@@ -1,0 +1,529 @@
+.typerocket-container {
+  box-sizing: border-box;
+}
+#post-body-content .typerocket-container {
+  margin-bottom: 30px;
+  }
+
+.tr-dev-alert-helper {
+  padding: 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #fff;
+  border:1px solid #b8d85d;
+  color: #68823e;
+  margin: 10px auto;
+  }
+
+.tr-dev-alert-helper code {
+  background: #ddff64;
+  color: #333;
+  }
+
+.typerocket-container .control-section + .control-section,
+.typerocket-wp-style-guide .control-section.tr-repeater .tr-repeater-fields .control-section + .control-section {
+  margin-top: 12px;
+  padding-top: 14px;
+}
+
+.typerocket-container .control-section + .control-section:after,
+.typerocket-wp-style-guide .control-section.tr-repeater .control-section + .control-section:after {
+  content: '';
+  display: block;
+  width: 100%;
+  border-top: 1px solid #DFDFDF;
+  border-bottom: 1px solid #fff;
+  position: absolute;
+  padding: 0 12px 0 10px;
+  left: -10px;
+  top: 0;
+}
+
+.typerocket-wp-style-guide {
+  display: table;
+  width: 100%;
+}
+
+.typerocket-wp-style-guide .control-section {
+  display: table-row;
+}
+
+.typerocket-wp-style-guide .control-section .control-label,
+.typerocket-wp-style-guide .control-section.tr-repeater .controls {
+  display: table-cell;
+  font-size: 14px;
+  width: 200px;
+}
+
+.typerocket-wp-style-guide .control,
+.typerocket-wp-style-guide .control-section.tr-repeater .tr-repeater-fields {
+  display: table-cell;
+  padding: 10px 0;
+}
+
+.typerocket-wp-style-guide .control-section.tr-repeater .tr-repeater-fields .control-section {
+  padding: 0;
+}
+
+.typerocket-wp-style-guide .control-section.tr-repeater .control,
+.typerocket-wp-style-guide .control-section.tr-repeater .tr-repeater-fields .control-section {
+  display: block;
+}
+
+.typerocket-wp-style-guide .control-section.tr-repeater .control {
+  padding: 0;
+}
+
+.typerocket-container .control-section {
+  position: relative;
+}
+
+.typerocket-container .control-label,
+.typerocket-wp-style-guide .control-section.tr-repeater .control-label {
+  color: #333;
+  display: block;
+  font-family: sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  height: auto;
+  width: auto;
+  padding-left: 1px;
+  padding-bottom: 4px;
+
+}
+
+.inside .typerocket-container .control-section:first-child .control-label {
+  margin-top: 10px;
+}
+
+.typerocket-container .control-section .control-label {
+  margin-top: -4px;
+}
+
+.typerocket-container input[type="text"],
+.typerocket-container input[type="email"],
+.typerocket-container input[type="password"],
+.typerocket-container input[type="number"],
+.typerocket-container textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 6px;
+  margin: 0;
+}
+
+.typerocket-container select {
+  margin: 0 0 5px;
+  padding: 3px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.typerocket-container textarea {
+  min-height: 120px;
+}
+
+.typerocket-container .help p {
+  color: #666;
+  font-style: italic;
+  margin: 4px 0 0;
+  font-size: 13px;
+}
+
+.typerocket-container .data-full,
+.typerocket-container .data-full li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.typerocket-container .image-picker-placeholder img,
+.typerocket-container .file-picker-placeholder a {
+  padding: 10px;
+  border: solid #DFDFDF 1px;
+  background: #fff;
+  margin-top: 10px;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.typerocket-container .tr-gallery-list .image-picker-placeholder img {
+  cursor: move;
+  }
+
+.tr-gallery-list .image-picker-placeholder {
+  float: left;
+}
+
+.tr-gallery-list {
+  margin: 5px -5px 0;
+}
+
+.typerocket-container .tr-gallery-list li {
+  margin: 5px;
+  position: relative;
+  list-style: none;
+  padding: 0;
+}
+
+.typerocket-container  .tr-gallery-list li img {
+  margin: 0;
+  display: block;
+}
+
+.tr-gallery-list li:hover a {
+  display: block;
+}
+
+.tr-gallery-list a,
+.tr-gallery-list a:before {
+  font-family: 'typerocket-icons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 16px;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.tr-gallery-list a {
+  color: #A00;
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  z-index: 1000;
+  text-decoration: none;
+  border: solid #DFDFDF 1px;
+  padding: 6px;
+  border-radius: 25px;
+  background: #fff;
+  display: none;
+}
+
+.tr-gallery-list a:hover {
+  color: #f00;
+  cursor: pointer;
+}
+
+.tr-gallery-list li:hover a {
+  display: block;
+}
+
+#wpwrap .tr-repeater-group .control-section {
+  padding-right: 35px;
+}
+
+#wpwrap .tr-repeater-group .control-section:after,
+#wpwrap .tr-repeater-group .control-section:before {
+  padding: 0 10px 0 10px;
+}
+
+.tr-repeater-fields {
+  position: relative;
+  clear: both;
+}
+
+.tr-repeater-group-template {
+  display: none;
+}
+
+.tr-repeater-fields > .tr-repeater-group {
+  display: block;
+  position: relative;
+  padding: 10px;
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  margin: 0 0 10px;
+  background: #fff;
+  border-radius: 3px;
+}
+
+.tr-repeater-group .repeater-controls .remove,
+.tr-repeater-group .repeater-controls .move {
+  font-family: 'typerocket-icons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 16px;
+  position: absolute;
+  left: 11px;
+  z-index: 1000;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+  color: #9B9B9B;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.tr-repeater-group.ui-sortable-helper,
+.tr-gallery-list li.ui-sortable-helper {
+  opacity: 0.8;
+  cursor: move;
+}
+
+.tr-repeater-fields .tr-repeater-group.ui-sortable-placeholder,
+.tr-gallery-list li.ui-sortable-placeholder,
+.tr-items-list li.ui-sortable-placeholder{
+  background: url(../img/ps_neutral.png);
+  visibility: visible !important;
+  border-color: transparent;
+  opacity: 0.8;
+  border-radius: 3px;
+}
+
+.tr-repeater-group .repeater-controls .remove {
+  bottom: 9px;
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tr-items-list .remove:hover {
+  color: red;
+}
+
+.tr-repeater-group .repeater-controls .move {
+  top: 9px;
+  cursor: move;
+  }
+
+.tr-repeater .controls {
+  margin: 0 0 10px 0;
+}
+
+.tr-repeater-group .repeater-inputs {
+  padding-left: 40px;
+}
+
+.tr-repeater-group .repeater-controls .remove:hover {
+  color: #fff !important;
+  }
+
+/* repeater colors */
+.tr-repeater-group .repeater-controls {
+  background: #745794;
+  border-right: solid 1px #41315B;
+  margin: -1px 0 -1px -1px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 39px;
+  left: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.tr-repeater-group .repeater-controls .move,
+.tr-repeater-group .repeater-controls .remove {
+  text-shadow: 0 1px 0 #7476AD;
+  color: #41315B;
+}
+
+.tr-repeater-group .tr-repeater-group .repeater-controls {
+  background: #49a09e;
+  border-right: solid 1px #396b74;
+  padding: 1px 0 1px 0;
+  margin: -1px -1px -1px 0;
+  }
+
+.tr-repeater-group .tr-repeater-group .repeater-controls .move,
+.tr-repeater-group .tr-repeater-group .repeater-controls .remove {
+  text-shadow: 0 1px 0 #4cbdbb;
+  color: #396b74;
+  }
+
+.tr-repeater-group .tr-repeater-group .tr-repeater-group .repeater-controls {
+  background: #4166d8;
+  border-right: solid 1px #393E9B;
+  padding: 1px 0 1px 0;
+  margin: -1px -1px -1px 0;
+  }
+
+.tr-repeater-group .tr-repeater-group .tr-repeater-group .repeater-controls .move,
+.tr-repeater-group .tr-repeater-group .tr-repeater-group .repeater-controls .remove {
+  text-shadow: 0 1px 0 #4971f4;
+  color: #393E9B;
+  }
+
+.tr-repeater-group .tr-repeater-group .tr-repeater-group .tr-repeater-group .repeater-controls {
+  background: #a8c85a;
+  border-right: solid 1px #68823e;
+  padding: 1px 0 1px 0;
+  margin: -1px -1px -1px 0;
+  }
+
+.tr-repeater-group .tr-repeater-group .tr-repeater-group .tr-repeater-group .repeater-controls .move,
+.tr-repeater-group .tr-repeater-group .tr-repeater-group .tr-repeater-group .repeater-controls .remove {
+  text-shadow: 0 1px 0 #b8d85d;
+  color: #68823e;
+  }
+
+.tr-repeater-group .tr-repeater-group .tr-repeater-group .tr-repeater-group .tr-repeater-group .repeater-controls {
+  background: #d87c31;
+  border-right: solid 1px #ac5217;
+  padding: 1px 0 1px 0;
+  margin: -1px -1px -1px 0;
+  }
+
+.tr-repeater-group .tr-repeater-group .tr-repeater-group .tr-repeater-group .tr-repeater-group .repeater-controls .move,
+.tr-repeater-group .tr-repeater-group .tr-repeater-group .tr-repeater-group .tr-repeater-group .repeater-controls .remove {
+  text-shadow: 0 1px 0 #f18f34;
+  color: #ac5217;
+  }
+
+
+
+/* Dev
+
+<div class="control">
+  <div class="dev">
+    <span class="info">
+      <span class="field">tr_field('about[person]');</span>
+    </span>
+  </div>
+  <textarea id="control2"></textarea>
+</div>
+
+*/
+
+.typerocket-container .dev {
+  font-weight: normal;
+  display: inline-block;
+  position: relative;
+  top: 1px;
+}
+
+.typerocket-container .control-section .dev:hover .debug,
+.typerocket-container .tr-repeater-group .control-section .dev:hover .debug {
+  color: #219b3b;
+}
+
+.typerocket-container .control-section:hover .dev .nav,
+.typerocket-container .tr-repeater-group .control-section .dev:hover .nav {
+  opacity: 1;
+}
+
+.typerocket-container .dev .nav,
+.typerocket-container .tr-repeater-group .control-section .dev .nav {
+  display: inline-block;
+  -webkit-transition: opacity 0.5s ease-out;
+  opacity: 0;
+  max-width: 350px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  top: 4px;
+}
+
+.typerocket-container .dev .debug,
+.typerocket-container .tr-repeater-group .control-section .dev .debug {
+  color: #999999;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+}
+
+.typerocket-container .dev .nav .field {
+  color: #21759B;
+  margin-left: 5px;
+}
+
+.typerocket-container .dev .nav .field span {
+  background: none;
+  margin-left: 5px;
+}
+
+/* Items List */
+
+.tr-items-list li {
+  display: block;
+  position: relative;
+  padding: 10px 40px;
+  border: solid 1px #dfdfdf;
+  margin: 0 0 10px;
+  background: #fff;
+  border-radius: 3px;
+  }
+
+.tr-items-list .remove,
+.tr-items-list .move {
+  font-family: 'typerocket-icons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 16px;
+  position: absolute;
+  z-index: 1000;
+  text-decoration: none;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+  color: #333;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.tr-items-list .remove {
+  right: 12px;
+  top: 17px;
+  }
+
+.tr-items-list .move {
+  left: 12px;
+  top: 17px;
+  cursor: move;
+}
+
+.control-division h2 {
+  color: #21759B;
+  margin: 30px 0 2px;
+  padding: 0;
+  }
+
+.control-division p {
+  color: #333;
+  margin: 0 0 15px;
+  padding: 0;
+}
+
+.control-division:first-child h2 {
+  margin-top: 0;
+}
+
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before,
+.cf:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+
+.cf:after {
+  clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+  *zoom: 1;
+}

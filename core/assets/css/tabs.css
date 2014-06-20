@@ -1,0 +1,119 @@
+#screen-meta.tr-options {
+  display: block !important;
+  margin-top: 20px;
+  border-top: 1px solid #DDD;
+}
+
+.tr-options #contextual-help-back,
+.tr-options .contextual-help-tabs .active,
+.tr-options .contextual-help-tabs .active a,
+.tr-options .contextual-help-tabs .active a:hover  {
+  background: #fefefe;
+}
+
+.tr-options .help-tab-content {
+  padding-top: 17px;
+}
+
+.tr-options input[type="submit"] {
+  margin-top: 17px;
+}
+
+.tr-options label {
+  line-height: inherit;
+}
+
+.tr-options .control-group {
+  margin: 0;
+  padding: 15px 0;
+}
+
+.tab-section.active {
+  display: block;
+}
+
+.tabbed {
+  margin: -6px -10px -8px -10px;
+  padding: 0 8px 10px;
+  background: #fff;
+  position: relative;
+  border-radius: 0 0 3px 3px;
+}
+
+.inside .tabbed .control-section + .control-section:after {
+  padding: 0 10px 0 10px;
+}
+
+
+.tr-tabs {float: none;
+  overflow: hidden;
+  padding: 5px 20px 0}
+
+.tab-section {
+  clear: both;
+  width: 100%;
+  display: none;
+}
+
+.tr-sections .control-group {
+  padding: 15px 19px;
+}
+
+.tabbed-sections {
+  margin: 0 -10px 15px;
+}
+
+.tabbed-sidebar {
+  float: right;
+}
+
+.tr-tabs li { display: inline; margin: 5px 0; padding: 5px; }
+.tabbed-sections.ui-tabs { padding: 0; }
+.tabbed-sections .ui-tabs-hide { display: none !important; }
+.tabbed-sections .ui-widget-header { border: none; }
+.tabbed-sections .tr-tabs {
+  background: #F5F5F5;
+  padding:5px 9px 0;
+  margin:0;
+  overflow: hidden;
+  zoom:1;
+  line-height:1em;
+  -webkit-box-shadow:inset 0 -1px 0 0 #d5d5d5;
+  -moz-box-shadow:inset 0 -1px 0 0 x #d5d5d5;
+  box-shadow:inset 0 -1px 0 0 #d5d5d5;
+}
+.tabbed-sections .tr-tabs li { float:left;padding:0;margin:0 5px 0 0; }
+.tabbed-sections .tr-tabs li.alignright { float: right; }
+.tabbed-sections .tr-tabs li.hide { display: none; }
+.tabbed-sections .tr-tabs li a {
+  margin:0;
+  float:left;
+  padding: 9px 9px;
+  background: #F1F1F1;
+  text-decoration:none;
+  color:#555;
+  border:1px solid #d5d5d5;
+}
+
+.tabbed-sections .tr-tabs li a:active {
+  outline: none;
+}
+
+.tabbed-sections .tr-tabs li.active a {
+  background: #fff;
+  position: relative;
+  top: 1px;
+}
+/* tabs help in post type */
+#post-body-content #screen-meta.tr-options {
+  margin: 0 0 20px 4px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+/* inside without tabs */
+#post-body-content .inside .control-group {
+  padding: 15px 0;
+  margin: 0;
+}
