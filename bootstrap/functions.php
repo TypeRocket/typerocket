@@ -57,10 +57,16 @@ function tr_post_field($name, $item_id = null) {
 }
 
 function tr_user_field($name, $item_id = null) {
-  global $post;
+  global $user_id, $post;
 
-  if(isset($post->ID) && is_null($item_id)) {
-    $item_id = $post->ID;
+  if(isset($user_id) && is_null($item_id)) {
+    $item_id = $user_id;
+  }
+  elseif( is_null($item_id) && isset($post->ID) ) {
+    $item_id = get_the_author_meta('ID');
+  }
+  elseif( is_null($item_id) ) {
+    $item_id = get_current_user_id();
   }
 
   $getter = new tr_get_field();
