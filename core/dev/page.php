@@ -5,7 +5,7 @@ function tr_dev_plugins() {
   $plugins = tr::$plugins;
 
   echo '<h3><i class="tr-icon-cog"></i> Active Plugins</h3><p>Active TypeRocket plugins being used on this site.</p><ul>';
-  foreach($plugins as $k => $v) {
+  foreach($plugins as $v) {
     echo tr_html::element('li', array(), $v);
   }
   echo '</ul>';
@@ -36,15 +36,15 @@ function tr_dev_forms() {
 
   ?>
   <h4>Updating Post Example (if on the single page)</h4>
-  <code><pre>$form = new tr_form();
+  <pre><code>$form = new tr_form();
 $form->make('post', 'update', $post->ID);
 $form->process();
 $form->open();
 $form->text('Post Title', array(), array('builtin' => true));
 $form->textarea('Post Content', array(), array('builtin' => true));
-$form->close('Update');</pre></code>
+$form->close('Update');</code></pre>
   <h4>Creating Post Example</h4>
-  <code><pre>$form = new tr_form();
+  <pre><code>$form = new tr_form();
 $form->make('post', 'create');
 $form->create_statics = array(
   'post_status' => 'publish',
@@ -54,15 +54,15 @@ $form->process();
 $form->open();
 $form->text('Post Title', array(), array('builtin' => true));
 $form->textarea('Post Content', array(), array('builtin' => true));
-$form->close('Create');</pre></code>
+$form->close('Create');</code></pre>
   <h4>Updating Current User Example</h4>
-  <code><pre>$form = new tr_form();
+  <pre><code>$form = new tr_form();
 $form->make('user', 'update', get_current_user_id());
 $form->process();
 $form->open();
 $form->text('Last Name', array(), array('builtin' => true ));
 $form->text('First Name', array(), array('builtin' => true ));
-$form->close('Update Your Last Name');</pre></code>
+$form->close('Update Your Last Name');</code></pre>
   <?php
 
   }
@@ -89,8 +89,6 @@ function tr_dev_stats() {
 
 <div class="wrap">
 <h2>TypeRocket Dev</h2>
-
-
   <div>
     <div id="tr-dev-content" class="typerocket-container typerocket-dev">
     <?php
@@ -110,12 +108,7 @@ function tr_dev_stats() {
         'title' => 'Icon Names',
         'content' => '',
         'callback' => 'tr_dev_icons'
-      ))->add_tab( array(
-        'id' => 'forms',
-        'title' => 'Form Building',
-        'content' => '',
-        'callback' => 'tr_dev_forms'
-      ) )->make();  ?>
+      ))->make();  ?>
     </div>
   </div>
 
