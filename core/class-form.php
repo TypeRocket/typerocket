@@ -395,9 +395,17 @@ class tr_form extends tr_base {
     foreach($fields as $args) {
 
       if( empty($args[1][1]) ) { $args[1][1] = array(); }
-      if( is_string($type) ) { $args[1][2][$type] = true; }
+      if( empty($args[1][2]) ) { $args[1][2] = array(); }
 
-      call_user_func_array(array($this, $args[0]), $args[1]);
+      if( $args[0] == 'select' || $args[0] == 'radio' || $args[0] == 'custom') {
+        if( empty($args[1][3]) ) { $args[1][3] = array(); }
+        if( is_string($type) ) { $args[1][3][$type] = true; }
+        call_user_func_array(array($this, $args[0]), $args[1]);
+      } else {
+        if( is_string($type) ) { $args[1][2][$type] = true; }
+        call_user_func_array(array($this, $args[0]), $args[1]);
+      }
+
     }
   }
 
