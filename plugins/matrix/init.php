@@ -60,6 +60,7 @@ class tr_matrix extends tr_base {
 <div class=\"button-group\">
 <input type=\"button\" value=\"Add {$this->name}\" data-id='$mxid' data-folder='{$this->name}' class=\"button matrix-button\">
 <input type=\"button\" value=\"Flip\" class=\"flip button\">
+<input type=\"button\" value=\"Collapse\" class=\"tr_action_collapse button\">
 <input type=\"button\" value=\"Clear All\" class=\"clear button\">
 </div>
 </div>

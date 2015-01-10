@@ -234,6 +234,11 @@
   clear: both;
 }
 
+.tr-repeater-collapse .tr-repeater-group {
+  height: 40px;
+  overflow: hidden;
+}
+
 .tr-repeater-group-template {
   display: none;
 }

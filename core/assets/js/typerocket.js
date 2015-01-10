@@ -130,11 +130,18 @@ jQuery(document).ready(function($) {
         e.preventDefault;
       });
 
+      // tr_action_collapse
+      $(document).on('click', '.tr-repeater .controls .tr_action_collapse', function(e){
+        $(this).parent().parent().next().next().toggleClass('tr-repeater-collapse');
+        e.preventDefault;
+      });
+
       // clear
       $(document).on('click', '.tr-repeater .controls .clear', function(e){
         if(confirm('Remove all items?')) {
           $(this).parent().parent().next().next().html('');
         }
+        e.preventDefault;
       });
 
       // flip
@@ -143,6 +150,7 @@ jQuery(document).ready(function($) {
           var items = $(this).parent().parent().next().next();
           items.children().each(function(i,item){items.prepend(item)})
         }
+        e.preventDefault;
       });
 
     },
