@@ -1,5 +1,13 @@
-.matrix-field-group {
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
+.matrix-controls {
+    margin-bottom: 20px;
+}
+
+.matrix-controls select {
+    display: inline-block;
+    width: auto;
+    margin: 0 10px 0 0;
+}
+
+.matrix-disabled {
+    opacity: 0.8;
 }

@@ -12,6 +12,7 @@ class tr_form extends tr_base {
   public $current_field = '';
   public $group = null;
   public $sub = null;
+  public $debug = null;
   private $hash = null;
 
   function __construct() {
@@ -285,9 +286,13 @@ class tr_form extends tr_base {
     return $html;
   }
 
+  private function is_debug() {
+    return ($this->debug === false) ? $this->debug : TR_DEBUG;
+  }
+
   private function debug() {
     $html = '';
-    if(TR_DEBUG === true && $this->current_field->builtin == false && is_admin() && $this->current_field->debuggable == true) {
+    if($this->is_debug() === true && $this->current_field->builtin == false && is_admin() && $this->current_field->debuggable == true) {
       $html =
       "<div class=\"dev\">
         <span class=\"debug\"><i class=\"tr-icon-bug\"></i></span>
@@ -326,6 +331,8 @@ class tr_form extends tr_base {
   public function repeater($name, $fields, $settings = array()) {
     wp_enqueue_script( 'typerocket-booyah', tr::$paths['urls']['assets'] . '/js/booyah.js', array('jquery'), '1.0', true );
     wp_enqueue_script('jquery-ui-sortable', array( 'jquery' ), '1.0', true);
+
+    $this->debug = false;
 
     // add controls
     if(isset($settings['help'])) {
@@ -389,6 +396,8 @@ class tr_form extends tr_base {
     $this->group = $cache_group;
     $this->sub = $cache_sub;
     $this->_e('</div>'); // end tr-repeater
+
+    $this->debug = null;
 
   }
 

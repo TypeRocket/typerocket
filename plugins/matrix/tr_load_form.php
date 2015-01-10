@@ -7,23 +7,23 @@ if(!$tr_load_ok) :
 
 	$tr_matrix_id = time();
 	$tr_matrix_group = $_GET['id'];
-	$tr_matrix_type = $_GET['type'];
-
+	$tr_matrix_type = lcfirst($_GET['type']);
+	$tr_matrix_form_group = $_GET['form_group'];
 
 	$form = tr_form();
 	$form->get_values = false;
 
-	$form->group = "[{$tr_matrix_group}][{$tr_matrix_id}][{$tr_matrix_type}]";
+	if(!$tr_matrix_form_group) {
+		$tr_matrix_form_group = '';
+	}
 
-else :
-	$form = $this->form;
+	$form->group = $tr_matrix_form_group . "[{$tr_matrix_group}][{$tr_matrix_id}][{$tr_matrix_type}]";
+endif; ?>
 
-	$tr_matrix_id = $t;
-	$tr_matrix_group = $this->name;
-	$tr_matrix_type = $type;
-
-	$form->group = "[{$tr_matrix_group}][{$tr_matrix_id}][{$tr_matrix_type}]";
-endif;
-
+<div class="repeater-controls">
+	<div class="move tr-icon-menu"></div>
+	<a href="#remove" class="remove tr-icon-remove2" title="remove"></a>
+</div>
+<div class="repeater-inputs">
 
 
