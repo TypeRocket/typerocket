@@ -12,13 +12,11 @@ jQuery(document).ready(function($) {
 
             $.ajax({
                 url: tr_matrix_url + '/' + mxid + '/' + $select.val() ,
-                data: {id: $that.data('id'), form_group: tr_matrix_form_group, type: $select.find('option[value="' +$select.val()+ '"]').text() },
+                data: {id: $that.data('id'), form_group: tr_matrix_form_group, type: $select.find('option[value="' +$select.val()+ '"]').data('file') },
                 success: function(data) {
                     data = $('<div class="matrix-field-group tr-repeater-group">' + data + '</div></div>');
 
                     data.prependTo($fields).hide().delay(10).slideDown(300).scrollTop('100%');
-
-
                 },
                 dataType: 'html',
                 complete: function() {

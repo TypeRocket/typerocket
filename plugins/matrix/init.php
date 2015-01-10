@@ -3,11 +3,13 @@ class tr_matrix extends tr_base {
 
 	public $name = null;
 	public $form = null;
+	public $settings = array();
 
-	function __construct($name, &$form) {
+	function __construct($name, &$form, $settings = array()) {
 
 		$this->name = (string) $name;
 		$this->form = $form;
+		$this->settings = $settings;
 
 		wp_enqueue_script('tr_matrix', tr::$paths['urls']['plugins'] . '/matrix/js.js', array( 'jquery' ), true);
 		wp_localize_script('tr_matrix', 'tr_matrix_url', tr::$paths['urls']['plugins'] . '/matrix');
@@ -25,7 +27,13 @@ class tr_matrix extends tr_base {
 		foreach($files as $f) {
 			if( $f != '.' && $f != '..' && file_exists($dir.'/'.$f)) {
 				$path = pathinfo($f);
-				$select .= tr_html::element( 'option', array( 'value' => $f ), ucfirst($path['filename']) );
+
+				if(!empty($this->settings) && in_array($f, $this->settings)) {
+					$select .= tr_html::element( 'option', array( 'value' => $f, 'data-file' => $path['filename']), $this->clean_file_name($path['filename']) );
+				} elseif(empty($this->settings)) {
+					$select .= tr_html::element( 'option', array( 'value' => $f, 'data-file' => $path['filename'] ), $this->clean_file_name($path['filename']) );
+				}
+
 			}
 		}
 
@@ -46,9 +54,16 @@ class tr_matrix extends tr_base {
 		$this->get();
 		echo "</div></div>";
 
+		return $this;
 	}
 
-	function get() {
+	private function clean_file_name($name) {
+		$name = str_replace('-', ' ', $name );
+		str_replace('_', ' ', $name );
+		return ucwords($name);
+	}
+
+	private function get() {
 
 		$val = (new tr_get_field())->value($this->form->group ."[{$this->name}]", $this->form->item_id, $this->form->controller, false);
 
