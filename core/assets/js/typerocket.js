@@ -56,8 +56,8 @@ jQuery(document).ready(function($) {
     };
 
   add_sorting(document);
-  add_date_picker($('.date-picker'));
-  add_color_picker($('.color-picker'));
+  add_date_picker($('.date-picker[name]'));
+  add_color_picker($('.color-picker[name]'));
 
   // Tabs
   $('.tr-tabs li').each(function(){
@@ -114,10 +114,13 @@ jQuery(document).ready(function($) {
 
         // add sorting
         add_sorting($group_template);
+        add_date_picker($group_template.find('.date-picker[name]'));
 
         var $fields_div = $(this).parent().parent().next().next();
 
         $group_template.prependTo($fields_div).hide().delay(10).slideDown(300).scrollTop('100%');
+
+        add_color_picker($group_template.find('.color-picker[name]'));
 
       });
 

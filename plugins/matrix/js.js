@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
 
-    $('.tr-matrix').on('click', '.matrix-button', function(e) {
+    $('.typerocket-container').on('click', '.matrix-button', function(e) {
         var $that = $(this);
 
         if(!$that.hasClass('matrix-disabled')) {
@@ -48,13 +48,13 @@ jQuery(document).ready(function($) {
                     }
 
                     if( $.isFunction($.fn.datepicker) ) {
-                        $fields.find('.date-picker').each(function(){
+                        $fields.find('.date-picker[name]').each(function(){
                             $(this).datepicker();
                         });
                     }
 
                     if( $.isFunction($.fn.wpColorPicker) ) {
-                        $fields.find('.color-picker').each(function(){
+                        $fields.find('.color-picker[name]').each(function(){
                             var pal = $(this).attr('id') + '_color_palette',
                                 settings = { palettes: window[pal] };
                             $(this).wpColorPicker(settings);
