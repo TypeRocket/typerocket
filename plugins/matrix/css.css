@@ -1,0 +1,13 @@
+.matrix-controls {
+    margin-bottom: 20px;
+}
+
+.matrix-controls select {
+    display: inline-block;
+    width: auto;
+    margin: 0 10px 0 0;
+}
+
+.matrix-disabled {
+    opacity: 0.8;
+}

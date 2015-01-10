@@ -36,10 +36,15 @@ class tr_field extends tr_base {
     $this->sub = $sub;
     $this->brackets = $this->get_field_bracket();
     $this->attr['name'] = $this->prefix . $this->brackets;
-    $this->attr['id'] = $this->prefix . '_' . $this->name;
+    $this->attr['class'] = $this->prefix . '_field_class_' . $this->name ;
   }
 
   public function get_value() {
+
+    if($this->form->get_values == false) {
+      return null;
+    }
+
     $getter = new tr_get_field();
     return $getter->value_from_field_obj($this);
   }

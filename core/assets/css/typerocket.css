@@ -5,6 +5,11 @@
   margin-bottom: 30px;
   }
 
+#titlediv + .typerocket-container,
+#postdivrich +  .typerocket-container {
+  margin-top: 20px;
+}
+
 .tr-dev-alert-helper {
   padding: 15px;
   -webkit-box-sizing: border-box;
@@ -197,7 +202,7 @@
   position: absolute;
   right: -8px;
   top: -8px;
-  z-index: 1000;
+  z-index: 10;
   text-decoration: none;
   border: solid #DFDFDF 1px;
   padding: 6px;
@@ -229,6 +234,11 @@
   clear: both;
 }
 
+.tr-repeater-collapse .tr-repeater-group {
+  height: 40px;
+  overflow: hidden;
+}
+
 .tr-repeater-group-template {
   display: none;
 }
@@ -255,7 +265,7 @@
   font-size: 16px;
   position: absolute;
   left: 11px;
-  z-index: 1000;
+  z-index: 10;
   text-shadow: 0 1px 0 rgba(255,255,255,0.8);
   color: #9B9B9B;
 
@@ -464,7 +474,7 @@
   line-height: 1;
   font-size: 16px;
   position: absolute;
-  z-index: 1000;
+  z-index: 10;
   text-decoration: none;
   text-shadow: 0 1px 0 rgba(255,255,255,0.8);
   color: #333;

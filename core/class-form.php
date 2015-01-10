@@ -2,6 +2,7 @@
 class tr_form extends tr_base {
 
   public $id = null;
+  public $get_values = true;
   public $settings = array();
   public $controller = 'post';
   public $action = 'update';
@@ -11,6 +12,7 @@ class tr_form extends tr_base {
   public $current_field = '';
   public $group = null;
   public $sub = null;
+  public $debug = null;
   private $hash = null;
 
   function __construct() {
@@ -284,9 +286,13 @@ class tr_form extends tr_base {
     return $html;
   }
 
+  private function is_debug() {
+    return ($this->debug === false) ? $this->debug : TR_DEBUG;
+  }
+
   private function debug() {
     $html = '';
-    if(TR_DEBUG === true && $this->current_field->builtin == false && is_admin() && $this->current_field->debuggable == true) {
+    if($this->is_debug() === true && $this->current_field->builtin == false && is_admin() && $this->current_field->debuggable == true) {
       $html =
       "<div class=\"dev\">
         <span class=\"debug\"><i class=\"tr-icon-bug\"></i></span>
@@ -326,6 +332,8 @@ class tr_form extends tr_base {
     wp_enqueue_script( 'typerocket-booyah', tr::$paths['urls']['assets'] . '/js/booyah.js', array('jquery'), '1.0', true );
     wp_enqueue_script('jquery-ui-sortable', array( 'jquery' ), '1.0', true);
 
+    $this->debug = false;
+
     // add controls
     if(isset($settings['help'])) {
       $help =
@@ -363,7 +371,7 @@ class tr_form extends tr_base {
 
     // add controls (add, flip, clear all)
     echo ($label) ? $label : '';
-    $this->_e("<div class=\"controls\"><div class=\"button-group\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}</div>");
+    $this->_e("<div class=\"controls\"><div class=\"button-group\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Collapse\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}</div>");
 
     // render js template data
     $this->_e('<div class="tr-repeater-group-template" data-id="'.$name.'">');
@@ -388,6 +396,8 @@ class tr_form extends tr_base {
     $this->group = $cache_group;
     $this->sub = $cache_sub;
     $this->_e('</div>'); // end tr-repeater
+
+    $this->debug = null;
 
   }
 

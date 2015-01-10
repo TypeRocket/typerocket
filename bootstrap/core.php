@@ -7,45 +7,20 @@
 | Require the core classes of TypeRocket.
 |
 */
-include_once tr::$paths['core'] . '/class-base.php';
-include_once tr::$paths['core'] . '/class-utility.php';
-include_once tr::$paths['core'] . '/class-validate.php';
-include_once tr::$paths['core'] . '/class-list.php';
-include_once tr::$paths['core'] . '/class-html.php';
-include_once tr::$paths['core'] . '/class-registry.php';
-include_once tr::$paths['core'] . '/class-enhance.php';
-include_once tr::$paths['core'] . '/class-taxonomy.php';
-include_once tr::$paths['core'] . '/class-postType.php';
-include_once tr::$paths['core'] . '/class-metaBox.php';
-include_once tr::$paths['core'] . '/class-field.php';
-include_once tr::$paths['core'] . '/class-form.php';
-include_once tr::$paths['core'] . '/class-crud.php';
-include_once tr::$paths['core'] . '/class-getField.php';
-include_once tr::$paths['core'] . '/class-sanitize.php';
-include_once tr::$paths['core'] . '/class-layout.php';
-include_once tr::$paths['core'] . '/class-icons.php';
+function tr_autoload($class) {
+  $is_tr = (strpos($class, 'tr_') === 0) ? true : false;
+  $is_tr_field = (strpos($class, 'tr_field_') === 0) ? true : false;
+  if($is_tr_field) {
+    $field = substr($class, 9);
+    include tr::$paths['core'] . "/fields/{$field}/class.php";
+  }
+  elseif($is_tr) {
+    $class = substr($class, 3);
+    include tr::$paths['core'] . '/class-' . $class . '.php';
+  }
+}
 
-/*
-|--------------------------------------------------------------------------
-| Require Core Form Field Classes
-|--------------------------------------------------------------------------
-|
-| Require the core classes of TypeRocket form fields.
-|
-*/
-include_once tr::$paths['core'] . '/fields/text/class.php';
-include_once tr::$paths['core'] . '/fields/submit/class.php';
-include_once tr::$paths['core'] . '/fields/textarea/class.php';
-include_once tr::$paths['core'] . '/fields/radio/class.php';
-include_once tr::$paths['core'] . '/fields/checkbox/class.php';
-include_once tr::$paths['core'] . '/fields/select/class.php';
-include_once tr::$paths['core'] . '/fields/editor/class.php';
-include_once tr::$paths['core'] . '/fields/color/class.php';
-include_once tr::$paths['core'] . '/fields/date/class.php';
-include_once tr::$paths['core'] . '/fields/image/class.php';
-include_once tr::$paths['core'] . '/fields/file/class.php';
-include_once tr::$paths['core'] . '/fields/gallery/class.php';
-include_once tr::$paths['core'] . '/fields/items/class.php';
+spl_autoload_register('tr_autoload');
 
 /*
 |--------------------------------------------------------------------------

@@ -56,8 +56,8 @@ jQuery(document).ready(function($) {
     };
 
   add_sorting(document);
-  add_date_picker($('.date-picker'));
-  add_color_picker($('.color-picker'));
+  add_date_picker($('.date-picker[name]'));
+  add_color_picker($('.color-picker[name]'));
 
   // Tabs
   $('.tr-tabs li').each(function(){
@@ -114,10 +114,13 @@ jQuery(document).ready(function($) {
 
         // add sorting
         add_sorting($group_template);
+        add_date_picker($group_template.find('.date-picker[name]'));
 
         var $fields_div = $(this).parent().parent().next().next();
 
         $group_template.prependTo($fields_div).hide().delay(10).slideDown(300).scrollTop('100%');
+
+        add_color_picker($group_template.find('.color-picker[name]'));
 
       });
 
@@ -127,11 +130,26 @@ jQuery(document).ready(function($) {
         e.preventDefault;
       });
 
+      // tr_action_collapse
+      $(document).on('click', '.tr-repeater .controls .tr_action_collapse', function(e){
+
+        if ($(this).val() == "Collapse") {
+          $(this).val("Expand");
+        }
+        else {
+          $(this).val("Collapse");
+        }
+
+        $(this).parent().parent().next().next().toggleClass('tr-repeater-collapse');
+        e.preventDefault;
+      });
+
       // clear
       $(document).on('click', '.tr-repeater .controls .clear', function(e){
         if(confirm('Remove all items?')) {
           $(this).parent().parent().next().next().html('');
         }
+        e.preventDefault;
       });
 
       // flip
@@ -140,6 +158,7 @@ jQuery(document).ready(function($) {
           var items = $(this).parent().parent().next().next();
           items.children().each(function(i,item){items.prepend(item)})
         }
+        e.preventDefault;
       });
 
     },
