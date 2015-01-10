@@ -40,6 +40,11 @@ class tr_field extends tr_base {
   }
 
   public function get_value() {
+
+    if($this->form->get_values == false) {
+      return null;
+    }
+
     $getter = new tr_get_field();
     return $getter->value_from_field_obj($this);
   }

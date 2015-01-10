@@ -2,6 +2,7 @@
 class tr_form extends tr_base {
 
   public $id = null;
+  public $get_values = true;
   public $settings = array();
   public $controller = 'post';
   public $action = 'update';
