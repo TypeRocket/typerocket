@@ -5,6 +5,11 @@
   margin-bottom: 30px;
   }
 
+#titlediv + .typerocket-container,
+#postdivrich +  .typerocket-container {
+  margin-top: 20px;
+}
+
 .tr-dev-alert-helper {
   padding: 15px;
   -webkit-box-sizing: border-box;

@@ -11,10 +11,20 @@ class tr_matrix extends tr_base {
 		$this->form = $form;
 		$this->settings = $settings;
 
+		wp_enqueue_script( 'typerocket-booyah', tr::$paths['urls']['assets'] . '/js/booyah.js', array('jquery'), '1.0', true );
+		wp_enqueue_script('jquery-ui-sortable', array( 'jquery' ), '1.0', true);
+		wp_enqueue_style( 'tr-date-picker', tr::$paths['urls']['assets'] . '/css/date-picker.css' );
+		wp_enqueue_script( 'jquery-ui-datepicker', array( 'jquery' ), '1.0', true );
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( 'wp-color-picker' );
+		wp_enqueue_script( 'typerocket-media', tr::$paths['urls']['assets'] . '/js/media.js', array('jquery'), '1.0', true );
+		wp_enqueue_script( 'typerocket-items-list', tr::$paths['urls']['assets'] . '/js/items-list.js', array('jquery'), '1.0', true );
+
 		wp_enqueue_script('tr_matrix', tr::$paths['urls']['plugins'] . '/matrix/js.js', array( 'jquery' ), true);
 		wp_localize_script('tr_matrix', 'tr_matrix_url', tr::$paths['urls']['plugins'] . '/matrix');
 		wp_localize_script('tr_matrix', 'tr_matrix_form_group', $form->group);
 		wp_enqueue_style( 'matrix-style', tr::$paths['urls']['plugins'] . '/matrix/css.css' );
+
 	}
 
 	function add() {
@@ -22,9 +32,12 @@ class tr_matrix extends tr_base {
 		$dir = __DIR__ . '/' . $this->name;
 		$files = scandir($dir);
 
-		$select =  "<select class=\"matrix-select-{$this->name}\">";
+		$mxid = md5(microtime(true));
+
+		$select =  "<select class=\"matrix-select-{$mxid}\">";
 
 		foreach($files as $f) {
+
 			if( $f != '.' && $f != '..' && file_exists($dir.'/'.$f)) {
 				$path = pathinfo($f);
 
@@ -35,6 +48,7 @@ class tr_matrix extends tr_base {
 				}
 
 			}
+
 		}
 
 		$select .= '</select>';
@@ -44,13 +58,13 @@ class tr_matrix extends tr_base {
 <div class='matrix-controls controls'>
 {$select}
 <div class=\"button-group\">
-<input type=\"button\" value=\"Add {$this->name}\" data-id='{$this->name}' class=\"button matrix-button\">
+<input type=\"button\" value=\"Add {$this->name}\" data-id='$mxid' data-folder='{$this->name}' class=\"button matrix-button\">
 <input type=\"button\" value=\"Flip\" class=\"flip button\">
 <input type=\"button\" value=\"Clear All\" class=\"clear button\">
 </div>
 </div>
 <div><input type='hidden' name='tr{$this->form->group}[{$this->name}]' /></div>
-<div class='matrix-fields matrix-fields-{$this->name} tr-repeater-fields ui-sortable'>";
+<div class='matrix-fields matrix-fields-$mxid tr-repeater-fields ui-sortable'>";
 		$this->get();
 		echo "</div></div>";
 
