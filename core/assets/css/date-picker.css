@@ -11,6 +11,7 @@
 .ui-datepicker {
   width: 17em;
   display: none;
+  z-index: 15 !important;
 }
 
 .ui-datepicker .ui-datepicker-header {
