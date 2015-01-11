@@ -308,6 +308,14 @@
   margin: 0 0 10px 0;
 }
 
+.tr-matrix > .dev, .tr-repeater > .dev {
+  margin-bottom: 10px;
+}
+
+.tr-repeater .tr-repeater .dev {
+  display: none;
+}
+
 .tr-repeater-group .repeater-inputs {
   padding-left: 40px;
 }

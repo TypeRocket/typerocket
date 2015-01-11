@@ -369,6 +369,22 @@ class tr_form extends tr_base {
     $root_group = $this->group .=  "[{$name}]";
     $this->group .= "[{{ {$name} }}]";
 
+    // debug
+    $debug = '';
+    if(TR_DEBUG === true && is_admin()) {
+      $debug =
+          "<div class=\"dev\">
+        <span class=\"debug\"><i class=\"tr-icon-bug\"></i></span>
+          <span class=\"nav\">
+          <span class=\"field\">
+            <i class=\"tr-icon-code\"></i><span>tr_{$this->controller}_field(\"{$root_group}\");</span>
+          </span>
+        </span>
+      </div>";
+    }
+
+    $this->_e($debug);
+
     // add controls (add, flip, clear all)
     echo ($label) ? $label : '';
     $this->_e("<div class=\"controls\"><div class=\"button-group\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Collapse\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}</div>");

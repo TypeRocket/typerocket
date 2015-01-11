@@ -53,8 +53,22 @@ class tr_matrix extends tr_base {
 
 		$select .= '</select>';
 
+		$debug = '';
+		if(TR_DEBUG === true && is_admin()) {
+			$debug =
+				"<div class=\"dev\">
+        <span class=\"debug\"><i class=\"tr-icon-bug\"></i></span>
+          <span class=\"nav\">
+          <span class=\"field\">
+            <i class=\"tr-icon-code\"></i><span>tr_{$this->form->controller}_field(\"{$this->form->group}[{$this->name}]\");</span>
+          </span>
+        </span>
+      </div>";
+		}
+
 		echo "
 <div class='tr-matrix control-section tr-repeater'>
+{$debug}
 <div class='matrix-controls controls'>
 {$select}
 <div class=\"button-group\">
