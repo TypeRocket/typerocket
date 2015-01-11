@@ -4,7 +4,6 @@ class tr_field_color extends tr_field {
   function __construct() {
     wp_enqueue_style( 'wp-color-picker' );
     wp_enqueue_script( 'wp-color-picker' );
-    $this->repeatable = false;
   }
 
   function render() {

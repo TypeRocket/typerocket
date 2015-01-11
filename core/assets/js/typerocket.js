@@ -120,6 +120,10 @@ jQuery(document).ready(function($) {
 
         $group_template.prependTo($fields_div).hide().delay(10).slideDown(300).scrollTop('100%');
 
+        //$group_template.find('textarea.wp-editor-area').each(function(){
+        //  $(this).attr('id', 'tr_moved_' + new Date().getTime());
+        //});
+
         add_color_picker($group_template.find('.color-picker[name]'));
 
       });
@@ -133,11 +137,15 @@ jQuery(document).ready(function($) {
       // tr_action_collapse
       $(document).on('click', '.tr-repeater .controls .tr_action_collapse', function(e){
 
+        var $groups_group = $(this).parent().parent().next().next();
+
         if ($(this).val() == "Collapse") {
           $(this).val("Expand");
+          $groups_group.find('.tr-repeater-group').animate({height: '40px'});
         }
         else {
           $(this).val("Collapse");
+          $groups_group.find('.tr-repeater-group').css({height: '100%'});
         }
 
         $(this).parent().parent().next().next().toggleClass('tr-repeater-collapse');

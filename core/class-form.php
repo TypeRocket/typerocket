@@ -328,7 +328,7 @@ class tr_form extends tr_base {
     return $this;
   }
 
-  public function repeater($name, $fields, $settings = array()) {
+  public function repeater($name, $fields, $settings = array(), $label = 'Repeater' ) {
     wp_enqueue_script( 'typerocket-booyah', tr::$paths['urls']['assets'] . '/js/booyah.js', array('jquery'), '1.0', true );
     wp_enqueue_script('jquery-ui-sortable', array( 'jquery' ), '1.0', true);
 
@@ -344,16 +344,16 @@ class tr_form extends tr_base {
       $help = '';
     }
 
+    // add buttom settings
     if(isset($settings['add_button'])) {
       $add_button_value = $settings['add_button'];
     } else {
-      $add_button_value = "Add {$name}";
+      $add_button_value = "Add New";
     }
 
-    if(isset($settings['label'])) {
-      $label = "<div class=\"control-label\"><span class=\"label\">" . $settings['label'] . '</span></div>';
-    } else {
-      $label = false;
+    // add label
+    if(is_string($label)) {
+      $label = "<div class=\"control-label\"><span class=\"label\">{$label}</span></div>";
     }
 
     // template for repeater groups
@@ -385,8 +385,9 @@ class tr_form extends tr_base {
 
     $this->_e($debug);
 
+    $this->_e($label);
+
     // add controls (add, flip, clear all)
-    echo ($label) ? $label : '';
     $this->_e("<div class=\"controls\"><div class=\"button-group\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Collapse\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}</div>");
 
     // render js template data

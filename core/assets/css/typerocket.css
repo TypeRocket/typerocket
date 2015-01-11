@@ -227,6 +227,8 @@
   padding: 0 10px 0 10px;
 }
 
+/* repeater */
+
 .tr-repeater-fields {
   position: relative;
   clear: both;
@@ -235,6 +237,18 @@
 .tr-repeater-collapse .tr-repeater-group {
   height: 40px;
   overflow: hidden;
+}
+
+.tr-repeater-collapse .repeater-inputs:after {
+  opacity: 0.6;
+  background: #fff;
+  content: '';
+  position: absolute;
+  display: block;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
 }
 
 .tr-repeater-group-template {
@@ -318,6 +332,7 @@
 
 .tr-repeater-group .repeater-inputs {
   padding-left: 40px;
+  position: relative;
 }
 
 .tr-repeater-group .repeater-controls .remove:hover {
@@ -334,6 +349,7 @@
   bottom: 0;
   width: 39px;
   left: 0;
+  z-index: 2;
   border-radius: 3px 0 0 3px;
 }
 

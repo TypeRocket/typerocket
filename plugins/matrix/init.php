@@ -1,15 +1,19 @@
 <?php
-class tr_matrix extends tr_base {
+class tr_matrix {
 
 	public $name = null;
 	public $form = null;
 	public $settings = array();
+	public $include_files = array();
+	public $label = null;
 
-	function __construct($name, &$form, $settings = array()) {
+	function __construct($name, &$form, $settings = array(), $label = false, $include_files = array()) {
 
 		$this->name = (string) $name;
 		$this->form = $form;
+		$this->include_files = $include_files;
 		$this->settings = $settings;
+		$this->label = $label;
 
 		wp_enqueue_script( 'typerocket-booyah', tr::$paths['urls']['assets'] . '/js/booyah.js', array('jquery'), '1.0', true );
 		wp_enqueue_script('jquery-ui-sortable', array( 'jquery' ), '1.0', true);
@@ -29,30 +33,28 @@ class tr_matrix extends tr_base {
 
 	function add() {
 
+		// setup select list of files
 		$dir = __DIR__ . '/' . $this->name;
 		$files = scandir($dir);
-
 		$mxid = md5(microtime(true));
-
 		$select =  "<select class=\"matrix-select-{$mxid}\">";
 
 		foreach($files as $f) {
-
 			if( $f != '.' && $f != '..' && file_exists($dir.'/'.$f)) {
 				$path = pathinfo($f);
 
-				if(!empty($this->settings) && in_array($f, $this->settings)) {
+				if(!empty($this->include_files) && in_array($f, $this->include_files)) {
 					$select .= tr_html::element( 'option', array( 'value' => $f, 'data-file' => $path['filename']), $this->clean_file_name($path['filename']) );
-				} elseif(empty($this->settings)) {
+				} elseif(empty($this->include_files)) {
 					$select .= tr_html::element( 'option', array( 'value' => $f, 'data-file' => $path['filename'] ), $this->clean_file_name($path['filename']) );
 				}
 
 			}
-
 		}
 
 		$select .= '</select>';
 
+		// get debug
 		$debug = '';
 		if(TR_DEBUG === true && is_admin()) {
 			$debug =
@@ -66,10 +68,25 @@ class tr_matrix extends tr_base {
       </div>";
 		}
 
+		// add help
+		if(isset($this->settings['help'])) {
+			$help =
+				"<div class=\"help\">
+          <p>{$this->settings['help']}</p>
+        </div>";
+		} else {
+			$help = '';
+		}
+
+		// add label
+		$label = (is_string($this->label)) ? "<div class=\"control-label\"><span class=\"label\">{$this->label}</span></div>" : '';
+
+		// add it all
 		echo "
 <div class='tr-matrix control-section tr-repeater'>
 {$debug}
 <div class='matrix-controls controls'>
+{$label}
 {$select}
 <div class=\"button-group\">
 <input type=\"button\" value=\"Add New\" data-id='$mxid' data-folder='{$this->name}' class=\"button matrix-button\">
@@ -77,6 +94,7 @@ class tr_matrix extends tr_base {
 <input type=\"button\" value=\"Collapse\" class=\"tr_action_collapse button\">
 <input type=\"button\" value=\"Clear All\" class=\"clear button\">
 </div>
+{$help}
 </div>
 <div><input type='hidden' name='tr{$this->form->group}[{$this->name}]' /></div>
 <div class='matrix-fields matrix-fields-$mxid tr-repeater-fields ui-sortable'>";
