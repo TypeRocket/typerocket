@@ -145,7 +145,7 @@ jQuery(document).ready(function($) {
         }
         else {
           $(this).val("Collapse");
-          $groups_group.find('.tr-repeater-group').css({height: '100%'});
+          $groups_group.find('.tr-repeater-group').attr('style', '');
         }
 
         $(this).parent().parent().next().next().toggleClass('tr-repeater-collapse');
