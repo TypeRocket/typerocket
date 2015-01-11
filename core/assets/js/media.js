@@ -32,10 +32,16 @@ jQuery(document).ready(function($) {
     // When an image is selected, run a callback.
     temp_frame.on( 'select', function() {
       // We set multiple to false so only get one image from the uploader
-      var attachment = temp_frame.state().get('selection').first().toJSON();
+      var attachment = temp_frame.state().get('selection').first().toJSON(), url = '';
+
+      if(attachment.sizes.thumbnail) {
+        url = attachment.sizes.thumbnail.url;
+      } else {
+        url = attachment.sizes.full.url;
+      }
 
       $(field).val(attachment.id);
-      $(button).parent().next().html('<img src="'+attachment.sizes.thumbnail.url+'"/>');
+      $(button).parent().next().html('<img src="'+url+'"/>');
 
     });
 
@@ -120,9 +126,15 @@ jQuery(document).ready(function($) {
 
       for(i = 0; i < l; i++) {
 
-        var field = $(button).parent().prev().clone();
+        var field = $(button).parent().prev().clone(), use_url = '';
 
-        var item = $('<li class="image-picker-placeholder"><a href="#remove" class="tr-icon-remove2" title="Remove Image"></a><img src="'+attachment[i].sizes.thumbnail.url+'"/></li>');
+        if(attachment[i].sizes.thumbnail) {
+          use_url = attachment[i].sizes.thumbnail.url;
+        } else {
+          use_url = attachment[i].sizes.full.url;
+        }
+
+        var item = $('<li class="image-picker-placeholder"><a href="#remove" class="tr-icon-remove2" title="Remove Image"></a><img src="'+use_url+'"/></li>');
 
         $(item)
           .append(field.val(attachment[i].id).attr('name', field.attr('name') + '[]'));

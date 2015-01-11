@@ -157,10 +157,6 @@
   cursor: move;
   }
 
-.tr-gallery-list .image-picker-placeholder {
-  float: left;
-}
-
 .tr-gallery-list {
   margin: 5px -5px 0;
 }
@@ -170,6 +166,8 @@
   position: relative;
   list-style: none;
   padding: 0;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .typerocket-container  .tr-gallery-list li img {
@@ -202,7 +200,7 @@
   position: absolute;
   right: -8px;
   top: -8px;
-  z-index: 10;
+  z-index: 5;
   text-decoration: none;
   border: solid #DFDFDF 1px;
   padding: 6px;

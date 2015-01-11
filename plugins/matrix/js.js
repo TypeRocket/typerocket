@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
             var $fields = $( '.matrix-fields-' + mxid ), $select = $( '.matrix-select-' + mxid );
             var button_txt = $that.val();
 
-            $that.val('Getting Group').addClass('matrix-disabled');
+            $that.val('Adding').addClass('matrix-disabled');
 
             var url = tr_matrix_url + '/' + folder + '/' + $select.val();
 
