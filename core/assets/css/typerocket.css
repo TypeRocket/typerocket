@@ -533,6 +533,21 @@
   margin-top: 0;
 }
 
+/* matrix */
+.matrix-controls {
+  margin-bottom: 20px;
+}
+
+.matrix-controls select {
+  display: inline-block;
+  width: auto;
+  margin: 0 10px 0 0;
+}
+
+.matrix-disabled {
+  opacity: 0.8;
+}
+
 /**
  * For modern browsers
  * 1. The space content is one way to avoid an Opera bug when the
