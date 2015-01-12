@@ -4,7 +4,7 @@ if(!$tr_load_ok) :
 
 	include( __DIR__ . '/config.php');
 	require_once(WP_INIT_PATH . '/wp-load.php');
-	require_once( get_template_directory() . '/typerocket/init.php' );
+	require_once( get_template_directory() . '/'.TR_INIT_FOLDER.'/init.php' );
 
 	if( current_user_can('read') ) {
 		$tr_matrix_id = time();
