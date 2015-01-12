@@ -16,15 +16,6 @@ class tr_matrix {
 		$this->label = $label;
 		$this->mxid = md5(microtime(true)); // set id for matrix random
 
-		wp_enqueue_script( 'typerocket-booyah', tr::$paths['urls']['assets'] . '/js/booyah.js', array('jquery'), '1.0', true );
-		wp_enqueue_script('jquery-ui-sortable', array( 'jquery' ), '1.0', true);
-		wp_enqueue_style( 'tr-date-picker', tr::$paths['urls']['assets'] . '/css/date-picker.css' );
-		wp_enqueue_script( 'jquery-ui-datepicker', array( 'jquery' ), '1.0', true );
-		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script( 'wp-color-picker' );
-		wp_enqueue_script( 'typerocket-media', tr::$paths['urls']['assets'] . '/js/media.js', array('jquery'), '1.0', true );
-		wp_enqueue_script( 'typerocket-items-list', tr::$paths['urls']['assets'] . '/js/items-list.js', array('jquery'), '1.0', true );
-
 		wp_enqueue_script('tr_matrix', tr::$paths['urls']['plugins'] . '/matrix/js.js', array( 'jquery' ), true);
 		wp_localize_script('tr_matrix', 'tr_matrix_url', tr::$paths['urls']['plugins'] . '/matrix');
 		wp_localize_script('tr_matrix', 'tr_matrix_form_group', $form->group);

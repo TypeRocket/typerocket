@@ -564,6 +564,15 @@ class tr_form extends tr_base {
     return $this;
   }
 
+  public function time($name, $attr = array(), $settings = array(), $label = true) {
+    $field = new tr_field_time();
+    $this->setup_field($field, $name, $settings);
+    $field->attr += $attr;
+    $this->add_field($field, $settings, $label);
+
+    return $this;
+  }
+
   public function image($name, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_image();
     $this->setup_field($field, $name, $settings);

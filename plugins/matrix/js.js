@@ -61,6 +61,14 @@ jQuery(document).ready(function($) {
                         });
                     }
 
+                    if( $.isFunction($.fn.datepicker) ) {
+                        $fields.find('.time-picker[name]').each(function(){
+                            $(this).timepicker({
+                                timeFormat: 'hh:mm tt'
+                            });
+                        });
+                    }
+
                 },
                 dataType: 'html',
                 complete: function() {

@@ -219,7 +219,7 @@
 }
 
 #wpwrap .tr-repeater-group .control-section {
-  padding-right: 35px;
+  padding-right: 0;
 }
 
 #wpwrap .tr-repeater-group .control-section:after,

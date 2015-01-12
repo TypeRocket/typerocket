@@ -45,6 +45,15 @@ jQuery(document).ready(function($) {
         });
       }
     },
+    add_time_picker = function(obj) {
+      if( $.isFunction($.fn.datepicker) ) {
+        $(obj).each(function(){
+          $(this).timepicker({
+            timeFormat: 'hh:mm tt'
+          });
+        });
+      }
+    },
     add_color_picker = function(obj) {
       if( $.isFunction($.fn.wpColorPicker) ) {
         $(obj).each(function(){
@@ -58,6 +67,7 @@ jQuery(document).ready(function($) {
   add_sorting(document);
   add_date_picker($('.date-picker[name]'));
   add_color_picker($('.color-picker[name]'));
+  add_time_picker($('.time-picker[name]'));
 
   // Tabs
   $('.tr-tabs li').each(function(){
@@ -115,6 +125,7 @@ jQuery(document).ready(function($) {
         // add sorting
         add_sorting($group_template);
         add_date_picker($group_template.find('.date-picker[name]'));
+        add_time_picker($group_template.find('.time-picker[name]'));
 
         var $fields_div = $(this).parent().parent().next().next();
 
