@@ -182,6 +182,7 @@ jQuery(document).ready(function($) {
           $collapse.find('.tr-repeater-group').removeClass('tr-repeater-group-collapsed').attr('style', '');
         } else {
           $collapse.toggleClass('tr-repeater-collapse');
+          $collapse.find('.tr-repeater-group').removeClass('tr-repeater-group-expanded');
         }
 
         e.preventDefault;
