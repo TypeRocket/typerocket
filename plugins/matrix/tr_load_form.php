@@ -23,7 +23,6 @@ if(!$tr_load_ok) :
 		$tr_matrix_form_group = $_GET['form_group'];
 
 		$form = tr_form();
-		$form->detect = true;
 		$form->get_values = false;
 
 		if(!$tr_matrix_form_group) {

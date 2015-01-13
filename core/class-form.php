@@ -10,7 +10,6 @@ class tr_form extends tr_base {
   public $create_statics = array();
   public $current_field = '';
   public $get_values = true;
-  public $detect = false;
   public $group = null;
   public $sub = null;
   public $debug = null;
