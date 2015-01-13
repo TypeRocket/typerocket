@@ -10,15 +10,13 @@ jQuery(document).ready(function($) {
 
             $that.val('Adding').addClass('matrix-disabled');
 
-            var url = tr_matrix_url + '/' + folder + '/' + $select.val();
-
-            console.log(url);
+            var url = tr_matrix_url + '/' + folder + '/' + $select.val(), $option = $select.find('option[value="' +$select.val()+ '"]');
 
             $.ajax({
                 url:  url,
-                data: {id: $that.data('folder'), form_group: tr_matrix_form_group, type: $select.find('option[value="' +$select.val()+ '"]').data('file') },
+                data: {id: $that.data('folder'), mxid: 123, form_group: $option.data('group'), type: $option.data('file') },
                 success: function(data) {
-                    data = $('<div class="matrix-field-group tr-repeater-group">' + data + '</div></div>');
+                    data = $( data + '</div></div>');
 
                     data.prependTo($fields).hide().delay(10).slideDown(300).scrollTop('100%');
 

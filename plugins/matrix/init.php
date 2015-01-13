@@ -31,7 +31,6 @@ class tr_matrix {
 		// load just matrix :)
 		wp_enqueue_script('tr_matrix', tr::$paths['urls']['plugins'] . '/matrix/js.js', array( 'jquery' ), true);
 		wp_localize_script('tr_matrix', 'tr_matrix_url', tr::$paths['urls']['plugins'] . '/matrix');
-		wp_localize_script('tr_matrix', 'tr_matrix_form_group', $form->group);
 
 	}
 
@@ -130,7 +129,7 @@ class tr_matrix {
 					$no_inc_files = empty($this->include_files);
 
 					if( $in_inc_files || $no_inc_files ) {
-						$attr = array( 'value' => $f, 'data-file' => $path['filename']);
+						$attr = array( 'value' => $f, 'data-file' => $path['filename'], 'data-group' => $this->form->group);
 						$select .= tr_html::element( 'option', $attr, $this->clean_file_name($path['filename']) );
 					}
 				}
@@ -167,7 +166,7 @@ class tr_matrix {
 					$path = __DIR__ . "/" . $this->name . "/{$type}.php";
 
 					if(file_exists($path)) {
-						echo '<div class="matrix-field-group tr-repeater-group">';
+						echo '<div class="matrix-field-group tr-repeater-group" data-mxfk="'.$tr_matrix_id.'">';
 						include($path);
 						echo '</div></div>';
 					} elseif(TR_DEBUG === true) {

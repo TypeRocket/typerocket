@@ -2,7 +2,6 @@
 class tr_form extends tr_base {
 
   public $id = null;
-  public $get_values = true;
   public $settings = array();
   public $controller = 'post';
   public $action = 'update';
@@ -10,6 +9,8 @@ class tr_form extends tr_base {
   public $create_defaults = array();
   public $create_statics = array();
   public $current_field = '';
+  public $get_values = true;
+  public $detect = false;
   public $group = null;
   public $sub = null;
   public $debug = null;
