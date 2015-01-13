@@ -166,7 +166,7 @@ class tr_matrix {
 					$path = __DIR__ . "/" . $this->name . "/{$type}.php";
 
 					if(file_exists($path)) {
-						echo '<div class="matrix-field-group tr-repeater-group" data-mxfk="'.$tr_matrix_id.'">';
+						echo '<div class="matrix-field-group tr-repeater-group matrix-type-'.$tr_matrix_type.' matrix-group-'.$tr_matrix_group.'">';
 						include($path);
 						echo '</div></div>';
 					} elseif(TR_DEBUG === true) {

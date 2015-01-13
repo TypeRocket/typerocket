@@ -145,6 +145,22 @@ jQuery(document).ready(function($) {
         e.preventDefault;
       });
 
+      // collapse
+      $(document).on('click', '.tr-repeater .repeater-controls .collapse', function(e){
+        var $group = $(this).parent().parent();
+
+        if($group.hasClass('tr-repeater-group-collapsed') || $group.height() == 90) {
+          $group.removeClass('tr-repeater-group-collapsed');
+          $group.addClass('tr-repeater-group-expanded');
+          $group.attr('style', '');
+        } else {
+          $group.removeClass('tr-repeater-group-expanded');
+          $group.addClass('tr-repeater-group-collapsed');
+        }
+
+        e.preventDefault;
+      });
+
       // tr_action_collapse
       $(document).on('click', '.tr-repeater .controls .tr_action_collapse', function(e){
 
@@ -152,14 +168,22 @@ jQuery(document).ready(function($) {
 
         if ($(this).val() == "Collapse") {
           $(this).val("Expand");
-          $groups_group.find('.tr-repeater-group').animate({height: '40px'});
+          $groups_group.find('.tr-repeater-group').animate({height: '90px'});
         }
         else {
           $(this).val("Collapse");
           $groups_group.find('.tr-repeater-group').attr('style', '');
         }
 
-        $(this).parent().parent().next().next().toggleClass('tr-repeater-collapse');
+        var $collapse = $(this).parent().parent().next().next();
+
+        if($collapse.hasClass('tr-repeater-collapse')) {
+          $collapse.toggleClass('tr-repeater-collapse');
+          $collapse.find('.tr-repeater-group').removeClass('tr-repeater-group-collapsed').attr('style', '');
+        } else {
+          $collapse.toggleClass('tr-repeater-collapse');
+        }
+
         e.preventDefault;
       });
 

@@ -31,7 +31,7 @@ if(!$tr_load_ok) :
 		}
 
 		$form->group = $tr_matrix_form_group . "[{$tr_matrix_group}][{$tr_matrix_id}][{$tr_matrix_type}]";
-		echo '<div class="matrix-field-group tr-repeater-group" data-mxfk="'.$tr_matrix_id.'">';
+		echo '<div class="matrix-field-group tr-repeater-group matrix-type-'.$tr_matrix_type.' matrix-group-'.$tr_matrix_group.'">';
 	} elseif($debug == false) {
 		http_response_code(404);
 		exit();
@@ -42,6 +42,7 @@ if(!$tr_load_ok) :
 endif; ?>
 
 	<div class="repeater-controls">
+		<div class="collapse tr-icon-stack"></div>
 		<div class="move tr-icon-menu"></div>
 		<a href="#remove" class="remove tr-icon-remove2" title="remove"></a>
 	</div>

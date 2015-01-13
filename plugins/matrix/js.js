@@ -14,7 +14,7 @@ jQuery(document).ready(function($) {
 
             $.ajax({
                 url:  url,
-                data: {id: $that.data('folder'), mxid: 123, form_group: $option.data('group'), type: $option.data('file') },
+                data: {id: $that.data('folder'), form_group: $option.data('group'), type: $option.data('file') },
                 success: function(data) {
                     data = $( data + '</div></div>');
 
