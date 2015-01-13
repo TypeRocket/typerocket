@@ -69,7 +69,7 @@ class tr_matrix {
 
 	private function clean_file_name($name) {
 		$name = str_replace('-', ' ', $name );
-		str_replace('_', ' ', $name );
+		$name = str_replace('_', ' ', $name );
 		return ucwords($name);
 	}
 
