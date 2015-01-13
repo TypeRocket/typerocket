@@ -166,12 +166,12 @@ jQuery(document).ready(function($) {
 
         var $groups_group = $(this).parent().parent().next().next();
 
-        if ($(this).val() == "Collapse") {
+        if ($(this).val() == "Contract") {
           $(this).val("Expand");
           $groups_group.find('.tr-repeater-group').animate({height: '90px'});
         }
         else {
-          $(this).val("Collapse");
+          $(this).val("Contract");
           $groups_group.find('.tr-repeater-group').attr('style', '');
         }
 

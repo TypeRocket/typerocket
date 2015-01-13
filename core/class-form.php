@@ -357,7 +357,7 @@ class tr_form extends tr_base {
     }
 
     // template for repeater groups
-    $templatesContainer = '<div class="repeater-controls"><div class="collapse tr-icon-arrow-up"></div><div class="move tr-icon-menu"></div><a href="#remove" class="remove tr-icon-remove2" title="remove"></a></div><div class="repeater-inputs">';
+    $templatesContainer = '<div class="repeater-controls"><div class="collapse tr-icon-stack"></div><div class="move tr-icon-menu"></div><a href="#remove" class="remove tr-icon-remove2" title="remove"></a></div><div class="repeater-inputs">';
     $templatesContainerEnd = '</div></div>';
 
     $this->_e('<div class="control-section tr-repeater">'); // start tr-repeater
@@ -388,7 +388,7 @@ class tr_form extends tr_base {
     $this->_e($label);
 
     // add controls (add, flip, clear all)
-    $this->_e("<div class=\"controls\"><div class=\"tr-repeater-button-add\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /></div><div class=\"button-group\"><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Collapse\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}</div>");
+    $this->_e("<div class=\"controls\"><div class=\"tr-repeater-button-add\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /></div><div class=\"button-group\"><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Contract\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}</div>");
 
     // render js template data
     $this->_e('<div class="tr-repeater-group-template" data-id="'.$name.'">');
