@@ -234,6 +234,15 @@
   clear: both;
 }
 
+.tr-repeater-button-add {
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+  white-space: nowrap;
+  font-size: 0;
+  vertical-align: middle;
+}
+
 .tr-repeater-collapse .tr-repeater-group,
 .tr-repeater-group-collapsed {
   height: 90px;
@@ -321,6 +330,8 @@
 
 .tr-repeater-group .repeater-controls .remove {
   bottom: 0;
+  z-index: 11;
+  background: #f5f5f5;
 }
 
 .tr-repeater-group .repeater-controls .move {
