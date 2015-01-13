@@ -249,12 +249,13 @@
   opacity: 0.6;
   background: #fff;
   content: '';
+  z-index: 20;
   position: absolute;
   display: block;
   height: 100%;
   width: 100%;
   top: 0;
-  left: 0;
+  left: 30px;
 }
 
 .tr-repeater-collapse .tr-repeater-group-expanded {
