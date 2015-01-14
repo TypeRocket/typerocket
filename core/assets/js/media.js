@@ -114,7 +114,7 @@ jQuery(document).ready(function($) {
         text: btnTitle
       },
       library: { type: 'image' },
-      multiple: true  // Set to true to allow multiple files to be selected
+      multiple: "toggle"  // Set to true to allow multiple files to be selected
     });
 
     // When an image is selected, run a callback.
