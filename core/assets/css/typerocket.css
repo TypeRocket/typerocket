@@ -340,6 +340,18 @@
 .tr-repeater-group .repeater-controls .collapse {
   top: 0;
   cursor: pointer;
+  font-family: dashicons;
+  font-weight: 400;
+  font-size: 21px;
+}
+
+.tr-repeater-group .repeater-controls .collapse:before {
+  content: '\f142';
+}
+
+.tr-repeater-collapse > .tr-repeater-group .repeater-controls .collapse:before,
+.tr-repeater-group-collapsed.tr-repeater-group .repeater-controls .collapse:before {
+  content: '\f140';
 }
 
 .tr-repeater-group .repeater-controls .move:hover,

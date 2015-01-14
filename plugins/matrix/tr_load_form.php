@@ -41,7 +41,7 @@ if(!$tr_load_ok) :
 endif; ?>
 
 	<div class="repeater-controls">
-		<div class="collapse tr-icon-stack"></div>
+		<div class="collapse"></div>
 		<div class="move tr-icon-menu"></div>
 		<a href="#remove" class="remove tr-icon-remove2" title="remove"></a>
 	</div>
