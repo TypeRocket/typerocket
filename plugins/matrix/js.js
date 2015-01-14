@@ -3,17 +3,18 @@ jQuery(document).ready(function($) {
     $('.typerocket-container').on('click', '.matrix-button', function(e) {
         var $that = $(this);
 
-        if(!$that.hasClass('matrix-disabled')) {
+        if(!$that.is(":disabled")) {
             var mxid = $that.data('id'), folder = $that.data('folder');
             var $fields = $( '.matrix-fields-' + mxid ), $select = $( '.matrix-select-' + mxid );
             var button_txt = $that.val();
 
-            $that.val('Adding').addClass('matrix-disabled');
+            $that.attr("disabled", "disabled").val('Adding...');
 
             var url = tr_matrix_url + '/' + folder + '/' + $select.val(), $option = $select.find('option[value="' +$select.val()+ '"]');
 
             $.ajax({
                 url:  url,
+                dataType: 'html',
                 data: {id: $that.data('folder'), form_group: $option.data('group'), type: $option.data('file') },
                 success: function(data) {
                     data = $( data + '</div></div>');
@@ -67,10 +68,14 @@ jQuery(document).ready(function($) {
                         });
                     }
 
+                    $that.val(button_txt).removeAttr("disabled", "disabled");
+
                 },
-                dataType: 'html',
-                complete: function() {
-                    $that.val(button_txt).removeClass('matrix-disabled');
+                error: function(jqXHR) {
+                    $that.val('Try again - Error ' + jqXHR.status).removeAttr("disabled", "disabled");
+                },
+                complete: function(jqXHR) {
+                    // nothing right now
                 }
             });
         }
