@@ -168,21 +168,21 @@ jQuery(document).ready(function($) {
 
         if ($(this).val() == "Contract") {
           $(this).val("Expand");
-          $groups_group.find('.tr-repeater-group').animate({height: '90px'});
+          $groups_group.find('> .tr-repeater-group').animate({height: '90px'});
         }
         else {
           $(this).val("Contract");
-          $groups_group.find('.tr-repeater-group').attr('style', '');
+          $groups_group.find('> .tr-repeater-group').attr('style', '');
         }
 
         var $collapse = $(this).parent().parent().next().next();
 
         if($collapse.hasClass('tr-repeater-collapse')) {
           $collapse.toggleClass('tr-repeater-collapse');
-          $collapse.find('.tr-repeater-group').removeClass('tr-repeater-group-collapsed').attr('style', '');
+          $collapse.find('> .tr-repeater-group').removeClass('tr-repeater-group-collapsed').attr('style', '');
         } else {
           $collapse.toggleClass('tr-repeater-collapse');
-          $collapse.find('.tr-repeater-group').removeClass('tr-repeater-group-expanded');
+          $collapse.find('> .tr-repeater-group').removeClass('tr-repeater-group-expanded');
         }
 
         e.preventDefault;
