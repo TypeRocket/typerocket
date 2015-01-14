@@ -42,8 +42,8 @@ endif; ?>
 
 	<div class="repeater-controls">
 		<div class="collapse"></div>
-		<div class="move tr-icon-menu"></div>
-		<a href="#remove" class="remove tr-icon-remove2" title="remove"></a>
+		<div class="move"></div>
+		<a href="#remove" class="remove" title="remove"></a>
 	</div>
 	<div class="repeater-inputs">
 
