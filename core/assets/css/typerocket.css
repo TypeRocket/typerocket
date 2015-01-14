@@ -214,6 +214,10 @@
   cursor: pointer;
 }
 
+.typerocket-container .tr-gallery-list .ui-sortable-helper a {
+  display: none;
+}
+
 .tr-gallery-list li:hover a {
   display: block;
 }
