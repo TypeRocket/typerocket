@@ -113,4 +113,3 @@ function tr_dev_stats() {
   </div>
 
 </div>
-<?php
