@@ -149,7 +149,8 @@ class tr_matrix {
 
 	private function get_from() {
 
-		$val = (new tr_get_field())->value($this->form->group ."[{$this->name}]", $this->form->item_id, $this->form->controller, false);
+		$field_class = new tr_get_field();
+		$val = $field_class->value($this->form->group ."[{$this->name}]", $this->form->item_id, $this->form->controller, false);
 
 		if(is_array($val)) {
 
