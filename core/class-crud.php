@@ -84,8 +84,6 @@ class tr_crud extends tr_base {
     do_action('tr_start_save', $_POST, $this);
     $the_post_vars = apply_filters('tr_save_filter', $_POST, $this);
     $this->fields = $the_post_vars['tr'];
-    // TODO: data validation should go here when it is built
-    /* We need to be able to detect the form and make sure no extra fields have been added. Users also need to be able to check their data in an easy way. */
     $validated = apply_filters('tr_save_validated_filter', true, $_POST, $this);
 
      if($validated === true) {
