@@ -81,7 +81,7 @@ class tr_crud extends tr_base {
 
    function controller_switch() {
 
-    do_action('tr_start_save', $_POST);
+    do_action('tr_start_save', $_POST, $this);
     $the_post_vars = apply_filters('tr_save_filter', $_POST);
     $this->fields = $the_post_vars['tr'];
     // TODO: data validation should go here when it is built
@@ -109,7 +109,7 @@ class tr_crud extends tr_base {
        }
      }
 
-    do_action('tr_end_save', $_POST);
+    do_action('tr_end_save', $_POST, $this, $validated);
   }
 
   private function post_action_switch() {
