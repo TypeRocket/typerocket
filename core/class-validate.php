@@ -64,4 +64,8 @@ class tr_validate extends tr_base {
       return true;
     }
   }
+
+  static function url($url) {
+    return filter_var($url, FILTER_VALIDATE_URL);
+  }
 }

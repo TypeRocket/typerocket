@@ -58,6 +58,8 @@ class tr_get_field extends tr_base {
         break;
     }
 
+    $data = apply_filters('tr_field_data_filter', $data, $this, $the_field, $item_id, $controller, $builtin);
+
     return $data;
   }
 

@@ -436,11 +436,21 @@ class tr_form extends tr_base {
     }
   }
 
+  public function setup_field_attr($field, $attr) {
+
+    if(array_key_exists('class', $attr)) {
+      $field->attr['class'] .= ' ' . $attr['class'];
+    }
+
+    $field->attr = array_merge($attr, $field->attr);
+    return $field->attr;
+  }
+
   public function text($name, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_text();
     $field->connect($this);
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $this->add_field($field, $settings, $label);
 
     return $this;
@@ -449,7 +459,7 @@ class tr_form extends tr_base {
   public function email($name, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_text();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $field->type = 'email';
     $this->add_field($field, $settings, $label);
 
@@ -459,7 +469,7 @@ class tr_form extends tr_base {
   public function number($name, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_text();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $field->type = 'number';
     $this->add_field($field, $settings, $label);
 
@@ -469,7 +479,7 @@ class tr_form extends tr_base {
   public function password($name, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_text();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $field->type = 'password';
     $field->attr['autocomplete'] = 'off';
     $this->add_field($field, $settings, $label);
@@ -480,7 +490,7 @@ class tr_form extends tr_base {
   public function hidden($name, $attr = array(), $settings = array(), $label = false) {
     $field = new tr_field_text();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $field->type = 'hidden';
     $settings['html'] = false;
     $this->add_field($field, $settings, $label);
@@ -492,7 +502,7 @@ class tr_form extends tr_base {
     $field = new tr_field_submit();
     $this->setup_field($field, $name, $settings);
     $field->attr['value'] = $name;
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $this->add_field($field, $settings, $label);
 
     return $this;
@@ -501,7 +511,7 @@ class tr_form extends tr_base {
   public function textarea($name, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_textarea();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $this->add_field($field, $settings, $label);
 
     return $this;
@@ -510,7 +520,7 @@ class tr_form extends tr_base {
   public function radio($name, $options, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_radio();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $field->options = $options;
     $this->add_field($field, $settings, $label);
 
@@ -520,7 +530,7 @@ class tr_form extends tr_base {
   public function checkbox($name, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_checkbox();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $this->add_field($field, $settings, $label);
 
     return $this;
@@ -529,7 +539,7 @@ class tr_form extends tr_base {
   public function select($name, $options, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_select();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $field->options = $options;
     $this->add_field($field, $settings, $label);
 
@@ -539,7 +549,7 @@ class tr_form extends tr_base {
   public function editor($name, $options = array(), $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_editor();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $field->options = $options;
     $this->add_field($field, $settings, $label);
 
@@ -549,7 +559,7 @@ class tr_form extends tr_base {
   public function color($name, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_color();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $this->add_field($field, $settings, $label);
 
     return $this;
@@ -558,7 +568,7 @@ class tr_form extends tr_base {
   public function date($name, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_date();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $this->add_field($field, $settings, $label);
 
     return $this;
@@ -567,7 +577,7 @@ class tr_form extends tr_base {
   public function time($name, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_time();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $this->add_field($field, $settings, $label);
 
     return $this;
@@ -576,7 +586,7 @@ class tr_form extends tr_base {
   public function image($name, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_image();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $this->add_field($field, $settings, $label);
 
     return $this;
@@ -585,7 +595,7 @@ class tr_form extends tr_base {
   public function file($name, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_file();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $this->add_field($field, $settings, $label);
 
     return $this;
@@ -594,7 +604,7 @@ class tr_form extends tr_base {
   public function gallery($name, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_gallery();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $this->add_field($field, $settings, $label);
 
     return $this;
@@ -603,7 +613,7 @@ class tr_form extends tr_base {
   public function items($name, $attr = array(), $settings = array(), $label = true) {
     $field = new tr_field_items();
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $this->add_field($field, $settings, $label);
 
     return $this;
@@ -611,7 +621,7 @@ class tr_form extends tr_base {
 
   public function custom(&$field, $name, $attr = array(), $settings = array(), $label = true) {
     $this->setup_field($field, $name, $settings);
-    $field->attr += $attr;
+    $field->attr = $this->setup_field_attr($field, $attr);
     $this->add_field($field, $settings, $label);
 
     return $this;

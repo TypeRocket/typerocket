@@ -86,25 +86,28 @@ class tr_crud extends tr_base {
     $this->fields = $the_post_vars['tr'];
     // TODO: data validation should go here when it is built
     /* We need to be able to detect the form and make sure no extra fields have been added. Users also need to be able to check their data in an easy way. */
+    $validated = apply_filters('tr_validate_filter', true, $_POST, $this);
 
-    switch($this->controller) {
-      case 'post' :
-        $this->post_action_switch();
-        break;
-      case 'user' :
-        $this->user_action_switch();
-        break;
-      case 'comment' :
-        $this->comment_action_switch();
-        break;
-      case 'option' :
-        $this->option_action_switch();
-        break;
-      default :
-        $func = 'tr_controller_switch_' . $this->controller;
-        call_user_func($func, $this);
-        break;
-    }
+     if($validated === true) {
+       switch($this->controller) {
+         case 'post' :
+           $this->post_action_switch();
+           break;
+         case 'user' :
+           $this->user_action_switch();
+           break;
+         case 'comment' :
+           $this->comment_action_switch();
+           break;
+         case 'option' :
+           $this->option_action_switch();
+           break;
+         default :
+           $func = 'tr_controller_switch_' . $this->controller;
+           call_user_func($func, $this);
+           break;
+       }
+     }
 
     do_action('tr_end_save', $_POST);
   }
