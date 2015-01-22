@@ -258,8 +258,11 @@ class tr_form extends tr_base {
     if(empty($this->current_field->settings['html']) && $this->current_field->settings['html'] === false) {
       $html = $field;
     } else {
+
+      $html_class = trim('control-section ' . apply_filters('tr_form_html_class_filter', '', $this->current_field, $this));
+
       $html =
-      "<div class=\"control-section\">
+      "<div class=\"{$html_class}\">
         {$label}
         <div class=\"control\">
           {$field}{$help}

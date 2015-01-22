@@ -36,7 +36,10 @@ class tr_field extends tr_base {
     $this->sub = $sub;
     $this->brackets = $this->get_field_bracket();
     $this->attr['name'] = $this->prefix . $this->brackets;
-    $this->attr['class'] = trim($this->attr['class'] . ' ' . $this->prefix . '_field_class_' . $this->name);
+
+    $html_class = trim($this->attr['class'] . ' ' . $this->prefix . '_field_class_' . $this->name);
+
+    $this->attr['class'] = apply_filters('tr_field_html_class_filter', $html_class, $this);
   }
 
   public function get_value() {
