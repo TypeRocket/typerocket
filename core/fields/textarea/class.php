@@ -8,7 +8,15 @@ class tr_field_textarea extends tr_field {
     } else {
       $value = tr_sanitize::textarea($this->get_value());
     }
-    return tr_html::element('textarea', $this->attr, $value);
+
+    if(is_int($this->attr['maxlength']) && $this->attr['maxlength'] > 0) {
+      $left = $this->attr['maxlength'] - count_chars($value);
+      $max = "<p class=\"tr-maxlength\">Characters left: <span>{$left}</span></p>";
+    } else {
+      $max = '';
+    }
+
+    return tr_html::element('textarea', $this->attr, $value) . $max;
   }
 
 }

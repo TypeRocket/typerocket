@@ -15,8 +15,15 @@ class tr_field_text extends tr_field {
       $value = esc_attr($this->get_value());
     }
 
+    if(isset($this->attr['maxlength']) && $this->attr['maxlength'] > 0) {
+      $left = (int) $this->attr['maxlength'] - strlen($value);
+      $max = "<p class=\"tr-maxlength\">Characters left: <span>{$left}</span></p>";
+    } else {
+      $max = '';
+    }
+
     unset($this->attr['name']);
-    return tr_html::input($this->type, $name, $value, $this->attr);
+    return tr_html::input($this->type, $name, $value, $this->attr) . $max;
   }
 
 }
