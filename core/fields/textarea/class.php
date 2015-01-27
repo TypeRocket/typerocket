@@ -10,7 +10,7 @@ class tr_field_textarea extends tr_field {
     }
 
     if(isset($this->attr['maxlength']) && $this->attr['maxlength'] > 0) {
-      $left = (int) $this->attr['maxlength'] - strlen($value);
+      $left = (int) $this->attr['maxlength'] - strlen(utf8_decode($value));
       $max = "<p class=\"tr-maxlength\">Characters left: <span>{$left}</span></p>";
     } else {
       $max = '';
