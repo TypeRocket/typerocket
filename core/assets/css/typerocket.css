@@ -582,6 +582,25 @@
   opacity: 0.8;
 }
 
+/* max length */
+.typerocket-container .contextual-help-tabs-wrap .help-tab-content {
+  padding-bottom: 20px;
+}
+
+.tr-maxlength {
+  margin-top: 3px;
+  margin-bottom: 6px;
+  color: #666;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: italic;
+}
+
+.tr-maxlength span {
+  color: #0074a2;
+  font-weight: bold;
+}
+
 /**
  * For modern browsers
  * 1. The space content is one way to avoid an Opera bug when the

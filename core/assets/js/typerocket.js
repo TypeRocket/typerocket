@@ -235,7 +235,6 @@ jQuery(document).ready(function($) {
   $('.typerocket-container').on('keyup', 'input[maxlength], textarea[maxlength]', function() {
     var $that = $(this);
     $that.next().find('span').text(tr_max.len(this));
-    console.log('ok');
   });
 
 });
