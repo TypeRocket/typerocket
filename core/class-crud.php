@@ -7,6 +7,7 @@ class tr_crud extends tr_base {
   public $item_id = null;
   public $form_obj = null;
   public $fields = null;
+  public $switch_callback = null;
 
    function reset() {
     $this->controller = $this->action = $this->item_id = $this->form_obj = $this->fields = null;
@@ -101,7 +102,12 @@ class tr_crud extends tr_base {
            $this->option_action_switch();
            break;
          default :
-           $func = 'tr_controller_switch_' . $this->controller;
+           if(is_array($this->switch_callback)) {
+             $func = $this->switch_callback;
+           } else {
+             $func = 'tr_controller_switch_' . $this->controller;
+           }
+
            call_user_func($func, $this);
            break;
        }
