@@ -186,6 +186,23 @@ class tr_base {
   }
 
   /**
+   * Replace white space with underscore and make all text lowercase
+   *
+   * @param $name
+   * @param $spacer
+   *
+   * @return mixed
+   */
+  protected function get_sanitized_string($name, $spacer = '_') {
+    if(is_string($name)) {
+      $name = strtolower(trim(sanitize_title($name, '')));
+      $pattern = '/(\-+)/';
+      $replacement = $spacer;
+      return preg_replace($pattern,$replacement,$name);
+    }
+  }
+
+  /**
    * Test for value if there is none die.
    *
    * @param $data

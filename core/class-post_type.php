@@ -140,7 +140,9 @@ class tr_post_type extends tr_base {
       die('TypeRocket: Error, you are using the reserved wp name "' . $this->id . '".');
     endif;
 
-    do_action('tr_register_post_type_'.$this->id, $this);
+    $id = $this->get_sanitized_string($this->id);
+
+    do_action('tr_register_post_type_'.$id, $this);
     register_post_type($this->id, $this->args);
 
     return $this;
@@ -164,7 +166,9 @@ class tr_post_type extends tr_base {
   function add_form_content($post, $args) {
     if($post->post_type == $this->id) :
 
-      $func = 'add_form_content_' . $this->id . '_' . $args;
+      $id = $this->get_sanitized_string($this->id);
+
+      $func = 'add_form_content_' . $id . '_' . $args;
 
       echo '<div class="typerocket-container typerocket-dev">';
       if(function_exists($func)) :
