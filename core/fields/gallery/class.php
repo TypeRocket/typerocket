@@ -31,7 +31,7 @@ class tr_field_gallery extends tr_field {
     }
 
     unset($this->attr['id']);
-    $html = tr_html::input('hidden', $name, 'no', $this->attr);
+    $html = tr_html::input('hidden', $name, '0', $this->attr);
     $html .= '<div class="button-group">';
     $html .= tr_html::element('input', array(
       'type' => 'button',
