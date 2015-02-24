@@ -88,7 +88,7 @@ jQuery(document).ready(function($) {
 
 
   // repeaters
-    if(window.trRepeaterCallback.length > 0) {
+    if(typeof window.trRepeaterCallback === 'array') {
     } else {
         window.trRepeaterCallback = [];
     }
@@ -102,7 +102,7 @@ jQuery(document).ready(function($) {
       // Add
       // $group_template | div.tr-repeater-group-template | contains all fields for repeating
       // hash | int | used for keying arrayed data to group repeated field groups
-      $(document).on('click', '.tr-repeater .controls .add', function(e){
+      $(document).on('click', '.tr-repeater .controls .add', function(){
         var $group_template = $($(this).parent().parent().next().clone()).removeClass('tr-repeater-group-template').addClass('tr-repeater-group'),
           hash = new Date().getTime(),
           replacement_id = $group_template.data('id'),
@@ -110,19 +110,19 @@ jQuery(document).ready(function($) {
           data_name = $group_template.find('[data-name]'),
           data_name_filtered = $group_template.find('.tr-repeater-group-template [data-name]');
 
-        $(data_name).each(function(i){
+        $(data_name).each(function(){
           var name = obj.nameParse($(this).data('name'), hash, replacement_id);
           $(this).attr('name', name);
           $(this).attr('data-name', null);
           $(this).attr('value', null);
         });
 
-        $(dev_notes).each(function(i) {
+        $(dev_notes).each(function() {
           var name = obj.nameParse($(this).html(), hash, replacement_id);
           $(this).html(name);
         });
 
-        $(data_name_filtered).each(function(i){
+        $(data_name_filtered).each(function(){
           $(this).attr('data-name', $(this).attr('name'));
           $(this).attr('name', null);
           $(this).attr('value', null);
@@ -156,7 +156,7 @@ jQuery(document).ready(function($) {
       // remove
       $(document).on('click', '.tr-repeater .repeater-controls .remove', function(e){
         $(this).parent().parent().slideUp(300, function(){$(this).remove()});
-        e.preventDefault;
+        e.preventDefault();
       });
 
       // collapse
@@ -172,7 +172,7 @@ jQuery(document).ready(function($) {
           $group.addClass('tr-repeater-group-collapsed');
         }
 
-        e.preventDefault;
+        e.preventDefault();
       });
 
       // tr_action_collapse
@@ -199,7 +199,7 @@ jQuery(document).ready(function($) {
           $collapse.find('> .tr-repeater-group').removeClass('tr-repeater-group-expanded');
         }
 
-        e.preventDefault;
+        e.preventDefault();
       });
 
       // clear
@@ -207,7 +207,7 @@ jQuery(document).ready(function($) {
         if(confirm('Remove all items?')) {
           $(this).parent().parent().next().next().html('');
         }
-        e.preventDefault;
+        e.preventDefault();
       });
 
       // flip
@@ -216,7 +216,7 @@ jQuery(document).ready(function($) {
           var items = $(this).parent().parent().next().next();
           items.children().each(function(i,item){items.prepend(item)})
         }
-        e.preventDefault;
+        e.preventDefault();
       });
 
     },
@@ -232,7 +232,7 @@ jQuery(document).ready(function($) {
       return liveTemplate;
     }
 
-  }
+  };
 
   repeaterClone.init();
 
