@@ -88,6 +88,12 @@ jQuery(document).ready(function($) {
 
 
   // repeaters
+    if(window.trRepeaterCallback.length > 0) {
+    } else {
+        window.trRepeaterCallback = [];
+    }
+
+
   var repeaterClone = {
 
     init: function() {
@@ -126,6 +132,14 @@ jQuery(document).ready(function($) {
         add_sorting($group_template);
         add_date_picker($group_template.find('.date-picker[name]'));
         add_time_picker($group_template.find('.time-picker[name]'));
+
+          // callback group
+          for(var ri = 0; window.trRepeaterCallback.length > ri; ri++) {
+              if (typeof window.trRepeaterCallback[ri] === "function") {
+                  // Call it, since we have confirmed it is callable​
+                  window.trRepeaterCallback[ri]($group_template);
+              }
+          }
 
         var $fields_div = $(this).parent().parent().next().next();
 
