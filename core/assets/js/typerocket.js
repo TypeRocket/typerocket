@@ -88,7 +88,7 @@ jQuery(document).ready(function($) {
 
 
   // repeaters
-    if(typeof window.trRepeaterCallback === 'array') {
+    if(typeof window.trRepeaterCallback === 'object') {
     } else {
         window.trRepeaterCallback = [];
     }

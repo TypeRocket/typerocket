@@ -1,5 +1,10 @@
 jQuery(document).ready(function($) {
 
+    if(typeof window.trRepeaterCallback === 'object') {
+    } else {
+        window.trRepeaterCallback = [];
+    }
+
     $('.typerocket-container').on('click', '.matrix-button', function(e) {
         var $that = $(this);
 
@@ -7,6 +12,7 @@ jQuery(document).ready(function($) {
             var mxid = $that.data('id'), folder = $that.data('folder');
             var $fields = $( '.matrix-fields-' + mxid ), $select = $( '.matrix-select-' + mxid );
             var button_txt = $that.val();
+            var callbacks = window.trRepeaterCallback;
 
             $that.attr("disabled", "disabled").val('Adding...');
 
@@ -18,6 +24,36 @@ jQuery(document).ready(function($) {
                 data: {id: $that.data('folder'), form_group: $option.data('group'), type: $option.data('file') },
                 success: function(data) {
                     data = $( data + '</div></div>');
+
+                    if( $.isFunction($.fn.datepicker) ) {
+                        data.find('.date-picker[name]').each(function(){
+                            $(this).datepicker();
+                        });
+                    }
+
+                    if( $.isFunction($.fn.wpColorPicker) ) {
+                        data.find('.color-picker[name]').each(function(){
+                            var pal = $(this).attr('id') + '_color_palette',
+                                settings = { palettes: window[pal] };
+                            $(this).wpColorPicker(settings);
+                        });
+                    }
+
+                    if( $.isFunction($.fn.datepicker) ) {
+                        data.find('.time-picker[name]').each(function(){
+                            $(this).timepicker({
+                                timeFormat: 'hh:mm tt'
+                            });
+                        });
+                    }
+
+                    // callback group
+                    for(var ri = 0; callbacks.length > ri; ri++) {
+                        if (typeof callbacks[ri] === "function") {
+                            // Call it, since we have confirmed it is callable​
+                            callbacks[ri](data);
+                        }
+                    }
 
                     data.prependTo($fields).hide().delay(10).slideDown(300).scrollTop('100%');
 
@@ -44,28 +80,6 @@ jQuery(document).ready(function($) {
                             });
                         }
 
-                    }
-
-                    if( $.isFunction($.fn.datepicker) ) {
-                        $fields.find('.date-picker[name]').each(function(){
-                            $(this).datepicker();
-                        });
-                    }
-
-                    if( $.isFunction($.fn.wpColorPicker) ) {
-                        $fields.find('.color-picker[name]').each(function(){
-                            var pal = $(this).attr('id') + '_color_palette',
-                                settings = { palettes: window[pal] };
-                            $(this).wpColorPicker(settings);
-                        });
-                    }
-
-                    if( $.isFunction($.fn.datepicker) ) {
-                        $fields.find('.time-picker[name]').each(function(){
-                            $(this).timepicker({
-                                timeFormat: 'hh:mm tt'
-                            });
-                        });
                     }
 
                     $that.val(button_txt).removeAttr("disabled", "disabled");
