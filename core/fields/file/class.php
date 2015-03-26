@@ -8,6 +8,7 @@ class tr_field_file extends tr_field {
 
   function render() {
     $name = $this->attr['name'];
+    $this->attr['class'] = 'file-picker';
     $value = esc_attr($this->get_value());
     unset($this->attr['name']);
 
@@ -23,7 +24,7 @@ class tr_field_file extends tr_field {
       $file = '';
     }
 
-    $html = tr_html::input('hidden', $name, $value, array('class' => 'file-picker'));
+    $html = tr_html::input('hidden', $name, $value, $this->attr);
     $html .= '<div class="button-group">';
     $html .= tr_html::element('input', array(
       'type' => 'button',
