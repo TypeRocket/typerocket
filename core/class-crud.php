@@ -5,6 +5,8 @@ class tr_crud extends tr_base {
   public $controller = null;
   public $action = null;
   public $item_id = null;
+
+  /** @var tr_form */
   public $form_obj = null;
   public $fields = null;
   public $switch_callback = null;
@@ -127,7 +129,7 @@ class tr_crud extends tr_base {
       $insert = array_merge(
         $this->form_obj->create_defaults,
         $_POST['_tr_builtin_data'],
-        $this->form_obj->create_s
+        $this->form_obj->create_statics
       );
       $this->item_id = wp_insert_post( $insert );
       add_action('save_post', array($this, 'save_post'));
@@ -144,7 +146,7 @@ class tr_crud extends tr_base {
       $insert = array_merge(
         $this->form_obj->create_defaults,
         $_POST['_tr_builtin_data'],
-        $this->form_obj->create_s
+        $this->form_obj->create_statics
       );
       $this->item_id = wp_insert_user( $insert );
     endif;
