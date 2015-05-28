@@ -23,9 +23,11 @@ class tr_field_gallery extends tr_field {
         $input = tr_html::input('hidden', $name . '[]', $id);
         $image = wp_get_attachment_image($id, 'thumbnail');
 
-        $list .= tr_html::element('li', array(
-          'class' => 'image-picker-placeholder'
-        ), '<a href="#remove" class="tr-icon-remove2" title="Remove Image"></a>' . $image . $input );
+        if(!empty($image)) {
+          $list .= tr_html::element('li', array(
+            'class' => 'image-picker-placeholder'
+          ), '<a href="#remove" class="tr-icon-remove2" title="Remove Image"></a>' . $image . $input );
+        }
 
       }
     }

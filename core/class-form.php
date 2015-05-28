@@ -244,6 +244,13 @@ class tr_form extends tr_base {
     $this->current_field->label = $label;
     $field = $this->current_field->render();
     $label = $this->label();
+    $id = esc_attr($this->current_field->settings['id']);
+
+    if(!empty($id)) {
+      $id = "id=\"{$id}\"";
+    } else {
+      $id = '';
+    }
 
     if(isset($this->current_field->settings['help'])) {
       $help = $this->current_field->settings['help'];
@@ -262,7 +269,7 @@ class tr_form extends tr_base {
       $html_class = trim('control-section ' . apply_filters('tr_form_html_class_filter', '', $this->current_field, $this));
 
       $html =
-      "<div class=\"{$html_class}\">
+      "<div class=\"{$html_class}\" {$id}>
         {$label}
         <div class=\"control\">
           {$field}{$help}

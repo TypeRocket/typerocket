@@ -7,7 +7,10 @@ class tr_field_radio extends tr_field {
     $this->type = 'radio';
     $option = esc_attr($this->get_value());
     unset($this->attr['name']);
+    unset($this->attr['id']);
     $field = '<ul class="data-full">';
+
+
     foreach($this->options as $key => $value) {
       if($option == $value) {
         $this->attr['checked'] = 'checked';
@@ -20,6 +23,7 @@ class tr_field_radio extends tr_field {
       $field .= tr_html::input($this->type, $name, $value, $this->attr);
       $field .= "<span>{$key}</span></label>";
     }
+
     $field .= '</ul>';
     return $field;
   }

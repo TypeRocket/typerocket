@@ -23,6 +23,10 @@ class tr_field_image extends tr_field {
       $image = '';
     }
 
+    if(empty($image)) {
+      $value = '';
+    }
+
     $html = tr_html::input('hidden', $name, $value, $this->attr);
     $html .= '<div class="button-group">';
     $html .= tr_html::element('input', array(

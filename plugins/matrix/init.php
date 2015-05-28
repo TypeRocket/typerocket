@@ -16,6 +16,7 @@ class tr_matrix {
 		$this->label = $label;
 		$this->mxid = md5(microtime(true)); // set id for matrix random
 		// load everything :(
+    wp_enqueue_media();
 		wp_enqueue_script( 'typerocket-booyah', tr::$paths['urls']['assets'] . '/js/booyah.js', array('jquery'), '1.0', true );
 		wp_enqueue_script('jquery-ui-sortable', array( 'jquery' ), '1.0', true);
 		wp_enqueue_style( 'tr-date-picker', tr::$paths['urls']['assets'] . '/css/date-picker.css' );
