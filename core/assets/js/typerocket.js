@@ -88,12 +88,6 @@ jQuery(document).ready(function($) {
 
 
   // repeaters
-    if(typeof window.trRepeaterCallback === 'object') {
-    } else {
-        window.trRepeaterCallback = [];
-    }
-
-
   var repeaterClone = {
 
     init: function() {

@@ -174,9 +174,9 @@ class tr_crud extends tr_base {
 
         $current_value = get_post_meta($this->item_id, $key, true);
 
-        if (isset($value) && $value !== $current_value ) :
+        if ( (isset($value) && $value !== "" ) && $value !== $current_value ) :
           update_post_meta($this->item_id, $key, $value);
-        elseif( empty($value) && $value !== 0 ) :
+        elseif( !isset($value) || $value === "" && ( isset($current_value) ||  $current_value === "" ) ) :
           delete_post_meta($this->item_id, $key);
         endif;
 
@@ -194,9 +194,9 @@ class tr_crud extends tr_base {
 
         $current_value = get_comment_meta($this->item_id, $key, true);
 
-        if (isset($value) && $value !== $current_value ) :
+        if ( ( isset($value) && $value !== "" ) && $value !== $current_value ) :
           update_comment_meta($this->item_id, $key, $value);
-        elseif( empty($value) && $value !== 0 ) :
+        elseif( !isset($value) || $value === "" && ( isset($current_value) ||  $current_value === "" ) ) :
           delete_comment_meta($this->item_id, $key);
         endif;
 
@@ -212,9 +212,9 @@ class tr_crud extends tr_base {
 
       $current_meta = get_option($key);
 
-      if ( isset($value) && $current_meta !== $value ) :
+      if ( ( isset($value) && $value !== "" ) && $current_meta !== $value ) :
         update_option( $key, $value );
-      elseif( empty($value) && isset($current_meta)) :
+      elseif( !isset($value) || $value === "" && ( isset($current_meta) || $current_meta === "") ) :
         delete_option( $key );
       endif;
 
@@ -234,7 +234,7 @@ class tr_crud extends tr_base {
 
       if (isset($value) && $value !== $current_value ) :
         update_user_meta($this->item_id, $key, $value);
-      elseif( empty($value) && $value !== 0 ) :
+      elseif( !isset($value) || $value === "" && ( isset($current_value) ||  $current_value === "" ) ) :
         delete_user_meta($this->item_id, $key);
       endif;
 

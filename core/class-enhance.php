@@ -70,6 +70,7 @@ class tr_enhance extends tr_base {
         wp_enqueue_script( 'typerocket-dev', tr::$paths['urls']['assets'] . '/js/dev.js', array('jquery'), '1.0', true );
       }
       wp_enqueue_script( 'typerocket-scripts', tr::$paths['urls']['assets'] . '/js/typerocket.js', array('jquery'), '1.0', true );
+      wp_enqueue_script( 'typerocket-scripts-global', tr::$paths['urls']['assets'] . '/js/global.js', array(), '1.0' );
 
       // Still working on a fix
       // wp_enqueue_script( 'typerocket-wp_editor', tr::$paths['urls']['assets'] . '/js/wp_editor.js', array('jquery'), '1.0', true );
