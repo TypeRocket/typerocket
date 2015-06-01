@@ -16,7 +16,7 @@ class tr_field_select extends tr_field {
         unset($attr['selected']);
       }
 
-      $field .= tr_html::element('option', $attr, $key);
+      $field .= tr_html::element('option', $attr, (string) $key);
 
     }
     $field .= '</select>';
