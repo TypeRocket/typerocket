@@ -1,7 +1,6 @@
 <?php
 return array(
   'core' => __DIR__ . '/../core',
-  'uploads' => __DIR__ . '/../core/uploads',
   'assets' => __DIR__ . '/../core/assets',
   'plugins' => __DIR__ . '/../plugins',
   'base' => __DIR__ . '/..',
