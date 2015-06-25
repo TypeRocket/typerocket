@@ -1,12 +1,13 @@
 <?php
+namespace TypeRocket;
 
-class tr_crud extends tr_base {
+class Crud {
 
   public $controller = null;
   public $action = null;
   public $item_id = null;
 
-  /** @var tr_form */
+  /** @var Form */
   public $form_obj = null;
   public $fields = null;
   public $switch_callback = null;
@@ -242,68 +243,6 @@ class tr_crud extends tr_base {
 
     endforeach;
     endif;
-  }
-
-  public function get_serialized_fields($fields = null) {
-
-    $fields = (is_array($fields)) ? $fields : $this->fields;
-
-    if(is_array($fields)) {
-      foreach($fields as $k => $v) {
-        $fields[$k] = maybe_serialize($v);
-      }
-    }
-
-    return $fields;
-
-  }
-
-  public function get_field_formats() {
-
-    $formats = array();
-
-    if(is_array($this->fields)) {
-      foreach($this->fields as $v) {
-        $formats []= '%s';
-      }
-    }
-
-    return $formats;
-  }
-
-  public function activate_db() {
-    global $wpdb;
-
-    $r = null;
-
-    $table = $wpdb->prefix.$this->controller;
-    $fields = $this->get_serialized_fields();
-    $field_formats = $this->get_field_formats();
-
-    switch($this->action) {
-      case 'update' :
-        $r = $wpdb->update(
-          $table,
-          $fields,
-          array( 'id' => $this->item_id ),
-          $field_formats,
-          array( '%d' )
-        );
-        break;
-      case 'create' :
-        $wpdb->insert(
-          $table,
-          $fields,
-          $field_formats
-        );
-        $r = $wpdb->insert_id;
-        break;
-      case 'delete' :
-        $r = $wpdb->delete( $table , array( 'id' => $this->item_id ), array( '%d' ) );
-        break;
-    }
-
-    return $r;
   }
 
 }

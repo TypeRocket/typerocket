@@ -1,5 +1,7 @@
 <?php
-class tr_field_file extends tr_field {
+namespace TypeRocket\Fields;
+
+class Image extends Field {
 
   function __construct() {
     wp_enqueue_media();
@@ -8,38 +10,41 @@ class tr_field_file extends tr_field {
 
   function render() {
     $name = $this->attr['name'];
-    $this->attr['class'] = 'file-picker';
+    $this->attr['class'] = 'image-picker';
     $value = esc_attr($this->get_value());
     unset($this->attr['name']);
 
     if(empty($this->settings['button'])) {
-      $this->settings['button'] = 'Insert File';
+      $this->settings['button'] = 'Insert Image';
     }
 
     if($value != "") {
-      $url = wp_get_attachment_url($value);
-      $file = '<a target="_blank" href="'.$url.'">'.$url.'</a>';
+      $image = wp_get_attachment_image($value, 'thumbnail');
     }
     else {
-      $file = '';
+      $image = '';
+    }
+
+    if(empty($image)) {
+      $value = '';
     }
 
     $html = tr_html::input('hidden', $name, $value, $this->attr);
     $html .= '<div class="button-group">';
     $html .= tr_html::element('input', array(
       'type' => 'button',
-      'class' => 'file-picker-button button',
+      'class' => 'image-picker-button button',
       'value' => $this->settings['button']
     ));
     $html .= tr_html::element('input', array(
       'type' => 'button',
-      'class' => 'file-picker-clear button',
+      'class' => 'image-picker-clear button',
       'value' => 'Clear'
     ));
     $html .= '</div>';
     $html .= tr_html::element('div', array(
-      'class' => 'file-picker-placeholder'
-    ), $file);
+      'class' => 'image-picker-placeholder'
+    ), $image);
     return $html;
   }
 

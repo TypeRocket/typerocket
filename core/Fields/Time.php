@@ -1,6 +1,7 @@
 <?php
+namespace TypeRocket\Fields;
 
-class tr_field_time extends tr_field {
+class Time extends Field {
 
     function __construct() {
         wp_enqueue_script( 'jquery-ui-slider', array( 'jquery' ) );

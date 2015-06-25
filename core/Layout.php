@@ -1,5 +1,7 @@
 <?php
-class tr_layout extends tr_base {
+namespace TypeRocket;
+
+class Layout {
 
   private $_tabs = array();
   private $_sidebar = null;

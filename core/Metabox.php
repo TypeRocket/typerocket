@@ -1,5 +1,7 @@
 <?php
-class tr_meta_box extends tr_base {
+namespace TypeRocket;
+
+class Metabox {
 
   public $id = null;
   public $label = null;

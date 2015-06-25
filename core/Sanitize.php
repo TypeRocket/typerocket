@@ -1,5 +1,7 @@
 <?php
-class tr_sanitize extends tr_base {
+namespace TypeRocket;
+
+class Sanitize {
 
   /**
    * Sanitize a textarea input field. Removes bad html like <script> and <html>.

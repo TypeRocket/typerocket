@@ -1,6 +1,7 @@
 <?php
+namespace TypeRocket;
 
-class tr_post_type extends tr_base {
+class PostType extends Registrable {
 
   public $id = null;
   public $singular = null;

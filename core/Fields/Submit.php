@@ -1,5 +1,7 @@
 <?php
-class tr_field_submit extends tr_field {
+namespace TypeRocket\Fields;
+
+class Submit extends Field {
 
   function __construct() {
     $this->type = 'submit';

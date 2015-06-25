@@ -1,5 +1,7 @@
 <?php
-class tr_field_editor extends tr_field {
+namespace TypeRocket\Fields;
+
+class Editor extends Field {
 
   function __construct() {
     wp_enqueue_media();

@@ -1,4 +1,6 @@
 <?php
+namespace TypeRocket;
+
 /*
 |--------------------------------------------------------------------------
 | Plugin Loader
@@ -9,24 +11,26 @@
 | must be used.
 |
 */
-class tr_plugin extends tr_base {
+class Plugins
+{
 
-  public function run($array) {
-      $this->loader($array);
-  }
+    public function run(array $array)
+    {
+        $this->loader($array);
+    }
 
-  private function loader($array) {
-    $this->check($array, 'Plugins config var $tr_plugins must be an array. An empty array will work.', 'array');
+    private function loader(array $plugins_list)
+    {
 
-    $array = apply_filters('tr_plugins_array', $array);
+        $plugins_list = apply_filters('tr_plugins_array', $plugins_list);
 
-    foreach($array as $plugin) :
-      $folder = tr::$paths['plugins'] . '/' . $plugin . '/';
+        foreach ($plugins_list as $plugin) {
+            $folder = \tr::$paths['plugins'] . '/' . $plugin . '/';
 
-      if (file_exists($folder . 'init.php')) {
-        include $folder . 'init.php';
-      }
-    endforeach;
-  }
+            if (file_exists($folder . 'init.php')) {
+                include $folder . 'init.php';
+            }
+        }
+    }
 
 }

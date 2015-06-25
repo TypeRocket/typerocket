@@ -1,5 +1,7 @@
 <?php
-class tr_dev extends tr_base {
+namespace Typerocket;
+
+class Dev {
 
   function make() {
     add_filter('admin_footer_text', array($this,'tr_remove_footer_admin'));
@@ -25,6 +27,6 @@ class tr_dev extends tr_base {
 
 }
 
-$tr_dev_plugin = new tr_dev();
+$tr_dev_plugin = new Dev();
 $tr_dev_plugin->make();
 unset($tr_dev_plugin);

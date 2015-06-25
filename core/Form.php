@@ -1,5 +1,7 @@
 <?php
-class tr_form extends tr_base {
+namespace TypeRocket;
+
+class From {
 
   public $id = null;
   public $settings = array();
@@ -16,7 +18,7 @@ class tr_form extends tr_base {
   private $hash = null;
 
   function __construct() {
-    wp_enqueue_script( 'typerocket-scripts', tr::$paths['urls']['assets'] . '/js/typerocket.js', array('jquery'), '1', true );
+    wp_enqueue_script( 'typerocket-scripts', \tr::$paths['urls']['assets'] . '/js/typerocket.js', array('jquery'), '1', true );
   }
 
   public function make($controller = 'auto', $action = 'update', $item_id = null) {
@@ -73,7 +75,7 @@ class tr_form extends tr_base {
     $attr = array_merge($defaults, $attr);
 
     $r = tr_html::open_element('form', $attr) . PHP_EOL;
-    $r .= (isset($this->id)) ? tr_html::input('hidden', '_tr_form_id', $this->id) : '';
+    $r .= (isset($this->id)) ? Html::input('hidden', '_tr_form_id', $this->id) : '';
     $r .= wp_nonce_field($this->hash, '_tr_nonce_form', true, false);
 
     $this->_e($r);

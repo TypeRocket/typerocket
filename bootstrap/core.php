@@ -7,20 +7,34 @@
 | Require the core classes of TypeRocket.
 |
 */
-function tr_autoload($class) {
-  $is_tr = (strpos($class, 'tr_') === 0) ? true : false;
-  $is_tr_field = (strpos($class, 'tr_field_') === 0) ? true : false;
-  if($is_tr_field) {
-    $field = substr($class, 9);
-    include tr::$paths['core'] . "/fields/{$field}/class.php";
-  }
-  elseif($is_tr) {
-    $class = substr($class, 3);
-    include tr::$paths['core'] . '/class-' . $class . '.php';
-  }
-}
+spl_autoload_register(function ($class) {
 
-spl_autoload_register('tr_autoload');
+    // project-specific namespace prefix
+    $prefix = 'TypeRocket\\';
+
+    // base directory for the namespace prefix
+    $base_dir = \tr::$paths['core'] . '/';
+
+    // does the class use the namespace prefix?
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        // no, move to the next registered autoloader
+        return;
+    }
+
+    // get the relative class name
+    $relative_class = substr($class, $len);
+
+    // replace the namespace prefix with the base directory, replace namespace
+    // separators with directory separators in the relative class name, append
+    // with .php
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+
+    // if the file exists, require it
+    if (file_exists($file)) {
+        require $file;
+    }
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +44,7 @@ spl_autoload_register('tr_autoload');
 | Enhance WordPress with a few functions that help clean up the interface
 |
 */
-$tr_enhance_obj = new tr_enhance;
+$tr_enhance_obj = new \TypeRocket\Enhance();
 $tr_enhance_obj->run();
 unset($tr_enhance_obj);
 
@@ -43,9 +57,8 @@ unset($tr_enhance_obj);
 |
 */
 if(TR_PLUGINS === true) {
-  include_once tr::$paths['core'] . '/class-plugins.php';
-  $tr_plugins_obj = new tr_plugin();
-  $tr_plugins_obj->run(tr::$plugins);
+  $tr_plugins_obj = new \TypeRocket\Plugins();
+  $tr_plugins_obj->run(\tr::$plugins);
   unset($tr_plugins_obj);
 }
 
@@ -58,7 +71,7 @@ if(TR_PLUGINS === true) {
 | TypeRocket to work.
 |
 */
-$crud = new tr_crud();
+$crud = new TypeRocket\Crud();
 add_action('save_post', array($crud, 'save_post'));
 add_action('wp_insert_comment', array($crud, 'save_comment'));
 add_action('edit_comment', array($crud, 'save_comment'));
@@ -77,7 +90,7 @@ add_action('personal_options_update', array($crud, 'save_user'));
 */
 do_action('typerocket_loaded');
 
-add_action('after_setup_theme', 'tr_registry::run');
+add_action('after_setup_theme', function() { \TypeRocket\Registry::run(); } );
 
 define('TR_END', microtime(true));
 
@@ -90,5 +103,5 @@ define('TR_END', microtime(true));
 |
 */
 if(TR_DEBUG === true) {
-  include_once tr::$paths['core'] . '/dev/init.php';
+  include_once \tr::$paths['core'] . '/dev/init.php';
 }

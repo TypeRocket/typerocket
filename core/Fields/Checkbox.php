@@ -1,5 +1,7 @@
 <?php
-class tr_field_checkbox extends tr_field {
+namespace TypeRocket\Fields;
+
+class Checkbox extends Field {
 
   function render() {
     $name = $this->attr['name'];

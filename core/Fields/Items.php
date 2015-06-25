@@ -1,5 +1,7 @@
 <?php
-  class tr_field_items extends tr_field {
+namespace TypeRocket\Fields;
+
+  class Items extends Field {
 
     function __construct() {
       wp_enqueue_script( 'typerocket-items-list', tr::$paths['urls']['assets'] . '/js/items-list.js', array('jquery'), '1.0', true );

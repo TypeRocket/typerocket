@@ -1,18 +1,13 @@
 <?php
+namespace TypeRocket\Fields;
 
-class tr_field_text extends tr_field {
-
-  function __construct() {
-    $this->type = 'text';
-  }
+class Textarea extends Field {
 
   function render() {
-    $name = $this->attr['name'];
-
     if($this->settings['sanitize'] == 'plain') {
       $value = $this->get_value();
     } else {
-      $value = esc_attr($this->get_value());
+      $value = tr_sanitize::textarea($this->get_value());
     }
 
     if(isset($this->attr['maxlength']) && $this->attr['maxlength'] > 0) {
@@ -22,8 +17,7 @@ class tr_field_text extends tr_field {
       $max = '';
     }
 
-    unset($this->attr['name']);
-    return tr_html::input($this->type, $name, $value, $this->attr) . $max;
+    return tr_html::element('textarea', $this->attr, $value) . $max;
   }
 
 }

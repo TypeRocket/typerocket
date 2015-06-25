@@ -1,6 +1,7 @@
 <?php
+namespace TypeRocket\Fields;
 
-class tr_field_radio extends tr_field {
+class Radio extends Field {
 
   function render() {
     $name = $this->attr['name'];

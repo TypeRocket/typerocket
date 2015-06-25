@@ -1,5 +1,7 @@
 <?php
-class tr_enhance extends tr_base {
+namespace TypeRocket;
+
+class Enhance {
 
   /**
    * Actions

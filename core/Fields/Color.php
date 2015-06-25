@@ -1,5 +1,7 @@
 <?php
-class tr_field_color extends tr_field {
+namespace TypeRocket\Fields;
+
+class Color extends Field {
 
   function __construct() {
     wp_enqueue_style( 'wp-color-picker' );

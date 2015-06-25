@@ -1,5 +1,7 @@
 <?php
-class tr_html extends tr_base {
+namespace TypeRocket;
+
+class Html {
 
   private static $noCloseTags = array('img' => true, 'input' => true, 'hr' => true, 'br' => true);
 

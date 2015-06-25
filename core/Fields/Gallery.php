@@ -1,5 +1,7 @@
 <?php
-class tr_field_gallery extends tr_field {
+namespace TypeRocket\Fields;
+
+class Gallery extends Field {
 
   function __construct() {
     wp_enqueue_media();

@@ -1,5 +1,7 @@
 <?php
-class tr_icons {
+namespace TypeRocket;
+
+class Icons {
   static $icon = array(
     'home' => '\e600',
     'office' => '\e601',

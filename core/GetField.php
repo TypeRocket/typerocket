@@ -1,5 +1,7 @@
 <?php
-class tr_get_field extends tr_base {
+namespace TypeRocket;
+
+class GetField {
 
   function value($brackets, $item_id, $controller, $builtin = false) {
     $keys = $this->get_bracket_keys($brackets);

@@ -1,5 +1,7 @@
 <?php
-class tr_validate extends tr_base {
+namespace TypeRocket;
+
+class Validate {
 
   /**
    * Validate a numeric value

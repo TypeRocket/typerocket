@@ -1,6 +1,7 @@
 <?php
+namespace TypeRocket\Fields;
 
-class tr_field_date extends tr_field {
+class Date extends Field {
 
   function __construct() {
     wp_enqueue_style( 'tr-date-picker', tr::$paths['urls']['assets'] . '/css/date-picker.css' );

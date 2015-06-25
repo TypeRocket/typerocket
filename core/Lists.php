@@ -1,5 +1,7 @@
 <?php
-class tr_list {
+namespace TypeRocket;
+
+class Lists {
 
   static private $states = array(
     'AL'=>"Alabama",

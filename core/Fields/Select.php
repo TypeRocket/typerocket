@@ -1,6 +1,7 @@
 <?php
+namespace TypeRocket\Fields;
 
-class tr_field_select extends tr_field {
+class Select extends Field {
 
   function render() {
     $this->type = 'radio';

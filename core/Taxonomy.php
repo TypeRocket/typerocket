@@ -1,10 +1,12 @@
 <?php
+namespace TypeRocket;
+
 /**
  * Taxonomy
  *
  * API for http://codex.wordpress.org/Function_Reference/register_taxonomy
  */
-class tr_taxonomy extends tr_base {
+class Taxonomy extends Registrable {
 
   public $id = null;
   public $singular = null;

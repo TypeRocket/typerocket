@@ -1,5 +1,7 @@
 <?php
-class tr_registry extends tr_base {
+namespace TypeRocket;
+
+class Registry {
   public static $obj = array();
 
   public static function add(&$obj = null) {

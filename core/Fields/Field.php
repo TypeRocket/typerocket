@@ -1,5 +1,7 @@
 <?php
-class tr_field extends tr_base {
+namespace TypeRocket\Fields;
+
+abstract class Field {
 
   public $id = null;
   public $name = null;
@@ -18,7 +20,7 @@ class tr_field extends tr_base {
   public $debuggable = true;
 
   public function connect(&$form_obj) {
-    if( $form_obj instanceof tr_form ) {
+    if( $form_obj instanceof From ) {
       $this->form = $form_obj;
     }
   }
