@@ -154,7 +154,7 @@ class Form {
 
 	private function update() {
 
-		$crud = new Crud();
+		$crud = new Model();
 
 		switch ( $this->controller ) {
 			case 'post' :
@@ -179,7 +179,7 @@ class Form {
 
 	private function create() {
 
-		$crud = new Crud();
+		$crud = new Model();
 
 		switch ( $this->controller ) {
 			case 'post' :
@@ -197,7 +197,7 @@ class Form {
 
 	private function delete() {
 
-		$crud = new Crud();
+		$crud = new Model();
 
 		switch ( $this->controller ) {
 			default :

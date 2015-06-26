@@ -103,7 +103,7 @@ function tr_db_field( $the_field, $item_id, $controller ) {
 	return maybe_unserialize( $data );
 }
 
-function tr_crud_url( $item_id = null, $action = null, $controller = null ) {
+function tr_model_url( $item_id = null, $action = null, $controller = null ) {
 
 	$params = $_GET;
 

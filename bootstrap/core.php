@@ -35,12 +35,16 @@ if ( \TypeRocket\Config::getPlugins() ) {
 | TypeRocket to work.
 |
 */
-$crud = new TypeRocket\Crud();
-add_action( 'save_post', array( $crud, 'save_post' ) );
-add_action( 'wp_insert_comment', array( $crud, 'save_comment' ) );
-add_action( 'edit_comment', array( $crud, 'save_comment' ) );
-add_action( 'edit_user_profile_update', array( $crud, 'save_user' ) );
-add_action( 'personal_options_update', array( $crud, 'save_user' ) );
+$model_post = new TypeRocket\Models\Post();
+add_action( 'save_post', array( $model_post, 'hook' ), null, 2 );
+
+$model_comment = new TypeRocket\Models\Comment();
+add_action( 'wp_insert_comment', array( $model_comment, 'hook' ) );
+add_action( 'edit_comment', array( $model_comment, 'hook' ) );
+
+$model_user = new TypeRocket\Models\User();
+add_action( 'edit_user_profile_update', array( $model_user, 'hook' ) );
+add_action( 'personal_options_update', array( $model_user, 'hook' ) );
 
 /*
 |--------------------------------------------------------------------------
