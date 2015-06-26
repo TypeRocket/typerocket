@@ -1,6 +1,8 @@
 <?php
 namespace TypeRocket\Fields;
 
+use \TypeRocket\Html as Html;
+
 class Submit extends Field {
 
   function __construct() {
@@ -21,7 +23,7 @@ class Submit extends Field {
       $this->attr['class'] = ' button button-primary';
     }
 
-    return tr_html::input($this->type, $name, $value, $this->attr);
+    return Html::input($this->type, $name, $value, $this->attr);
   }
 
 }

@@ -1,11 +1,16 @@
 <?php
+
 namespace TypeRocket;
 
+/**
+ * Class Utility
+ * @package TypeRocket
+ */
 class Utility
 {
 
     public $buffering = false;
-    public $buffer = [];
+    public $buffer = array();
 
     function buffer($index = null)
     {
@@ -32,7 +37,7 @@ class Utility
      *
      * @param $v
      */
-    protected function unslash(&$v)
+    public function unslash(&$v)
     {
         if (is_string($v)) {
             $v = wp_unslash($v);
@@ -45,8 +50,11 @@ class Utility
      * Merge array
      *
      *  Set first value to the new value
+     *  @param $arg1
+     *  @param $arg2
+     *
      */
-    protected function merge(&$arg1, $arg2)
+	public function merge(&$arg1, $arg2)
     {
         if (is_array($arg1) && is_array($arg2)) {
             $arg1 = array_merge($arg1, $arg2);
@@ -61,7 +69,7 @@ class Utility
      *
      * @return mixed
      */
-    protected function sanitize_string(&$name, $spacer = '_')
+	public function sanitize_string(&$name, $spacer = '_')
     {
         if (is_string($name)) {
             $name = strtolower(trim(sanitize_title($name, '')));
@@ -79,7 +87,7 @@ class Utility
      *
      * @return mixed
      */
-    protected function get_sanitized_string($name, $spacer = '_')
+	public function get_sanitized_string($name, $spacer = '_')
     {
         $return = array();
 
@@ -101,31 +109,9 @@ class Utility
      * @param $error
      * @param string $type
      */
-    protected function check($data, $error, $type = 'string')
+	public function check($data, $error, $type = 'string')
     {
 
-        // TODO: look into using WP_Error https://codex.wordpress.org/Class_Reference/WP_Error
-        if ( ! isset($data)) {
-            die('TypeRocket Error: ' . $error);
-        }
-
-        switch ($type) {
-            case 'array' :
-                if (isset($data) && ! is_array($data)) {
-                    die('TypeRocket Error: ' . $error);
-                }
-                break;
-            case 'bool' :
-                if (isset($data) && ! is_bool($data)) {
-                    die('TypeRocket Error: ' . $error);
-                }
-                break;
-            default:
-                if (isset($data) && ! is_string($data)) {
-                    die('TypeRocket Error: ' . $error);
-                }
-                break;
-        }
     }
 
 }

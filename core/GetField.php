@@ -27,8 +27,8 @@ class GetField {
       }
 
     }
-
-    $this->unslash($data);
+	$utility = new Utility();
+	  $utility->unslash($data);
     return $data;
   }
 

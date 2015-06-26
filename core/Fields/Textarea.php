@@ -1,13 +1,16 @@
 <?php
 namespace TypeRocket\Fields;
 
+use \TypeRocket\Html as Html;
+use \TypeRocket\Sanitize as Sanitize;
+
 class Textarea extends Field {
 
   function render() {
     if($this->settings['sanitize'] == 'plain') {
       $value = $this->get_value();
     } else {
-      $value = tr_sanitize::textarea($this->get_value());
+      $value = Sanitize::textarea($this->get_value());
     }
 
     if(isset($this->attr['maxlength']) && $this->attr['maxlength'] > 0) {
@@ -17,7 +20,7 @@ class Textarea extends Field {
       $max = '';
     }
 
-    return tr_html::element('textarea', $this->attr, $value) . $max;
+    return Html::element('textarea', $this->attr, $value) . $max;
   }
 
 }

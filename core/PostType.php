@@ -1,6 +1,10 @@
 <?php
 namespace TypeRocket;
 
+/**
+ * Class PostType
+ * @package TypeRocket
+ */
 class PostType extends Registrable {
 
   public $id = null;

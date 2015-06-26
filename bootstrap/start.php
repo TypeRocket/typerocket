@@ -7,7 +7,7 @@
 | Set the app boot time to the current time in seconds since the Unix epoch
 |
 */
-define('TR_START', microtime(true));
+define( 'TR_START', microtime( true ) );
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +17,34 @@ define('TR_START', microtime(true));
 | Set the version for TypeRocket using the style major.minor.patch
 |
 */
-define('TR_VERSION', '1.0');
+define( 'TR_VERSION', '1.0' );
+
+/*
+|--------------------------------------------------------------------------
+| Require Core Classes
+|--------------------------------------------------------------------------
+|
+| Require the core classes of TypeRocket.
+|
+*/
+spl_autoload_register( function ( $class ) {
+
+	$prefix   = 'TypeRocket\\';
+	$base_dir = __DIR__ . '/../core/';
+
+	$len = strlen( $prefix );
+	if ( strncmp( $prefix, $class, $len ) !== 0 ) {
+		return;
+	}
+
+	$relative_class = substr( $class, $len );
+
+	$file = $base_dir . str_replace( '\\', '/', $relative_class ) . '.php';
+
+	if ( file_exists( $file ) ) {
+		require $file;
+	}
+} );
 
 /*
 |--------------------------------------------------------------------------
@@ -28,40 +55,7 @@ define('TR_VERSION', '1.0');
 |
 */
 require __DIR__ . '/../config.php';
-
-/*
-|--------------------------------------------------------------------------
-| TR Setup
-|--------------------------------------------------------------------------
-|
-| Set the global $path variable
-|
-*/
-class tr {
-  static public $paths = null;
-  static public $plugins = array();
-
-  static function setup() {
-    self::set_paths();
-  }
-
-  static function set_paths() {
-    $paths = apply_filters('tr_paths', require __DIR__ . '/paths.php');
-    self::set_var('paths', $paths);
-  }
-
-  static function add_plugin($string) {
-    if(is_string($string)) {
-      self::$plugins[] = $string;
-    }
-  }
-
-  static function set_var($var, $data) {
-    self::$$var = $data;
-  }
-}
-
-tr::setup();
+new \TypeRocket\Config();
 
 /*
 |--------------------------------------------------------------------------

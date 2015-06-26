@@ -1,5 +1,5 @@
 <?php
-namespace TypeRocket;
+namespace TypeRocket\Plugin;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,21 +11,26 @@ namespace TypeRocket;
 | must be used.
 |
 */
-class Plugins
+class Loader
 {
+    public $plugins = null;
 
-    public function run(array $array)
+    function __construct(Collection $plugins)
     {
-        $this->loader($array);
+        $this->setCollection($plugins);
     }
 
-    private function loader(array $plugins_list)
-    {
+    function setCollection(Collection $collection) {
+        $this->plugins = apply_filters('tr_plugins_collection', $collection->plugins);
+    }
 
-        $plugins_list = apply_filters('tr_plugins_array', $plugins_list);
+    function load()
+    {
+        $plugins_list = $this->plugins;
+	    $paths = \TypeRocket\Config::getPaths();
 
         foreach ($plugins_list as $plugin) {
-            $folder = \tr::$paths['plugins'] . '/' . $plugin . '/';
+            $folder = $paths['plugins'] . '/' . $plugin . '/';
 
             if (file_exists($folder . 'init.php')) {
                 include $folder . 'init.php';

@@ -1,6 +1,8 @@
 <?php
 namespace TypeRocket\Fields;
 
+use \TypeRocket\Html as Html;
+
 class Text extends Field {
 
   function __construct() {
@@ -24,7 +26,7 @@ class Text extends Field {
     }
 
     unset($this->attr['name']);
-    return tr_html::input($this->type, $name, $value, $this->attr) . $max;
+    return Html::input($this->type, $name, $value, $this->attr) . $max;
   }
 
 }

@@ -2,7 +2,5 @@
 !.gitignore
 !seo/
 !seo/*
-!matrix/
-!matrix/*
-matrix/config.php
-matrix/.DS_Store*
+!dev/
+!dev/*

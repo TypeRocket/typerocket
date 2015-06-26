@@ -1,6 +1,8 @@
 <?php
 namespace TypeRocket\Fields;
 
+use \TypeRocket\Html as Html;
+
 class Color extends Field {
 
   function __construct() {
@@ -25,7 +27,7 @@ class Color extends Field {
       $this->attr['data-default-color'] = $this->settings['default'];
     }
 
-    return tr_html::input($this->type, $name, $value, $this->attr);
+    return Html::input($this->type, $name, $value, $this->attr);
   }
 
 }

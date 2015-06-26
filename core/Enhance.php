@@ -60,19 +60,22 @@ class Enhance {
 
   public function add_css() {
     if(is_admin()){
-      wp_enqueue_style( 'typerocket-tr-icons', tr::$paths['urls']['assets'] . '/css/tr-icons.css' );
-      wp_enqueue_style( 'typerocket-styles', tr::$paths['urls']['assets'] . '/css/typerocket.css' );
-      wp_enqueue_style( 'typerocket-tabs', tr::$paths['urls']['assets'] . '/css/tabs.css' );
+	    $paths = \TypeRocket\Config::getPaths();
+      wp_enqueue_style( 'typerocket-tr-icons', $paths['urls']['assets'] . '/css/tr-icons.css' );
+      wp_enqueue_style( 'typerocket-styles', $paths['urls']['assets'] . '/css/typerocket.css' );
+      wp_enqueue_style( 'typerocket-tabs', $paths['urls']['assets'] . '/css/tabs.css' );
     }
   }
 
   public function add_js() {
     if(is_admin()){
+	    $paths = \TypeRocket\Config::getPaths();
+
       if(TR_DEBUG === true) {
-        wp_enqueue_script( 'typerocket-dev', tr::$paths['urls']['assets'] . '/js/dev.js', array('jquery'), '1.0', true );
+        wp_enqueue_script( 'typerocket-dev', $paths['urls']['assets'] . '/js/dev.js', array('jquery'), '1.0', true );
       }
-      wp_enqueue_script( 'typerocket-scripts', tr::$paths['urls']['assets'] . '/js/typerocket.js', array('jquery'), '1.0', true );
-      wp_enqueue_script( 'typerocket-scripts-global', tr::$paths['urls']['assets'] . '/js/global.js', array(), '1.0' );
+      wp_enqueue_script( 'typerocket-scripts', $paths['urls']['assets'] . '/js/typerocket.js', array('jquery'), '1.0', true );
+      wp_enqueue_script( 'typerocket-scripts-global', $paths['urls']['assets'] . '/js/global.js', array(), '1.0' );
 
       // Still working on a fix
       // wp_enqueue_script( 'typerocket-wp_editor', tr::$paths['urls']['assets'] . '/js/wp_editor.js', array('jquery'), '1.0', true );

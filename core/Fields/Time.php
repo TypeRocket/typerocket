@@ -1,12 +1,15 @@
 <?php
 namespace TypeRocket\Fields;
 
+use \TypeRocket\Html as Html;
+
 class Time extends Field {
 
     function __construct() {
+	    $paths = \TypeRocket\Config::getPaths();
         wp_enqueue_script( 'jquery-ui-slider', array( 'jquery' ) );
-        wp_enqueue_style( 'tr-time-picker-style', tr::$paths['urls']['assets'] . '/css/time-picker.css' );
-        wp_enqueue_script( 'tr-time-picker-script', tr::$paths['urls']['assets'] . '/js/time-picker.js', array( 'jquery', 'jquery-ui-slider' ), '1.0', true );
+        wp_enqueue_style( 'tr-time-picker-style', $paths['urls']['assets'] . '/css/time-picker.css' );
+        wp_enqueue_script( 'tr-time-picker-script', $paths['urls']['assets'] . '/js/time-picker.js', array( 'jquery', 'jquery-ui-slider' ), '1.0', true );
         $this->type = 'text';
     }
 
@@ -21,7 +24,7 @@ class Time extends Field {
         }
 
         unset($this->attr['name']);
-        return tr_html::input($this->type, $name, $value, $this->attr);
+        return Html::input($this->type, $name, $value, $this->attr);
     }
 
 }

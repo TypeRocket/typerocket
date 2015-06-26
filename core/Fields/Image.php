@@ -1,11 +1,14 @@
 <?php
 namespace TypeRocket\Fields;
 
+use \TypeRocket\Html as Html;
+
 class Image extends Field {
 
   function __construct() {
+	  $paths = \TypeRocket\Config::getPaths();
     wp_enqueue_media();
-    wp_enqueue_script( 'typerocket-media', tr::$paths['urls']['assets'] . '/js/media.js', array('jquery'), '1.0', true );
+    wp_enqueue_script( 'typerocket-media', $paths['urls']['assets'] . '/js/media.js', array('jquery'), '1.0', true );
   }
 
   function render() {
@@ -29,20 +32,20 @@ class Image extends Field {
       $value = '';
     }
 
-    $html = tr_html::input('hidden', $name, $value, $this->attr);
+    $html = Html::input('hidden', $name, $value, $this->attr);
     $html .= '<div class="button-group">';
-    $html .= tr_html::element('input', array(
+    $html .= Html::element('input', array(
       'type' => 'button',
       'class' => 'image-picker-button button',
       'value' => $this->settings['button']
     ));
-    $html .= tr_html::element('input', array(
+    $html .= Html::element('input', array(
       'type' => 'button',
       'class' => 'image-picker-clear button',
       'value' => 'Clear'
     ));
     $html .= '</div>';
-    $html .= tr_html::element('div', array(
+    $html .= Html::element('div', array(
       'class' => 'image-picker-placeholder'
     ), $image);
     return $html;

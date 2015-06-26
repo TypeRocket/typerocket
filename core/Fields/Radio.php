@@ -1,6 +1,8 @@
 <?php
 namespace TypeRocket\Fields;
 
+use \TypeRocket\Html as Html;
+
 class Radio extends Field {
 
   function render() {
@@ -21,7 +23,7 @@ class Radio extends Field {
       }
 
       $field .= "<li><label>";
-      $field .= tr_html::input($this->type, $name, $value, $this->attr);
+      $field .= Html::input($this->type, $name, $value, $this->attr);
       $field .= "<span>{$key}</span></label>";
     }
 

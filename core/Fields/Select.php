@@ -1,12 +1,14 @@
 <?php
 namespace TypeRocket\Fields;
 
+use \TypeRocket\Html as Html;
+
 class Select extends Field {
 
   function render() {
     $this->type = 'radio';
     $option = esc_attr($this->get_value());
-    $field = tr_html::open_element('select', $this->attr);
+    $field = Html::open_element('select', $this->attr);
     foreach($this->options as $key => $value) {
 
       $attr['value'] = $value;
@@ -17,7 +19,7 @@ class Select extends Field {
         unset($attr['selected']);
       }
 
-      $field .= tr_html::element('option', $attr, (string) $key);
+      $field .= Html::element('option', $attr, (string) $key);
 
     }
     $field .= '</select>';

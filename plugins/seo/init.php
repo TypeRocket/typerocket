@@ -16,7 +16,7 @@ class tr_seo_plugin {
 
   function seo_meta() {
     $publicTypes = get_post_types( array( 'public' => true ) );
-    $obj = new tr_meta_box();
+    $obj = new \TypeRocket\Metabox();
     $obj->make('tr_seo', array('label' => 'Search Engine Optimization','priority' => 'low'))->apply($publicTypes)->bake();
   }
 
@@ -90,9 +90,10 @@ class tr_seo_plugin {
 
   // CSS
   function css() {
-    $path = tr::$paths['urls']['plugins'] . '/seo/';
+	  $paths = \TypeRocket\Config::getPaths();
+    $path = $paths['urls']['plugins'] . '/seo/';
     wp_enqueue_style('tr-seo', $path . 'style.css' );
-    wp_enqueue_script('tr-seo', $path . 'script.js' );
+    wp_enqueue_script('tr-seo', $path . 'script.js', array( 'jquery' ), '1.0', true );
   }
 
 }
@@ -104,7 +105,7 @@ unset($tr_seo);
 // build metabox interface
 function add_meta_content_tr_seo() {
 
-  $utility = new tr_utility();
+  $utility = new \TypeRocket\Utility();
 
   // field settings
   $title = array(
@@ -167,12 +168,13 @@ function add_meta_content_tr_seo() {
   );
 
   // build form
-  $form = new tr_form();
+	/** @var \TypeRocket\Form $form */
+  $form = tr_form();
   $form->group = '[seo][meta]';
   $form->make();
   $utility->buffer();
-  $form->text('title', array(), $title)
-    ->textarea('description',array(), $desc);
+  $form->text('title', array('id' => 'tr_title'), $title)
+    ->textarea('description',array('id' => 'tr_description'), $desc);
     $utility->buffer('general'); // index buffer
     $utility->buffer();
   $form->text('og_title',array(), $og_title)
@@ -181,12 +183,12 @@ function add_meta_content_tr_seo() {
     $utility->buffer('social'); // index buffer
     $utility->buffer();
   $form->text('canonical',array(), $canon)
-    ->text('redirect',array('readonly' => 'readonly'), $redirect)
+    ->text('redirect',array('readonly' => 'readonly', 'id' => 'tr_redirect'), $redirect)
     ->select('follow', $follow_opts,array(), $follow)
     ->select('index', $index_opts,array(), $help);
     $utility->buffer('extra'); // index buffer
 
-  $tabs = new tr_layout();
+  $tabs = new \TypeRocket\Layout();
   $tabs->add_tab( array(
       'id' => 'seo-general',
       'title' => "Basic",

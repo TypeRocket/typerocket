@@ -1,312 +1,329 @@
 <?php
 namespace TypeRocket;
 
-class From {
+class Form {
 
-  public $id = null;
-  public $settings = array();
-  public $controller = 'post';
-  public $action = 'update';
-  public $item_id = null;
-  public $create_defaults = array();
-  public $create_statics = array();
-  public $current_field = '';
-  public $get_values = true;
-  public $group = null;
-  public $sub = null;
-  public $debug = null;
-  private $hash = null;
+	public $id = null;
+	public $settings = array();
+	public $controller = 'post';
+	public $action = 'update';
+	public $item_id = null;
+	public $create_defaults = array();
+	public $create_statics = array();
 
-  function __construct() {
-    wp_enqueue_script( 'typerocket-scripts', \tr::$paths['urls']['assets'] . '/js/typerocket.js', array('jquery'), '1', true );
-  }
+	/** @var \TypeRocket\Fields\Field $current_field */
+	public $current_field = '';
+	public $get_values = true;
+	public $group = null;
+	public $sub = null;
+	public $debug = null;
+	private $hash = null;
 
-  public function make($controller = 'auto', $action = 'update', $item_id = null) {
+	function __construct() {
+		$paths = Config::getPaths();
+		wp_enqueue_script( 'typerocket-scripts', $paths['urls']['assets'] . '/js/typerocket.js', array( 'jquery' ), '1',
+			true );
+	}
 
-    $this->auto_controller($controller, $item_id);
+	public function make( $controller = 'auto', $action = 'update', $item_id = null ) {
 
-    $this->controller = $controller;
-    $this->action = $action;
-    $this->item_id = $item_id;
-    $this->hash = wp_hash('_from_hash'.TR_SEED);
+		$this->auto_controller( $controller, $item_id );
 
-    do_action('tr_make_form', $this);
+		$this->controller = $controller;
+		$this->action     = $action;
+		$this->item_id    = $item_id;
+		$this->hash       = wp_hash( '_from_hash' . TR_SEED );
 
-    return $this;
-  }
+		do_action( 'tr_make_form', $this );
 
-  public function auto_controller(&$controller, &$item_id) {
-    if($controller === 'auto') {
-      global $post, $comment, $user_id;
+		return $this;
+	}
 
-      if(isset($post->ID) && is_null($item_id)) {
-        $item_id = $post->ID;
-        $controller = 'post';
-      }
-      elseif(isset($comment->comment_ID) && is_null($item_id)) {
-        $item_id = $comment->comment_ID;
-        $controller = 'comment';
-      }
-      elseif(isset($user_id) && is_null($item_id)) {
-        $item_id = $user_id;
-        $controller = 'user';
-      }
-      else {
-        $controller = 'option';
-      }
-    }
-  }
+	public function auto_controller( &$controller, &$item_id ) {
+		if ( $controller === 'auto' ) {
+			global $post, $comment, $user_id;
 
-  public function set_settings($settings = array()) {
-    $this->settings = $settings;
-  }
+			if ( isset( $post->ID ) && is_null( $item_id ) ) {
+				$item_id    = $post->ID;
+				$controller = 'post';
+			} elseif ( isset( $comment->comment_ID ) && is_null( $item_id ) ) {
+				$item_id    = $comment->comment_ID;
+				$controller = 'comment';
+			} elseif ( isset( $user_id ) && is_null( $item_id ) ) {
+				$item_id    = $user_id;
+				$controller = 'user';
+			} else {
+				$controller = 'option';
+			}
+		}
+	}
 
-  public function _e($v) {
-    echo $v;
-  }
+	public function set_settings( $settings = array() ) {
+		$this->settings = $settings;
+	}
 
-  public function open($attr = array()) {
+	public function _e( $v ) {
+		echo $v;
+	}
 
-    $defaults = array(
-      'action' => esc_attr($_SERVER["REQUEST_URI"]),
-      'method' => 'post'
-    );
+	public function open( $attr = array() ) {
 
-    $attr = array_merge($defaults, $attr);
+		$defaults = array(
+			'action' => esc_attr( $_SERVER["REQUEST_URI"] ),
+			'method' => 'post'
+		);
 
-    $r = tr_html::open_element('form', $attr) . PHP_EOL;
-    $r .= (isset($this->id)) ? Html::input('hidden', '_tr_form_id', $this->id) : '';
-    $r .= wp_nonce_field($this->hash, '_tr_nonce_form', true, false);
+		$attr = array_merge( $defaults, $attr );
 
-    $this->_e($r);
+		$r = Html::open_element( 'form', $attr ) . PHP_EOL;
+		$r .= ( isset( $this->id ) ) ? Html::input( 'hidden', '_tr_form_id', $this->id ) : '';
+		$r .= wp_nonce_field( $this->hash, '_tr_nonce_form', true, false );
 
-    return $this;
-  }
+		$this->_e( $r );
 
-  public function close($value = false) {
-    $html = '';
-    if(is_string($value)) {
-      $html .= tr_html::input('submit', '_tr_submit_form', $value, array('class' => 'button button-primary'));
-    }
+		return $this;
+	}
 
-    $html .= '</form>';
-    $this->_e($html);
+	public function close( $value = false ) {
+		$html = '';
+		if ( is_string( $value ) ) {
+			$html .= Html::input( 'submit', '_tr_submit_form', $value, array( 'class' => 'button button-primary' ) );
+		}
 
-    return $this;
-  }
+		$html .= '</form>';
+		$this->_e( $html );
 
-  public function process($action = null, $flash = true, $messages = array()) {
-    if(is_null($action)) {
-      $action = $this->action;
-    }
+		return $this;
+	}
 
-    $message = null;
-    $messages = array_merge($messages, array('update' => 'Data Updated', 'create' => 'Item Created', 'delete' => 'Item Deleted'));
+	public function process( $action = null, $flash = true, $messages = array() ) {
+		if ( is_null( $action ) ) {
+			$action = $this->action;
+		}
 
-    if(
-      isset($_POST['_tr_nonce_form']) &&
-      check_admin_referer($this->hash, '_tr_nonce_form')
-    ) :
-      switch($action) {
-        case 'update' :
-          $this->update();
-          $message = $messages['update'];
-          break;
-        case 'create' :
-          $this->create();
-          $message = $messages['create'];
-          break;
-        case 'delete' :
-          $this->delete();
-          $message = $messages['delete'];
-          break;
-        default :
-          die('From action is wrong.');
-          break;
-      }
-    endif;
+		$message  = null;
+		$messages = array_merge( $messages,
+			array( 'update' => 'Data Updated', 'create' => 'Item Created', 'delete' => 'Item Deleted' ) );
 
-    if($flash == true && !get_transient( 'tr_flash_messages')) {
-      set_transient( 'tr_flash_messages', $message);
-    }
+		if (
+			isset( $_POST['_tr_nonce_form'] ) &&
+			check_admin_referer( $this->hash, '_tr_nonce_form' )
+		) :
+			switch ( $action ) {
+				case 'update' :
+					$this->update();
+					$message = $messages['update'];
+					break;
+				case 'create' :
+					$this->create();
+					$message = $messages['create'];
+					break;
+				case 'delete' :
+					$this->delete();
+					$message = $messages['delete'];
+					break;
+				default :
+					die( 'From action is wrong.' );
+					break;
+			}
+		endif;
 
-    return $this;
-  }
+		if ( $flash == true && ! get_transient( 'tr_flash_messages' ) ) {
+			set_transient( 'tr_flash_messages', $message );
+		}
 
-  public function flash($message = null, $before = '<div class="updated tr-flash-message"><p>', $after = '</p></div>') {
-    $tr_flash_messages = get_transient( 'tr_flash_messages');
+		return $this;
+	}
 
-    if(is_null($message)) {
-      $message = $tr_flash_messages;
-    }
+	public function flash(
+		$message = null,
+		$before = '<div class="updated tr-flash-message"><p>',
+		$after = '</p></div>'
+	) {
+		$tr_flash_messages = get_transient( 'tr_flash_messages' );
 
-    if($tr_flash_messages) {
-      $this->_e($before.$message.$after);
-      delete_transient( 'tr_flash_messages');
-    }
-  }
+		if ( is_null( $message ) ) {
+			$message = $tr_flash_messages;
+		}
 
-  private function update() {
+		if ( $tr_flash_messages ) {
+			$this->_e( $before . $message . $after );
+			delete_transient( 'tr_flash_messages' );
+		}
+	}
 
-    $crud = new tr_crud();
+	private function update() {
 
-    switch($this->controller) {
-      case 'post' :
-        $crud->save_post( $this->item_id, 'update', $this );
-        break;
-      case 'user' :
-        $crud->save_user( $this->item_id, 'update', $this );
-        break;
-      case 'comment' :
-        $crud->save_comment( $this->item_id, 'update', $this );
-        break;
-      case 'option' :
-        $crud->save_option( $this->item_id, 'update', $this );
-        break;
-      default :
-        $crud->save_data( $this->controller, 'update', $this->item_id, $this );
-        break;
-    }
+		$crud = new Crud();
 
-    return $this;
-  }
+		switch ( $this->controller ) {
+			case 'post' :
+				$crud->save_post( $this->item_id, 'update', $this );
+				break;
+			case 'user' :
+				$crud->save_user( $this->item_id, 'update', $this );
+				break;
+			case 'comment' :
+				$crud->save_comment( $this->item_id, 'update', $this );
+				break;
+			case 'option' :
+				$crud->save_option( $this->item_id, 'update', $this );
+				break;
+			default :
+				$crud->save_data( $this->controller, 'update', $this->item_id, $this );
+				break;
+		}
 
-  private function create() {
+		return $this;
+	}
 
-    $crud = new tr_crud();
+	private function create() {
 
-    switch($this->controller) {
-      case 'post' :
-        $crud->save_post( null, 'create', $this );
-        break;
-      case 'user' :
-        break;
-      default :
-        $crud->save_data( $this->controller, 'create', $this->item_id, $this );
-        break;
-    }
+		$crud = new Crud();
 
-    return $this;
-  }
+		switch ( $this->controller ) {
+			case 'post' :
+				$crud->save_post( null, 'create', $this );
+				break;
+			case 'user' :
+				break;
+			default :
+				$crud->save_data( $this->controller, 'create', $this->item_id, $this );
+				break;
+		}
 
-  private function delete() {
+		return $this;
+	}
 
-    $crud = new tr_crud();
+	private function delete() {
 
-    switch($this->controller) {
-      default :
-        $crud->delete_data( $this->controller, 'delete', $this->item_id, $this );
-        break;
-    }
+		$crud = new Crud();
 
-    return $this;
-  }
+		switch ( $this->controller ) {
+			default :
+				$crud->delete_data( $this->controller, 'delete', $this->item_id, $this );
+				break;
+		}
 
-  public function __call($name, $arguments) {
-    if(!method_exists($this, $name)) {
-      die('Form does not have this method: ' . $name);
-    }
-  }
+		return $this;
+	}
 
-  private function setup_field(&$field_obj, $name, &$settings) {
+	public function __call( $name, $arguments ) {
+		if ( ! method_exists( $this, $name ) ) {
+			die( 'Form does not have this method: ' . $name );
+		}
+	}
 
-    do_action('tr_start_setup_field', $this, $field_obj, $name, $settings);
+	/**
+	 * @param \TypeRocket\Fields\Field $field_obj
+	 * @param $name
+	 * @param $settings
+	 */
+	private function setup_field( &$field_obj, $name, &$settings ) {
 
-    if(is_string($this->group) && empty($settings['group'])) {
-      $settings['group'] = $this->group;
-    }
+		do_action( 'tr_start_setup_field', $this, $field_obj, $name, $settings );
 
-    if(is_string($this->sub) && empty($settings['sub'])) {
-      $settings['sub'] = $this->sub;
-    }
+		if ( is_string( $this->group ) && empty( $settings['group'] ) ) {
+			$settings['group'] = $this->group;
+		}
 
-    if(isset($settings['builtin']) && $settings['builtin'] == true) {
-      $field_obj->builtin = true;
-    }
+		if ( is_string( $this->sub ) && empty( $settings['sub'] ) ) {
+			$settings['sub'] = $this->sub;
+		}
 
-    $field_obj->connect($this);
-    $field_obj->setup($name, $settings['group'], $settings['sub']);
-    if(!isset($settings['label'])) {
-      $settings['label'] = $name;
-    }
+		if ( isset( $settings['builtin'] ) && $settings['builtin'] == true ) {
+			$field_obj->builtin = true;
+		}
 
-    if($settings['template'] == true) {
-      $field_obj->attr['data-name'] = $field_obj->attr['name'];
-      unset($field_obj->attr['name']);
-      unset($field_obj->attr['id']);
-    }
+		$field_obj->connect( $this );
+		$field_obj->setup( $name, $settings['group'], $settings['sub'] );
+		if ( ! isset( $settings['label'] ) ) {
+			$settings['label'] = $name;
+		}
 
-    do_action('tr_end_setup_field', $this, $field_obj, $name, $settings);
+		if ( $settings['template'] == true ) {
+			$field_obj->attr['data-name'] = $field_obj->attr['name'];
+			unset( $field_obj->attr['name'] );
+			unset( $field_obj->attr['id'] );
+		}
 
-  }
+		do_action( 'tr_end_setup_field', $this, $field_obj, $name, $settings );
 
-  public function add_field(&$field_obj, $settings = array(), $label = true) {
-    $this->current_field = $field_obj;
-    $this->current_field->settings = $settings;
-    $this->current_field->label = $label;
-    $field = $this->current_field->render();
-    $label = $this->label();
-    $id = esc_attr($this->current_field->settings['id']);
+	}
 
-    if(!empty($id)) {
-      $id = "id=\"{$id}\"";
-    } else {
-      $id = '';
-    }
+	/**
+	 * @param \TypeRocket\Fields\Field $field_obj
+	 * @param array $settings
+	 * @param bool $label
+	 */
+	public function add_field( &$field_obj, $settings = array(), $label = true ) {
+		$this->current_field           = $field_obj;
+		$this->current_field->settings = $settings;
+		$this->current_field->label    = $label;
+		$field                         = $this->current_field->render();
+		$label                         = $this->label();
+		$id                            = esc_attr( $this->current_field->settings['id'] );
 
-    if(isset($this->current_field->settings['help'])) {
-      $help = $this->current_field->settings['help'];
-      $help =
-        "<div class=\"help\">
+		if ( ! empty( $id ) ) {
+			$id = "id=\"{$id}\"";
+		} else {
+			$id = '';
+		}
+
+		if ( isset( $this->current_field->settings['help'] ) ) {
+			$help = $this->current_field->settings['help'];
+			$help =
+				"<div class=\"help\">
           <p>{$help}</p>
         </div>";
-    } else {
-      $help = '';
-    }
+		} else {
+			$help = '';
+		}
 
-    if(empty($this->current_field->settings['html']) && $this->current_field->settings['html'] === false) {
-      $html = $field;
-    } else {
+		if ( empty( $this->current_field->settings['html'] ) && $this->current_field->settings['html'] === false ) {
+			$html = $field;
+		} else {
 
-      $html_class = trim('control-section ' . apply_filters('tr_form_html_class_filter', '', $this->current_field, $this));
+			$html_class = trim( 'control-section ' . apply_filters( 'tr_form_html_class_filter', '',
+					$this->current_field, $this ) );
 
-      $html =
-      "<div class=\"{$html_class}\" {$id}>
+			$html =
+				"<div class=\"{$html_class}\" {$id}>
         {$label}
         <div class=\"control\">
           {$field}{$help}
         </div>
       </div>";
-    }
-    $this->_e($html);
-    $this->current_field = null;
-  }
+		}
+		$this->_e( $html );
+		$this->current_field = null;
+	}
 
-  private function label() {
-    $open_html = "<div class=\"control-label\"><span class=\"label\">";
-    $close_html = '</span></div>';
-    $debug = $this->debug();
+	private function label() {
+		$open_html  = "<div class=\"control-label\"><span class=\"label\">";
+		$close_html = '</span></div>';
+		$debug      = $this->debug();
+		$html = '';
 
-    if($this->current_field->label !== false) {
-      $label = $this->current_field->settings['label'];
-      $html = "{$open_html}{$label} {$debug}{$close_html}";
-    }
-    elseif($debug !== '') {
-      $html = "{$open_html}{$debug}{$close_html}";
-    }
+		if ( $this->current_field->label !== false ) {
+			$label = $this->current_field->settings['label'];
+			$html  = "{$open_html}{$label} {$debug}{$close_html}";
+		} elseif ( $debug !== '' ) {
+			$html = "{$open_html}{$debug}{$close_html}";
+		}
 
-    return $html;
-  }
+		return $html;
+	}
 
-  private function is_debug() {
-    return ($this->debug === false) ? $this->debug : TR_DEBUG;
-  }
+	private function is_debug() {
+		return ( $this->debug === false ) ? $this->debug : TR_DEBUG;
+	}
 
-  private function debug() {
-    $html = '';
-    if($this->is_debug() === true && $this->current_field->builtin == false && is_admin() && $this->current_field->debuggable == true) {
-      $html =
-      "<div class=\"dev\">
+	private function debug() {
+		$html = '';
+		if ( $this->is_debug() === true && $this->current_field->builtin == false && is_admin() && $this->current_field->debuggable == true ) {
+			$html =
+				"<div class=\"dev\">
         <span class=\"debug\"><i class=\"tr-icon-bug\"></i></span>
           <span class=\"nav\">
           <span class=\"field\">
@@ -314,78 +331,93 @@ class From {
           </span>
         </span>
       </div>";
-    }
-    return $html;
-  }
+		}
 
-  public function division($headline = 'Division', $description = null) {
-    $content ="<div class=\"control-division\">";
+		return $html;
+	}
 
-    if(is_string($headline)) {
-      $headline = force_balance_tags($headline);
-      $content .= "<h2>{$headline}</h2>";
-    }
+	public function division( $headline = 'Division', $description = null ) {
+		$content = "<div class=\"control-division\">";
 
-    if(is_string($description)) {
-      $description = force_balance_tags($description);
-      $content .= "<p>{$description}</p>";
-    }
+		$tags = array(
+			'a' => array(
+				'href' => array(),
+				'title' => array()
+			),
+			'br' => array(),
+			'em' => array(),
+			'strong' => array(),
+		);
 
-    $content .= "</div>";
+		if ( is_string( $headline ) ) {
+			$headline = wp_kses( $headline, $tags );
+			$content .= "<h2>{$headline}</h2>";
+		}
 
-    $content = apply_filters('tr_from_division', $content, $headline, $description);
+		if ( is_string( $description ) ) {
+			$description = wp_kses( $description, $tags );
+			$content .= "<p>{$description}</p>";
+		}
 
-    $this->_e($content);
+		$content .= "</div>";
 
-    return $this;
-  }
+		$content = apply_filters( 'tr_from_division', $content, $headline, $description );
 
-  public function repeater($name, $fields, $settings = array(), $label = 'Repeater' ) {
-    wp_enqueue_script( 'typerocket-booyah', tr::$paths['urls']['assets'] . '/js/booyah.js', array('jquery'), '1.0', true );
-    wp_enqueue_script('jquery-ui-sortable', array( 'jquery' ), '1.0', true);
+		$this->_e( $content );
 
-    $this->debug = false;
+		return $this;
+	}
 
-    // add controls
-    if(isset($settings['help'])) {
-      $help =
-        "<div class=\"help\">
+	public function repeater( $name, $fields, $settings = array(), $label = 'Repeater' ) {
+		$paths = Config::getPaths();
+		wp_enqueue_script( 'typerocket-booyah', $paths['urls']['assets'] . '/js/booyah.js', array( 'jquery' ),
+			'1.0', true );
+		wp_enqueue_script( 'jquery-ui-sortable', array( 'jquery' ), '1.0', true );
+
+		$this->debug = false;
+
+		// add controls
+		if ( isset( $settings['help'] ) ) {
+			$help =
+				"<div class=\"help\">
           <p>{$settings['help']}</p>
         </div>";
-    } else {
-      $help = '';
-    }
+		} else {
+			$help = '';
+		}
 
-    // add buttom settings
-    if(isset($settings['add_button'])) {
-      $add_button_value = $settings['add_button'];
-    } else {
-      $add_button_value = "Add New";
-    }
+		// add buttom settings
+		if ( isset( $settings['add_button'] ) ) {
+			$add_button_value = $settings['add_button'];
+		} else {
+			$add_button_value = "Add New";
+		}
 
-    // add label
-    if(is_string($label)) {
-      $label = "<div class=\"control-label\"><span class=\"label\">{$label}</span></div>";
-    }
+		// add label
+		if ( is_string( $label ) ) {
+			$label = "<div class=\"control-label\"><span class=\"label\">{$label}</span></div>";
+		}
 
-    // template for repeater groups
-    $templatesContainer = '<div class="repeater-controls"><div class="collapse"></div><div class="move"></div><a href="#remove" class="remove" title="remove"></a></div><div class="repeater-inputs">';
-    $templatesContainerEnd = '</div></div>';
+		// template for repeater groups
+		$templatesContainer    = '<div class="repeater-controls"><div class="collapse"></div><div class="move"></div><a href="#remove" class="remove" title="remove"></a></div><div class="repeater-inputs">';
+		$templatesContainerEnd = '</div></div>';
 
-    $this->_e('<div class="control-section tr-repeater">'); // start tr-repeater
+		$this->_e( '<div class="control-section tr-repeater">' ); // start tr-repeater
 
-    // setup repeater
-    $cache_group = $this->group;
-    $cache_sub = $this->sub;
-    $this->sanitize_string($name);
-    $root_group = $this->group .=  "[{$name}]";
-    $this->group .= "[{{ {$name} }}]";
+		// setup repeater
+		$cache_group = $this->group;
+		$cache_sub   = $this->sub;
 
-    // debug
-    $debug = '';
-    if(TR_DEBUG === true && is_admin()) {
-      $debug =
-          "<div class=\"dev\">
+		$utility = new Utility();
+		$utility->sanitize_string( $name );
+		$root_group = $this->group .= "[{$name}]";
+		$this->group .= "[{{ {$name} }}]";
+
+		// debug
+		$debug = '';
+		if ( TR_DEBUG === true && is_admin() ) {
+			$debug =
+				"<div class=\"dev\">
         <span class=\"debug\"><i class=\"tr-icon-bug\"></i></span>
           <span class=\"nav\">
           <span class=\"field\">
@@ -393,250 +425,261 @@ class From {
           </span>
         </span>
       </div>";
-    }
+		}
 
-    $this->_e($debug);
+		$this->_e( $debug );
 
-    $this->_e($label);
+		$this->_e( $label );
 
-    // add controls (add, flip, clear all)
-    $this->_e("<div class=\"controls\"><div class=\"tr-repeater-button-add\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /></div><div class=\"button-group\"><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Contract\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}</div>");
+		// add controls (add, flip, clear all)
+		$this->_e( "<div class=\"controls\"><div class=\"tr-repeater-button-add\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /></div><div class=\"button-group\"><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Contract\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}</div>" );
 
-    // render js template data
-    $this->_e('<div class="tr-repeater-group-template" data-id="'.$name.'">');
-    $this->_e($templatesContainer);
-    $this->render_fields($fields, 'template');
-    $this->_e($templatesContainerEnd);
+		// render js template data
+		$this->_e( '<div class="tr-repeater-group-template" data-id="' . $name . '">' );
+		$this->_e( $templatesContainer );
+		$this->render_fields( $fields, 'template' );
+		$this->_e( $templatesContainerEnd );
 
-    // render saved data
-    $this->_e('<div class="tr-repeater-fields">'); // start tr-repeater-fields
-    $getter = new tr_get_field();
-    $repeats = $getter->value($root_group, $this->item_id, $this->controller);
-    if(is_array($repeats)) {
-      foreach($repeats as $k => $array) {
-        $this->_e('<div class="tr-repeater-group">');
-        $this->_e($templatesContainer);
-        $this->group = $root_group . "[{$k}]";
-        $this->render_fields($fields);
-        $this->_e($templatesContainerEnd);
-      }
-    }
-    $this->_e('</div>'); // end tr-repeater-fields
-    $this->group = $cache_group;
-    $this->sub = $cache_sub;
-    $this->_e('</div>'); // end tr-repeater
+		// render saved data
+		$this->_e( '<div class="tr-repeater-fields">' ); // start tr-repeater-fields
+		$getter  = new GetField();
+		$repeats = $getter->value( $root_group, $this->item_id, $this->controller );
+		if ( is_array( $repeats ) ) {
+			foreach ( $repeats as $k => $array ) {
+				$this->_e( '<div class="tr-repeater-group">' );
+				$this->_e( $templatesContainer );
+				$this->group = $root_group . "[{$k}]";
+				$this->render_fields( $fields );
+				$this->_e( $templatesContainerEnd );
+			}
+		}
+		$this->_e( '</div>' ); // end tr-repeater-fields
+		$this->group = $cache_group;
+		$this->sub   = $cache_sub;
+		$this->_e( '</div>' ); // end tr-repeater
 
-    $this->debug = null;
+		$this->debug = null;
 
-  }
+	}
 
-  public function render_fields($fields = array(), $type = null ) {
-    foreach($fields as $args) {
+	public function render_fields( $fields = array(), $type = null ) {
+		foreach ( $fields as $args ) {
 
-      if( empty($args[1][1]) ) { $args[1][1] = array(); }
-      if( empty($args[1][2]) ) { $args[1][2] = array(); }
+			if ( empty( $args[1][1] ) ) {
+				$args[1][1] = array();
+			}
+			if ( empty( $args[1][2] ) ) {
+				$args[1][2] = array();
+			}
 
-      if( $args[0] == 'select' || $args[0] == 'radio' || $args[0] == 'custom') {
-        if( empty($args[1][3]) ) { $args[1][3] = array(); }
-        if( is_string($type) ) { $args[1][3][$type] = true; }
-        call_user_func_array(array($this, $args[0]), $args[1]);
-      } else {
-        if( is_string($type) ) { $args[1][2][$type] = true; }
-        call_user_func_array(array($this, $args[0]), $args[1]);
-      }
+			if ( $args[0] == 'select' || $args[0] == 'radio' || $args[0] == 'custom' ) {
+				if ( empty( $args[1][3] ) ) {
+					$args[1][3] = array();
+				}
+				if ( is_string( $type ) ) {
+					$args[1][3][ $type ] = true;
+				}
+				call_user_func_array( array( $this, $args[0] ), $args[1] );
+			} else {
+				if ( is_string( $type ) ) {
+					$args[1][2][ $type ] = true;
+				}
+				call_user_func_array( array( $this, $args[0] ), $args[1] );
+			}
 
-    }
-  }
+		}
+	}
 
-  public function setup_field_attr($field, $attr) {
+	public function setup_field_attr( $field, $attr ) {
 
-    if(array_key_exists('class', $attr)) {
-      $field->attr['class'] .= ' ' . $attr['class'];
-    }
+		if ( array_key_exists( 'class', $attr ) ) {
+			$field->attr['class'] .= ' ' . $attr['class'];
+		}
 
-    $field->attr = array_merge($attr, $field->attr);
-    return $field->attr;
-  }
+		$field->attr = array_merge( $attr, $field->attr );
 
-  public function text($name, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_text();
-    $field->connect($this);
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $this->add_field($field, $settings, $label);
+		return $field->attr;
+	}
 
-    return $this;
-  }
+	public function text( $name, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Text();
+		$field->connect( $this );
+		$this->setup_field( $field, $name, $settings );
+		$field->attr = $this->setup_field_attr( $field, $attr );
+		$this->add_field( $field, $settings, $label );
 
-  public function email($name, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_text();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $field->type = 'email';
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function email( $name, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Text();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr = $this->setup_field_attr( $field, $attr );
+		$field->type = 'email';
+		$this->add_field( $field, $settings, $label );
 
-  public function number($name, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_text();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $field->type = 'number';
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function number( $name, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Text();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr = $this->setup_field_attr( $field, $attr );
+		$field->type = 'number';
+		$this->add_field( $field, $settings, $label );
 
-  public function password($name, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_text();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $field->type = 'password';
-    $field->attr['autocomplete'] = 'off';
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function password( $name, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Text();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr                 = $this->setup_field_attr( $field, $attr );
+		$field->type                 = 'password';
+		$field->attr['autocomplete'] = 'off';
+		$this->add_field( $field, $settings, $label );
 
-  public function hidden($name, $attr = array(), $settings = array(), $label = false) {
-    $field = new tr_field_text();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $field->type = 'hidden';
-    $settings['html'] = false;
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function hidden( $name, $attr = array(), $settings = array(), $label = false ) {
+		$field = new Fields\Text();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr      = $this->setup_field_attr( $field, $attr );
+		$field->type      = 'hidden';
+		$settings['html'] = false;
+		$this->add_field( $field, $settings, $label );
 
-  public function submit($name, $attr = array(), $settings = array(), $label = false) {
-    $field = new tr_field_submit();
-    $this->setup_field($field, $name, $settings);
-    $field->attr['value'] = $name;
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function submit( $name, $attr = array(), $settings = array(), $label = false ) {
+		$field = new Fields\Submit();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr['value'] = $name;
+		$field->attr          = $this->setup_field_attr( $field, $attr );
+		$this->add_field( $field, $settings, $label );
 
-  public function textarea($name, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_textarea();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function textarea( $name, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Textarea();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr = $this->setup_field_attr( $field, $attr );
+		$this->add_field( $field, $settings, $label );
 
-  public function radio($name, $options, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_radio();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $field->options = $options;
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function radio( $name, $options, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Radio();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr    = $this->setup_field_attr( $field, $attr );
+		$field->options = $options;
+		$this->add_field( $field, $settings, $label );
 
-  public function checkbox($name, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_checkbox();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function checkbox( $name, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Checkbox();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr = $this->setup_field_attr( $field, $attr );
+		$this->add_field( $field, $settings, $label );
 
-  public function select($name, $options, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_select();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $field->options = $options;
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function select( $name, $options, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Select();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr    = $this->setup_field_attr( $field, $attr );
+		$field->options = $options;
+		$this->add_field( $field, $settings, $label );
 
-  public function editor($name, $options = array(), $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_editor();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $field->options = $options;
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function editor( $name, $options = array(), $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Editor();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr    = $this->setup_field_attr( $field, $attr );
+		$field->options = $options;
+		$this->add_field( $field, $settings, $label );
 
-  public function color($name, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_color();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function color( $name, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Color();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr = $this->setup_field_attr( $field, $attr );
+		$this->add_field( $field, $settings, $label );
 
-  public function date($name, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_date();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function date( $name, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Date();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr = $this->setup_field_attr( $field, $attr );
+		$this->add_field( $field, $settings, $label );
 
-  public function time($name, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_time();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function time( $name, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Time();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr = $this->setup_field_attr( $field, $attr );
+		$this->add_field( $field, $settings, $label );
 
-  public function image($name, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_image();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function image( $name, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Image();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr = $this->setup_field_attr( $field, $attr );
+		$this->add_field( $field, $settings, $label );
 
-  public function file($name, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_file();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function file( $name, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\File();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr = $this->setup_field_attr( $field, $attr );
+		$this->add_field( $field, $settings, $label );
 
-  public function gallery($name, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_gallery();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function gallery( $name, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Gallery();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr = $this->setup_field_attr( $field, $attr );
+		$this->add_field( $field, $settings, $label );
 
-  public function items($name, $attr = array(), $settings = array(), $label = true) {
-    $field = new tr_field_items();
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function items( $name, $attr = array(), $settings = array(), $label = true ) {
+		$field = new Fields\Items();
+		$this->setup_field( $field, $name, $settings );
+		$field->attr = $this->setup_field_attr( $field, $attr );
+		$this->add_field( $field, $settings, $label );
 
-  public function custom(&$field, $name, $attr = array(), $settings = array(), $label = true) {
-    $this->setup_field($field, $name, $settings);
-    $field->attr = $this->setup_field_attr($field, $attr);
-    $this->add_field($field, $settings, $label);
+		return $this;
+	}
 
-    return $this;
-  }
+	public function custom( &$field, $name, $attr = array(), $settings = array(), $label = true ) {
+		$this->setup_field( $field, $name, $settings );
+		$field->attr = $this->setup_field_attr( $field, $attr );
+		$this->add_field( $field, $settings, $label );
+
+		return $this;
+	}
 
 }
