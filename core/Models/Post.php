@@ -9,7 +9,7 @@ class Post extends Model
 
     function hook( $post_id, $post )
     {
-        $this->post = $post;
+        $this->post  = $post;
         $this->valid = true;
         $this->save( $post_id );
     }
@@ -17,7 +17,8 @@ class Post extends Model
     function validate()
     {
         $this->valid = apply_filters( 'tr_post_validate', $this->valid, $this );
-        return ( $this->valid  && $this->post instanceof \WP_Post );
+
+        return $this->valid;
     }
 
     function sanitize()
@@ -28,10 +29,14 @@ class Post extends Model
     /**
      * @param $item_id
      * @param string $action
+     *
+     * @return Post $this
      */
     function save( $item_id, $action = 'update' )
     {
         parent::save( $item_id, $action );
+
+        return $this;
     }
 
     protected function update()

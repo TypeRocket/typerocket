@@ -27,6 +27,8 @@ abstract class Model {
 
 		}
 
+        return $this;
+
 	}
 
 	function validate() {

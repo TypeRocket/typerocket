@@ -175,7 +175,7 @@ class PostType extends Registrable {
 
       $func = 'add_form_content_' . $id . '_' . $args;
 
-      echo '<div class="typerocket-container typerocket-dev">';
+      echo '<div class="typerocket-container">';
       if(function_exists($func)) :
         $func($post);
       elseif(TR_DEBUG == true) :

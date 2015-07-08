@@ -23,7 +23,8 @@ if ( \TypeRocket\Config::getPlugins() ) {
 	$plugins_collection = new \TypeRocket\Plugin\Collection( \TypeRocket\Config::getPlugins() );
 	$plugin_loader      = new \TypeRocket\Plugin\Loader( $plugins_collection );
 	$plugin_loader->load();
-	unset( $tr_plugins_obj );
+	unset( $plugin_loader );
+    unset( $plugins_collection );
 }
 
 /*
@@ -61,5 +62,39 @@ do_action( 'typerocket_loaded' );
 add_action( 'after_setup_theme', function () {
 	\TypeRocket\Registry::run();
 } );
+
+/*
+|--------------------------------------------------------------------------
+| Add Form API
+|--------------------------------------------------------------------------
+|
+| Add a url that will allow you to save to forms using an API. This is not
+| REST but more like RPC. This API is designed to create, update and
+| delete data in WordPress. Item ID's should be sent via $_POST.
+|
+*/
+add_action('admin_init', function() {
+    $regex = 'typerocket_api/v1/([^/]*)/([^/]*)/?$';
+    $location = 'index.php?typerocket_controller=$matches[1]&typerocket_action=$matches[2]';
+    add_rewrite_rule( $regex, $location, 'top' );
+});
+
+add_filter( 'query_vars', function($vars) {
+    array_push($vars, 'typerocket_controller');
+    array_push($vars, 'typerocket_action');
+    return $vars;
+} );
+
+add_filter( 'template_include', function($template) {
+
+    $typerocket_controller = get_query_var('typerocket_controller', null);
+    $typerocket_action = get_query_var('typerocket_action', null);
+
+    if($typerocket_controller && $typerocket_action) {
+        $template = __DIR__ . '/api/v1.php';
+    }
+
+    return $template;
+}, 99 );
 
 define( 'TR_END', microtime( true ) );

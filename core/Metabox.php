@@ -64,7 +64,7 @@ class Metabox extends Registrable {
 	function meta_content( $object, $box ) {
 		$func = 'add_meta_content_' . $this->id;
 
-		echo '<div class="typerocket-container typerocket-dev">';
+		echo '<div class="typerocket-container">';
 		if ( function_exists( $func ) ) :
 			$func( $object, $box );
 		elseif ( TR_DEBUG == true ) :

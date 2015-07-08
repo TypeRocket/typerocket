@@ -8,8 +8,6 @@ class Form {
 	public $controller = 'post';
 	public $action = 'update';
 	public $item_id = null;
-	public $create_defaults = array();
-	public $create_statics = array();
 
 	/** @var \TypeRocket\Fields\Field $current_field */
 	public $current_field = '';
@@ -96,6 +94,7 @@ class Form {
 		return $this;
 	}
 
+    // TODO: move to a controller class
 	public function process( $action = null, $flash = true, $messages = array() ) {
 		if ( is_null( $action ) ) {
 			$action = $this->action;
@@ -109,23 +108,7 @@ class Form {
 			isset( $_POST['_tr_nonce_form'] ) &&
 			check_admin_referer( $this->hash, '_tr_nonce_form' )
 		) :
-			switch ( $action ) {
-				case 'update' :
-					$this->update();
-					$message = $messages['update'];
-					break;
-				case 'create' :
-					$this->create();
-					$message = $messages['create'];
-					break;
-				case 'delete' :
-					$this->delete();
-					$message = $messages['delete'];
-					break;
-				default :
-					die( 'From action is wrong.' );
-					break;
-			}
+			// do stuff
 		endif;
 
 		if ( $flash == true && ! get_transient( 'tr_flash_messages' ) ) {
@@ -135,6 +118,7 @@ class Form {
 		return $this;
 	}
 
+    // TODO: move to a new class
 	public function flash(
 		$message = null,
 		$before = '<div class="updated tr-flash-message"><p>',
@@ -149,68 +133,6 @@ class Form {
 		if ( $tr_flash_messages ) {
 			$this->_e( $before . $message . $after );
 			delete_transient( 'tr_flash_messages' );
-		}
-	}
-
-	private function update() {
-
-		$crud = new Model();
-
-		switch ( $this->controller ) {
-			case 'post' :
-				$crud->save_post( $this->item_id, 'update', $this );
-				break;
-			case 'user' :
-				$crud->save_user( $this->item_id, 'update', $this );
-				break;
-			case 'comment' :
-				$crud->save_comment( $this->item_id, 'update', $this );
-				break;
-			case 'option' :
-				$crud->save_option( $this->item_id, 'update', $this );
-				break;
-			default :
-				$crud->save_data( $this->controller, 'update', $this->item_id, $this );
-				break;
-		}
-
-		return $this;
-	}
-
-	private function create() {
-
-		$crud = new Model();
-
-		switch ( $this->controller ) {
-			case 'post' :
-				$crud->save_post( null, 'create', $this );
-				break;
-			case 'user' :
-				break;
-			default :
-				$crud->save_data( $this->controller, 'create', $this->item_id, $this );
-				break;
-		}
-
-		return $this;
-	}
-
-	private function delete() {
-
-		$crud = new Model();
-
-		switch ( $this->controller ) {
-			default :
-				$crud->delete_data( $this->controller, 'delete', $this->item_id, $this );
-				break;
-		}
-
-		return $this;
-	}
-
-	public function __call( $name, $arguments ) {
-		if ( ! method_exists( $this, $name ) ) {
-			die( 'Form does not have this method: ' . $name );
 		}
 	}
 

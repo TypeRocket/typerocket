@@ -118,7 +118,7 @@ class Taxonomy extends Registrable {
 
     $func = 'add_form_content_' . $this->id . '_' . $args;
 
-    echo '<div class="typerocket-container typerocket-dev">';
+    echo '<div class="typerocket-container">';
     if(function_exists($func)) :
       $func($tag, $taxonomy);
     elseif(TR_DEBUG == true) :

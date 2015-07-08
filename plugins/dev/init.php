@@ -1,5 +1,5 @@
 <?php
-namespace Typerocket;
+namespace TypeRocket;
 
 class Dev {
 

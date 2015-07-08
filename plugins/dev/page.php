@@ -76,7 +76,7 @@ function tr_dev_stats() { ?>
 	<h2>TypeRocket Dev</h2>
 
 	<div>
-		<div id="tr-dev-content" class="typerocket-container typerocket-dev">
+		<div id="tr-dev-content" class="typerocket-container">
 			<?php
 			$screen = new \TypeRocket\Layout();
 			$screen->add_tab( array(

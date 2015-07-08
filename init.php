@@ -28,5 +28,5 @@ if(empty($wp_version) || $wp_version < '4'  ) :
 elseif(PHP_VERSION < '5.3') :
   die("You need version 5.3+ of PHP. Using " . PHP_VERSION);
 elseif(!defined('TR_START')) :
-  require __DIR__ . '/bootstrap/start.php';
+  require __DIR__ . '/app/start.php';
 endif;

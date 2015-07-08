@@ -91,7 +91,7 @@ class Enhance {
 	}
 
 	public function user_content( $user_obj ) {
-		echo '<div class="typerocket-container typerocket-wp-style-guide typerocket-dev">';
+		echo '<div class="typerocket-container typerocket-wp-style-guide">';
 		do_action( 'tr_user_profile', $user_obj );
 		echo '</div>';
 	}
