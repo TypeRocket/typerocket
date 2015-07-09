@@ -18,11 +18,11 @@ class Collection
     function __construct(array $plugins)
     {
 	    foreach($plugins as $plugin) {
-		    $this->add_plugin($plugin);
+		    $this->addPlugin($plugin);
 	    }
     }
 
-    function add_plugin($string) {
+    function addPlugin($string) {
         if(is_string($string)) {
             array_push($this->plugins, $string);
         }

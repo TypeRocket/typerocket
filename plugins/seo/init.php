@@ -35,8 +35,6 @@ class Seo
     // Page Title
     function title( $title, $sep = '', $other = '' )
     {
-        global $paged, $page;
-
         $newTitle = tr_post_field( '[seo][meta][title]', $this->item_id );
 
         if ($newTitle != null) {
