@@ -1,6 +1,9 @@
 <?php
 namespace TypeRocket;
 
+use TypeRocket\Html\Generator as Generator;
+use TypeRocket\Html\Tag as Tag;
+
 class Form
 {
 
@@ -12,7 +15,7 @@ class Form
     /** @var \TypeRocket\Fields\Field $current_field */
     public $current_field = '';
     public $get_values = true;
-    public $group = null;
+    private $group = null;
     public $sub = null;
     public $debug = null;
     public $settings = array();
@@ -23,6 +26,14 @@ class Form
         wp_enqueue_script( 'typerocket-http', $paths['urls']['assets'] . '/js/http.js', array( 'jquery' ), '1', true );
         wp_enqueue_script( 'typerocket-scripts', $paths['urls']['assets'] . '/js/typerocket.js', array( 'jquery' ), '1',
             true );
+    }
+
+    public function __get( $property )
+    {
+    }
+
+    public function __set( $property, $value )
+    {
     }
 
     public function make( $controller = 'auto', $action = 'update', $item_id = null )
@@ -91,13 +102,13 @@ class Form
         if ($this->controller === 'auto') {
             global $post, $comment, $user_id;
 
-            if (isset( $post->ID ) && is_null( $this->item_id )) {
+            if (isset( $post->ID )) {
                 $item_id    = $post->ID;
                 $controller = 'post';
-            } elseif (isset( $comment->comment_ID ) && is_null( $this->item_id )) {
+            } elseif (isset( $comment->comment_ID )) {
                 $item_id    = $comment->comment_ID;
                 $controller = 'comment';
-            } elseif (isset( $user_id ) && is_null( $this->item_id )) {
+            } elseif (isset( $user_id )) {
                 $item_id    = $user_id;
                 $controller = 'user';
             } else {
@@ -149,8 +160,11 @@ class Form
 
         $attr = array_merge( $defaults, $attr, $rest );
 
-        $r = Html::open_element( 'form', $attr ) . PHP_EOL;
-        $r .= Html::input( 'hidden', '_method', $method );
+        $form      = new Tag( 'form', $attr );
+        $generator = new Generator();
+
+        $r = $form->getStringOpenTag() . PHP_EOL;
+        $r .= $generator->newInput( 'hidden', '_method', $method )->getString();
         $r .= wp_nonce_field( 'form_' . TR_SEED, '_tr_nonce_form', false, false );
 
         $this->_e( $r );
@@ -162,8 +176,9 @@ class Form
     {
         $html = '';
         if (is_string( $value )) {
-            $html .= Html::input( 'submit', '_tr_submit_form', $value,
-                array( 'id' => '_tr_submit_form', 'class' => 'button button-primary' ) );
+            $generator = new Generator();
+            $html .= $generator->newInput( 'submit', '_tr_submit_form', $value,
+                array( 'id' => '_tr_submit_form', 'class' => 'button button-primary' ) )->getString();
         }
 
         $html .= '</form>';
@@ -215,7 +230,7 @@ class Form
      * @param array $settings
      * @param bool $label
      */
-    public function add_field( &$field_obj, $settings = array(), $label = true )
+    public function addField( $field_obj, $settings = array(), $label = true )
     {
         $this->current_field           = $field_obj;
         $this->current_field->settings = $settings;
@@ -471,29 +486,18 @@ class Form
         $field = new Fields\Text();
         $this->setup_field( $field, $name, $settings );
         $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
 
-    public function email( $name, $attr = array(), $settings = array(), $label = true )
+    public function input( $type, $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Text();
         $this->setup_field( $field, $name, $settings );
         $field->attr = $this->setup_field_attr( $field, $attr );
-        $field->type = 'email';
-        $this->add_field( $field, $settings, $label );
-
-        return $this;
-    }
-
-    public function number( $name, $attr = array(), $settings = array(), $label = true )
-    {
-        $field = new Fields\Text();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr = $this->setup_field_attr( $field, $attr );
-        $field->type = 'number';
-        $this->add_field( $field, $settings, $label );
+        $field->type = $type;
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -505,7 +509,7 @@ class Form
         $field->attr                 = $this->setup_field_attr( $field, $attr );
         $field->type                 = 'password';
         $field->attr['autocomplete'] = 'off';
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -517,7 +521,7 @@ class Form
         $field->attr      = $this->setup_field_attr( $field, $attr );
         $field->type      = 'hidden';
         $settings['html'] = false;
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -528,7 +532,7 @@ class Form
         $this->setup_field( $field, $name, $settings );
         $field->attr['value'] = $name;
         $field->attr          = $this->setup_field_attr( $field, $attr );
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -538,7 +542,7 @@ class Form
         $field = new Fields\Textarea();
         $this->setup_field( $field, $name, $settings );
         $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -549,7 +553,7 @@ class Form
         $this->setup_field( $field, $name, $settings );
         $field->attr    = $this->setup_field_attr( $field, $attr );
         $field->options = $options;
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -559,7 +563,7 @@ class Form
         $field = new Fields\Checkbox();
         $this->setup_field( $field, $name, $settings );
         $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -570,7 +574,7 @@ class Form
         $this->setup_field( $field, $name, $settings );
         $field->attr    = $this->setup_field_attr( $field, $attr );
         $field->options = $options;
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -581,7 +585,7 @@ class Form
         $this->setup_field( $field, $name, $settings );
         $field->attr    = $this->setup_field_attr( $field, $attr );
         $field->options = $options;
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -591,7 +595,7 @@ class Form
         $field = new Fields\Color();
         $this->setup_field( $field, $name, $settings );
         $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -601,7 +605,7 @@ class Form
         $field = new Fields\Date();
         $this->setup_field( $field, $name, $settings );
         $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -611,7 +615,7 @@ class Form
         $field = new Fields\Image();
         $this->setup_field( $field, $name, $settings );
         $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -621,7 +625,7 @@ class Form
         $field = new Fields\File();
         $this->setup_field( $field, $name, $settings );
         $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -631,7 +635,7 @@ class Form
         $field = new Fields\Gallery();
         $this->setup_field( $field, $name, $settings );
         $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -641,7 +645,7 @@ class Form
         $field = new Fields\Items();
         $this->setup_field( $field, $name, $settings );
         $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }
@@ -650,7 +654,7 @@ class Form
     {
         $this->setup_field( $field, $name, $settings );
         $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->add_field( $field, $settings, $label );
+        $this->addField( $field, $settings, $label );
 
         return $this;
     }

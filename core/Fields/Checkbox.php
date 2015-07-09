@@ -8,7 +8,7 @@ class Checkbox extends Field {
   function render() {
     $name = $this->attr['name'];
     $this->type = 'checkbox';
-    $option = esc_attr($this->get_value());
+    $option = esc_attr($this->getValue());
     unset($this->attr['name']);
 
     if($option == '1') {

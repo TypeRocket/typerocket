@@ -20,15 +20,15 @@ class GetField {
       // unset first key since $data is already set to it
       unset($keys[0]);
 
-      if(!empty($keys)) {
+      if(!empty($keys) && is_array($keys)) {
         foreach($keys as $name) {
-          @$data = $data[$name];
+          $data = isset($data[$name]) ? $data[$name] : false;
         }
       }
 
     }
 	$utility = new Utility();
-	  $utility->unslash($data);
+    $utility->unslash($data);
     return $data;
   }
 

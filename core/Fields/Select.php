@@ -1,29 +1,33 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html as Html;
+use \TypeRocket\Html\Generator as Generator;
 
-class Select extends Field {
+class Select extends Field
+{
 
-  function render() {
-    $this->type = 'radio';
-    $option = esc_attr($this->get_value());
-    $field = Html::open_element('select', $this->attr);
-    foreach($this->options as $key => $value) {
+    function render()
+    {
+        $this->type = 'radio';
+        $option     = esc_attr( $this->getValue() );
+        $generator  = new Generator();
+        $generator->newElement( 'select', $this->attr );
 
-      $attr['value'] = $value;
-      if($option == $value) {
-        $attr['selected'] = 'selected';
-      }
-      else {
-        unset($attr['selected']);
-      }
 
-      $field .= Html::element('option', $attr, (string) $key);
+        foreach ($this->options as $key => $value) {
 
+            $attr['value'] = $value;
+            if ($option == $value) {
+                $attr['selected'] = 'selected';
+            } else {
+                unset( $attr['selected'] );
+            }
+
+            $generator->appendInside( 'option', $attr, (string) $key );
+
+        }
+
+        return $generator->getString();
     }
-    $field .= '</select>';
-    return $field;
-  }
 
 }

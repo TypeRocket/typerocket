@@ -8,7 +8,7 @@ class Radio extends Field {
   function render() {
     $name = $this->attr['name'];
     $this->type = 'radio';
-    $option = esc_attr($this->get_value());
+    $option = esc_attr($this->getValue());
     unset($this->attr['name']);
     unset($this->attr['id']);
     $field = '<ul class="data-full">';

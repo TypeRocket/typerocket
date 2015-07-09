@@ -11,7 +11,7 @@ class Editor extends Field {
 	}
 
 	function render() {
-		$value    = Sanitize::editor( $this->get_value() );
+		$value    = Sanitize::editor( $this->getValue() );
 		$settings = $this->options;
 
 		$override = array(

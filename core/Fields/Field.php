@@ -45,7 +45,7 @@ abstract class Field {
 		$this->attr['class'] = apply_filters( 'tr_field_html_class_filter', $html_class, $this );
 	}
 
-	public function get_value() {
+	public function getValue() {
 
 		if ( $this->form->get_values == false ) {
 			return null;

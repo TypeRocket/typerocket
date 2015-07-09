@@ -1,54 +1,60 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html as Html;
+use \TypeRocket\Html\Generator as Generator,
+    \TypeRocket\Config as Config;
 
-class Image extends Field {
+class Image extends Field
+{
 
-  function __construct() {
-	  $paths = \TypeRocket\Config::getPaths();
-    wp_enqueue_media();
-    wp_enqueue_script( 'typerocket-media', $paths['urls']['assets'] . '/js/media.js', array('jquery'), '1.0', true );
-  }
-
-  function render() {
-    $name = $this->attr['name'];
-    $this->attr['class'] = 'image-picker';
-    $value = esc_attr($this->get_value());
-    unset($this->attr['name']);
-
-    if(empty($this->settings['button'])) {
-      $this->settings['button'] = 'Insert Image';
+    function __construct()
+    {
+        $paths = Config::getPaths();
+        wp_enqueue_media();
+        wp_enqueue_script( 'typerocket-media', $paths['urls']['assets'] . '/js/media.js', array( 'jquery' ), '1.0',
+            true );
     }
 
-    if($value != "") {
-      $image = wp_get_attachment_image($value, 'thumbnail');
-    }
-    else {
-      $image = '';
-    }
+    function render()
+    {
+        $name                = $this->attr['name'];
+        $this->attr['class'] = 'image-picker';
+        $value               = esc_attr( $this->getValue() );
+        unset( $this->attr['name'] );
+        $generator = new Generator();
 
-    if(empty($image)) {
-      $value = '';
-    }
+        if (empty( $this->settings['button'] )) {
+            $this->settings['button'] = 'Insert Image';
+        }
 
-    $html = Html::input('hidden', $name, $value, $this->attr);
-    $html .= '<div class="button-group">';
-    $html .= Html::element('input', array(
-      'type' => 'button',
-      'class' => 'image-picker-button button',
-      'value' => $this->settings['button']
-    ));
-    $html .= Html::element('input', array(
-      'type' => 'button',
-      'class' => 'image-picker-clear button',
-      'value' => 'Clear'
-    ));
-    $html .= '</div>';
-    $html .= Html::element('div', array(
-      'class' => 'image-picker-placeholder'
-    ), $image);
-    return $html;
-  }
+        if ($value != "") {
+            $image = wp_get_attachment_image( $value, 'thumbnail' );
+        } else {
+            $image = '';
+        }
+
+        if (empty( $image )) {
+            $value = '';
+        }
+
+        $html = $generator->newInput( 'hidden', $name, $value, $this->attr )->getString();
+        $html .= '<div class="button-group">';
+        $html .= $generator->newElement( 'input', array(
+            'type'  => 'button',
+            'class' => 'image-picker-button button',
+            'value' => $this->settings['button']
+        ) )->getString();
+        $html .= $generator->newElement( 'input', array(
+            'type'  => 'button',
+            'class' => 'image-picker-clear button',
+            'value' => 'Clear'
+        ) )->getString();
+        $html .= '</div>';
+        $html .= $generator->newElement( 'div', array(
+            'class' => 'image-picker-placeholder'
+        ), $image )->getString();
+
+        return $html;
+    }
 
 }

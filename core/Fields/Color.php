@@ -12,7 +12,7 @@ class Color extends Field {
 
   function render() {
     $name = $this->attr['name'];
-    $value = esc_attr($this->get_value());
+    $value = esc_attr($this->getValue());
     unset($this->attr['name']);
 
     if(isset($this->attr['class'])) {

@@ -1,7 +1,7 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html as Html;
+use \TypeRocket\Html\Generator as Generator;
 
 class Text extends Field
 {
@@ -13,24 +13,25 @@ class Text extends Field
 
     function render()
     {
-        $name = $this->attr['name'];
+        $max = '';
+        $value = $this->getValue();
 
-        if ($this->settings['sanitize'] == 'plain') {
-            $value = $this->get_value();
-        } else {
-            $value = esc_attr( $this->get_value() );
+        if ($this->settings['sanitize'] !== 'raw') {
+            $value = esc_attr( $this->getValue() );
         }
 
         if (isset( $this->attr['maxlength'] ) && $this->attr['maxlength'] > 0) {
             $left = (int) $this->attr['maxlength'] - strlen( utf8_decode( $value ) );
-            $max  = "<p class=\"tr-maxlength\">Characters left: <span>{$left}</span></p>";
-        } else {
-            $max = '';
+            $max = new Generator();
+            $max->newElement('p', array('class' => 'tr-maxlength'), 'Characters left: ')->appendInside('span', array(), $left);
         }
 
-        unset( $this->attr['name'] );
+        $this->attr['type'] = $this->type;
+        $this->attr['value'] = $value;
 
-        return Html::input( $this->type, $name, $value, $this->attr ) . $max;
+        $input = new Generator();
+
+        return $input->newElement('input', $this->attr)->getString() . $max;
     }
 
 }

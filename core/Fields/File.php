@@ -16,7 +16,7 @@ class File extends Field {
 	function render() {
 		$name                = $this->attr['name'];
 		$this->attr['class'] = 'file-picker';
-		$value               = esc_attr( $this->get_value() );
+		$value               = esc_attr( $this->getValue() );
 		unset( $this->attr['name'] );
 
 		if ( empty( $this->settings['button'] ) ) {

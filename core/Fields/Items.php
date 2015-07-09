@@ -14,7 +14,7 @@ class Items extends Field {
 	function render() {
 		$name                = $this->attr['name'];
 		$this->attr['class'] = 'items-list';
-		$items               = $this->get_value();
+		$items               = $this->getValue();
 		unset( $this->attr['name'] );
 
 		if ( empty( $this->settings['button'] ) ) {

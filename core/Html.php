@@ -1,7 +1,7 @@
 <?php
 namespace TypeRocket;
 
-class Html
+class HtmlOld
 {
 
     private static $noCloseTags = array( 'img' => true, 'input' => true, 'hr' => true, 'br' => true );

@@ -190,8 +190,8 @@ class Seo
 
         // build form
         /** @var \TypeRocket\Form $form */
-        $form        = tr_form();
-        $form->group = '[seo][meta]';
+        $form = new Form();
+        $form->setGroup('[seo][meta]');
         $form->make();
         $utility->buffer();
         $form->text( 'title', array( 'id' => 'tr_title' ), $title )
