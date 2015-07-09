@@ -77,11 +77,11 @@ class ThemeOptions
 
         $uploads = wp_upload_dir();
 
-        $fp = fopen( $uploads['basedir'] . '/results.json', 'w' );
+        $fp = fopen( $uploads['basedir'] . '/typerocket-export-theme-options.json', 'w' );
         fwrite( $fp, $json );
         fclose( $fp );
 
-        wp_redirect( $uploads['baseurl'] . '/results.json' );
+        wp_redirect( $uploads['baseurl'] . '/typerocket-export-theme-options.json' );
 
     }
 

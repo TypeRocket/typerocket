@@ -46,10 +46,22 @@ class Sanitize {
    * @return string
    */
   static function hex( $hex, $default = '#000000' ) {
-    if ( acpt_validate::hex( $hex ) ) {
+    if ( Validate::hex( $hex ) ) {
       return $hex;
     }
     return $default;
+  }
+
+  static function string( $name, $spacer = '_' )
+  {
+    if (is_string( $name )) {
+      $name        = strtolower( trim( sanitize_title( $name, '' ) ) );
+      $pattern     = '/(\-+)/';
+      $replacement = $spacer;
+      $name        = preg_replace( $pattern, $replacement, $name );
+    }
+
+    return $name;
   }
 
 }

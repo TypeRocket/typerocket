@@ -1,7 +1,7 @@
 <?php
 function tr_taxonomy(
-	$singular = null,
-	$plural = null,
+	$singular,
+	$plural,
 	$settings = array(),
 	$use = array()
 ) {
@@ -12,8 +12,8 @@ function tr_taxonomy(
 }
 
 function tr_post_type(
-	$singular = null,
-	$plural = null,
+	$singular,
+	$plural,
 	$settings = array(),
 	$use = array()
 ) {
@@ -37,11 +37,6 @@ function tr_meta_box(
 function tr_form() {
 	$obj = new \TypeRocket\Form();
 	$obj->make();
-
-	if ( $obj->controller == 'option' ) {
-		$obj->process();
-	}
-
 	return $obj;
 }
 

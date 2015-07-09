@@ -53,8 +53,7 @@ class Metabox extends Registrable {
 	function apply( $use ) {
 
 		if ( isset( $use ) ) :
-			$this->uses( $use,
-				'TypeRocket: Must use an array for $use when making a taxonomy. $use is the third arg.' );
+			$this->uses( $use );
 			$this->use = $use;
 		endif;
 

@@ -84,6 +84,12 @@ abstract class Registrable {
         'withoutcomments' => true,
         'year' => true );
 
+    public $registrable = array(
+        'TypeRocket\Taxonomy' => 'tr_taxonomy',
+        'TypeRocket\PostType' => 'tr_post_type',
+        'TypeRocket\Metabox' => 'tr_meta_box',
+    );
+
     function __construct() {
         $this->init();
     }
@@ -105,7 +111,7 @@ abstract class Registrable {
     }
 
     function reg() {
-        tr_registry::add($this);
+        Registry::add($this);
 
         return $this;
     }
@@ -127,8 +133,9 @@ abstract class Registrable {
         foreach($use as $v) :
             if(is_object($v)) {
                 $class = get_class($v);
-                if( method_exists($this, $class) ) {
-                    $this->$class($v);
+                $method = $this->registrable[$class];
+                if( method_exists($this, $method) ) {
+                    $this->$method($v);
                 }
                 else {
                     die('TypeRocket: You are passing the unsupported object '.$class.' into '. $current_class . '.');

@@ -20,7 +20,7 @@ abstract class Field {
 	public $builtin = false;
 	public $debuggable = true;
 
-	public function connect( &$form_obj ) {
+	public function connect_form( $form_obj ) {
 		if ( $form_obj instanceof \TypeRocket\Form ) {
 			$this->form = $form_obj;
 		}

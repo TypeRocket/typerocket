@@ -36,16 +36,16 @@ if ( \TypeRocket\Config::getPlugins() ) {
 | TypeRocket to work.
 |
 */
-$model_post = new TypeRocket\Models\Post();
+$model_post = new TypeRocket\Controllers\Post();
 add_action( 'save_post', array( $model_post, 'hook' ), null, 2 );
 
-$model_comment = new TypeRocket\Models\Comment();
-add_action( 'wp_insert_comment', array( $model_comment, 'hook' ) );
-add_action( 'edit_comment', array( $model_comment, 'hook' ) );
+$model_comment = new TypeRocket\Controllers\Comment();
+add_action( 'wp_insert_comment', array( $model_comment, 'hook' ), null, 2 );
+add_action( 'edit_comment', array( $model_comment, 'hook' ), null, 2 );
 
-$model_user = new TypeRocket\Models\User();
-add_action( 'edit_user_profile_update', array( $model_user, 'hook' ) );
-add_action( 'personal_options_update', array( $model_user, 'hook' ) );
+$model_user = new TypeRocket\Controllers\User();
+add_action( 'edit_user_profile_update', array( $model_user, 'hook' ), null, 2  );
+add_action( 'personal_options_update', array( $model_user, 'hook' ), null, 2 );
 
 /*
 |--------------------------------------------------------------------------
@@ -74,23 +74,28 @@ add_action( 'after_setup_theme', function () {
 |
 */
 add_action('admin_init', function() {
+
+    $regex = 'typerocket_api/v1/([^/]*)/?$';
+    $location = 'index.php?typerocket_controller=$matches[1]';
+    add_rewrite_rule( $regex, $location, 'top' );
+
     $regex = 'typerocket_api/v1/([^/]*)/([^/]*)/?$';
-    $location = 'index.php?typerocket_controller=$matches[1]&typerocket_action=$matches[2]';
+    $location = 'index.php?typerocket_controller=$matches[1]&typerocket_item=$matches[2]';
     add_rewrite_rule( $regex, $location, 'top' );
 });
 
 add_filter( 'query_vars', function($vars) {
     array_push($vars, 'typerocket_controller');
-    array_push($vars, 'typerocket_action');
+    array_push($vars, 'typerocket_item');
     return $vars;
 } );
 
 add_filter( 'template_include', function($template) {
 
-    $typerocket_controller = get_query_var('typerocket_controller', null);
-    $typerocket_action = get_query_var('typerocket_action', null);
+    $resource = get_query_var('typerocket_controller', null);
+    $id = get_query_var('typerocket_item', null);
 
-    if($typerocket_controller && $typerocket_action) {
+    if($resource) {
         $template = __DIR__ . '/api/v1.php';
     }
 

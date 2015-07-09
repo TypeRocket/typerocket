@@ -4,9 +4,8 @@
 $form = new \TypeRocket\Form();
 $form->id = $this->name;
 $form->group = '['.$this->name.']';
+$form->action = 'update';
 $form->make();
-$form->process();
-$form->flash();
 ?>
 
 <div id="tr-dev-content" class="typerocket-container">
@@ -31,7 +30,8 @@ $form->flash();
 
     // api
     $utility->buffer();
-    $form->text('Google Maps API Key', array(), array('help' => '<a target="blank" href="https://developers.google.com/maps/documentation/embed/guide#api_key">Get Your Google Maps API</a> to activate maps in the theme.'));
+    $help = '<a target="blank" href="https://developers.google.com/maps/documentation/embed/guide#api_key">Get Your Google Maps API</a> to activate maps in the theme.';
+    $form->text('Google Maps API Key', array(), array('help' => $help));
     $utility->buffer('api');
 
     // save

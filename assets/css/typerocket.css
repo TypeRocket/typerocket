@@ -10,6 +10,19 @@
   margin-top: 20px;
 }
 
+.typerocket-rest-alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  padding: 20px 20px;
+  line-height: 1.4em;
+  width: 100%;
+  text-align: center;
+  background: green;
+  color: #fff;
+}
+
 .tr-dev-alert-helper {
   padding: 15px;
   -webkit-box-sizing: border-box;

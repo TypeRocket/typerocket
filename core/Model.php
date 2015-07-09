@@ -16,17 +16,6 @@ class Model {
 		$this->controller = $this->action = $this->item_id = $this->form_obj = $this->fields = null;
 	}
 
-	function save_post( $post_id, $action = 'update', $form_obj = null ) {
-
-		$this->controller = 'post';
-		$this->action     = $action;
-		$this->item_id    = $post_id;
-		$this->form_obj   = $form_obj;
-
-		$this->controller_switch();
-		$this->reset();
-	}
-
 	function save_user( $user_id, $action = 'update', $form_obj = null ) {
 		if ( current_user_can( 'edit_user', $user_id ) ) {
 			$this->controller = 'user';
@@ -44,17 +33,6 @@ class Model {
 		$this->controller = 'comment';
 		$this->action     = $action;
 		$this->item_id    = $comment_id;
-		$this->form_obj   = $form_obj;
-
-		$this->controller_switch();
-		$this->reset();
-	}
-
-	function save_option( $action = 'update', $form_obj = null ) {
-
-		$this->controller = 'option';
-		$this->action     = $action;
-		$this->item_id    = null;
 		$this->form_obj   = $form_obj;
 
 		$this->controller_switch();
@@ -92,17 +70,11 @@ class Model {
 
 		if ( $validated === true ) {
 			switch ( $this->controller ) {
-				case 'post' :
-					$this->post_action_switch();
-					break;
 				case 'user' :
 					$this->user_action_switch();
 					break;
 				case 'comment' :
 					$this->comment_action_switch();
-					break;
-				case 'option' :
-					$this->option_action_switch();
 					break;
 				default :
 					if ( is_array( $this->switch_callback ) ) {
@@ -117,25 +89,6 @@ class Model {
 		}
 
 		do_action( 'tr_end_save', $_POST, $this, $validated );
-	}
-
-	private function post_action_switch() {
-		if ( isset( $_POST['_tr_builtin_data'] ) && $this->action == 'update' ) :
-			remove_action( 'save_post', array( $this, 'save_post' ) );
-			$_POST['_tr_builtin_data']['ID'] = $this->item_id;
-			wp_update_post( $_POST['_tr_builtin_data'] );
-			add_action( 'save_post', array( $this, 'save_post' ) );
-		elseif ( $this->action == 'create' ) :
-			remove_action( 'save_post', array( $this, 'save_post' ) );
-			$insert        = array_merge(
-				$this->form_obj->create_defaults,
-				$_POST['_tr_builtin_data'],
-				$this->form_obj->create_statics
-			);
-			$this->item_id = wp_insert_post( $insert );
-			add_action( 'save_post', array( $this, 'save_post' ) );
-		endif;
-		$this->post_meta_actions();
 	}
 
 	private function user_action_switch() {
@@ -159,34 +112,6 @@ class Model {
 		$this->comment_meta_actions();
 	}
 
-	private function option_action_switch() {
-		$this->option_actions();
-	}
-
-	private function post_meta_actions() {
-
-		if ( is_array( $this->fields ) ) :
-			if ( $parent_id = wp_is_post_revision( $this->item_id ) ) {
-				$this->item_id = $parent_id;
-			}
-
-			foreach ( $this->fields as $key => $value ) :
-				if ( is_string( $value ) ) {
-					$value = trim( $value );
-				}
-
-				$current_value = get_post_meta( $this->item_id, $key, true );
-
-				if ( ( isset( $value ) && $value !== "" ) && $value !== $current_value ) :
-					update_post_meta( $this->item_id, $key, $value );
-				elseif ( ! isset( $value ) || $value === "" && ( isset( $current_value ) || $current_value === "" ) ) :
-					delete_post_meta( $this->item_id, $key );
-				endif;
-
-			endforeach;
-		endif;
-	}
-
 	private function comment_meta_actions() {
 
 		if ( is_array( $this->fields ) ) :
@@ -201,26 +126,6 @@ class Model {
 					update_comment_meta( $this->item_id, $key, $value );
 				elseif ( ! isset( $value ) || $value === "" && ( isset( $current_value ) || $current_value === "" ) ) :
 					delete_comment_meta( $this->item_id, $key );
-				endif;
-
-			endforeach;
-		endif;
-	}
-
-	private function option_actions() {
-		if ( is_array( $this->fields ) ) :
-			foreach ( $this->fields as $key => $value ) :
-
-				if ( is_string( $value ) ) {
-					$value = trim( $value );
-				}
-
-				$current_meta = get_option( $key );
-
-				if ( ( isset( $value ) && $value !== "" ) && $current_meta !== $value ) :
-					update_option( $key, $value );
-				elseif ( ! isset( $value ) || $value === "" && ( isset( $current_meta ) || $current_meta === "" ) ) :
-					delete_option( $key );
 				endif;
 
 			endforeach;

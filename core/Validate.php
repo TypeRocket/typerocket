@@ -49,7 +49,7 @@ class Validate {
    * @return bool
    *
    */
-  static function validate_hex( $hex ) {
+  static function hex( $hex ) {
     $hex = trim( $hex );
     /* Strip recognized prefixes. */
     if ( 0 === strpos( $hex, '#' ) ) {

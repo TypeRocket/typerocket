@@ -1,8 +1,8 @@
 <?php
 
-namespace TypeRocket\Models;
+namespace TypeRocket\Controllers;
 
-class Post extends Model
+class Post extends Controller
 {
 
     public $post = null;
@@ -16,6 +16,7 @@ class Post extends Model
 
     function validate()
     {
+        parent::validate();
         $this->valid = apply_filters( 'tr_post_validate', $this->valid, $this );
 
         return $this->valid;
@@ -23,6 +24,7 @@ class Post extends Model
 
     function sanitize()
     {
+        parent::sanitize();
         $this->fields = apply_filters( 'tr_post_sanitize', $_POST['tr'], $this );
     }
 
