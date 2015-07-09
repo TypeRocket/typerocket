@@ -16,7 +16,7 @@ class Form
     public $current_field = '';
     public $get_values = true;
     private $group = null;
-    public $sub = null;
+    private $sub = null;
     public $debug = null;
     public $settings = array();
 
@@ -88,6 +88,23 @@ class Form
         }
 
         return $this;
+    }
+
+    public function getGroup() {
+        return $this->group;
+    }
+
+    public function setSub( $sub )
+    {
+        if (Validate::bracket( $sub )) {
+            $this->sub = $sub;
+        }
+
+        return $this;
+    }
+
+    public function getSub() {
+        return $this->sub;
     }
 
     public function setSettings( array $settings )
@@ -189,52 +206,12 @@ class Form
 
     /**
      * @param \TypeRocket\Fields\Field $field_obj
-     * @param $name
-     * @param $settings
+     *
+     * @return $this
      */
-    private function setup_field( &$field_obj, $name, &$settings )
-    {
-
-        do_action( 'tr_start_setup_field', $this, $field_obj, $name, $settings );
-
-        if (is_string( $this->group ) && empty( $settings['group'] )) {
-            $settings['group'] = $this->group;
-        }
-
-        if (is_string( $this->sub ) && empty( $settings['sub'] )) {
-            $settings['sub'] = $this->sub;
-        }
-
-        if (isset( $settings['builtin'] ) && $settings['builtin'] == true) {
-            $field_obj->builtin = true;
-        }
-
-        $field_obj->connect_form( $this );
-        $field_obj->setup( $name, $settings['group'], $settings['sub'] );
-        if ( ! isset( $settings['label'] )) {
-            $settings['label'] = $name;
-        }
-
-        if ($settings['template'] == true) {
-            $field_obj->attr['data-name'] = $field_obj->attr['name'];
-            unset( $field_obj->attr['name'] );
-            unset( $field_obj->attr['id'] );
-        }
-
-        do_action( 'tr_end_setup_field', $this, $field_obj, $name, $settings );
-
-    }
-
-    /**
-     * @param \TypeRocket\Fields\Field $field_obj
-     * @param array $settings
-     * @param bool $label
-     */
-    public function addField( $field_obj, $settings = array(), $label = true )
+    public function addField( $field_obj )
     {
         $this->current_field           = $field_obj;
-        $this->current_field->settings = $settings;
-        $this->current_field->label    = $label;
         $field                         = $this->current_field->render();
         $label                         = $this->label();
         $id                            = esc_attr( $this->current_field->settings['id'] );
@@ -272,6 +249,8 @@ class Form
         }
         $this->_e( $html );
         $this->current_field = null;
+
+        return $this;
     }
 
     private function label()
@@ -438,6 +417,7 @@ class Form
 
         $this->debug = null;
 
+        return $this;
     }
 
     public function render_fields( $fields = array(), $type = null )
@@ -467,26 +447,16 @@ class Form
             }
 
         }
+
+        return $this;
     }
 
-    public function setup_field_attr( $field, $attr )
-    {
-
-        if (array_key_exists( 'class', $attr )) {
-            $field->attr['class'] .= ' ' . $attr['class'];
-        }
-
-        $field->attr = array_merge( $attr, $field->attr );
-
-        return $field->attr;
-    }
 
     public function text( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Text();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->addField( $field, $settings, $label );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -494,10 +464,9 @@ class Form
     public function input( $type, $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Text();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr = $this->setup_field_attr( $field, $attr );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
         $field->type = $type;
-        $this->addField( $field, $settings, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -505,11 +474,10 @@ class Form
     public function password( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Text();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr                 = $this->setup_field_attr( $field, $attr );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
         $field->type                 = 'password';
         $field->attr['autocomplete'] = 'off';
-        $this->addField( $field, $settings, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -517,11 +485,10 @@ class Form
     public function hidden( $name, $attr = array(), $settings = array(), $label = false )
     {
         $field = new Fields\Text();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr      = $this->setup_field_attr( $field, $attr );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
         $field->type      = 'hidden';
         $settings['html'] = false;
-        $this->addField( $field, $settings, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -529,10 +496,9 @@ class Form
     public function submit( $name, $attr = array(), $settings = array(), $label = false )
     {
         $field = new Fields\Submit();
-        $this->setup_field( $field, $name, $settings );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
         $field->attr['value'] = $name;
-        $field->attr          = $this->setup_field_attr( $field, $attr );
-        $this->addField( $field, $settings, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -540,9 +506,8 @@ class Form
     public function textarea( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Textarea();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->addField( $field, $settings, $label );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -550,10 +515,9 @@ class Form
     public function radio( $name, $options, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Radio();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr    = $this->setup_field_attr( $field, $attr );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
         $field->options = $options;
-        $this->addField( $field, $settings, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -561,9 +525,8 @@ class Form
     public function checkbox( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Checkbox();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->addField( $field, $settings, $label );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -571,10 +534,9 @@ class Form
     public function select( $name, $options, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Select();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr    = $this->setup_field_attr( $field, $attr );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
         $field->options = $options;
-        $this->addField( $field, $settings, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -582,10 +544,9 @@ class Form
     public function wp_editor( $name, $options = array(), $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Editor();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr    = $this->setup_field_attr( $field, $attr );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
         $field->options = $options;
-        $this->addField( $field, $settings, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -593,9 +554,8 @@ class Form
     public function color( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Color();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->addField( $field, $settings, $label );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -603,9 +563,8 @@ class Form
     public function date( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Date();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->addField( $field, $settings, $label );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -613,9 +572,8 @@ class Form
     public function image( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Image();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->addField( $field, $settings, $label );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -623,9 +581,8 @@ class Form
     public function file( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\File();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->addField( $field, $settings, $label );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -633,9 +590,8 @@ class Form
     public function gallery( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Gallery();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->addField( $field, $settings, $label );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $this->addField( $field );
 
         return $this;
     }
@@ -643,18 +599,25 @@ class Form
     public function items( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Items();
-        $this->setup_field( $field, $name, $settings );
-        $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->addField( $field, $settings, $label );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $this->addField( $field );
 
         return $this;
     }
 
-    public function custom( &$field, $name, $attr = array(), $settings = array(), $label = true )
+    /**
+     * @param Fields\Field $field
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
+    public function custom( $field, $name, $attr = array(), $settings = array(), $label = true )
     {
-        $this->setup_field( $field, $name, $settings );
-        $field->attr = $this->setup_field_attr( $field, $attr );
-        $this->addField( $field, $settings, $label );
+        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $this->addField( $field );
 
         return $this;
     }
