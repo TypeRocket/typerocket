@@ -15,7 +15,9 @@ class Select extends Field
 
     function render()
     {
-        $option     = esc_attr( $this->getValue() );
+        $default = $this->getSetting('default');
+        $option     = ! is_null($this->getValue()) ? $this->getValue() : $default;
+
         $generator  = new Generator();
         $generator->newElement( 'select', $this->getAttributes() );
 

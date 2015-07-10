@@ -3,34 +3,42 @@ namespace TypeRocket\Fields;
 
 use \TypeRocket\Html as Html;
 
-class Radio extends Field {
+class Radio extends Field
+{
 
-  public $options = array();
+    public $options = array();
 
-  function render() {
-    $name = $this->attr['name'];
-    $this->type = 'radio';
-    $option = esc_attr($this->getValue());
-    unset($this->attr['name']);
-    unset($this->attr['id']);
-    $field = '<ul class="data-full">';
-
-
-    foreach($this->options as $key => $value) {
-      if($option == $value) {
-        $this->attr['checked'] = 'checked';
-      }
-      else {
-        unset($this->attr['checked']);
-      }
-
-      $field .= "<li><label>";
-      $field .= Html::input($this->type, $name, $value, $this->attr);
-      $field .= "<span>{$key}</span></label>";
+    public function __construct()
+    {
+        $this->setType( 'radio' );
     }
 
-    $field .= '</ul>';
-    return $field;
-  }
+    function render()
+    {
+        $name       = $this->getAttribute('name');
+        $default = $this->getSetting('default');
+        $option     = ! is_null($this->getValue()) ? $this->getValue() : $default;
+        $this->removeAttribute('name');
+        $this->removeAttribute('id');
+        $generator = new Html\Generator();
+
+        $field = '<ul class="data-full">';
+
+        foreach ($this->options as $key => $value) {
+            if ($option == $value) {
+                $this->setAttribute('checked', 'checked');
+            } else {
+                $this->removeAttribute('checked');
+            }
+
+            $field .= "<li><label>";
+            $field .= $generator->newInput( $this->getType(), $name, $value, $this->getAttributes() )->getString();
+            $field .= "<span>{$key}</span></label>";
+        }
+
+        $field .= '</ul>';
+
+        return $field;
+    }
 
 }

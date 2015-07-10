@@ -32,6 +32,7 @@
   width: 1.8em;
   height: 1.8em;
   text-indent: -9999px;
+  cursor: pointer;
 }
 
 .ui-datepicker .ui-datepicker-prev-hover,
@@ -59,6 +60,14 @@
   margin-right: 3px;
   margin-top: 6px;
   border-left-color: #999;
+}
+
+.ui-datepicker .ui-datepicker-prev:hover:after {
+  border-right-color: #21759B;
+}
+
+.ui-datepicker .ui-datepicker-next:hover:after {
+  border-left-color: #21759B;
 }
 
 .ui-datepicker .ui-datepicker-next {

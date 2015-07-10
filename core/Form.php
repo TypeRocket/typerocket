@@ -7,18 +7,18 @@ use TypeRocket\Html\Tag as Tag;
 class Form
 {
 
-    public $id = 'tr_the_form';
-    public $controller = null;
-    public $action = null;
-    public $item_id = null;
+    private $id = 'tr_the_form';
+    private $controller = null;
+    private $action = null;
+    private $item_id = null;
 
     /** @var \TypeRocket\Fields\Field $currentField */
-    public $currentField = '';
-    public $populate = true;
+    private $currentField = '';
+    private $populate = true;
     private $group = null;
     private $sub = null;
     private $debugStatus = null;
-    public $settings = array();
+    private $settings = array();
 
     function __construct()
     {
@@ -148,7 +148,7 @@ class Form
         }
     }
 
-    public function _e( $v )
+    private function _e( $v )
     {
         echo $v;
     }
@@ -219,7 +219,7 @@ class Form
      *
      * @return $this
      */
-    public function addField( $field_obj )
+    private function addField( $field_obj )
     {
         $this->currentField           = $field_obj;
         $field                         = $this->currentField->render();
@@ -307,7 +307,7 @@ class Form
         return $html;
     }
 
-    public function repeater( $name, $fields, $settings = array(), $label = 'Repeater' )
+    public function repeater( $name, $fields, array $settings = array(), $label = 'Repeater' )
     {
         $paths = Config::getPaths();
         wp_enqueue_script( 'typerocket-booyah', $paths['urls']['assets'] . '/js/booyah.js', array( 'jquery' ), '1.0',
@@ -401,7 +401,7 @@ class Form
         return $this;
     }
 
-    public function render_fields( $fields = array(), $type = null )
+    public function render_fields( array $fields = array(), $type = null )
     {
         foreach ($fields as $args) {
 
@@ -433,7 +433,7 @@ class Form
     }
 
 
-    public function text( $name, $attr = array(), $settings = array(), $label = true )
+    public function text( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Text();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label );
@@ -442,7 +442,7 @@ class Form
         return $this;
     }
 
-    public function input( $type, $name, $attr = array(), $settings = array(), $label = true )
+    public function input( $type, $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Text();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label )->setType($type);
@@ -451,7 +451,7 @@ class Form
         return $this;
     }
 
-    public function password( $name, $attr = array(), $settings = array(), $label = true )
+    public function password( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Text();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label )->setType('password');
@@ -461,7 +461,7 @@ class Form
         return $this;
     }
 
-    public function hidden( $name, $attr = array(), $settings = array(), $label = false )
+    public function hidden( $name, array $attr = array(), array $settings = array(), $label = false )
     {
         $field = new Fields\Text();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label )->setType('hidden');
@@ -471,7 +471,7 @@ class Form
         return $this;
     }
 
-    public function submit( $name, $attr = array(), $settings = array(), $label = false )
+    public function submit( $name, array $attr = array(), array $settings = array(), $label = false )
     {
         $field = new Fields\Submit();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label );
@@ -481,7 +481,7 @@ class Form
         return $this;
     }
 
-    public function textarea( $name, $attr = array(), $settings = array(), $label = true )
+    public function textarea( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Textarea();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label );
@@ -490,7 +490,7 @@ class Form
         return $this;
     }
 
-    public function radio( $name, $options, $attr = array(), $settings = array(), $label = true )
+    public function radio( $name, array $options, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Radio();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label );
@@ -500,7 +500,7 @@ class Form
         return $this;
     }
 
-    public function checkbox( $name, $attr = array(), $settings = array(), $label = true )
+    public function checkbox( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Checkbox();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label );
@@ -509,7 +509,7 @@ class Form
         return $this;
     }
 
-    public function select( $name, $options, $attr = array(), $settings = array(), $label = true )
+    public function select( $name, array $options, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Select();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label );
@@ -519,7 +519,7 @@ class Form
         return $this;
     }
 
-    public function wp_editor( $name, $options = array(), $attr = array(), $settings = array(), $label = true )
+    public function wp_editor( $name, array $options = array(), array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Editor();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label );
@@ -529,7 +529,7 @@ class Form
         return $this;
     }
 
-    public function color( $name, $attr = array(), $settings = array(), $label = true )
+    public function color( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Color();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label );
@@ -538,7 +538,7 @@ class Form
         return $this;
     }
 
-    public function date( $name, $attr = array(), $settings = array(), $label = true )
+    public function date( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Date();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label );
@@ -547,7 +547,7 @@ class Form
         return $this;
     }
 
-    public function image( $name, $attr = array(), $settings = array(), $label = true )
+    public function image( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Image();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label );
@@ -556,7 +556,7 @@ class Form
         return $this;
     }
 
-    public function file( $name, $attr = array(), $settings = array(), $label = true )
+    public function file( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\File();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label );
@@ -565,7 +565,7 @@ class Form
         return $this;
     }
 
-    public function gallery( $name, $attr = array(), $settings = array(), $label = true )
+    public function gallery( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Gallery();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label );
@@ -574,7 +574,7 @@ class Form
         return $this;
     }
 
-    public function items( $name, $attr = array(), $settings = array(), $label = true )
+    public function items( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Items();
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label );
@@ -592,7 +592,7 @@ class Form
      *
      * @return $this
      */
-    public function renderCustomField( $field, $name, $attr = array(), $settings = array(), $label = true )
+    public function renderCustomField( $field, $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field->setupByForm( $this )->setup( $name, $settings, $attr, $label );
         $this->addField( $field );

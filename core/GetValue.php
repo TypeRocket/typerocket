@@ -33,7 +33,7 @@ class GetValue
 
             if ( ! empty( $keys ) && is_array( $keys )) {
                 foreach ($keys as $name) {
-                    $data = isset( $data[$name] ) ? $data[$name] : false;
+                    $data = isset( $data[$name] ) ? $data[$name] : null;
                 }
             }
 

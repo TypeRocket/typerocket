@@ -1,14 +1,15 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html\Generator as Generator;
+use \TypeRocket\Html\Generator as Generator,
+    \TypeRocket\Config as Config;
 
 class Gallery extends Field
 {
 
     function __construct()
     {
-        $paths = \TypeRocket\Config::getPaths();
+        $paths = Config::getPaths();
         wp_enqueue_media();
         wp_enqueue_script( 'typerocket-media', $paths['urls']['assets'] . '/js/media.js', array( 'jquery' ), '1.0',
             true );
@@ -16,10 +17,10 @@ class Gallery extends Field
 
     function render()
     {
-        $name                = $this->attr['name'];
-        $this->attr['class'] = 'image-picker';
+        $name                = $this->getAttribute('name');
+        $this->setAttribute('class', 'image-picker');
         $images              = $this->getValue();
-        unset( $this->attr['name'] );
+        $this->removeAttribute('name');
         $generator = new Generator();
 
         if (empty( $this->settings['button'] )) {
@@ -32,20 +33,21 @@ class Gallery extends Field
             foreach ($images as $id) {
                 $input = $generator->newInput( 'hidden', $name . '[]', $id )->getString();
                 $image = wp_get_attachment_image( $id, 'thumbnail' );
+                $remove = '#remove';
 
                 if ( ! empty( $image )) {
                     $list .= $generator->newElement( 'li', array(
                         'class' => 'image-picker-placeholder'
                     ),
-                        '<a href="#remove" class="tr-icon-remove2" title="Remove Image"></a>' . $image . $input )->getString();
+                        '<a class="tr-icon-remove2"  title="Remove Image" href="'.$remove.'"></a>' . $image . $input )->getString();
                 }
 
             }
         }
 
-        unset( $this->attr['id'] );
+        $this->removeAttribute('id');
         $container = new Generator();
-        $html      = $generator->newInput( 'hidden', $name, '0', $this->attr )->getString();
+        $html      = $generator->newInput( 'hidden', $name, '0', $this->getAttributes() )->getString();
 
         $button = $generator->newElement( 'input', array(
             'type'  => 'button',

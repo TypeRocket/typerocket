@@ -17,10 +17,11 @@ class Image extends Field
 
     function render()
     {
-        $name                = $this->attr['name'];
-        $this->attr['class'] = 'image-picker';
+        $name                = $this->getAttribute('name');
+        $this->setAttribute('class', 'image-picker');
         $value               = esc_attr( $this->getValue() );
-        unset( $this->attr['name'] );
+
+        $this->removeAttribute('name');
         $generator = new Generator();
 
         if (empty( $this->settings['button'] )) {
@@ -37,7 +38,7 @@ class Image extends Field
             $value = '';
         }
 
-        $html = $generator->newInput( 'hidden', $name, $value, $this->attr )->getString();
+        $html = $generator->newInput( 'hidden', $name, $value, $this->getAttributes() )->getString();
         $html .= '<div class="button-group">';
         $html .= $generator->newElement( 'input', array(
             'type'  => 'button',

@@ -25,7 +25,7 @@ abstract class Field
     private $brackets = null;
 
     public $label = false;
-    public $settings = false;
+    public $settings = array();
     public $builtin = false;
     public $populate = true;
 
@@ -142,16 +142,52 @@ abstract class Field
         return $this;
     }
 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setSetting( $key, $value )
+    {
+        $this->settings[$key] = $value;
+
+        return $this;
+    }
+
+    public function getSetting($key) {
+
+        if( ! array_key_exists($key, $this->settings)) {
+            return null;
+        }
+
+        return $this->settings[$key];
+    }
+
     public function setPrefix( $prefix )
     {
 
-        $this->prefix = $prefix;
+        $this->prefix = (string) $prefix;
 
         if ($this->builtin == true) {
             $this->prefix = '_tr_builtin_data';
         }
 
         return $this;
+    }
+
+    public function appendStringToAttribute($key, $text) {
+
+        if(array_key_exists($key, $this->attr)) {
+            $text .= $this->attr[$key] . (string) $text;
+        }
+
+        $this->attr[$key] = $text;
+
+        return $this;
+    }
+
+    public function getPrefix() {
+        return $this->prefix;
     }
 
     /**
@@ -210,7 +246,7 @@ abstract class Field
     {
 
         if ($this->populate == false) {
-            return false;
+            return null;
         }
 
         $getter = new GetValue();

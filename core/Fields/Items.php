@@ -1,65 +1,68 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html as Html;
+use \TypeRocket\Html\Generator as Generator;
 
-class Items extends Field {
+class Items extends Field
+{
 
-	function __construct() {
-		$paths = \TypeRocket\Config::getPaths();
-		wp_enqueue_script( 'typerocket-items-list', $paths['urls']['assets'] . '/js/items-list.js', array( 'jquery' ),
-			'1.0', true );
-	}
+    function __construct()
+    {
+        $paths = \TypeRocket\Config::getPaths();
+        wp_enqueue_script( 'typerocket-items-list', $paths['urls']['assets'] . '/js/items-list.js', array( 'jquery' ),
+            '1.0', true );
+    }
 
-	function render() {
-		$name                = $this->attr['name'];
-		$this->attr['class'] = 'items-list';
-		$items               = $this->getValue();
-		unset( $this->attr['name'] );
+    function render()
+    {
+        $name = $this->getAttribute( 'name' );
+        $this->appendStringToAttribute( 'class', ' items-list' );
+        // $this->attr['class'] = 'items-list';
+        $items = $this->getValue();
+        $this->removeAttribute('name');
+        $generator = new Generator();
 
-		if ( empty( $this->settings['button'] ) ) {
-			$this->settings['button'] = 'Insert Item';
-		}
+        if (empty( $this->settings['button'] )) {
+            $this->settings['button'] = 'Insert Item';
+        }
 
-		$list = '';
+        $list = '';
 
-		if ( is_array( $items ) ) {
-			foreach ( $items as $value ) {
-				$input = Html::input( 'text', $name . '[]', esc_attr( $value ) );
+        if (is_array( $items )) {
+            foreach ($items as $value) {
+                $input = $generator->newInput( 'text', $name . '[]', esc_attr( $value ) )->getString();
 
-				$list .= Html::element( 'li', array(
-					'class' => 'item'
-				),
-					'<div class="move tr-icon-menu"></div><a href="#remove" class="tr-icon-remove2 remove" title="Remove Item"></a>' . $input );
+                $list .= $generator->newElement( 'li', array( 'class' => 'item' ),
+                    '<div class="move tr-icon-menu"></div><a href="#remove" class="tr-icon-remove2 remove" title="Remove Item"></a>' . $input )->getString();
 
-			}
-		}
+            }
+        }
 
-		unset( $this->attr['id'] );
-		$html = Html::input( 'hidden', $name, 'no', $this->attr );
-		$html .= '<div class="button-group">';
-		$html .= Html::element( 'input', array(
-			'type'  => 'button',
-			'class' => 'items-list-button button',
-			'value' => $this->settings['button']
-		) );
-		$html .= Html::element( 'input', array(
-			'type'  => 'button',
-			'class' => 'items-list-clear button',
-			'value' => 'Clear'
-		) );
-		$html .= '</div>';
+        $this->removeAttribute('id');
+        $html = $generator->newInput( 'hidden', $name, 'no', $this->getAttributes() )->getString();
+        $html .= '<div class="button-group">';
+        $html .= $generator->newElement( 'input', array(
+            'type'  => 'button',
+            'class' => 'items-list-button button',
+            'value' => $this->settings['button']
+        ) )->getString();
+        $html .= $generator->newElement( 'input', array(
+            'type'  => 'button',
+            'class' => 'items-list-clear button',
+            'value' => 'Clear'
+        ) )->getString();
+        $html .= '</div>';
 
-		if ( is_null( $name ) && is_string( $this->attr['data-name'] ) ) {
-			$name = $this->attr['data-name'];
-		}
+        if (is_null( $name ) && is_string( $this->getAttribute('data-name') )) {
+            $name = $this->getAttribute('data-name');
+        }
 
-		$html .= Html::element( 'ul', array(
-			'data-name' => $name,
-			'class'     => 'tr-items-list cf'
-		), $list );
+        $html .= $generator->newElement( 'ul', array(
+            'data-name' => $name,
+            'class'     => 'tr-items-list cf'
+        ), $list )->getString();
 
-		return $html;
-	}
+        return $html;
+    }
 
 }

@@ -1,33 +1,34 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html as Html;
+use \TypeRocket\Html\Generator as Generator;
 
-class Color extends Field {
+class Color extends Field
+{
 
-  function __construct() {
-    wp_enqueue_style( 'wp-color-picker' );
-    wp_enqueue_script( 'wp-color-picker' );
-  }
-
-  function render() {
-    $name = $this->attr['name'];
-    $value = esc_attr($this->getValue());
-    unset($this->attr['name']);
-
-    if(isset($this->attr['class'])) {
-      $this->attr['class'] .= ' color-picker';
-    } else {
-      $this->attr['class'] = 'color-picker';
+    function __construct()
+    {
+        wp_enqueue_style( 'wp-color-picker' );
+        wp_enqueue_script( 'wp-color-picker' );
     }
 
-    wp_localize_script('typerocket-scripts', $this->prefix.'_'.$this->name.'_color_palette', $this->settings['palette'] );
+    function render()
+    {
+        $name  = $this->getAttribute( 'name' );
+        $value = esc_attr( $this->getValue() );
+        $this->removeAttribute( 'name' );
+        $this->appendStringToAttribute( 'class', ' color-picker' );
 
-    if(isset($this->settings['default'])) {
-      $this->attr['data-default-color'] = $this->settings['default'];
+        wp_localize_script( 'typerocket-scripts', $this->getPrefix() . '_' . $this->getName() . '_color_palette',
+            $this->settings['palette'] );
+
+        if (isset( $this->settings['default'] )) {
+            $this->setAttribute( 'data-default-color', $this->settings['default'] );
+        }
+
+        $input = new Generator();
+
+        return $input->newInput( $this->getType(), $name, $value, $this->getAttributes() )->getString();
     }
-
-    return Html::input($this->type, $name, $value, $this->attr);
-  }
 
 }
