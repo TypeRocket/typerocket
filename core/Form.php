@@ -41,7 +41,7 @@ class Form
 
         $this->setController( $controller );
         $this->setAction( $action );
-        $this->setItem( $item_id );
+        $this->setItemId( $item_id );
         $this->autoConfig();
 
         do_action( 'tr_make_form', $this );
@@ -56,6 +56,11 @@ class Form
         return $this;
     }
 
+    public function getController()
+    {
+        return $this->controller;
+    }
+
     public function setAction( $action )
     {
         $this->action = $action;
@@ -63,13 +68,18 @@ class Form
         return $this;
     }
 
-    public function setItem( $item_id )
+    public function setItemId( $item_id )
     {
         if (isset( $item_id )) {
             $this->item_id = (int) $item_id;
         }
 
         return $this;
+    }
+
+    public function getItemId()
+    {
+        return $this->item_id;
     }
 
     public function setId( $id )
@@ -133,7 +143,7 @@ class Form
                 $controller = 'option';
             }
 
-            $this->setItem( $item_id );
+            $this->setItemId( $item_id );
             $this->setController( $controller );
         }
     }
@@ -277,53 +287,20 @@ class Form
 
     private function debug()
     {
+        $generator = new Generator();
         $html = '';
         if ($this->is_debug() === true && $this->current_field->builtin == false && is_admin() && $this->current_field->debuggable == true) {
-            $html =
-                "<div class=\"dev\">
-        <span class=\"debug\"><i class=\"tr-icon-bug\"></i></span>
-          <span class=\"nav\">
-          <span class=\"field\">
-            <i class=\"tr-icon-code\"></i><span>tr_{$this->controller}_field(\"{$this->current_field->brackets}\");</span>
-          </span>
-        </span>
-      </div>";
+
+            $generator->newElement('div', array('class' => 'dev'));
+            $debugTag = new Tag('span', array('class' => 'dev'), '<i class="tr-icon-bug"></i>');
+            $navTag = new Tag('span', array('class' => 'nav'));
+            $fieldCopyTag = new Tag('span', array('class' => 'field'), '<i class="tr-icon-code"></i>');
+            $fieldCopyTag->appendInnerTag(new Tag('span', array(), "tr_{$this->controller}_field('{$this->current_field->getBrackets()}');"));
+            $navTag->appendInnerTag($fieldCopyTag);
+            $html = $generator->appendInside($debugTag)->appendInside($navTag)->getString();
         }
 
         return $html;
-    }
-
-    public function division( $headline = 'Division', $description = null )
-    {
-        $content = "<div class=\"control-division\">";
-
-        $tags = array(
-            'a'      => array(
-                'href'  => array(),
-                'title' => array()
-            ),
-            'br'     => array(),
-            'em'     => array(),
-            'strong' => array(),
-        );
-
-        if (is_string( $headline )) {
-            $headline = wp_kses( $headline, $tags );
-            $content .= "<h2>{$headline}</h2>";
-        }
-
-        if (is_string( $description )) {
-            $description = wp_kses( $description, $tags );
-            $content .= "<p>{$description}</p>";
-        }
-
-        $content .= "</div>";
-
-        $content = apply_filters( 'tr_from_division', $content, $headline, $description );
-
-        $this->_e( $content );
-
-        return $this;
     }
 
     public function repeater( $name, $fields, $settings = array(), $label = 'Repeater' )
@@ -455,7 +432,7 @@ class Form
     public function text( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Text();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $this->addField( $field );
 
         return $this;
@@ -464,7 +441,7 @@ class Form
     public function input( $type, $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Text();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $field->type = $type;
         $this->addField( $field );
 
@@ -474,7 +451,7 @@ class Form
     public function password( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Text();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $field->type                 = 'password';
         $field->attr['autocomplete'] = 'off';
         $this->addField( $field );
@@ -485,7 +462,7 @@ class Form
     public function hidden( $name, $attr = array(), $settings = array(), $label = false )
     {
         $field = new Fields\Text();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $field->type      = 'hidden';
         $settings['html'] = false;
         $this->addField( $field );
@@ -496,7 +473,7 @@ class Form
     public function submit( $name, $attr = array(), $settings = array(), $label = false )
     {
         $field = new Fields\Submit();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $field->attr['value'] = $name;
         $this->addField( $field );
 
@@ -506,7 +483,7 @@ class Form
     public function textarea( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Textarea();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $this->addField( $field );
 
         return $this;
@@ -515,7 +492,7 @@ class Form
     public function radio( $name, $options, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Radio();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $field->options = $options;
         $this->addField( $field );
 
@@ -525,7 +502,7 @@ class Form
     public function checkbox( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Checkbox();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $this->addField( $field );
 
         return $this;
@@ -534,7 +511,7 @@ class Form
     public function select( $name, $options, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Select();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $field->options = $options;
         $this->addField( $field );
 
@@ -544,7 +521,7 @@ class Form
     public function wp_editor( $name, $options = array(), $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Editor();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $field->options = $options;
         $this->addField( $field );
 
@@ -554,7 +531,7 @@ class Form
     public function color( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Color();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $this->addField( $field );
 
         return $this;
@@ -563,7 +540,7 @@ class Form
     public function date( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Date();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $this->addField( $field );
 
         return $this;
@@ -572,7 +549,7 @@ class Form
     public function image( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Image();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $this->addField( $field );
 
         return $this;
@@ -581,7 +558,7 @@ class Form
     public function file( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\File();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $this->addField( $field );
 
         return $this;
@@ -590,7 +567,7 @@ class Form
     public function gallery( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Gallery();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $this->addField( $field );
 
         return $this;
@@ -599,7 +576,7 @@ class Form
     public function items( $name, $attr = array(), $settings = array(), $label = true )
     {
         $field = new Fields\Items();
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $this->addField( $field );
 
         return $this;
@@ -616,7 +593,7 @@ class Form
      */
     public function custom( $field, $name, $attr = array(), $settings = array(), $label = true )
     {
-        $field->connect_form( $this )->setup( $name, $settings, $attr, $label );
+        $field->connectForm( $this )->setup( $name, $settings, $attr, $label );
         $this->addField( $field );
 
         return $this;

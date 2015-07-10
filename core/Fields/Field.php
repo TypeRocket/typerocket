@@ -1,65 +1,112 @@
 <?php
 namespace TypeRocket\Fields;
 
+use \TypeRocket\Form as Form,
+    \TypeRocket\Validate as Validate,
+    \TypeRocket\Utility as Utility,
+    \TypeRocket\GetField as GetField;
+
 abstract class Field
 {
 
+    // Element attributes
     public $id = null;
     public $name = null;
-    public $group = '';
-    public $type = '';
-    public $sub = '';
-    public $prefix = 'tr';
+    public $type = null;
     public $attr = array();
-    public $brackets = '[]';
-    /** @var \TypeRocket\Form $form */
+
+    // controller settings
+    private $item_id = null;
+    private $controller = null;
+    public $group = null;
+
+    public $sub = null;
+    public $prefix = null;
+    public $brackets = null;
+
     public $label = false;
     public $settings = false;
     public $options = null;
-    public $repeatable = true;
     public $builtin = false;
+    public $repeatable = true;
+    public $fillable = true;
     public $debuggable = true;
 
-    public function connect_form( $form )
+    public function connectForm( $form )
     {
-        if ($form instanceof \TypeRocket\Form) {
+        if ($form instanceof Form) {
             $this->setGroup( $form->getGroup() );
             $this->setSub( $form->getSub() );
+            $this->setItemId( $form->getItemId() );
+            $this->setController( $form->getController() );
         }
 
         return $this;
     }
 
-    public function setGroup($group) {
-        if (\TypeRocket\Validate::bracket( $group )) {
+    public function setGroup( $group )
+    {
+        if (Validate::bracket( $group )) {
             $this->group = $group;
         }
 
         return $this;
     }
 
-    public function setSub($sub) {
-        if (\TypeRocket\Validate::bracket( $sub )) {
+    public function setSub( $sub )
+    {
+        if (Validate::bracket( $sub )) {
             $this->sub = $sub;
         }
 
         return $this;
     }
 
-    public function setName( $name, $group = '', $sub = '' )
+    public function setItemId( $item_id )
     {
-        $utility = new \TypeRocket\Utility();
+        if (isset( $item_id )) {
+            $this->item_id = (int) $item_id;
+        }
+
+        return $this;
+    }
+
+    public function getItemId()
+    {
+        return $this->item_id;
+    }
+
+    public function setController( $controller )
+    {
+        if (isset( $controller )) {
+            $this->controller = $controller;
+        }
+
+        return $this;
+    }
+
+    public function getController()
+    {
+        return $this->controller;
+    }
+
+    public function setName( $name )
+    {
+        $utility = new Utility();
         $utility->sanitize_string( $name );
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function setPrefix( $prefix )
+    {
+
+        $this->prefix = $prefix;
 
         if ($this->builtin == true) {
             $this->prefix = '_tr_builtin_data';
         }
-
-        $this->name         = $name;
-        $this->group        = $group;
-        $this->sub          = $sub;
-        $this->brackets     = $this->get_field_bracket();
-        $this->attr['name'] = $this->prefix . $this->brackets;
 
         return $this;
     }
@@ -73,21 +120,14 @@ abstract class Field
      *
      * @return $this
      */
-    public function setup( $name, $settings, array $attr = array(), $label = true)
+    public function setup( $name, $settings, array $attr = array(), $label = true )
     {
 
         do_action( 'tr_start_setup_field', $this, $name, $settings );
 
         $this->settings = $settings;
-        $this->label = $label;
+        $this->label    = $label;
 
-        if (is_string( $this->form->getGroup() ) && empty( $settings['group'] )) {
-            $settings['group'] = $this->form->getGroup();
-        }
-
-        if (is_string( $this->form->sub ) && empty( $settings['sub'] )) {
-            $settings['sub'] = $this->form->sub;
-        }
 
         if (isset( $settings['builtin'] ) && $settings['builtin'] == true) {
             $this->builtin = true;
@@ -99,13 +139,15 @@ abstract class Field
 
         $this->attr = array_merge( $this->attr, $attr );
 
-        $this->setName( $name, $settings['group'], $settings['sub'] );
+        $this->setPrefix( 'tr' )->setName( $name )->setBrackets( $this->getBrackets() );
+
+        $this->attr['name'] = $this->prefix . $this->brackets;
 
         $html_class = trim( $this->attr['class'] . ' ' . $this->prefix . '_field_class_' . $this->name );
 
         $this->attr['class'] = apply_filters( 'tr_field_html_class_filter', $html_class, $this );
 
-        if ( ! isset( $settings['label'] ) ) {
+        if ( ! isset( $settings['label'] )) {
             $this->settings['label'] = $name;
         }
 
@@ -124,18 +166,25 @@ abstract class Field
     public function getValue()
     {
 
-        if ($this->form->get_values == false) {
+        if ($this->fillable == false) {
             return null;
         }
 
-        $getter = new \TypeRocket\GetField();
+        $getter = new GetField();
 
-        return $getter->value_from_field_obj( $this );
+        return $getter->getFieldValue( $this );
     }
 
-    public function get_field_bracket()
+    public function getBrackets()
     {
         return "{$this->group}[{$this->name}]{$this->sub}";
+    }
+
+    public function setBrackets( $brackets )
+    {
+        $this->brackets = $brackets;
+
+        return $this;
     }
 
     public function render()
