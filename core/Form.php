@@ -124,6 +124,16 @@ class Form
         return $this;
     }
 
+    public function setPopulate($populate) {
+        $this->populate = (bool) $populate;
+
+        return $this;
+    }
+
+    function getPopulate() {
+        return $this->populate;
+    }
+
     private function autoConfig()
     {
         if ($this->controller === 'auto') {
@@ -224,7 +234,7 @@ class Form
         $this->currentField           = $field_obj;
         $field                         = $this->currentField->render();
         $label                         = $this->label();
-        $id                            = esc_attr( $this->currentField->settings['id'] );
+        $id                            = esc_attr( $this->currentField->getSetting('id') );
 
         if ( ! empty( $id )) {
             $id = "id=\"{$id}\"";
@@ -232,8 +242,8 @@ class Form
             $id = '';
         }
 
-        if (isset( $this->currentField->settings['help'] )) {
-            $help = $this->currentField->settings['help'];
+        if ( $this->currentField->getSetting('help') ) {
+            $help = $this->currentField->getSetting('help');
             $help =
                 "<div class=\"help\">
           <p>{$help}</p>
@@ -242,7 +252,7 @@ class Form
             $help = '';
         }
 
-        if (empty( $this->currentField->settings['html'] ) && $this->currentField->settings['html'] === false) {
+        if ( $this->currentField->getSetting('html') === false) {
             $html = $field;
         } else {
 
@@ -271,7 +281,7 @@ class Form
         $html       = '';
 
         if ($this->currentField->label !== false) {
-            $label = $this->currentField->settings['label'];
+            $label = $this->currentField->getSetting('label');
             $html  = "{$open_html}{$label} {$debug}{$close_html}";
         } elseif ($debug !== '') {
             $html = "{$open_html}{$debug}{$close_html}";

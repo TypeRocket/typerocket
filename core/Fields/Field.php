@@ -25,7 +25,7 @@ abstract class Field
     private $brackets = null;
 
     public $label = false;
-    public $settings = array();
+    private $settings = array();
     public $builtin = false;
     public $populate = true;
 
@@ -36,6 +36,7 @@ abstract class Field
             $this->setSub( $form->getSub() );
             $this->setItemId( $form->getItemId() );
             $this->setController( $form->getController() );
+            $this->setPopulate( $form->getPopulate() );
         }
 
         return $this;
@@ -63,6 +64,16 @@ abstract class Field
         $this->attr = $attributes;
 
         return $this;
+    }
+
+    public function setPopulate($populate) {
+        $this->populate = (bool) $populate;
+
+        return $this;
+    }
+
+    function getPopulate() {
+        return $this->populate;
     }
 
     public function getAttributes() {

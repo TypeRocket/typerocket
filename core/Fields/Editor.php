@@ -20,7 +20,7 @@ class Editor extends Field
         $settings = $this->options;
 
         $override = array(
-            'textarea_name' => $this->attr['name']
+            'textarea_name' => $this->getAttribute('name')
         );
 
         $defaults = array(
@@ -32,7 +32,7 @@ class Editor extends Field
         $settings = array_merge( $defaults, $settings, $override );
 
         ob_start();
-        wp_editor( $value, 'wp_editor_' . $this->name, $settings );
+        wp_editor( $value, 'wp_editor_' . $this->getName(), $settings );
         $html = ob_get_clean();
 
         return $html;
