@@ -2,9 +2,9 @@
 
 <?php
 $form = new \TypeRocket\Form();
-$form->id = $this->name;
-$form->setGroup('['.$this->name.']');
-$form->action = 'update';
+$form->setId($this->name);
+$form->setGroup($this->name);
+$form->setAction('update');
 $form->make();
 ?>
 
@@ -24,7 +24,7 @@ $form->make();
         array('text', array('Email')),
     );
 
-    $form->render_fields($contact);
+    $form->renderFields($contact);
     $utility->buffer('about');
 
     // api

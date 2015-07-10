@@ -44,10 +44,10 @@ class Post extends Controller
     protected function update()
     {
         if (isset( $_POST['_tr_builtin_data'] )) {
-            remove_action( 'save_post', array( $this, 'save_post' ) );
+            remove_action( 'save_post', array( $this, 'hook' ), 1999909 );
             $_POST['_tr_builtin_data']['ID'] = $this->item_id;
             wp_update_post( $_POST['_tr_builtin_data'] );
-            add_action( 'save_post', array( $this, 'save_post' ) );
+            add_action( 'save_post', array( $this, 'hook' ), 1999909, 2 );
         }
 
         $this->saveMeta();
@@ -55,14 +55,14 @@ class Post extends Controller
 
     protected function create()
     {
-        remove_action( 'save_post', array( $this, 'save_post' ) );
+        remove_action( 'save_post', array( $this, 'hook' ) );
         $insert        = array_merge(
             $this->defaultValues,
             $_POST['_tr_builtin_data'],
             $this->staticValues
         );
         $this->item_id = wp_insert_post( $insert );
-        add_action( 'save_post', array( $this, 'save_post' ) );
+        add_action( 'save_post', array( $this, 'hook' ) );
         $this->saveMeta();
     }
 

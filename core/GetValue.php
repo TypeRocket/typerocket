@@ -20,7 +20,7 @@ class GetValue
      */
     function getFromField( $field )
     {
-        return $this->value( $field->getBrackets(), $field->getItemID(), $field->getController(), $field->builtin );
+        return $this->value( $field->getBrackets(), $field->getItemID(), $field->getController(), $field->getBuiltin() );
     }
 
     function parse_value_data( $data, $keys )

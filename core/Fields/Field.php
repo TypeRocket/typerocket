@@ -24,10 +24,18 @@ abstract class Field
     private $sub = null;
     private $brackets = null;
 
-    public $label = false;
+    private $label = false;
     private $settings = array();
-    public $builtin = false;
-    public $populate = true;
+    private $builtin = false;
+    private $populate = true;
+
+    public function __get( $property )
+    {
+    }
+
+    public function __set( $property, $value )
+    {
+    }
 
     public function setupByForm( $form )
     {
@@ -74,6 +82,26 @@ abstract class Field
 
     function getPopulate() {
         return $this->populate;
+    }
+
+    public function setBuiltin($in) {
+        $this->builtin = (bool) $in;
+
+        return $this;
+    }
+
+    function getBuiltin() {
+        return $this->populate;
+    }
+
+    public function setLabel($label) {
+        $this->label = (bool) $label;
+
+        return $this;
+    }
+
+    function getLabel() {
+        return $this->label;
     }
 
     public function getAttributes() {
@@ -212,17 +240,17 @@ abstract class Field
 
     /**
      * @param $name
-     * @param $settings
      * @param array $attr
+     * @param array $settings
      *
      * @param bool $label
      *
      * @return $this
      */
-    public function setup( $name, array $settings = array(), array $attr = array(), $label = true )
+    public function setup( $name, array $attr = array(), array $settings = array(), $label = true )
     {
 
-        do_action( 'tr_start_setup_field', $this, $name, $settings, $attr, $label );
+        do_action( 'tr_start_setup_field', $this, $name, $attr, $settings, $label );
 
         $this->settings = $settings;
         $this->label    = $label;
@@ -256,7 +284,7 @@ abstract class Field
             unset( $this->attr['id'] );
         }
 
-        do_action( 'tr_end_setup_field', $this, $name, $settings, $attr, $label);
+        do_action( 'tr_end_setup_field', $this, $name, $attr, $settings, $label);
 
         return $this;
 

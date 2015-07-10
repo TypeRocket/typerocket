@@ -10,8 +10,8 @@ class Dev {
         $controller = $field->getController();
         $function = "tr_{$controller}_field('{$brackets}');";
 
-        if($field->builtin) {
-            $function = 'Builtin as: ' . $field->name;
+        if($field->getBuiltin()) {
+            $function = 'Builtin as: ' . $field->getName();
         }
 
         return $function;
