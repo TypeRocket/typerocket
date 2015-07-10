@@ -5,6 +5,8 @@ namespace TypeRocket\Controllers;
 class User extends Controller
 {
 
+    public $user = null;
+
     function hook( $user_id, $user )
     {
         $this->user  = $user;
@@ -26,9 +28,9 @@ class User extends Controller
     function create()
     {
         $insert        = array_merge(
-            $this->defaults,
+            $this->defaultValues,
             $_POST['_tr_builtin_data'],
-            $this->statics
+            $this->staticValues
         );
         $this->item_id = wp_insert_user( $insert );
 

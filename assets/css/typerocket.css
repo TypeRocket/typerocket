@@ -453,9 +453,6 @@
     top: 1px;
 }
 
-.typerocket-container .control-section .dev > i {
-    color: #ccc;
-}
 
 .typerocket-container .control-section .dev:hover > i,
 .typerocket-container .tr-repeater-group .control-section .dev:hover > i {
@@ -480,20 +477,18 @@
     top: 4px;
 }
 
-.typerocket-container .dev .debug,
-.typerocket-container .tr-repeater-group .control-section .dev .debug {
+.typerocket-container .dev,
+.typerocket-container .tr-repeater-group .control-section .dev {
     color: #999999;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
 }
 
-.typerocket-container .dev .nav .field {
+.typerocket-container .dev:hover .nav .field {
     color: #21759B;
-    margin-left: 5px;
 }
 
-.typerocket-container .dev .nav .field span {
-    background: none;
+.typerocket-container .dev .nav .field {
     margin-left: 5px;
 }
 

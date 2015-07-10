@@ -21,7 +21,7 @@ class Api {
         $model = new $class();
 
         if($model instanceof Controllers\Controller) {
-            $data = $model->handle_rest($this->id, $this->method);
+            $data = $model->handleRest($this->id, $this->method);
 
             if ($data == null) {
                 $data = array('api_v' => $this->version);

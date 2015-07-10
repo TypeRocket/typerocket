@@ -5,6 +5,8 @@ use \TypeRocket\Html as Html;
 
 class Radio extends Field {
 
+  public $options = array();
+
   function render() {
     $name = $this->attr['name'];
     $this->type = 'radio';

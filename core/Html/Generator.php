@@ -45,7 +45,7 @@ class Generator
     function newInput( $type, $name, $value, array $attributes = array() )
     {
 
-        $attributes = array_merge( array( 'type' => $type, 'name' => $name, 'value' => $value), $attributes );
+        $attributes = array_merge( array( 'type' => $type, 'name' => $name, 'value' => $value ), $attributes );
 
         $this->tag = new Tag( 'input', $attributes );
 
@@ -57,7 +57,7 @@ class Generator
         return $this->tag;
     }
 
-    function setTag(Tag $tag)
+    function setTag( Tag $tag )
     {
         $this->tag = $tag;
 
@@ -79,17 +79,13 @@ class Generator
     function appendInside( $tag, array $attributes = array(), $text = '' )
     {
 
-        switch ($tag) {
-            case $tag instanceof Tag :
-                $this->tag->appendInnerTag( $tag );
-                break;
-            case $tag instanceof Generator :
-                $this->tag->appendInnerTag( $this->tag );
-                break;
-            case is_string( $tag ) :
-                $this->tag->appendInnerTag( new Tag( $tag, $attributes, $text ) );
-                break;
+        if ($tag instanceof Generator) {
+            $tag = $tag->tag;
+        } elseif (is_string( $tag )) {
+            $tag = new Tag( $tag, $attributes, $text );
         }
+
+        $this->tag->appendInnerTag( $tag );
 
         return $this;
 
@@ -105,17 +101,13 @@ class Generator
     function prependInside( $tag, array $attributes = array(), $text = '' )
     {
 
-        switch ($tag) {
-            case $tag instanceof Tag :
-                $this->tag->prependInnerTag( $tag );
-                break;
-            case $tag instanceof Generator :
-                $this->tag->prependInnerTag( $this->tag );
-                break;
-            case is_string( $tag ) :
-                $this->tag->prependInnerTag( new Tag( $tag, $attributes, $text ) );
-                break;
+        if ($tag instanceof Generator) {
+            $tag = $tag->tag;
+        } elseif (is_string( $tag )) {
+            $tag = new Tag( $tag, $attributes, $text );
         }
+
+        $this->tag->prependInnerTag( $tag );
 
         return $this;
 

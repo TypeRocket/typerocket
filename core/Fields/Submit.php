@@ -8,7 +8,7 @@ class Submit extends Field
 
     function __construct()
     {
-        $this->type       = 'submit';
+        $this->setType('submit');
         $this->debuggable = false;
     }
 
@@ -16,21 +16,25 @@ class Submit extends Field
     {
         $name = '_tr_submit_form';
 
-        unset( $this->attr['id'] );
-        $this->attr['id'] = $name;
+        $this->removeAttribute('id');
+        $this->setAttribute('id', $name);
 
-        $value = esc_attr( $this->attr['value'] );
-        unset( $this->attr['value'] );
-        unset( $this->attr['name'] );
+        $value = esc_attr( $this->getAttribute('value') );
+        $this->removeAttribute('value');
+        $this->removeAttribute('name');
+        $class = $this->getAttribute('class');
 
 
-        if (isset( $this->attr['class'] )) {
-            $this->attr['class'] .= ' button button-primary';
+        if (isset( $attr )) {
+            $class .= ' button button-primary';
         } else {
-            $this->attr['class'] = ' button button-primary';
+            $class = ' button button-primary';
         }
 
-        return Html::input( $this->type, $name, $value, $this->attr );
+        $this->setAttribute('class', $class);
+
+        $generator = new Html\Generator();
+        return $generator->newInput( $this->getType(), $name, $value, $this->getAttributes() )->getString();
     }
 
 }

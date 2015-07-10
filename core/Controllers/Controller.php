@@ -8,8 +8,8 @@ abstract class Controller
     public $action = null;
     public $fields = null;
     public $valid = null;
-    public $defaults = null;
-    public $statics = null;
+    public $defaultValues = null;
+    public $staticValues = null;
     public $response = array('message' => 'Message...', 'errors' => array());
 
     function save( $item_id, $action = 'update' )
@@ -39,7 +39,7 @@ abstract class Controller
         return $this->valid = true;
     }
 
-    function handle_rest( $item_id, $method )
+    function handleRest( $item_id, $method )
     {
         $method        = strtoupper( $method );
         $this->item_id = $item_id;

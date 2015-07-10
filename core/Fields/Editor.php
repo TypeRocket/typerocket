@@ -3,34 +3,39 @@ namespace TypeRocket\Fields;
 
 use \TypeRocket\Sanitize as Sanitize;
 
-class Editor extends Field {
+class Editor extends Field
+{
 
-	function __construct() {
-		wp_enqueue_media();
-		$this->repeatable = false;
-	}
+    public $options = array();
 
-	function render() {
-		$value    = Sanitize::editor( $this->getValue() );
-		$settings = $this->options;
+    function __construct()
+    {
+        wp_enqueue_media();
+        $this->repeatable = false;
+    }
 
-		$override = array(
-			'textarea_name' => $this->attr['name']
-		);
+    function render()
+    {
+        $value    = Sanitize::editor( $this->getValue() );
+        $settings = $this->options;
 
-		$defaults = array(
-			'textarea_rows' => 10,
-			'teeny'         => true,
-			'tinymce'       => array( 'plugins' => 'wordpress' )
-		);
+        $override = array(
+            'textarea_name' => $this->attr['name']
+        );
 
-		$settings = array_merge( $defaults, $settings, $override );
+        $defaults = array(
+            'textarea_rows' => 10,
+            'teeny'         => true,
+            'tinymce'       => array( 'plugins' => 'wordpress' )
+        );
 
-		ob_start();
-		wp_editor( $value, 'wp_editor_' . $this->name, $settings );
-		$html = ob_get_clean();
+        $settings = array_merge( $defaults, $settings, $override );
 
-		return $html;
-	}
+        ob_start();
+        wp_editor( $value, 'wp_editor_' . $this->name, $settings );
+        $html = ob_get_clean();
+
+        return $html;
+    }
 
 }

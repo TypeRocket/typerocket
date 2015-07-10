@@ -4,35 +4,32 @@ namespace TypeRocket\Fields;
 use \TypeRocket\Form as Form,
     \TypeRocket\Validate as Validate,
     \TypeRocket\Utility as Utility,
-    \TypeRocket\GetField as GetField;
+    \TypeRocket\GetValue as GetValue;
 
 abstract class Field
 {
 
     // Element attributes
-    public $id = null;
-    public $name = null;
-    public $type = null;
-    public $attr = array();
+    private $name = null;
+    private $type = null;
+    private $attr = array();
 
     // controller settings
     private $item_id = null;
     private $controller = null;
-    public $group = null;
 
-    public $sub = null;
-    public $prefix = null;
-    public $brackets = null;
+    // used to build the attribute name
+    private $prefix = null;
+    private $group = null;
+    private $sub = null;
+    private $brackets = null;
 
     public $label = false;
     public $settings = false;
-    public $options = null;
     public $builtin = false;
-    public $repeatable = true;
-    public $fillable = true;
-    public $debuggable = true;
+    public $populate = true;
 
-    public function connectForm( $form )
+    public function setupByForm( $form )
     {
         if ($form instanceof Form) {
             $this->setGroup( $form->getGroup() );
@@ -62,6 +59,41 @@ abstract class Field
         return $this;
     }
 
+    public function setAttributes( array $attributes) {
+        $this->attr = $attributes;
+
+        return $this;
+    }
+
+    public function getAttributes() {
+        return $this->attr;
+    }
+
+    public function getAttribute( $key )
+    {
+        if( ! array_key_exists($key, $this->attr)) {
+            return null;
+        }
+
+        return $this->attr[$key];
+    }
+
+    public function setAttribute( $key, $value )
+    {
+        $this->attr[ (string) $key] = $value;
+
+        return $this;
+    }
+
+    public function removeAttribute($key) {
+
+        if(array_key_exists($key, $this->attr)) {
+            unset($this->attr[$key]);
+        }
+
+        return $this;
+    }
+
     public function setItemId( $item_id )
     {
         if (isset( $item_id )) {
@@ -74,6 +106,17 @@ abstract class Field
     public function getItemId()
     {
         return $this->item_id;
+    }
+
+    public function setType($type) {
+
+        $this->type = (string) $type;
+
+        return $this;
+    }
+
+    public function getType() {
+        return $this->type;
     }
 
     public function setController( $controller )
@@ -120,10 +163,10 @@ abstract class Field
      *
      * @return $this
      */
-    public function setup( $name, $settings, array $attr = array(), $label = true )
+    public function setup( $name, array $settings = array(), array $attr = array(), $label = true )
     {
 
-        do_action( 'tr_start_setup_field', $this, $name, $settings );
+        do_action( 'tr_start_setup_field', $this, $name, $settings, $attr, $label );
 
         $this->settings = $settings;
         $this->label    = $label;
@@ -157,7 +200,7 @@ abstract class Field
             unset( $this->attr['id'] );
         }
 
-        do_action( 'tr_end_setup_field', $this, $name, $settings );
+        do_action( 'tr_end_setup_field', $this, $name, $settings, $attr, $label);
 
         return $this;
 
@@ -166,13 +209,13 @@ abstract class Field
     public function getValue()
     {
 
-        if ($this->fillable == false) {
-            return null;
+        if ($this->populate == false) {
+            return false;
         }
 
-        $getter = new GetField();
+        $getter = new GetValue();
 
-        return $getter->getFieldValue( $this );
+        return $getter->getFromField( $this );
     }
 
     public function getBrackets()

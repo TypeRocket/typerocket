@@ -18,11 +18,8 @@ jQuery.fn.selectText = function(){
 
 jQuery(document).ready(function($) {
 
-  $(".debug").each(function() {
-   // $(this).opentip("Copy the reveled PHP code to access the data stored by this field and use it in your theme template files. (Note: Post type data must be accessed from within 'The Loop')", { delay: 1, background: '#ffffff', borderColor: '#ccc', target: $(this).next(), tipJoint: 'top', borderRadius: 3 });
-  });
+  $('.typerocket-container').on('click', '.field', function() {
 
-  $('.typerocket-container').on('click', '.field', function(){
     $(this).selectText();
   })
 

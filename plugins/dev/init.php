@@ -1,7 +1,7 @@
 <?php
 namespace TypeRocket;
 
-class Dev {
+class DevPlugin {
 
 	function make() {
 		add_filter( 'admin_footer_text', array( $this, 'tr_remove_footer_admin' ) );
@@ -22,6 +22,6 @@ class Dev {
 
 }
 
-$tr_dev_plugin = new Dev();
+$tr_dev_plugin = new DevPlugin();
 $tr_dev_plugin->make();
 unset( $tr_dev_plugin );

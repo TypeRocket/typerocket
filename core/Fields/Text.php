@@ -8,30 +8,29 @@ class Text extends Field
 
     function __construct()
     {
-        $this->type = 'text';
+        $this->setType('text');
     }
 
     function render()
     {
         $max = '';
+        $input = new Generator();
         $value = $this->getValue();
 
         if ($this->settings['sanitize'] !== 'raw') {
             $value = esc_attr( $value );
         }
 
-        if (isset( $this->attr['maxlength'] ) && $this->attr['maxlength'] > 0) {
-            $left = (int) $this->attr['maxlength'] - strlen( utf8_decode( $value ) );
+        $maxLength = $this->getAttribute('maxlength');
+
+        if ($maxLength != null && $maxLength > 0) {
+            $left = (int) $maxLength - strlen( utf8_decode( $value ) );
             $max = new Generator();
             $max->newElement('p', array('class' => 'tr-maxlength'), 'Characters left: ')->appendInside('span', array(), $left);
+            $max = $max->getString();
         }
 
-        $this->attr['type'] = $this->type;
-        $this->attr['value'] = $value;
-
-        $input = new Generator();
-
-        return $input->newInput($this->type, $this->attr['name'], $value,  $this->attr)->getString() . $max;
+        return $input->newInput($this->getType(), $value, $value, $this->getAttributes() )->getString() . $max;
     }
 
 }

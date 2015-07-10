@@ -1,28 +1,40 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html as Html;
+use \TypeRocket\Html\Generator as Generator;
 
-class Checkbox extends Field {
+class Checkbox extends Field
+{
 
-  function render() {
-    $name = $this->attr['name'];
-    $this->type = 'checkbox';
-    $option = esc_attr($this->getValue());
-    unset($this->attr['name']);
-
-    if($option == '1') {
-      $this->attr['checked'] = 'checked';
+    public function __construct()
+    {
+        $this->setType( 'checkbox' );
     }
 
-    $field = "<label>";
-    if($this->settings['default'] !== false) {
-      $field .= Html::input('hidden', $name, '0', $this->attr);
-    }
-    $field .= Html::input($this->type, $name, '1', $this->attr);
-    $field .= "<span>{$this->settings['text']}</span></label>";
+    function render()
+    {
+        $name   = $this->getAttribute( 'name' );
+        $this->removeAttribute( 'name' );
+        $option = esc_attr( $this->getValue() );
+        $checkbox = new Generator();
+        $field = new Generator();
 
-    return $field;
-  }
+        if ($option == '1') {
+            $this->setAttribute( 'checked', 'checked' );
+        }
+
+        $checkbox->newInput( $this->getType(), $name, '1', $this->getAttributes() );
+
+        $field->newElement( 'label' )
+            ->appendInside( $checkbox )
+            ->appendInside( 'span', array(), $this->settings['text'] );
+
+        if ($this->settings['default'] !== false) {
+            $hidden = new Generator();
+            $field->prependInside( $hidden->newInput('hidden', $name, '0' ) );
+        }
+
+        return $field->getString();
+    }
 
 }

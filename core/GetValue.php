@@ -1,7 +1,7 @@
 <?php
 namespace TypeRocket;
 
-class GetField
+class GetValue
 {
 
     function value( $brackets, $item_id, $controller, $builtin = false )
@@ -18,9 +18,9 @@ class GetField
      *
      * @return string|false
      */
-    function getFieldValue( $field )
+    function getFromField( $field )
     {
-        return $this->value( $field->brackets, $field->getItemID(), $field->getController(), $field->builtin );
+        return $this->value( $field->getBrackets(), $field->getItemID(), $field->getController(), $field->builtin );
     }
 
     function parse_value_data( $data, $keys )

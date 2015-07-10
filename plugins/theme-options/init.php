@@ -1,7 +1,9 @@
 <?php
 namespace TypeRocket;
 
-class ThemeOptions
+use \TypeRocket\Config as Config;
+
+class ThemeOptionsPlugin
 {
 
     public $name = 'tr_theme_options';
@@ -31,8 +33,10 @@ class ThemeOptions
     {
         echo '<div id="wrap">';
         $file = apply_filters( 'tr_theme_options_admin', __DIR__ . '/admin.php' );
-        include( $file );
-        include(__DIR__ . '/import.php');
+        if (file_exists( $file )) {
+            include( $file );
+        }
+        include( __DIR__ . '/import.php' );
         echo '</div>';
     }
 
@@ -101,7 +105,7 @@ class ThemeOptions
     public function add_scripts_styles()
     {
         if (is_admin()) {
-            $paths = \TypeRocket\Config::getPaths();
+            $paths = Config::getPaths();
 
             wp_enqueue_script( 'tr_thop-script', $paths['urls']['plugins'] . '/theme-options/js.js',
                 array( 'jquery' ), '1.0', true );
@@ -111,6 +115,6 @@ class ThemeOptions
 
 }
 
-$tr_theme_options = new ThemeOptions();
+$tr_theme_options = new ThemeOptionsPlugin();
 $tr_theme_options->make();
 unset( $tr_theme_options );

@@ -57,9 +57,9 @@ class Post extends Controller
     {
         remove_action( 'save_post', array( $this, 'save_post' ) );
         $insert        = array_merge(
-            $this->defaults,
+            $this->defaultValues,
             $_POST['_tr_builtin_data'],
-            $this->statics
+            $this->staticValues
         );
         $this->item_id = wp_insert_post( $insert );
         add_action( 'save_post', array( $this, 'save_post' ) );

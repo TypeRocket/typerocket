@@ -1,7 +1,7 @@
 <?php
 namespace TypeRocket;
 
-class Seo
+class SeoPlugin
 {
 
     public $item_id = null;
@@ -191,6 +191,7 @@ class Seo
         // build form
         /** @var \TypeRocket\Form $form */
         $form = new Form();
+        $form->setDebugStatus(false);
         $form->setGroup('[seo][meta]');
         $form->make();
         $utility->buffer();
@@ -294,6 +295,6 @@ class Seo
 
 }
 
-$tr_seo = new Seo();
+$tr_seo = new SeoPlugin();
 add_action( 'typerocket_loaded', array( $tr_seo, 'setup' ) );
 unset( $tr_seo );

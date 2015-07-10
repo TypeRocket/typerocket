@@ -80,9 +80,7 @@ class Tag
 
     public function setText( $text )
     {
-        if (is_string( $text )) {
-            $this->text = $text;
-        }
+        $this->text = (string) $text;
 
         return $this;
     }

@@ -3,7 +3,7 @@
 <?php
 $form = new \TypeRocket\Form();
 $form->id = $this->name;
-$form->group = '['.$this->name.']';
+$form->setGroup('['.$this->name.']');
 $form->action = 'update';
 $form->make();
 ?>
@@ -22,7 +22,6 @@ $form->make();
     $contact = array(
         array('text', array('Phone')),
         array('text', array('Email')),
-        array('text', array('Hours of Service'))
     );
 
     $form->render_fields($contact);
