@@ -17,7 +17,8 @@ class Radio extends Field
     {
         $name       = $this->getAttribute('name');
         $default = $this->getSetting('default');
-        $option     = ! is_null($this->getValue()) ? $this->getValue() : $default;
+        $option = $this->getValue();
+        $option     = ! is_null($option) ? $this->getValue() : $default;
         $this->removeAttribute('name');
         $this->removeAttribute('id');
         $generator = new Html\Generator();

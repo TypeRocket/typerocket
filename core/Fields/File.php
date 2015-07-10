@@ -20,12 +20,12 @@ class File extends Field
         // $this->attr['class'] = 'file-picker';
         $name = $this->getAttribute( 'name' );
         $this->appendStringToAttribute( 'class', ' file-picker' );
-        $value = (int) $this->getValue();
+        $value = (int) $this->getValue() !== 0 ? $this->getValue() : null;
         $this->removeAttribute( 'name' );
         $generator = new Html\Generator();
 
-        if (empty( $this->settings['button'] )) {
-            $this->settings['button'] = 'Insert File';
+        if ( ! $this->getSetting( 'button' )) {
+            $this->setSetting( 'button', 'Insert File' );
         }
 
         if ($value != "") {
@@ -40,7 +40,7 @@ class File extends Field
         $html .= $generator->newElement( 'input', array(
             'type'  => 'button',
             'class' => 'file-picker-button button',
-            'value' => $this->settings['button']
+            'value' => $this->getSetting( 'button' )
         ) )->getString();;
         $html .= $generator->newElement( 'input', array(
             'type'  => 'button',
@@ -50,7 +50,7 @@ class File extends Field
         $html .= '</div>';
         $html .= $generator->newElement( 'div', array(
             'class' => 'file-picker-placeholder'
-        ), $file )->getString();;
+        ), $file )->getString();
 
         return $html;
     }

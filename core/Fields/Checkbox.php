@@ -27,11 +27,11 @@ class Checkbox extends Field
 
         $field->newElement( 'label' )
             ->appendInside( $checkbox )
-            ->appendInside( 'span', array(), $this->settings['text'] );
+            ->appendInside( 'span', array(), $this->getSetting( 'text' ) );
 
-        if ($this->settings['default'] !== false) {
+        if ($this->getSetting( 'default' )) {
             $hidden = new Generator();
-            $field->prependInside( $hidden->newInput('hidden', $name, '0' ) );
+            $field->prependInside( $hidden->newInput('hidden', $name, $this->getSetting( 'default' ) ) );
         }
 
         return $field->getString();

@@ -105,6 +105,15 @@ abstract class Field
         return $this;
     }
 
+    public function removeSetting($key) {
+
+        if(array_key_exists($key, $this->settings)) {
+            unset($this->settings[$key]);
+        }
+
+        return $this;
+    }
+
     public function setItemId( $item_id )
     {
         if (isset( $item_id )) {

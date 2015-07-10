@@ -17,15 +17,15 @@ class Image extends Field
 
     function render()
     {
-        $name                = $this->getAttribute('name');
-        $this->setAttribute('class', 'image-picker');
-        $value               = esc_attr( $this->getValue() );
+        $name = $this->getAttribute( 'name' );
+        $this->setAttribute( 'class', 'image-picker' );
+        $value = esc_attr( $this->getValue() );
 
-        $this->removeAttribute('name');
+        $this->removeAttribute( 'name' );
         $generator = new Generator();
 
-        if (empty( $this->settings['button'] )) {
-            $this->settings['button'] = 'Insert Image';
+        if ( ! $this->getSetting( 'button' )) {
+            $this->setSetting( 'button', 'Insert Image' );
         }
 
         if ($value != "") {
@@ -43,7 +43,7 @@ class Image extends Field
         $html .= $generator->newElement( 'input', array(
             'type'  => 'button',
             'class' => 'image-picker-button button',
-            'value' => $this->settings['button']
+            'value' => $this->getSetting( 'button' )
         ) )->getString();
         $html .= $generator->newElement( 'input', array(
             'type'  => 'button',

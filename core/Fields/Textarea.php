@@ -13,7 +13,7 @@ class Textarea extends Field
         $generator = new Generator();
         $value = $this->getValue();
 
-        if ($this->settings['sanitize'] != 'raw') {
+        if ($this->getSetting('sanitize') != 'raw') {
             $value = Sanitize::textarea( $value );
         }
 

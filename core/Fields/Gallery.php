@@ -23,8 +23,8 @@ class Gallery extends Field
         $this->removeAttribute('name');
         $generator = new Generator();
 
-        if (empty( $this->settings['button'] )) {
-            $this->settings['button'] = 'Insert Images';
+        if (! $this->getSetting( 'button' )) {
+            $this->setSetting('button', 'Insert Images');
         }
 
         $list = '';
@@ -52,7 +52,7 @@ class Gallery extends Field
         $button = $generator->newElement( 'input', array(
             'type'  => 'button',
             'class' => 'gallery-picker-button button',
-            'value' => $this->settings['button']
+            'value' => $this->getSetting( 'button' )
         ) )->getTag();
 
         $clear = $generator->newElement( 'input', array(

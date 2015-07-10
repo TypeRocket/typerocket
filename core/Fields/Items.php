@@ -1,14 +1,15 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html\Generator as Generator;
+use \TypeRocket\Html\Generator as Generator,
+    \TypeRocket\Config as Config;
 
 class Items extends Field
 {
 
     function __construct()
     {
-        $paths = \TypeRocket\Config::getPaths();
+        $paths = Config::getPaths();
         wp_enqueue_script( 'typerocket-items-list', $paths['urls']['assets'] . '/js/items-list.js', array( 'jquery' ),
             '1.0', true );
     }
@@ -22,8 +23,8 @@ class Items extends Field
         $this->removeAttribute('name');
         $generator = new Generator();
 
-        if (empty( $this->settings['button'] )) {
-            $this->settings['button'] = 'Insert Item';
+        if (! $this->getSetting('button') ) {
+            $this->setSetting('button', 'Insert Item');
         }
 
         $list = '';
@@ -31,9 +32,9 @@ class Items extends Field
         if (is_array( $items )) {
             foreach ($items as $value) {
                 $input = $generator->newInput( 'text', $name . '[]', esc_attr( $value ) )->getString();
-
+                $remove = '#remove';
                 $list .= $generator->newElement( 'li', array( 'class' => 'item' ),
-                    '<div class="move tr-icon-menu"></div><a href="#remove" class="tr-icon-remove2 remove" title="Remove Item"></a>' . $input )->getString();
+                    '<div class="move tr-icon-menu"></div><a href="'.$remove.'" class="tr-icon-remove2 remove" title="Remove Item"></a>' . $input )->getString();
 
             }
         }
@@ -44,7 +45,7 @@ class Items extends Field
         $html .= $generator->newElement( 'input', array(
             'type'  => 'button',
             'class' => 'items-list-button button',
-            'value' => $this->settings['button']
+            'value' => $this->getSetting('button')
         ) )->getString();
         $html .= $generator->newElement( 'input', array(
             'type'  => 'button',

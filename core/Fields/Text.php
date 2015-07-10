@@ -17,7 +17,7 @@ class Text extends Field
         $input = new Generator();
         $value = $this->getValue();
 
-        if ($this->settings['sanitize'] !== 'raw') {
+        if ($this->getSetting('sanitize') !== 'raw') {
             $value = esc_attr( $value );
         }
 

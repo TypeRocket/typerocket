@@ -33,7 +33,7 @@ class GetValue
 
             if ( ! empty( $keys ) && is_array( $keys )) {
                 foreach ($keys as $name) {
-                    $data = isset( $data[$name] ) ? $data[$name] : null;
+                    $data = ( isset( $data[$name] ) && $data[$name] !== '') ? $data[$name] : null;
                 }
             }
 
@@ -75,7 +75,7 @@ class GetValue
 
         $data = apply_filters( 'tr_field_data_filter', $data, $this, $the_field, $item_id, $controller, $builtin );
 
-        return $data;
+        return $data !== '' ? $data : null;
     }
 
     function get_bracket_keys( $str, $set = 1 )
