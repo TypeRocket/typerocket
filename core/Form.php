@@ -291,13 +291,12 @@ class Form
         $html = '';
         if ($this->is_debug() === true && $this->current_field->builtin == false && is_admin() && $this->current_field->debuggable == true) {
 
-            $generator->newElement('div', array('class' => 'dev'));
-            $debugTag = new Tag('span', array('class' => 'dev'), '<i class="tr-icon-bug"></i>');
+            $generator->newElement('div', array('class' => 'dev'), '<i class="tr-icon-bug"></i>');
             $navTag = new Tag('span', array('class' => 'nav'));
             $fieldCopyTag = new Tag('span', array('class' => 'field'), '<i class="tr-icon-code"></i>');
             $fieldCopyTag->appendInnerTag(new Tag('span', array(), "tr_{$this->controller}_field('{$this->current_field->getBrackets()}');"));
             $navTag->appendInnerTag($fieldCopyTag);
-            $html = $generator->appendInside($debugTag)->appendInside($navTag)->getString();
+            $html = $generator->appendInside($navTag)->getString();
         }
 
         return $html;
