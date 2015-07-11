@@ -8,7 +8,6 @@ class Option extends Controller
     function validate()
     {
         parent::validate();
-        $this->valid = apply_filters( 'tr_option_validate', $this->valid, $this );
 
         if( ! current_user_can( 'manage_options')) {
             $this->valid = false;
@@ -19,6 +18,8 @@ class Option extends Controller
             $this->valid = false;
             $this->response['message'] = 'Invalid CSRF Token';
         }
+
+        $this->valid = apply_filters( 'tr_option_validate', $this->valid, $this );
 
         return $this->valid;
     }

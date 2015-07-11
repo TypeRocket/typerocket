@@ -5,6 +5,7 @@ namespace TypeRocket\Controllers;
 class Post extends Controller
 {
 
+    /** @var \WP_Post */
     public $post = null;
 
     function hook( $post_id, $post )
@@ -17,6 +18,12 @@ class Post extends Controller
     function validate()
     {
         parent::validate();
+
+        if ( $this->post->post_author != $this->current_user->ID && ! current_user_can( 'edit_posts') ) {
+            $this->valid = false;
+            $this->response['message'] = "Sorry, you don't have enough rights.";
+        }
+
         $this->valid = apply_filters( 'tr_post_validate', $this->valid, $this );
 
         return $this->valid;

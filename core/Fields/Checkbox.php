@@ -19,7 +19,7 @@ class Checkbox extends Field
         $checkbox = new Generator();
         $field = new Generator();
 
-        if ($option == '1') {
+        if ($option == '1' || $option == $this->getAttribute('value')) {
             $this->setAttribute( 'checked', 'checked' );
         }
 
@@ -29,9 +29,9 @@ class Checkbox extends Field
             ->appendInside( $checkbox )
             ->appendInside( 'span', array(), $this->getSetting( 'text' ) );
 
-        if ($this->getSetting( 'default' )) {
+        if ($this->getSetting( 'default' ) !== false) {
             $hidden = new Generator();
-            $field->prependInside( $hidden->newInput('hidden', $name, $this->getSetting( 'default' ) ) );
+            $field->prependInside( $hidden->newInput('hidden', $name, '0' ) );
         }
 
         return $field->getString();

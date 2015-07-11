@@ -11,6 +11,8 @@ abstract class Controller
     public $defaultValues = null;
     public $staticValues = null;
     public $response = array('message' => 'Message...', 'errors' => array());
+    /** @var \WP_User */
+    public $current_user = null;
 
     function save( $item_id, $action = 'update' )
     {
@@ -18,6 +20,7 @@ abstract class Controller
         $this->fields  = isset( $_POST['tr'] ) ? $_POST['tr'] : array();
         $this->item_id = $item_id;
         $this->action  = $action;
+        $this->current_user = wp_get_current_user();
 
         if ($this->validate()) {
             $this->sanitize();

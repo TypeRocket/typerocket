@@ -5,6 +5,7 @@ namespace TypeRocket\Controllers;
 class Comment extends Controller
 {
 
+
     public $comment = null;
 
     function hook( $id )
@@ -18,14 +19,21 @@ class Comment extends Controller
     function validate()
     {
         parent::validate();
-        $this->valid = apply_filters( 'tr_comment_validate', $this->valid, $this );
 
-        if ( ! current_user_can( 'edit_comment', $this->item_id )) {
+        if ( $this->comment->user_id != $this->current_user->ID && ! current_user_can( 'edit_comment' ) ) {
             $this->valid = false;
             $this->response['message'] = "Sorry, you don't have enough rights.";
         }
 
+        $this->valid = apply_filters( 'tr_comment_validate', $this->valid, $this );
+
         return $this->valid;
+    }
+
+    function sanitize()
+    {
+        parent::sanitize();
+        $this->fields = apply_filters( 'tr_comment_sanitize', $_POST['tr'], $this );
     }
 
     function save( $item_id, $action = 'update' )

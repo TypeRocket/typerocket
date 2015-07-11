@@ -5,25 +5,35 @@ namespace TypeRocket\Controllers;
 class User extends Controller
 {
 
+    /** @var \WP_User */
     public $user = null;
 
-    function hook( $user_id, $user )
+    function hook( $user_id )
     {
-        $this->user  = $user;
+        $this->user  = get_user_by( 'id', $user_id );
         $this->valid = true;
         $this->save( $user_id );
     }
 
     function validate() {
         parent::validate();
-        $this->valid = apply_filters( 'tr_user_validate', $this->valid, $this );
 
-        if ( current_user_can( 'edit_user', $this->item_id ) ) {
+        $cant_edit = ( $this->user->ID != $this->current_user->ID && ! current_user_can( 'edit_user' ) );
+
+        if (  $cant_edit ) {
             $this->valid = false;
             $this->response['message'] = "Sorry, you don't have enough rights.";
         }
 
+        $this->valid = apply_filters( 'tr_user_validate', $this->valid, $this );
+
         return $this->valid;
+    }
+
+    function sanitize()
+    {
+        parent::sanitize();
+        $this->fields = apply_filters( 'tr_user_sanitize', $_POST['tr'], $this );
     }
 
     function update()
