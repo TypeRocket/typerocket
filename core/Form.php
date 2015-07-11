@@ -294,7 +294,7 @@ class Form
 
     function getDebugStatus()
     {
-        return ( $this->debugStatus === false ) ? $this->debugStatus : Config::getDebug();
+        return ( $this->debugStatus === false ) ? $this->debugStatus : Config::getDebugStatus();
     }
 
     public function setDebugStatus($status) {

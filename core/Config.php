@@ -22,7 +22,7 @@ class Config {
         return self::$paths;
     }
 
-    static public function getDebug() {
+    static public function getDebugStatus() {
         return self::$debug;
     }
 

@@ -78,6 +78,7 @@ add_action( 'after_setup_theme', function () {
 */
 add_action('admin_init', function() {
 
+    // Controller API
     $regex = 'typerocket_api/v1/([^/]*)/?$';
     $location = 'index.php?typerocket_controller=$matches[1]';
     add_rewrite_rule( $regex, $location, 'top' );
@@ -85,11 +86,23 @@ add_action('admin_init', function() {
     $regex = 'typerocket_api/v1/([^/]*)/([^/]*)/?$';
     $location = 'index.php?typerocket_controller=$matches[1]&typerocket_item=$matches[2]';
     add_rewrite_rule( $regex, $location, 'top' );
+
+    // Matrix API
+    $regex = 'typerocket_matrix_api/v1/([^/]*)/([^/]*)/?$';
+    $location = 'index.php?typerocket_matrix_group=$matches[1]&typerocket_matrix_type=$matches[2]';
+    add_rewrite_rule( $regex, $location, 'top' );
+
+    $regex = 'typerocket_matrix_api/v1/([^/]*)/([^/]*)/([^/]*)/?$';
+    $location = 'index.php?typerocket_matrix_group=$matches[1]&typerocket_matrix_type=$matches[2]&typerocket_matrix_form=$matches[3]';
+    add_rewrite_rule( $regex, $location, 'top' );
 });
 
 add_filter( 'query_vars', function($vars) {
     array_push($vars, 'typerocket_controller');
     array_push($vars, 'typerocket_item');
+    array_push($vars, 'typerocket_matrix_group');
+    array_push($vars, 'typerocket_matrix_type');
+    array_push($vars, 'typerocket_matrix_form');
     return $vars;
 } );
 
@@ -99,7 +112,21 @@ add_filter( 'template_include', function($template) {
     $id = get_query_var('typerocket_item', null);
 
     if($resource) {
-        $template = __DIR__ . '/api/v1.php';
+        unset($matrix);
+        $template = __DIR__ . '/api/rest-v1.php';
+    }
+
+    return $template;
+}, 99 );
+
+add_filter( 'template_include', function($template) {
+
+    $matrix_group = get_query_var('typerocket_matrix_group', null);
+    $matrix_type = get_query_var('typerocket_matrix_type', null);
+    $matrix_form = get_query_var('typerocket_matrix_from', null);
+
+    if($matrix_group && $matrix_type) {
+        $template = __DIR__ . '/api/matrix-v1.php';
     }
 
     return $template;

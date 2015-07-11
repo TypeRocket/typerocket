@@ -1,18 +1,21 @@
 <?php
 namespace TypeRocket;
 
-class Matrix
-{
+use TypeRocket\Html\Generator as Generator;
 
-    public $name = null;
-    public $form = null;
-    public $settings = array();
-    public $include_files = array();
-    public $label = null;
+class Matrix {
 
-    function __construct( $name, $form, $settings = array(), $label = false, $include_files = array() )
+    private $name = null;
+    /** @var Form */
+    private $form = null;
+    private $settings = array();
+    private $include_files = array();
+    private $label = null;
+
+    function __construct( $name, Form $form, array $settings = array(), $label = false, array $include_files = array() )
     {
 
+        $paths = Config::getPaths();
         $this->name          = (string) $name;
         $this->form          = $form;
         $this->include_files = $include_files;
@@ -21,26 +24,24 @@ class Matrix
         $this->mxid          = md5( microtime( true ) ); // set id for matrix random
         // load everything :(
         wp_enqueue_media();
-        wp_enqueue_script( 'typerocket-booyah', tr::$paths['urls']['assets'] . '/js/booyah.js', array( 'jquery' ),
+        wp_enqueue_script( 'typerocket-booyah', $paths['urls']['assets'] . '/js/booyah.js', array( 'jquery' ),
             '1.0', true );
         wp_enqueue_script( 'jquery-ui-sortable', array( 'jquery' ), '1.0', true );
-        wp_enqueue_style( 'tr-date-picker', tr::$paths['urls']['assets'] . '/css/date-picker.css' );
+        wp_enqueue_style( 'tr-date-picker', $paths['urls']['assets'] . '/css/date-picker.css' );
         wp_enqueue_script( 'jquery-ui-datepicker', array( 'jquery' ), '1.0', true );
         wp_enqueue_style( 'wp-color-picker' );
         wp_enqueue_script( 'wp-color-picker' );
-        wp_enqueue_script( 'typerocket-media', tr::$paths['urls']['assets'] . '/js/media.js', array( 'jquery' ), '1.0',
+        wp_enqueue_script( 'typerocket-media', $paths['urls']['assets'] . '/js/media.js', array( 'jquery' ), '1.0',
             true );
-        wp_enqueue_script( 'typerocket-items-list', tr::$paths['urls']['assets'] . '/js/items-list.js',
+        wp_enqueue_script( 'typerocket-items-list', $paths['urls']['assets'] . '/js/items-list.js',
             array( 'jquery' ), '1.0', true );
         wp_enqueue_script( 'jquery-ui-slider', array( 'jquery' ) );
-        wp_enqueue_style( 'tr-time-picker-style', tr::$paths['urls']['assets'] . '/css/time-picker.css' );
-        wp_enqueue_script( 'tr-time-picker-script', tr::$paths['urls']['assets'] . '/js/time-picker.js',
+        wp_enqueue_style( 'tr-time-picker-style', $paths['urls']['assets'] . '/css/time-picker.css' );
+        wp_enqueue_script( 'tr-time-picker-script', $paths['urls']['assets'] . '/js/time-picker.js',
             array( 'jquery', 'jquery-ui-slider' ), '1.0', true );
 
         // load just matrix :)
-        wp_enqueue_script( 'tr_matrix', tr::$paths['urls']['plugins'] . '/matrix/js.js', array( 'jquery' ), true );
-        wp_localize_script( 'tr_matrix', 'tr_matrix_url', tr::$paths['urls']['plugins'] . '/matrix' );
-
+        wp_enqueue_script( 'tr_matrix', $paths['urls']['assets'] . '/js/matrix.js', array( 'jquery' ), true );
     }
 
     function add()
@@ -51,6 +52,7 @@ class Matrix
         $debug  = $this->get_debug_html();
         $help   = $this->get_help_html();
         $label  = $this->get_label_html();
+        $group = $this->form->getGroup();
 
         // add it all
         echo "
@@ -69,7 +71,7 @@ class Matrix
 </div>
 {$help}
 </div>
-<div><input type='hidden' name='tr{$this->form->group}[{$this->name}]' /></div>
+<div><input type='hidden' name='tr{$group}[{$this->name}]' /></div>
 <div class='matrix-fields matrix-fields-{$this->mxid} tr-repeater-fields ui-sortable'>";
         $this->get_from();
         echo "</div></div>";
@@ -79,8 +81,10 @@ class Matrix
 
     private function clean_file_name( $name )
     {
+
+        $utility = new Utility();
+        $name = $utility->get_sanitized_string($name);
         $name = str_replace( '-', ' ', $name );
-        $name = str_replace( '_', ' ', $name );
 
         return ucwords( $name );
     }
@@ -113,13 +117,15 @@ class Matrix
     private function get_debug_html()
     {
         $debug = '';
-        if (TR_DEBUG === true && is_admin()) {
+        if ( $this->form->getDebugStatus() ) {
+            $controller = $this->form->getController();
+            $group = $this->form->getGroup();
             $debug =
                 "<div class=\"dev\">
         <span class=\"debug\"><i class=\"tr-icon-bug\"></i></span>
           <span class=\"nav\">
           <span class=\"field\">
-            <i class=\"tr-icon-code\"></i><span>tr_{$this->form->controller}_field(\"{$this->form->group}[{$this->name}]\");</span>
+            <i class=\"tr-icon-code\"></i><span>tr_{$controller}_field(\"{$group}[{$this->name}]\");</span>
           </span>
         </span>
       </div>";
@@ -131,7 +137,7 @@ class Matrix
     private function get_select_html()
     {
 
-        $dir = __DIR__ . '/' . $this->name;
+        $dir = TR_MATRIX_DIR . '/' . $this->name;
 
         if (file_exists( $dir )) {
 
@@ -142,16 +148,17 @@ class Matrix
             foreach ($files as $f) {
                 if (file_exists( $dir . '/' . $f )) {
                     $path = pathinfo( $f );
+                    $generator = new Generator();
 
                     $in_inc_files = ( ! empty( $this->include_files ) && in_array( $f, $this->include_files ) );
                     $no_inc_files = empty( $this->include_files );
 
                     if ($in_inc_files || $no_inc_files) {
-                        $attr = array( 'value'      => $f,
+                        $attr = array( 'value'      => $path['filename'],
                                        'data-file'  => $path['filename'],
-                                       'data-group' => $this->form->group
+                                       'data-group' => $this->form->getGroup()
                         );
-                        $select .= tr_html::element( 'option', $attr, $this->clean_file_name( $path['filename'] ) );
+                        $select .= $generator->newElement( 'option', $attr, $this->clean_file_name( $path['filename'] ) )->getString();
                     }
                 }
             }
@@ -159,7 +166,7 @@ class Matrix
             $select .= '</select>';
 
         } else {
-            $select = "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add a folder in Matrix called <code>{$this->name}</code> and add your matrix files to it.</div>";
+            $select = "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add a folder for Matrx <code>{$dir}</code> and add your matrix files to it.</div>";
         }
 
         return $select;
@@ -169,9 +176,9 @@ class Matrix
     private function get_from()
     {
 
-        $field_class = new tr_get_field();
-        $val         = $field_class->value( $this->form->group . "[{$this->name}]", $this->form->item_id,
-            $this->form->controller, false );
+        $field_class = new GetValue();
+        $val         = $field_class->value( $this->form->getGroup() . "[{$this->name}]", $this->form->getItemId(),
+            $this->form->getController(), false );
 
         if (is_array( $val )) {
 
@@ -180,26 +187,36 @@ class Matrix
 
                     $form = $this->form;
 
-                    $form->debug     = false;
+                    $form->setDebugStatus(false);
                     $tr_matrix_id    = $t;
                     $tr_matrix_group = $this->name;
                     $tr_matrix_type  = lcfirst( $type );
-                    $init_grp        = $form->group;
+                    $init_grp        = $form->getGroup();
 
-                    $form->group = $init_grp . "[{$tr_matrix_group}][{$tr_matrix_id}][{$tr_matrix_type}]";
-                    $path        = __DIR__ . "/" . $this->name . "/{$type}.php";
+                    $form->setGroup($init_grp . "[{$tr_matrix_group}][{$tr_matrix_id}][{$tr_matrix_type}]");
+                    $path        = TR_MATRIX_DIR . "/" . $this->name . "/{$type}.php";
 
                     if (file_exists( $path )) {
-                        echo '<div class="matrix-field-group tr-repeater-group matrix-type-' . $tr_matrix_type . ' matrix-group-' . $tr_matrix_group . '">';
-                        include( $path );
-                        echo '</div></div>';
-                    } elseif (TR_DEBUG === true) {
-                        echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add a file to your Matrix group <code>{$this->name}</code> and name it <code>{$type}.php</code>; ensure you require <code>tr_load_form.php</code>.</div>";
+                        ?>
+                        <div class="matrix-field-group tr-repeater-group matrix-type-<?php echo $tr_matrix_type; ?> matrix-group-<?php echo $tr_matrix_group; ?>">
+                            <div class="repeater-controls">
+                                <div class="collapse"></div>
+                                <div class="move"></div>
+                                <a href="#remove" class="remove" title="remove"></a>
+                            </div>
+                            <div class="repeater-inputs">
+                                <?php
+                                /** @noinspection PhpIncludeInspection */
+                                include($path);
+                                ?>
+                            </div>
+                        </div>
+                        <?php
                     }
 
 
-                    $form->group = $init_grp;
-                    $form->debug = true;
+                    $form->setGroup($init_grp);
+                    $form->setDebugStatus(true);
                 }
             }
 
