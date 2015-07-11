@@ -21,6 +21,7 @@ class Api {
         $controller = new $class();
 
         if($controller instanceof Controllers\Controller) {
+            $controller->requestType = 'TypeRocketApi';
             $data = $controller->handleRest($this->id, $this->method);
 
             if ($data == null) {

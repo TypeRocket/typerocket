@@ -1,6 +1,14 @@
 <?php
 namespace TypeRocket\Controllers;
 
+/**
+ * Class Controller
+ *
+ * Be sure to validate by https://codex.wordpress.org/Roles_and_Capabilities
+ * when building your own controllers.
+ *
+ * @package TypeRocket\Controllers
+ */
 abstract class Controller
 {
 
@@ -12,7 +20,8 @@ abstract class Controller
     public $staticValues = null;
     public $response = array('message' => 'Message...', 'errors' => array());
     /** @var \WP_User */
-    public $current_user = null;
+    public $currentUser = null;
+    public $requestType = null;
 
     function save( $item_id, $action = 'update' )
     {
@@ -20,7 +29,7 @@ abstract class Controller
         $this->fields  = isset( $_POST['tr'] ) ? $_POST['tr'] : array();
         $this->item_id = $item_id;
         $this->action  = $action;
-        $this->current_user = wp_get_current_user();
+        $this->currentUser = wp_get_current_user();
 
         if ($this->validate()) {
             $this->sanitize();

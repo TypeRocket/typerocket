@@ -14,7 +14,7 @@ class Option extends Controller
             $this->response['message'] = "Sorry, you don't have enough rights.";
         }
 
-        if( ! check_ajax_referer( 'form_' . TR_SEED, '_tr_nonce_form', false )) {
+        if( $this->requestType != 'TypeRocketApi' && ! check_ajax_referer( 'form_' . TR_SEED, '_tr_nonce_form', false )) {
             $this->valid = false;
             $this->response['message'] = 'Invalid CSRF Token';
         }

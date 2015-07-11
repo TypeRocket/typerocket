@@ -19,7 +19,7 @@ class Post extends Controller
     {
         parent::validate();
 
-        if ( $this->post->post_author != $this->current_user->ID && ! current_user_can( 'edit_posts') ) {
+        if ( $this->post->post_author != $this->currentUser->ID && ! current_user_can( 'edit_posts') ) {
             $this->valid = false;
             $this->response['message'] = "Sorry, you don't have enough rights.";
         }

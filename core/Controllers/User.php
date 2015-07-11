@@ -18,7 +18,7 @@ class User extends Controller
     function validate() {
         parent::validate();
 
-        $cant_edit = ( $this->user->ID != $this->current_user->ID && ! current_user_can( 'edit_users' ) );
+        $cant_edit = ( $this->user->ID != $this->currentUser->ID && ! current_user_can( 'edit_users' ) );
 
         if (  $cant_edit ) {
             $this->valid = false;

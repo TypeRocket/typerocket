@@ -5,7 +5,6 @@ namespace TypeRocket\Controllers;
 class Comment extends Controller
 {
 
-
     public $comment = null;
 
     function hook( $id )
@@ -20,7 +19,7 @@ class Comment extends Controller
     {
         parent::validate();
 
-        if ( $this->comment->user_id != $this->current_user->ID && ! current_user_can( 'edit_comment' ) ) {
+        if ( $this->comment->user_id != $this->currentUser->ID && ! current_user_can( 'edit_comment' ) ) {
             $this->valid = false;
             $this->response['message'] = "Sorry, you don't have enough rights.";
         }
