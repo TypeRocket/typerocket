@@ -77,18 +77,22 @@ abstract class Controller
 
     protected function update()
     {
+        return $this;
     }
 
     protected function create()
     {
+        return $this;
     }
 
     protected function delete( $id )
     {
+        return $this;
     }
 
     protected function read( $id )
     {
+        return $this;
     }
 
 }

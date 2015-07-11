@@ -50,7 +50,7 @@ class Post extends Controller
             add_action( 'save_post', array( $this, 'hook' ), 1999909, 2 );
         }
 
-        $this->saveMeta();
+        $this->savePostMeta();
     }
 
     protected function create()
@@ -63,10 +63,10 @@ class Post extends Controller
         );
         $this->item_id = wp_insert_post( $insert );
         add_action( 'save_post', array( $this, 'hook' ) );
-        $this->saveMeta();
+        $this->savePostMeta();
     }
 
-    function saveMeta()
+    function savePostMeta()
     {
 
         if (is_array( $this->fields )) :

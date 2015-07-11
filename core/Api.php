@@ -18,10 +18,10 @@ class Api {
 
         $class = "\\TypeRocket\\Controllers\\$resource";
         /** @var Controllers\Controller $model */
-        $model = new $class();
+        $controller = new $class();
 
-        if($model instanceof Controllers\Controller) {
-            $data = $model->handleRest($this->id, $this->method);
+        if($controller instanceof Controllers\Controller) {
+            $data = $controller->handleRest($this->id, $this->method);
 
             if ($data == null) {
                 $data = array('api_v' => $this->version);

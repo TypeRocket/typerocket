@@ -63,19 +63,3 @@ class Option extends Controller
     }
 
 }
-
-//
-//if (!empty($_POST['title']) && !empty($_POST['email'])) {
-//    $args = [$_POST['title'], $_POST['content'], json_encode($_POST), 'article', 'published', $args[2]['id']];
-//
-//    $db = (new Treenode\Service\Database());
-//    $db->link();
-//    $db->query('UPDATE nodes SET title=?, content=?, meta=?, kind=?, status=? WHERE id=?', $args);
-//    echo json_encode(['errors' => false, 'message' => 'Updated node!']);
-//} else {
-//    echo json_encode([
-//        'errors' => true,
-//        'message' => 'Fields required!',
-//        'required' => ['title' => 'You need a name', 'email' => 'You need an email']
-//    ]);
-//}

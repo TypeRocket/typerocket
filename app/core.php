@@ -37,17 +37,17 @@ if ( \TypeRocket\Config::getPlugins() ) {
 |
 */
 $model_post = new TypeRocket\Controllers\Post();
-add_action( 'save_post', array( $model_post, 'hook' ), 1999909, 2 );
+add_action( 'save_post', array( $model_post, 'hook' ), 1999909, 3 );
 unset($model_post);
 
 $model_comment = new TypeRocket\Controllers\Comment();
-add_action( 'wp_insert_comment', array( $model_comment, 'hook' ), 1999909, 2 );
-add_action( 'edit_comment', array( $model_comment, 'hook' ), 1999909, 2 );
+add_action( 'wp_insert_comment', array( $model_comment, 'hook' ), 1999909, 3 );
+add_action( 'edit_comment', array( $model_comment, 'hook' ), 1999909, 3 );
 unset($model_comment);
 
 $model_user = new TypeRocket\Controllers\User();
-add_action( 'edit_user_profile_update', array( $model_user, 'hook' ), 1999909, 2  );
-add_action( 'personal_options_update', array( $model_user, 'hook' ), 1999909, 2 );
+add_action( 'edit_user_profile_update', array( $model_user, 'hook' ), 1999909, 3  );
+add_action( 'personal_options_update', array( $model_user, 'hook' ), 1999909, 3 );
 unset($model_user);
 
 /*

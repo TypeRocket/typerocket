@@ -91,7 +91,7 @@ abstract class Field
     }
 
     function getBuiltin() {
-        return $this->populate;
+        return $this->builtin;
     }
 
     public function setLabel($label) {

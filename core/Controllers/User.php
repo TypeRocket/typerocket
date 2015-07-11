@@ -14,6 +14,18 @@ class User extends Controller
         $this->save( $user_id );
     }
 
+    function validate() {
+        parent::validate();
+        $this->valid = apply_filters( 'tr_user_validate', $this->valid, $this );
+
+        if ( current_user_can( 'edit_user', $this->item_id ) ) {
+            $this->valid = false;
+            $this->response['message'] = "Sorry, you don't have enough rights.";
+        }
+
+        return $this->valid;
+    }
+
     function update()
     {
         if (isset( $_POST['_tr_builtin_data'] )) :
@@ -22,7 +34,7 @@ class User extends Controller
             unset( $this->fields['user_insert'] );
         endif;
 
-        $this->saveMeta();
+        $this->saveUserMeta();
     }
 
     function create()
@@ -34,10 +46,10 @@ class User extends Controller
         );
         $this->item_id = wp_insert_user( $insert );
 
-        $this->saveMeta();
+        $this->saveUserMeta();
     }
 
-    function saveMeta()
+    function saveUserMeta()
     {
         if (is_array( $this->fields )) :
             foreach ($this->fields as $key => $value) :
