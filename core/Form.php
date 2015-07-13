@@ -536,10 +536,11 @@ class Form
         return $this;
     }
 
-    public function repeater( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function repeater( $name, array $fields, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Repeater();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
+        $field->fields = $fields;
         $this->addField( $field );
 
         return $this;

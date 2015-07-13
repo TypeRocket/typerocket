@@ -1,11 +1,12 @@
 <?php
 namespace TypeRocket\Fields;
 
-use TypeRocket\Html\Generator as Generator,
-    TypeRocket\Config as Config,
+use TypeRocket\Config as Config,
     TypeRocket\Utility as Utility;
 
 class Repeater extends Field {
+
+    public $fields;
 
     public function __construct()
     {
@@ -18,8 +19,13 @@ class Repeater extends Field {
     public function getString()
     {
 
-
-        $this->setDebugStatus( false );
+        $form = $this->getForm();
+        $form->setDebugStatus( false );
+        $settings = $this->getSettings();
+        $fields = $this->fields;
+        $name = $this->getName();
+        $html = '';
+        $utility = new Utility();
 
         // add controls
         if (isset( $settings['help'] )) {
@@ -35,75 +41,53 @@ class Repeater extends Field {
             $add_button_value = "Add New";
         }
 
-        // add label
-        if (is_string( $label )) {
-            $label = "<div class=\"control-label\"><span class=\"label\">{$label}</span></div>";
-        }
-
         // template for repeater groups
         $href                  = '#remove';
         $templatesContainer    = '<div class="repeater-controls"><div class="collapse"></div><div class="move"></div><a href="' . $href . '" class="remove" title="remove"></a></div><div class="repeater-inputs">';
         $templatesContainerEnd = '</div></div>';
 
-        $this->_e( '<div class="control-section tr-repeater">' ); // start tr-repeater
+        $html .= '<div class="control-section tr-repeater">'; // start tr-repeater
 
         // setup repeater
-        $cache_group = $this->group;
-        $cache_sub   = $this->sub;
+        $cache_group = $form->getGroup();
+        $cache_sub   = $form->getSub();
 
-        $utility = new Utility();
         $utility->sanitize_string( $name );
-        $root_group = $this->group .= "[{$name}]";
-        $this->group .= "[{{ {$name} }}]";
-
-        // debug
-        $debug = '';
-        if ($this->getDebugStatus() === true) {
-            $debug =
-                "<div class=\"dev\">
-        <span class=\"debug\"><i class=\"tr-icon-bug\"></i></span>
-          <span class=\"nav\">
-          <span class=\"field\">
-            <i class=\"tr-icon-code\"></i><span>tr_{$this->controller}_field(\"{$root_group}\");</span>
-          </span>
-        </span>
-      </div>";
-        }
-
-        $this->_e( $debug );
-
-        $this->_e( $label );
+        $root_group = $this->getBrackets();
+        $form->setGroup( $this->getBrackets() . "[{{ {$name} }}]" );
 
         // add controls (add, flip, clear all)
-        $this->_e( "<div class=\"controls\"><div class=\"tr-repeater-button-add\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /></div><div class=\"button-group\"><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Contract\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}</div>" );
+        $html .= "<div class=\"controls\"><div class=\"tr-repeater-button-add\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /></div><div class=\"button-group\"><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Contract\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}</div>";
 
         // render js template data
-        $this->_e( '<div class="tr-repeater-group-template" data-id="' . $name . '">' );
-        $this->_e( $templatesContainer );
-        $this->renderFields( $fields, 'template' );
-        $this->_e( $templatesContainerEnd );
+        $html .= '<div class="tr-repeater-group-template" data-id="' . $name . '">';
+        $html .= $templatesContainer;
+        $utility->startBuffer();
+        $form->renderFields( $fields, 'template' );
+        $html .= $utility->indexBuffer('template')->getBuffer('template');
+        $html .= $templatesContainerEnd ;
 
         // render saved data
-        $this->_e( '<div class="tr-repeater-fields">' ); // start tr-repeater-fields
-        $getter  = new GetValue();
-        $repeats = $getter->value( $root_group, $this->item_id, $this->controller );
+        $html .= '<div class="tr-repeater-fields">'; // start tr-repeater-fields
+        $repeats = $this->getValue();
         if (is_array( $repeats )) {
             foreach ($repeats as $k => $array) {
-                $this->_e( '<div class="tr-repeater-group">' );
-                $this->_e( $templatesContainer );
-                $this->group = $root_group . "[{$k}]";
-                $this->renderFields( $fields );
-                $this->_e( $templatesContainerEnd );
+                $html .= '<div class="tr-repeater-group">';
+                $html .= $templatesContainer;
+                $form->setGroup($root_group . "[{$k}]");
+                $utility->startBuffer();
+                $form->renderFields( $fields );
+                $html .= $utility->indexBuffer('fields')->getBuffer('fields');
+                $html .= $templatesContainerEnd;
             }
         }
-        $this->_e( '</div>' ); // end tr-repeater-fields
-        $this->group = $cache_group;
-        $this->sub   = $cache_sub;
-        $this->_e( '</div>' ); // end tr-repeater
+        $html .= '</div>'; // end tr-repeater-fields
+        $form->setGroup($cache_group);
+        $form->setSub($cache_sub);
+        $html .= '</div>'; // end tr-repeater
+        $utility->cleanBuffer();
 
-        $this->setDebugStatus( null );
-
-        return $this;
+        return $html;
     }
 
 }

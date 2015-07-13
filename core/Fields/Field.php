@@ -71,6 +71,10 @@ abstract class Field
         return $this;
     }
 
+    public function getGroup() {
+        return  $this->group;
+    }
+
     public function setSub( $sub )
     {
         if (Validate::bracket( $sub )) {
@@ -212,6 +216,10 @@ abstract class Field
         $this->settings[$key] = $value;
 
         return $this;
+    }
+
+    public function getSettings() {
+        return $this->settings;
     }
 
     public function getSetting($key) {
