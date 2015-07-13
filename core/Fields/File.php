@@ -15,7 +15,7 @@ class File extends Field
             true );
     }
 
-    function render()
+    function getString()
     {
         // $this->attr['class'] = 'file-picker';
         $name = $this->getAttribute( 'name' );

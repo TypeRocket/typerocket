@@ -14,9 +14,11 @@ abstract class Field
     private $type = null;
     private $attr = array();
 
-    // controller settings
+    // form settings
     private $item_id = null;
     private $controller = null;
+    /** @var Form */
+    private $form = null;
 
     // used to build the attribute name
     private $prefix = null;
@@ -37,17 +39,27 @@ abstract class Field
     {
     }
 
-    public function setupByForm( $form )
+    public function setupByForm( Form $form )
     {
-        if ($form instanceof Form) {
-            $this->setGroup( $form->getGroup() );
-            $this->setSub( $form->getSub() );
-            $this->setItemId( $form->getItemId() );
-            $this->setController( $form->getController() );
-            $this->setPopulate( $form->getPopulate() );
-        }
+        $this->setGroup( $form->getGroup() );
+        $this->setSub( $form->getSub() );
+        $this->setItemId( $form->getItemId() );
+        $this->setController( $form->getController() );
+        $this->setPopulate( $form->getPopulate() );
+        $this->setForm( clone $form ); // do not pass by reference
 
         return $this;
+    }
+
+    public function setForm(Form $form) {
+        $this->form = $form;
+
+        return $this;
+    }
+
+    public function getForm()
+    {
+        return $this->form;
     }
 
     public function setGroup( $group )
@@ -314,7 +326,7 @@ abstract class Field
         return $this;
     }
 
-    public function render()
+    public function getString()
     {
         return '';
     }

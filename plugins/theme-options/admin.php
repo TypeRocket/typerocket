@@ -15,41 +15,39 @@ $form->make();
     $utility = new \TypeRocket\Utility();
 
     // about
-    $utility->buffer();
-
+    $utility->startBuffer();
     $form->text('Company Name');
-
     $contact = array(
         array('text', array('Phone')),
         array('text', array('Email')),
     );
 
     $form->renderFields($contact);
-    $utility->buffer('about');
+    $utility->indexBuffer('about');
 
     // api
-    $utility->buffer();
+    $utility->startBuffer();
     $help = '<a target="blank" href="https://developers.google.com/maps/documentation/embed/guide#api_key">Get Your Google Maps API</a> to activate maps in the theme.';
     $form->text('Google Maps API Key', array(), array('help' => $help));
-    $utility->buffer('api');
+    $utility->indexBuffer('api');
 
     // save
-    $utility->buffer();
+    $utility->startBuffer();
     $form->submit('Save');
-    $utility->buffer('save');
+    $utility->indexBuffer('save');
 
     // layout
     $screen = new TypeRocket\Layout();
-    $screen->set_sidebar($utility->buffer['save']);
+    $screen->set_sidebar($utility->getBuffer('save'));
     $screen->add_tab( array(
       'id' => 'about',
       'title' => 'About',
-      'content' => $utility->buffer['about']
+      'content' => $utility->getBuffer('about')
     ) );
     $screen->add_tab( array(
       'id' => 'advanced',
       'title' => 'APIs',
-      'content' => $utility->buffer['api']
+      'content' => $utility->getBuffer('api')
     ) );
     $screen->make();
     $form->close();

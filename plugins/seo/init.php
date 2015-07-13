@@ -194,38 +194,38 @@ class SeoPlugin
         $form->setDebugStatus(false);
         $form->setGroup('[seo][meta]');
         $form->make();
-        $utility->buffer();
+        $utility->startBuffer();
         $form->text( 'title', array( 'id' => 'tr_title' ), $title )
              ->textarea( 'description', array( 'id' => 'tr_description' ), $desc );
-        $utility->buffer( 'general' ); // index buffer
-        $utility->buffer();
+        $utility->indexBuffer( 'general' ); // index buffer
+        $utility->startBuffer();
         $form->text( 'og_title', array(), $og_title )
              ->textarea( 'og_desc', array(), $og_desc )
              ->image( 'meta_img', array(), $img );
-        $utility->buffer( 'social' ); // index buffer
-        $utility->buffer();
+        $utility->indexBuffer( 'social' ); // index buffer
+        $utility->startBuffer();
         $form->text( 'canonical', array(), $canon )
              ->text( 'redirect', array( 'readonly' => 'readonly', 'id' => 'tr_redirect' ), $redirect )
              ->select( 'follow', $follow_opts, array(), $follow )
              ->select( 'index', $index_opts, array(), $help );
-        $utility->buffer( 'extra' ); // index buffer
+        $utility->indexBuffer( 'extra' ); // index buffer
 
         $tabs = new Layout();
         $tabs->add_tab( array(
             'id'       => 'seo-general',
             'title'    => "Basic",
-            'content'  => $utility->buffer['general'],
+            'content'  => $utility->getBuffer('general'),
             'callback' => array($this, 'general')
         ) )
              ->add_tab( array(
                  'id'      => 'seo-social',
                  'title'   => "OG",
-                 'content' => $utility->buffer['social']
+                 'content' => $utility->getBuffer('social')
              ) )
              ->add_tab( array(
                  'id'      => 'seo-extra',
                  'title'   => "Extras",
-                 'content' => $utility->buffer['extra']
+                 'content' => $utility->getBuffer('extra')
              ) )
              ->make( 'meta' );
 

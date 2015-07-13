@@ -1,22 +1,19 @@
 jQuery(document).ready(function($) {
 
-  if(typeof window.trRepeaterCallback === 'object') {
-  } else {
-    window.trRepeaterCallback = [];
-  }
-
   $('.typerocket-container').on('click', '.matrix-button', function(e) {
     var $that = $(this);
+    console.log('clicked matrix');
 
     if(!$that.is(":disabled")) {
-      var mxid = $that.data('id'), folder = $that.data('folder');
-      var $fields = $( '.matrix-fields-' + mxid ), $select = $( '.matrix-select-' + mxid );
+      var mxid = $that.data('id'), group = $that.data('folder');
+      var $fields = $( '#' + mxid ), $select = $( 'select[data-mxid="' + mxid + '"]' );
       var button_txt = $that.val();
+      var type = $select.val();
       var callbacks = window.trRepeaterCallback;
 
       $that.attr("disabled", "disabled").val('Adding...');
 
-      var url = '/typerocket_matrix_api/v1/' + folder + '/' + $select.val(), $option = $select.find('option[value="' +$select.val()+ '"]');
+      var url = '/typerocket_matrix_api/v1/' + group + '/' + type, $option = $select.find('option[value="' +$select.val()+ '"]');
 
       $.ajax({
         url:  url,
@@ -36,14 +33,6 @@ jQuery(document).ready(function($) {
               var pal = $(this).attr('id') + '_color_palette',
                 settings = { palettes: window[pal] };
               $(this).wpColorPicker(settings);
-            });
-          }
-
-          if( $.isFunction($.fn.datepicker) ) {
-            data.find('.time-picker[name]').each(function(){
-              $(this).timepicker({
-                timeFormat: 'hh:mm tt'
-              });
             });
           }
 

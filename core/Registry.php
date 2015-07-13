@@ -6,7 +6,7 @@ class Registry
 
     public static $obj = array();
 
-    public static function add( &$obj = null )
+    public static function add( $obj = null )
     {
         if (is_object( $obj )) {
             self::$obj = array_merge(self::$obj, array( $obj ));

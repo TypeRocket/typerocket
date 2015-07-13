@@ -9,27 +9,37 @@ namespace TypeRocket;
 class Utility
 {
 
-    public $buffering = false;
-    public $buffer = array();
+    private $buffering = false;
+    private $buffer = array();
 
-    function buffer($index = null)
+    public function startBuffer()
     {
+        $this->buffering = true;
+        ob_start();
 
-        $this->sanitize_string($index);
+        return $this;
 
-        if ($this->buffering === false) {
-            if (isset($index) && $index !== '') {
-                die('Starting buffer... Index when the buffer ends.');
-            }
-            ob_start();
-            $this->buffering = true;
-        } else {
-            $this->check($index, 'Ending buffer... add an index.');
+    }
+
+    public function indexBuffer($index) {
+
+        if($this->buffering) {
+            $this->sanitize_string($index);
             $data = ob_get_clean();
             $this->buffer[$index] = $data;
             $this->buffering = false;
         }
 
+        return $this;
+    }
+
+    public function getBuffer( $index )
+    {
+        return $this->buffer[$index];
+    }
+
+    public function cleanBuffer() {
+        $this->buffer = array();
     }
 
     /**
@@ -100,18 +110,6 @@ class Utility
         }
 
         return $return;
-    }
-
-    /**
-     * Test for value if there is none die.
-     *
-     * @param $data
-     * @param $error
-     * @param string $type
-     */
-	public function check($data, $error, $type = 'string')
-    {
-
     }
 
 }

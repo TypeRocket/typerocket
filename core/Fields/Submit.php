@@ -12,7 +12,7 @@ class Submit extends Field
         $this->debuggable = false;
     }
 
-    function render()
+    function getString()
     {
         $name = '_tr_submit_form';
 

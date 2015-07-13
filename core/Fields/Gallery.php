@@ -15,7 +15,7 @@ class Gallery extends Field
             true );
     }
 
-    function render()
+    function getString()
     {
         $name                = $this->getAttribute('name');
         $this->setAttribute('class', 'image-picker');

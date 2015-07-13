@@ -11,7 +11,7 @@ class Checkbox extends Field
         $this->setType( 'checkbox' );
     }
 
-    function render()
+    function getString()
     {
         $name   = $this->getAttribute( 'name' );
         $this->removeAttribute( 'name' );

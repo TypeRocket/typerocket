@@ -14,7 +14,7 @@ class Editor extends Field
         $this->repeatable = false;
     }
 
-    function render()
+    function getString()
     {
         $value    = Sanitize::editor( $this->getValue() );
         $settings = $this->options;

@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
   function set_image_uploader(button, field) {
     var title = 'Select an Image',
       btnTitle = 'Use Image',
-      typeInput = 'image'
+      typeInput = 'image';
 
     // Create the media frame.
     var temp_frame = wp.media({
@@ -105,7 +105,7 @@ jQuery(document).ready(function($) {
 
   function set_gallery_uploader(button, list) {
     var title = 'Select Images',
-      btnTitle = 'Use Images'
+      btnTitle = 'Use Images';
 
     // Create the media frame.
     var temp_frame = wp.media({

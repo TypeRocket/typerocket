@@ -13,7 +13,7 @@ class Radio extends Field
         $this->setType( 'radio' );
     }
 
-    function render()
+    function getString()
     {
         $name       = $this->getAttribute('name');
         $default = $this->getSetting('default');

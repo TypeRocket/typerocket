@@ -7,7 +7,7 @@ use \TypeRocket\Html\Generator as Generator,
 class Textarea extends Field
 {
 
-    function render()
+    function getString()
     {
         $max = '';
         $generator = new Generator();

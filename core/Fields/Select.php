@@ -13,7 +13,7 @@ class Select extends Field
         $this->setType('select');
     }
 
-    function render()
+    function getString()
     {
         $default = $this->getSetting('default');
         $option     = ! is_null($this->getValue()) ? $this->getValue() : $default;

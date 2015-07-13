@@ -12,7 +12,7 @@ class Color extends Field
         wp_enqueue_script( 'wp-color-picker' );
     }
 
-    function render()
+    function getString()
     {
         $name  = $this->getAttribute( 'name' );
         $value = esc_attr( $this->getValue() );

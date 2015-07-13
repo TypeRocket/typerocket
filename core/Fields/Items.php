@@ -14,7 +14,7 @@ class Items extends Field
             '1.0', true );
     }
 
-    function render()
+    function getString()
     {
         $name = $this->getAttribute( 'name' );
         $this->appendStringToAttribute( 'class', ' items-list' );

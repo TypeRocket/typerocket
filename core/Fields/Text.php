@@ -11,7 +11,7 @@ class Text extends Field
         $this->setType('text');
     }
 
-    function render()
+    function getString()
     {
         $max = '';
         $input = new Generator();

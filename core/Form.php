@@ -1,8 +1,9 @@
 <?php
 namespace TypeRocket;
 
-use TypeRocket\Html\Generator as Generator;
-use TypeRocket\Html\Tag as Tag;
+use TypeRocket\Html\Generator as Generator,
+    TypeRocket\Html\Tag as Tag,
+    TypeRocket\Fields\Field as Field;
 
 class Form
 {
@@ -101,14 +102,15 @@ class Form
 
         if (Validate::bracket( $group )) {
             $this->group = $group;
-        } elseif(is_string($group)) {
+        } elseif (is_string( $group )) {
             $this->group = "[{$group}]";
         }
 
         return $this;
     }
 
-    public function getGroup() {
+    public function getGroup()
+    {
         return $this->group;
     }
 
@@ -123,7 +125,8 @@ class Form
         return $this;
     }
 
-    public function getSub() {
+    public function getSub()
+    {
         return $this->sub;
     }
 
@@ -134,14 +137,33 @@ class Form
         return $this;
     }
 
-    public function setPopulate($populate) {
+    public function setPopulate( $populate )
+    {
         $this->populate = (bool) $populate;
 
         return $this;
     }
 
-    function getPopulate() {
+    function getPopulate()
+    {
         return $this->populate;
+    }
+
+    function getCurrentField()
+    {
+        return $this->currentField;
+    }
+
+    function setCurrentField( $field )
+    {
+
+        $this->currentField = null;
+
+        if ($field instanceof Field) {
+            $this->currentField = $field;
+        }
+
+        return $this;
     }
 
     private function autoConfig()
@@ -235,47 +257,34 @@ class Form
     }
 
     /**
-     * @param \TypeRocket\Fields\Field $field_obj
+     * @param Field $field
      *
      * @return $this
+     * @internal param Field $field_obj
+     *
      */
-    private function addField( $field_obj )
+    private function addField( Field $field )
     {
-        $this->currentField           = $field_obj;
-        $field                         = $this->currentField->render();
-        $label                         = $this->label();
-        $id                            = esc_attr( $this->currentField->getSetting('id') );
+        $this->setCurrentField($field);
+        $field_html         = $this->getCurrentField()->getString();
+        $label              = $this->getLabel();
+        $id                 = esc_attr( $this->currentField->getSetting( 'id' ) );
+        $help               = '';
 
-        if ( ! empty( $id )) {
-            $id = "id=\"{$id}\"";
-        } else {
-            $id = '';
+        $id = $id ? "id=\"{$id}\"" : '';
+
+        if ($this->currentField->getSetting( 'help' )) {
+            $help = $this->currentField->getSetting( 'help' );
+            $help = "<div class=\"help\"><p>{$help}</p></div>";
         }
 
-        if ( $this->currentField->getSetting('help') ) {
-            $help = $this->currentField->getSetting('help');
-            $help =
-                "<div class=\"help\">
-          <p>{$help}</p>
-        </div>";
+        if ($this->currentField->getSetting( 'html' ) === false) {
+            $html = $field_html;
         } else {
-            $help = '';
-        }
+            $filtered_classes = apply_filters( 'tr_form_html_class_filter', '', $this );
+            $html_class       = trim( 'control-section ' . $filtered_classes );
 
-        if ( $this->currentField->getSetting('html') === false) {
-            $html = $field;
-        } else {
-
-            $html_class = trim( 'control-section ' . apply_filters( 'tr_form_html_class_filter', '',
-                    $this->currentField, $this ) );
-
-            $html =
-                "<div class=\"{$html_class}\" {$id}>
-        {$label}
-        <div class=\"control\">
-          {$field}{$help}
-        </div>
-      </div>";
+            $html = "<div class=\"{$html_class}\" {$id}> {$label} <div class=\"control\"> {$field_html}{$help}</div></div>";
         }
         $this->_e( $html );
         $this->currentField = null;
@@ -283,7 +292,7 @@ class Form
         return $this;
     }
 
-    private function label()
+    private function getLabel()
     {
         $open_html  = "<div class=\"control-label\"><span class=\"label\">";
         $close_html = '</span></div>';
@@ -291,7 +300,7 @@ class Form
         $html       = '';
 
         if ($this->currentField->getLabel()) {
-            $label = $this->currentField->getSetting('label');
+            $label = $this->currentField->getSetting( 'label' );
             $html  = "{$open_html}{$label} {$debug}{$close_html}";
         } elseif ($debug !== '') {
             $html = "{$open_html}{$debug}{$close_html}";
@@ -305,121 +314,30 @@ class Form
         return ( $this->debugStatus === false ) ? $this->debugStatus : Config::getDebugStatus();
     }
 
-    public function setDebugStatus($status) {
+    public function setDebugStatus( $status )
+    {
         $this->debugStatus = (bool) $status;
     }
 
     private function debug()
     {
         $generator = new Generator();
-        $html = '';
-        if ($this->getDebugStatus() === true ) {
+        $html      = '';
+        if ($this->getDebugStatus() === true) {
 
-            $dev = new Dev();
+            $dev      = new Dev();
+            $dev_html = $dev->getFieldHelpFunction( $this->currentField );
 
-            $generator->newElement('div', array('class' => 'dev'), '<i class="tr-icon-info"></i>');
-            $navTag = new Tag('span', array('class' => 'nav'));
-            $fieldCopyTag = new Tag('span', array('class' => 'field'), $dev->getFieldHelpFunction($this->currentField));
-            $navTag->appendInnerTag($fieldCopyTag);
-            $html = $generator->appendInside($navTag)->getString();
+            $generator->newElement( 'div', array( 'class' => 'dev' ), '<i class="tr-icon-info"></i>' );
+            $navTag       = new Tag( 'span', array( 'class' => 'nav' ) );
+            $fieldCopyTag = new Tag( 'span', array( 'class' => 'field' ), $dev_html );
+            $navTag->appendInnerTag( $fieldCopyTag );
+            $html = $generator->appendInside( $navTag )->getString();
         }
 
         return $html;
     }
 
-    public function repeater( $name, $fields, array $settings = array(), $label = 'Repeater' )
-    {
-        $paths = Config::getPaths();
-        wp_enqueue_script( 'typerocket-booyah', $paths['urls']['assets'] . '/js/booyah.js', array( 'jquery' ), '1.0',
-            true );
-        wp_enqueue_script( 'jquery-ui-sortable', array( 'jquery' ), '1.0', true );
-
-        $this->setDebugStatus(false);
-
-        // add controls
-        if (isset( $settings['help'] )) {
-            $help = "<div class=\"help\"> <p>{$settings['help']}</p> </div>";
-        } else {
-            $help = '';
-        }
-
-        // add button settings
-        if (isset( $settings['add_button'] )) {
-            $add_button_value = $settings['add_button'];
-        } else {
-            $add_button_value = "Add New";
-        }
-
-        // add label
-        if (is_string( $label )) {
-            $label = "<div class=\"control-label\"><span class=\"label\">{$label}</span></div>";
-        }
-
-        // template for repeater groups
-        $href                  = '#remove';
-        $templatesContainer    = '<div class="repeater-controls"><div class="collapse"></div><div class="move"></div><a href="' . $href . '" class="remove" title="remove"></a></div><div class="repeater-inputs">';
-        $templatesContainerEnd = '</div></div>';
-
-        $this->_e( '<div class="control-section tr-repeater">' ); // start tr-repeater
-
-        // setup repeater
-        $cache_group = $this->group;
-        $cache_sub   = $this->sub;
-
-        $utility = new Utility();
-        $utility->sanitize_string( $name );
-        $root_group = $this->group .= "[{$name}]";
-        $this->group .= "[{{ {$name} }}]";
-
-        // debug
-        $debug = '';
-        if ( $this->getDebugStatus() === true ) {
-            $debug =
-                "<div class=\"dev\">
-        <span class=\"debug\"><i class=\"tr-icon-bug\"></i></span>
-          <span class=\"nav\">
-          <span class=\"field\">
-            <i class=\"tr-icon-code\"></i><span>tr_{$this->controller}_field(\"{$root_group}\");</span>
-          </span>
-        </span>
-      </div>";
-        }
-
-        $this->_e( $debug );
-
-        $this->_e( $label );
-
-        // add controls (add, flip, clear all)
-        $this->_e( "<div class=\"controls\"><div class=\"tr-repeater-button-add\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /></div><div class=\"button-group\"><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Contract\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}</div>" );
-
-        // render js template data
-        $this->_e( '<div class="tr-repeater-group-template" data-id="' . $name . '">' );
-        $this->_e( $templatesContainer );
-        $this->renderFields( $fields, 'template' );
-        $this->_e( $templatesContainerEnd );
-
-        // render saved data
-        $this->_e( '<div class="tr-repeater-fields">' ); // start tr-repeater-fields
-        $getter  = new GetValue();
-        $repeats = $getter->value( $root_group, $this->item_id, $this->controller );
-        if (is_array( $repeats )) {
-            foreach ($repeats as $k => $array) {
-                $this->_e( '<div class="tr-repeater-group">' );
-                $this->_e( $templatesContainer );
-                $this->group = $root_group . "[{$k}]";
-                $this->renderFields( $fields );
-                $this->_e( $templatesContainerEnd );
-            }
-        }
-        $this->_e( '</div>' ); // end tr-repeater-fields
-        $this->group = $cache_group;
-        $this->sub   = $cache_sub;
-        $this->_e( '</div>' ); // end tr-repeater
-
-        $this->setDebugStatus(null);
-
-        return $this;
-    }
 
     public function renderFields( array $fields = array(), $type = null )
     {
@@ -465,7 +383,7 @@ class Form
     public function input( $type, $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Text();
-        $field->setupByForm( $this )->setup( $name, $attr, $settings, $label )->setType($type);
+        $field->setupByForm( $this )->setup( $name, $attr, $settings, $label )->setType( $type );
         $this->addField( $field );
 
         return $this;
@@ -475,7 +393,7 @@ class Form
     {
         $field = new Fields\Text();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
-        $field->setType('password')->setAttribute('autocomplete', 'off');
+        $field->setType( 'password' )->setAttribute( 'autocomplete', 'off' );
         $this->addField( $field );
 
         return $this;
@@ -485,7 +403,7 @@ class Form
     {
         $field = new Fields\Text();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
-        $field->setType('hidden')->setAttribute('html', false);
+        $field->setType( 'hidden' )->setAttribute( 'html', false );
         $this->addField( $field );
 
         return $this;
@@ -495,7 +413,7 @@ class Form
     {
         $field = new Fields\Submit();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
-        $field->setAttribute('value', $name);
+        $field->setAttribute( 'value', $name );
         $this->addField( $field );
 
         return $this;
@@ -539,8 +457,13 @@ class Form
         return $this;
     }
 
-    public function wp_editor( $name, array $options = array(), array $attr = array(), array $settings = array(), $label = true )
-    {
+    public function wp_editor(
+        $name,
+        array $options = array(),
+        array $attr = array(),
+        array $settings = array(),
+        $label = true
+    ) {
         $field = new Fields\Editor();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
         $field->options = $options;
@@ -597,6 +520,25 @@ class Form
     public function items( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Items();
+        $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
+        $this->addField( $field );
+
+        return $this;
+    }
+
+    public function matrix( $name,  array $options = array(), array $attr = array(), array $settings = array(), $label = true )
+    {
+        $field = new Fields\Matrix();
+        $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
+        $field->options = $options;
+        $this->addField( $field );
+
+        return $this;
+    }
+
+    public function repeater( $name, array $attr = array(), array $settings = array(), $label = true )
+    {
+        $field = new Fields\Repeater();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
         $this->addField( $field );
 
