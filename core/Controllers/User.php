@@ -15,25 +15,25 @@ class User extends Controller
         $this->save( $user_id );
     }
 
-    function validate() {
-        parent::validate();
+    function getValidate()
+    {
 
         $cant_edit = ( $this->user->ID != $this->currentUser->ID && ! current_user_can( 'edit_users' ) );
 
-        if (  $cant_edit ) {
-            $this->valid = false;
+        if ($cant_edit) {
+            $this->valid               = false;
             $this->response['message'] = "Sorry, you don't have enough rights.";
         }
 
-        $this->valid = apply_filters( 'tr_user_validate', $this->valid, $this );
+        $this->valid = apply_filters( 'tr_user_controller_validate', $this->valid, $this );
 
         return $this->valid;
     }
 
-    function sanitize()
+    function filter()
     {
-        parent::sanitize();
-        $this->fields = apply_filters( 'tr_user_sanitize', $_POST['tr'], $this );
+        parent::filter();
+        $this->fields = apply_filters( 'tr_user_controller_filter', $_POST['tr'], $this );
     }
 
     function update()

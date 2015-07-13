@@ -7,8 +7,8 @@
 | Enhance WordPress with a few functions that help clean up the interface
 |
 */
-$tr_enhance_obj = new \TypeRocket\Enhance();
-$tr_enhance_obj->run();
+$tr_enhance = new \TypeRocket\Enhance();
+$tr_enhance->run();
 unset( $tr_enhance_obj );
 
 /*
@@ -20,11 +20,18 @@ unset( $tr_enhance_obj );
 |
 */
 if ( \TypeRocket\Config::getPlugins() ) {
-	$plugins_collection = new \TypeRocket\Plugin\Collection( \TypeRocket\Config::getPlugins() );
-	$plugin_loader      = new \TypeRocket\Plugin\Loader( $plugins_collection );
-	$plugin_loader->load();
-	unset( $plugin_loader );
-    unset( $plugins_collection );
+    $tr_plugins_collection = new \TypeRocket\Plugin\PluginCollection();
+    $tr_plugins_in_config = \TypeRocket\Config::getPlugins();
+
+    foreach($tr_plugins_in_config as $plugin) {
+        $tr_plugins_collection->append($plugin);
+    }
+
+	$tr_plugin_loader      = new \TypeRocket\Plugin\Loader( $tr_plugins_collection );
+	$tr_plugin_loader->load();
+	unset( $tr_plugin_loader );
+    unset( $tr_plugins_collection );
+    unset( $tr_plugins_in_config );
 }
 
 /*
@@ -36,19 +43,19 @@ if ( \TypeRocket\Config::getPlugins() ) {
 | TypeRocket to work.
 |
 */
-$model_post = new TypeRocket\Controllers\Post();
-add_action( 'save_post', array( $model_post, 'hook' ), 1999909, 3 );
-unset($model_post);
+$tr_model_post = new TypeRocket\Controllers\Post();
+add_action( 'save_post', array( $tr_model_post, 'hook' ), 1999909, 3 );
+unset($tr_model_post);
 
-$model_comment = new TypeRocket\Controllers\Comment();
-add_action( 'wp_insert_comment', array( $model_comment, 'hook' ), 1999909, 3 );
-add_action( 'edit_comment', array( $model_comment, 'hook' ), 1999909, 3 );
-unset($model_comment);
+$tr_model_comment = new TypeRocket\Controllers\Comment();
+add_action( 'wp_insert_comment', array( $tr_model_comment, 'hook' ), 1999909, 3 );
+add_action( 'edit_comment', array( $tr_model_comment, 'hook' ), 1999909, 3 );
+unset($tr_model_comment);
 
-$model_user = new TypeRocket\Controllers\User();
-add_action( 'edit_user_profile_update', array( $model_user, 'hook' ), 1999909, 3  );
-add_action( 'personal_options_update', array( $model_user, 'hook' ), 1999909, 3 );
-unset($model_user);
+$tr_model_user = new TypeRocket\Controllers\User();
+add_action( 'edit_user_profile_update', array( $tr_model_user, 'hook' ), 1999909, 3  );
+add_action( 'personal_options_update', array( $tr_model_user, 'hook' ), 1999909, 3 );
+unset($tr_model_user);
 
 /*
 |--------------------------------------------------------------------------
@@ -79,12 +86,12 @@ add_action( 'after_setup_theme', function () {
 add_action('admin_init', function() {
 
     // Controller API
-    $regex = 'typerocket_api/v1/([^/]*)/?$';
-    $location = 'index.php?typerocket_controller=$matches[1]';
+    $regex = 'typerocket_rest_api/v1/([^/]*)/?$';
+    $location = 'index.php?typerocket_rest_controller=$matches[1]';
     add_rewrite_rule( $regex, $location, 'top' );
 
-    $regex = 'typerocket_api/v1/([^/]*)/([^/]*)/?$';
-    $location = 'index.php?typerocket_controller=$matches[1]&typerocket_item=$matches[2]';
+    $regex = 'typerocket_rest_api/v1/([^/]*)/([^/]*)/?$';
+    $location = 'index.php?typerocket_rest_controller=$matches[1]&typerocket_rest_item=$matches[2]';
     add_rewrite_rule( $regex, $location, 'top' );
 
     // Matrix API
@@ -98,8 +105,8 @@ add_action('admin_init', function() {
 });
 
 add_filter( 'query_vars', function($vars) {
-    array_push($vars, 'typerocket_controller');
-    array_push($vars, 'typerocket_item');
+    array_push($vars, 'typerocket_rest_controller');
+    array_push($vars, 'typerocket_rest_item');
     array_push($vars, 'typerocket_matrix_group');
     array_push($vars, 'typerocket_matrix_type');
     array_push($vars, 'typerocket_matrix_form');
@@ -108,11 +115,12 @@ add_filter( 'query_vars', function($vars) {
 
 add_filter( 'template_include', function($template) {
 
-    $resource = get_query_var('typerocket_controller', null);
-    $id = get_query_var('typerocket_item', null);
+    $resource = get_query_var('typerocket_rest_controller', null);
 
-    if($resource) {
-        unset($matrix);
+    $load_template = ($resource);
+    $load_template = apply_filters('tr_rest_api_template', $load_template);
+
+    if($load_template) {
         $template = __DIR__ . '/api/rest-v1.php';
     }
 
@@ -123,9 +131,11 @@ add_filter( 'template_include', function($template) {
 
     $matrix_group = get_query_var('typerocket_matrix_group', null);
     $matrix_type = get_query_var('typerocket_matrix_type', null);
-    $matrix_form = get_query_var('typerocket_matrix_from', null);
 
-    if($matrix_group && $matrix_type) {
+    $load_template = ($matrix_group && $matrix_type);
+    $load_template = apply_filters('tr_matrix_api_template', $load_template);
+
+    if($load_template) {
         $template = __DIR__ . '/api/matrix-v1.php';
     }
 

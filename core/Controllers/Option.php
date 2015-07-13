@@ -5,10 +5,8 @@ namespace TypeRocket\Controllers;
 class Option extends Controller
 {
 
-    function validate()
+    function getValidate()
     {
-        parent::validate();
-
         if( ! current_user_can( 'manage_options')) {
             $this->valid = false;
             $this->response['message'] = "Sorry, you don't have enough rights.";
@@ -19,15 +17,17 @@ class Option extends Controller
             $this->response['message'] = 'Invalid CSRF Token';
         }
 
-        $this->valid = apply_filters( 'tr_option_validate', $this->valid, $this );
+        $this->valid = apply_filters( 'tr_option_controller_validate', $this->valid, $this );
 
         return $this->valid;
     }
 
-    function sanitize()
+    function filter()
     {
-        parent::sanitize();
-        $this->fields = apply_filters( 'tr_option_sanitize', $_POST['tr'], $this );
+        parent::filter();
+        $this->fields = apply_filters( 'tr_option_controller_filter', $_POST['tr'], $this );
+
+        return $this;
     }
 
     function save( $item_id, $action = 'update' )

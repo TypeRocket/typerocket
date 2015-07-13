@@ -1,17 +1,8 @@
 <?php
 namespace TypeRocket\Html;
 
-use ArrayObject;
+use \TypeRocket\Collection as Collection;
 
-class TagCollection extends ArrayObject
+class TagCollection extends Collection
 {
-    public function prepend($value) {
-        $array = $this->getArrayCopy();
-        array_unshift($array, $value);
-        $this->exchangeArray($array);
-    }
-
-    public function append($value) {
-        $this[] = $value;
-    }
 }

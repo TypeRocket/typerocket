@@ -15,24 +15,24 @@ class Post extends Controller
         $this->save( $post_id );
     }
 
-    function validate()
+    function getValidate()
     {
-        parent::validate();
-
         if ( $this->post->post_author != $this->currentUser->ID && ! current_user_can( 'edit_posts') ) {
             $this->valid = false;
             $this->response['message'] = "Sorry, you don't have enough rights.";
         }
 
-        $this->valid = apply_filters( 'tr_post_validate', $this->valid, $this );
+        $this->valid = apply_filters( 'tr_post_controller_validate', $this->valid, $this );
 
         return $this->valid;
     }
 
-    function sanitize()
+    function filter()
     {
-        parent::sanitize();
-        $this->fields = apply_filters( 'tr_post_sanitize', $_POST['tr'], $this );
+        parent::filter();
+        $this->fields = apply_filters( 'tr_post_controller_filter', $_POST['tr'], $this );
+
+        return $this;
     }
 
     /**

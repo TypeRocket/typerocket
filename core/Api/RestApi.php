@@ -1,8 +1,10 @@
 <?php
 
-namespace TypeRocket;
+namespace TypeRocket\Api;
 
-class Api {
+use \TypeRocket\Controllers\Controller as Controller;
+
+class RestApi {
 
     public $resource;
     public $id;
@@ -17,10 +19,10 @@ class Api {
         $this->method = strtoupper($method);
 
         $class = "\\TypeRocket\\Controllers\\$resource";
-        /** @var Controllers\Controller $model */
+        /** @var Controller $model */
         $controller = new $class();
 
-        if($controller instanceof Controllers\Controller) {
+        if($controller instanceof Controller) {
             $controller->requestType = 'TypeRocketApi';
             $data = $controller->handleRest($this->id, $this->method);
 

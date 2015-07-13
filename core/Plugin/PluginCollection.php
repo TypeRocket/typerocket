@@ -1,6 +1,8 @@
 <?php
 namespace TypeRocket\Plugin;
 
+use \TypeRocket\Collection as Collection;
+
 /*
 |--------------------------------------------------------------------------
 | Plugin Collection
@@ -11,21 +13,6 @@ namespace TypeRocket\Plugin;
 | must be used.
 |
 */
-class Collection
+class PluginCollection extends Collection
 {
-    public $plugins = array();
-
-    function __construct(array $plugins)
-    {
-	    foreach($plugins as $plugin) {
-		    $this->addPlugin($plugin);
-	    }
-    }
-
-    function addPlugin($string) {
-        if(is_string($string)) {
-            array_push($this->plugins, $string);
-        }
-    }
-
 }

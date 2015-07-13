@@ -1,6 +1,7 @@
 <?php
 namespace TypeRocket\Plugin;
 
+use \TypeRocket\Config as Config;
 /*
 |--------------------------------------------------------------------------
 | Plugin Loader
@@ -15,24 +16,25 @@ class Loader
 {
     public $plugins = null;
 
-    function __construct(Collection $plugins)
+    function __construct(PluginCollection $plugins)
     {
         $this->setCollection($plugins);
     }
 
-    function setCollection(Collection $collection) {
-        $this->plugins = apply_filters('tr_plugins_collection', $collection->plugins);
+    function setCollection(PluginCollection $collection) {
+        $this->plugins = apply_filters('tr_plugins_collection', $collection);
     }
 
     function load()
     {
         $plugins_list = $this->plugins;
-	    $paths = \TypeRocket\Config::getPaths();
+	    $paths = Config::getPaths();
 
         foreach ($plugins_list as $plugin) {
             $folder = $paths['plugins'] . '/' . $plugin . '/';
 
             if (file_exists($folder . 'init.php')) {
+                /** @noinspection PhpIncludeInspection */
                 include $folder . 'init.php';
             }
         }

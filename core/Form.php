@@ -70,6 +70,8 @@ class Form
 
     public function setItemId( $item_id )
     {
+        $this->item_id = null;
+
         if (isset( $item_id )) {
             $this->item_id = (int) $item_id;
         }
@@ -84,6 +86,8 @@ class Form
 
     public function setId( $id )
     {
+        $this->id = null;
+
         if (is_string( $id )) {
             $this->id = $id;
         }
@@ -93,6 +97,8 @@ class Form
 
     public function setGroup( $group )
     {
+        $this->group = null;
+
         if (Validate::bracket( $group )) {
             $this->group = $group;
         } elseif(is_string($group)) {
@@ -108,6 +114,8 @@ class Form
 
     public function setSub( $sub )
     {
+        $this->sub = null;
+
         if (Validate::bracket( $sub )) {
             $this->sub = $sub;
         }
@@ -193,7 +201,7 @@ class Form
         if ($use_rest == true) {
             $rest = array(
                 'class'    => 'typerocket-rest-form',
-                'rest-api' => '/typerocket_api/v1/' . $this->controller . '/' . $this->item_id
+                'rest-api' => home_url() . '/typerocket_rest_api/v1/' . $this->controller . '/' . $this->item_id
             );
         }
 
@@ -202,7 +210,7 @@ class Form
         $form      = new Tag( 'form', $attr );
         $generator = new Generator();
 
-        $r = $form->getStringOpenTag() . PHP_EOL;
+        $r = $form->getStringOpenTag();
         $r .= $generator->newInput( 'hidden', '_method', $method )->getString();
         $r .= wp_nonce_field( 'form_' . TR_SEED, '_tr_nonce_form', false, false );
 

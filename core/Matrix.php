@@ -73,7 +73,7 @@ class Matrix {
 </div>
 <div><input type='hidden' name='tr{$group}[{$this->name}]' /></div>
 <div class='matrix-fields matrix-fields-{$this->mxid} tr-repeater-fields ui-sortable'>";
-        $this->get_from();
+        $this->getMatrixBlocks();
         echo "</div></div>";
 
         return $this;
@@ -173,12 +173,12 @@ class Matrix {
 
     }
 
-    private function get_from()
+    private function getMatrixBlocks()
     {
 
-        $field_class = new GetValue();
-        $val         = $field_class->value( $this->form->getGroup() . "[{$this->name}]", $this->form->getItemId(),
-            $this->form->getController(), false );
+        $get_value = new GetValue();
+        $val = $get_value->value( $this->form->getGroup() . "[{$this->name}]", $this->form->getItemId(),
+        $this->form->getController(), false );
 
         if (is_array( $val )) {
 
@@ -186,7 +186,6 @@ class Matrix {
                 foreach ($i as $type => $v) {
 
                     $form = $this->form;
-
                     $form->setDebugStatus(false);
                     $tr_matrix_id    = $t;
                     $tr_matrix_group = $this->name;
@@ -196,7 +195,7 @@ class Matrix {
                     $form->setGroup($init_grp . "[{$tr_matrix_group}][{$tr_matrix_id}][{$tr_matrix_type}]");
                     $path        = TR_MATRIX_DIR . "/" . $this->name . "/{$type}.php";
 
-                    if (file_exists( $path )) {
+
                         ?>
                         <div class="matrix-field-group tr-repeater-group matrix-type-<?php echo $tr_matrix_type; ?> matrix-group-<?php echo $tr_matrix_group; ?>">
                             <div class="repeater-controls">
@@ -206,13 +205,17 @@ class Matrix {
                             </div>
                             <div class="repeater-inputs">
                                 <?php
-                                /** @noinspection PhpIncludeInspection */
-                                include($path);
+                                if (file_exists( $path )) {
+                                    /** @noinspection PhpIncludeInspection */
+                                    include( $path );
+                                } else {
+                                    echo '<p>No Matrix file found.</p>';
+                                }
                                 ?>
                             </div>
                         </div>
                         <?php
-                    }
+
 
 
                     $form->setGroup($init_grp);

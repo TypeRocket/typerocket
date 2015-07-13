@@ -31,8 +31,8 @@ abstract class Controller
         $this->action  = $action;
         $this->currentUser = wp_get_current_user();
 
-        if ($this->validate()) {
-            $this->sanitize();
+        if ($this->getValidate()) {
+            $this->filter();
 
             if ($this->action === 'update') {
                 $this->update();
@@ -46,7 +46,7 @@ abstract class Controller
 
     }
 
-    function validate()
+    function getValidate()
     {
         return $this->valid = true;
     }
@@ -83,8 +83,9 @@ abstract class Controller
 
     }
 
-    function sanitize()
+    function filter()
     {
+        return $this;
     }
 
     protected function update()

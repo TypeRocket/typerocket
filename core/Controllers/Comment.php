@@ -15,24 +15,25 @@ class Comment extends Controller
         $this->save( $id );
     }
 
-    function validate()
+    function getValidate()
     {
-        parent::validate();
 
         if ( $this->comment->user_id != $this->currentUser->ID && ! current_user_can( 'edit_comment' ) ) {
             $this->valid = false;
             $this->response['message'] = "Sorry, you don't have enough rights.";
         }
 
-        $this->valid = apply_filters( 'tr_comment_validate', $this->valid, $this );
+        $this->valid = apply_filters( 'tr_comment_controller_validate', $this->valid, $this );
 
         return $this->valid;
     }
 
-    function sanitize()
+    function filter()
     {
-        parent::sanitize();
-        $this->fields = apply_filters( 'tr_comment_sanitize', $_POST['tr'], $this );
+        parent::filter();
+        $this->fields = apply_filters( 'tr_comment_controller_filter', $_POST['tr'], $this );
+
+        return $this;
     }
 
     function save( $item_id, $action = 'update' )
