@@ -11,7 +11,7 @@ class PostType extends Registrable
     public $id = null;
     public $singular = null;
     public $plural = null;
-    public $title = null;
+    private $title = null;
     private $form = null;
     public $use = null;
     public $taxonomies = array();
@@ -25,6 +25,16 @@ class PostType extends Registrable
         add_action( 'admin_head', array( $this, 'style' ) );
 
         return $this;
+    }
+
+    public function getTitlePlaceholder()
+    {
+        return $this->title;
+    }
+
+    public function setTitlePlaceholder($text)
+    {
+        return $this->title = (string) $text;
     }
 
     /**
