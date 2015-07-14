@@ -96,8 +96,9 @@ class Matrix extends Field {
 
     private function get_select_html()
     {
+        $paths = Config::getPaths();
         $name = $this->getName();
-        $dir = TR_MATRIX_DIR . '/' . $name;
+        $dir = $paths['matrix'] . '/' . $name;
 
         if (file_exists( $dir )) {
 
@@ -135,6 +136,7 @@ class Matrix extends Field {
         $utility = new Buffer();
         $blocks = '';
         $form = $this->getForm();
+        $paths = Config::getPaths();
 
         if (is_array( $val )) {
 
@@ -150,7 +152,7 @@ class Matrix extends Field {
                     $form->setDebugStatus(false);
 
                     $form->setGroup($root_group . "[{$tr_matrix_group}][{$tr_matrix_key}][{$tr_matrix_type}]");
-                    $file        = TR_MATRIX_DIR . "/" . $this->getName() . "/{$tr_matrix_type}.php";
+                    $file        = $paths['matrix'] . "/" . $this->getName() . "/{$tr_matrix_type}.php";
                     $classes = "matrix-field-group tr-repeater-group matrix-type-{$tr_matrix_type} matrix-group-{$tr_matrix_group}";
                     $remove = '#remove';
                     ?>
