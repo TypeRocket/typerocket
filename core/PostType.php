@@ -12,7 +12,7 @@ class PostType extends Registrable
     public $singular = null;
     public $plural = null;
     public $title = null;
-    public $form = null;
+    private $form = null;
     public $use = null;
     public $taxonomies = array();
     public $args = array();
@@ -27,9 +27,121 @@ class PostType extends Registrable
         return $this;
     }
 
+    /**
+     * @param $id
+     *
+     * @return $this
+     */
     function setId( $id )
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @param $key
+     *
+     * @return mixed
+     */
+    public function getFrom( $key )
+    {
+        return $this->form[$key];
+    }
+
+    /**
+     * @param bool|true|callable $value
+     *
+     * @return $this
+     */
+    public function setTitleFrom($value = true) {
+
+        if( is_callable($value) ) {
+            $this->form['title'] = $value;
+        } else {
+            $this->form['title'] = true;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function removeTitleFrom() {
+        $this->form['title'] = null;
+
+        return $this;
+    }
+
+    /**
+     * @param bool|true|callable $value
+     *
+     * @return $this
+     */
+    public function setTopFrom($value = true) {
+        if( is_callable($value) ) {
+            $this->form['top'] = $value;
+        } else {
+            $this->form['top'] = true;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function removeTopFrom() {
+        $this->form['top'] = null;
+
+        return $this;
+    }
+
+    /**
+     * @param bool|true|callable $value
+     *
+     * @return $this
+     */
+    public function setBottomFrom($value = true) {
+        if( is_callable($value) ) {
+            $this->form['bottom'] = $value;
+        } else {
+            $this->form['bottom'] = true;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function removeBottomFrom() {
+        $this->form['bottom'] = null;
+
+        return $this;
+    }
+
+    /**
+     * @param bool|true|callable $value
+     *
+     * @return $this
+     */
+    public function setEditorFrom($value = true) {
+        if( is_callable($value) ) {
+            $this->form['editor'] = $value;
+        } else {
+            $this->form['editor'] = true;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function removeEditorFrom() {
+        $this->form['editor'] = null;
 
         return $this;
     }
