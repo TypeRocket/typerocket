@@ -17,7 +17,6 @@ class ThemeOptionsPlugin
     {
         add_action( 'admin_menu', array( $this, 'menu' ) );
         add_action( 'wp_before_admin_bar_render', array( $this, 'admin_bar_menu' ), 100 );
-        add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts_styles' ) );
 
         // process import and export
         if (count( $_POST ) < 1 && $_GET['theme-options'] == 'export') {
@@ -71,8 +70,9 @@ class ThemeOptionsPlugin
     {
         /** @var \wpdb $wpdb */
         global $wpdb;
+        $name = esc_sql( $this->name );
 
-        $sql     = "SELECT * FROM {$wpdb->options} WHERE option_name = '{$this->name}';";
+        $sql     = "SELECT * FROM {$wpdb->options} WHERE option_name = '{$name}';";
         $arr     = array();
         $options = $wpdb->get_results( $sql );
         if ( ! $options) {
@@ -104,17 +104,6 @@ class ThemeOptionsPlugin
                 $theme_options = $data[$this->name];
                 update_option( $this->name, serialize( $theme_options ) );
             }
-        }
-    }
-
-    public function add_scripts_styles()
-    {
-        if (is_admin()) {
-            $paths = Config::getPaths();
-
-            wp_enqueue_script( 'tr_thop-script', $paths['urls']['plugins'] . '/theme-options/js.js',
-                array( 'jquery' ), '1.0', true );
-            wp_enqueue_style( 'tr_thop-style', $paths['urls']['plugins'] . '/theme-options/css.css' );
         }
     }
 
