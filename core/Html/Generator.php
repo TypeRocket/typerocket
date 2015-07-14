@@ -45,7 +45,17 @@ class Generator
     function newInput( $type, $name, $value, array $attributes = array() )
     {
 
-        $attributes = array_merge( array( 'type' => $type, 'name' => $name, 'value' => $value ), $attributes );
+        $defaults = array( 'type' => $type, 'name' => $name, 'value' => $value );
+
+        if(is_null($name)) {
+            unset($defaults['name']);
+        }
+
+        if(is_null($value)) {
+            unset($defaults['value']);
+        }
+
+        $attributes = array_merge( $defaults, $attributes );
 
         $this->tag = new Tag( 'input', $attributes );
 

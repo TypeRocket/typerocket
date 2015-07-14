@@ -47,6 +47,15 @@ class Matrix extends Field {
         $group = $this->getForm()->getGroup();
         $name = $this->getName();
         $blocks = $this->getMatrixBlocks();
+        $settings = $this->getSettings();
+
+        // add controls
+        if (isset( $settings['help'] )) {
+            $help = "<div class=\"help\"> <p>{$settings['help']}</p> </div>";
+            $this->removeSetting('help');
+        } else {
+            $help = '';
+        }
 
         // add it all
         $html = "
@@ -61,6 +70,7 @@ class Matrix extends Field {
 <input type=\"button\" value=\"Contract\" class=\"tr_action_collapse button\">
 <input type=\"button\" value=\"Clear All\" class=\"clear button\">
 </div>
+{$help}
 </div>
 <div><input type='hidden' name='tr{$group}[{$name}]' /></div>
 <div id=\"{$this->mxid}\" class='matrix-fields tr-repeater-fields ui-sortable'>{$blocks}</div></div>";

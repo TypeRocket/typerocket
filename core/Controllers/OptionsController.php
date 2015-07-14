@@ -2,7 +2,7 @@
 
 namespace TypeRocket\Controllers;
 
-class Option extends Controller
+class OptionsController extends Controller
 {
 
     function getValidate()

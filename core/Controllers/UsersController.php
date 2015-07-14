@@ -2,7 +2,7 @@
 
 namespace TypeRocket\Controllers;
 
-class User extends Controller
+class UsersController extends Controller
 {
 
     /** @var \WP_User */

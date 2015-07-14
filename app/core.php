@@ -43,16 +43,16 @@ if ( \TypeRocket\Config::getPlugins() ) {
 | TypeRocket to work.
 |
 */
-$tr_model_post = new TypeRocket\Controllers\Post();
+$tr_model_post = new TypeRocket\Controllers\PostsController();
 add_action( 'save_post', array( $tr_model_post, 'hook' ), 1999909, 3 );
 unset($tr_model_post);
 
-$tr_model_comment = new TypeRocket\Controllers\Comment();
+$tr_model_comment = new TypeRocket\Controllers\CommentsController();
 add_action( 'wp_insert_comment', array( $tr_model_comment, 'hook' ), 1999909, 3 );
 add_action( 'edit_comment', array( $tr_model_comment, 'hook' ), 1999909, 3 );
 unset($tr_model_comment);
 
-$tr_model_user = new TypeRocket\Controllers\User();
+$tr_model_user = new TypeRocket\Controllers\UsersController();
 add_action( 'edit_user_profile_update', array( $tr_model_user, 'hook' ), 1999909, 3  );
 add_action( 'personal_options_update', array( $tr_model_user, 'hook' ), 1999909, 3 );
 unset($tr_model_user);

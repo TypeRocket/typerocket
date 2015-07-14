@@ -2,7 +2,7 @@
 
 namespace TypeRocket\Controllers;
 
-class Comment extends Controller
+class CommentsController extends Controller
 {
 
     public $comment = null;

@@ -2,7 +2,7 @@
 
 namespace TypeRocket\Controllers;
 
-class Post extends Controller
+class PostsController extends Controller
 {
 
     /** @var \WP_Post */

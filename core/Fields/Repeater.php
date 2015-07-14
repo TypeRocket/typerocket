@@ -30,6 +30,7 @@ class Repeater extends Field {
         // add controls
         if (isset( $settings['help'] )) {
             $help = "<div class=\"help\"> <p>{$settings['help']}</p> </div>";
+            $this->removeSetting('help');
         } else {
             $help = '';
         }
@@ -57,7 +58,7 @@ class Repeater extends Field {
         $form->setGroup( $this->getBrackets() . "[{{ {$name} }}]" );
 
         // add controls (add, flip, clear all)
-        $html .= "<div class=\"controls\"><div class=\"tr-repeater-button-add\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /></div><div class=\"button-group\"><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Contract\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}</div>";
+        $html .= "<div class=\"controls\"><div class=\"tr-repeater-button-add\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /></div><div class=\"button-group\"><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Contract\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}<div><input type='hidden' name='tr{$root_group}' /></div></div>";
 
         // render js template data
         $html .= '<div class="tr-repeater-group-template" data-id="' . $name . '">';

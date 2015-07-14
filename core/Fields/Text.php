@@ -16,6 +16,7 @@ class Text extends Field
         $max = '';
         $input = new Generator();
         $value = $this->getValue();
+        $name = $this->getAttribute('name');
 
         if ($this->getSetting('sanitize') !== 'raw') {
             $value = esc_attr( $value );
@@ -30,7 +31,7 @@ class Text extends Field
             $max = $max->getString();
         }
 
-        return $input->newInput($this->getType(), $value, $value, $this->getAttributes() )->getString() . $max;
+        return $input->newInput($this->getType(), $name, $value, $this->getAttributes() )->getString() . $max;
     }
 
 }

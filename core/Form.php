@@ -120,6 +120,8 @@ class Form
 
         if (Validate::bracket( $sub )) {
             $this->sub = $sub;
+        } elseif (is_string( $sub )) {
+            $this->sub = "[{$sub}]";
         }
 
         return $this;
@@ -284,7 +286,7 @@ class Form
             $filtered_classes = apply_filters( 'tr_form_html_class_filter', '', $this );
             $html_class       = trim( 'control-section ' . $filtered_classes );
 
-            $html = "<div class=\"{$html_class}\" {$id}> {$label} <div class=\"control\"> {$field_html}{$help}</div></div>";
+            $html = "<div class=\"{$html_class}\" {$id}>{$label}<div class=\"control\">{$field_html}{$help}</div></div>";
         }
         $this->_e( $html );
         $this->currentField = null;
@@ -457,12 +459,7 @@ class Form
         return $this;
     }
 
-    public function wp_editor(
-        $name,
-        array $options = array(),
-        array $attr = array(),
-        array $settings = array(),
-        $label = true
+    public function wp_editor( $name, array $options = array(), array $attr = array(), array $settings = array(), $label = true
     ) {
         $field = new Fields\Editor();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );

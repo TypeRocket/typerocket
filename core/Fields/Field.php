@@ -46,13 +46,13 @@ abstract class Field
         $this->setItemId( $form->getItemId() );
         $this->setController( $form->getController() );
         $this->setPopulate( $form->getPopulate() );
-        $this->setForm( clone $form ); // do not pass by reference
+        $this->setForm( $form ); // do not pass by reference
 
         return $this;
     }
 
     public function setForm(Form $form) {
-        $this->form = $form;
+        $this->form = clone $form;
 
         return $this;
     }
@@ -64,8 +64,12 @@ abstract class Field
 
     public function setGroup( $group )
     {
+        $this->sub = null;
+
         if (Validate::bracket( $group )) {
             $this->group = $group;
+        } elseif (is_string( $group )) {
+            $this->group = "[{$group}]";
         }
 
         return $this;
@@ -77,8 +81,12 @@ abstract class Field
 
     public function setSub( $sub )
     {
+        $this->sub = null;
+
         if (Validate::bracket( $sub )) {
             $this->sub = $sub;
+        } elseif (is_string( $sub )) {
+            $this->sub = "[{$sub}]";
         }
 
         return $this;
@@ -298,6 +306,7 @@ abstract class Field
             $this->settings['label'] = $name;
         }
 
+        // TODO: configure template for repeaters
         if ($settings['template'] == true) {
             $this->attr['data-name'] = $this->attr['name'];
             unset( $this->attr['name'] );
