@@ -58,8 +58,14 @@ spl_autoload_register( function ( $class ) {
 | Load configuration file.
 |
 */
-require __DIR__ . '/../config.php';
-new \TypeRocket\Config();
+$tr_config_path = __DIR__ . '/../config.php';
+if(file_exists($tr_config_path)) {
+    require $tr_config_path;
+    new \TypeRocket\Config();
+    unset($tr_config_path);
+} else {
+    die('Add a config.php file at ' . $tr_config_path);
+}
 
 /*
 |--------------------------------------------------------------------------
