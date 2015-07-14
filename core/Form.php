@@ -139,6 +139,37 @@ class Form
         return $this;
     }
 
+    public function getSettings()
+    {
+        return $this->settings;
+    }
+
+    public function getSetting( $key )
+    {
+        if( ! array_key_exists($key, $this->settings)) {
+            return null;
+        }
+
+        return $this->settings[$key];
+    }
+
+    public function setSetting( $key, $value )
+    {
+
+        $this->settings[$key] = $value;
+
+        return $this;
+    }
+
+    public function removeSetting( $key )
+    {
+        if( array_key_exists($key, $this->settings)) {
+            unset($this->settings[$key]);
+        }
+
+        return $this;
+    }
+
     public function setPopulate( $populate )
     {
         $this->populate = (bool) $populate;
@@ -448,7 +479,7 @@ class Form
         return $this;
     }
 
-    public function wp_editor(
+    public function wpEditor(
         $name,
         array $options = array(),
         array $attr = array(),

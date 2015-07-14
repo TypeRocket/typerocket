@@ -283,7 +283,6 @@ abstract class Field
         $this->settings = $settings;
         $this->label    = $label;
 
-
         if (isset( $settings['builtin'] ) && $settings['builtin'] == true) {
             $this->builtin = true;
         }
@@ -294,23 +293,20 @@ abstract class Field
 
         $this->attr = array_merge( $this->attr, $attr );
 
+        // setup name for field
         $this->setPrefix( 'tr' )->setName( $name )->setBrackets( $this->getBrackets() );
-
         $this->attr['name'] = $this->prefix . $this->brackets;
 
-        $html_class = trim( $this->attr['class'] . ' ' . $this->prefix . '_field_class_' . $this->name );
-
-        $this->attr['class'] = apply_filters( 'tr_field_html_class_filter', $html_class, $this );
-
-        if ( ! isset( $settings['label'] )) {
-            $this->settings['label'] = $name;
-        }
-
-        // TODO: configure template for repeaters
-        if ($settings['template'] == true) {
+        if ($this->getForm()->getSetting('template') == true) {
             $this->attr['data-name'] = $this->attr['name'];
             unset( $this->attr['name'] );
             unset( $this->attr['id'] );
+        }
+
+        $this->attr['class'] = apply_filters( 'tr_field_html_class_filter', $this->attr['class'], $this );
+
+        if ( ! isset( $settings['label'] )) {
+            $this->settings['label'] = $name;
         }
 
         do_action( 'tr_end_setup_field', $this, $name, $attr, $settings, $label);

@@ -39,7 +39,7 @@ class PostsController extends Controller
      * @param $item_id
      * @param string $action
      *
-     * @return Post $this
+     * @return PostsController $this
      */
     function save( $item_id, $action = 'update' )
     {
