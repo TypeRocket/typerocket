@@ -64,7 +64,7 @@ class Repeater extends Field {
         $html .= '<div class="tr-repeater-group-template" data-id="' . $name . '">';
         $html .= $templatesContainer;
         $utility->startBuffer();
-        $form->renderFields( $fields, 'template' );
+        $form->renderFields( $fields );
         $html .= $utility->indexBuffer('template')->getBuffer('template');
         $html .= $templatesContainerEnd ;
 

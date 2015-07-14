@@ -254,7 +254,7 @@ abstract class Field
     public function appendStringToAttribute($key, $text) {
 
         if(array_key_exists($key, $this->attr)) {
-            $text .= $this->attr[$key] . (string) $text;
+            $text = $this->attr[$key] . (string) $text;
         }
 
         $this->attr[$key] = $text;

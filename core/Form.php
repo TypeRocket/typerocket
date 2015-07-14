@@ -258,47 +258,11 @@ class Form
         return $this;
     }
 
-    /**
-     * @param Field $field
-     *
-     * @return $this
-     * @internal param Field $field_obj
-     *
-     */
-    private function addField( Field $field )
-    {
-        $this->setCurrentField($field);
-        $field_html         = $this->getCurrentField()->getString();
-        $label              = $this->getLabel();
-        $id                 = esc_attr( $this->currentField->getSetting( 'id' ) );
-        $help               = '';
-
-        $id = $id ? "id=\"{$id}\"" : '';
-
-        if ($this->currentField->getSetting( 'help' )) {
-            $help = $this->currentField->getSetting( 'help' );
-            $help = "<div class=\"help\"><p>{$help}</p></div>";
-        }
-
-        if ($this->currentField->getSetting( 'html' ) === false) {
-            $html = $field_html;
-        } else {
-            $filtered_classes = apply_filters( 'tr_form_html_class_filter', '', $this );
-            $html_class       = trim( 'control-section ' . $filtered_classes );
-
-            $html = "<div class=\"{$html_class}\" {$id}>{$label}<div class=\"control\">{$field_html}{$help}</div></div>";
-        }
-        $this->_e( $html );
-        $this->currentField = null;
-
-        return $this;
-    }
-
     private function getLabel()
     {
         $open_html  = "<div class=\"control-label\"><span class=\"label\">";
         $close_html = '</span></div>';
-        $debug      = $this->debug();
+        $debug      = $this->getDebug();
         $html       = '';
 
         if ($this->currentField->getLabel()) {
@@ -311,17 +275,8 @@ class Form
         return $html;
     }
 
-    function getDebugStatus()
-    {
-        return ( $this->debugStatus === false ) ? $this->debugStatus : Config::getDebugStatus();
-    }
 
-    public function setDebugStatus( $status )
-    {
-        $this->debugStatus = (bool) $status;
-    }
-
-    private function debug()
+    private function getDebug()
     {
         $generator = new Generator();
         $html      = '';
@@ -340,31 +295,56 @@ class Form
         return $html;
     }
 
-
-    public function renderFields( array $fields = array(), $type = null )
+    function getDebugStatus()
     {
-        foreach ($fields as $args) {
+        return ( $this->debugStatus === false ) ? $this->debugStatus : Config::getDebugStatus();
+    }
 
-            if (empty( $args[1][1] )) {
-                $args[1][1] = array();
-            }
-            if (empty( $args[1][2] )) {
-                $args[1][2] = array();
-            }
+    public function setDebugStatus( $status )
+    {
+        $this->debugStatus = (bool) $status;
+    }
 
-            if ($args[0] == 'select' || $args[0] == 'radio' || $args[0] == 'custom') {
-                if (empty( $args[1][3] )) {
-                    $args[1][3] = array();
-                }
-                if (is_string( $type )) {
-                    $args[1][3][$type] = true;
-                }
-                call_user_func_array( array( $this, $args[0] ), $args[1] );
-            } else {
-                if (is_string( $type )) {
-                    $args[1][2][$type] = true;
-                }
-                call_user_func_array( array( $this, $args[0] ), $args[1] );
+    /**
+     * @param Field $field
+     *
+     * @return $this
+     * @internal param Field $field_obj
+     *
+     */
+    private function renderField( Field $field )
+    {
+        $this->setCurrentField( $field );
+        $field = $this->getCurrentField()->getString();
+        $label = $this->getLabel();
+        $id    = $this->getCurrentField()->getSetting( 'id' );
+        $help  = $this->getCurrentField()->getSetting( 'help' );
+        $html  = $this->getCurrentField()->getSetting( 'html' );
+
+        $id   = $id ? "id=\"{$id}\"" : '';
+        $help = $help ? "<div class=\"help\"><p>{$help}</p></div>" : '';
+
+        if ($html === false) {
+            $html = $field;
+        } else {
+            $html = "<div class=\"control-section\" {$id}>{$label}<div class=\"control\">{$field}{$help}</div></div>";
+        }
+
+        $this->_e( $html );
+        $this->currentField = null;
+
+        return $this;
+    }
+
+    public function renderFields( array $fields = array() )
+    {
+        foreach ($fields as $functionSetup) {
+
+            $function   = array_shift( $functionSetup );
+            $parameters = array_pop( $functionSetup );
+
+            if (method_exists( $this, $function ) && is_array( $parameters )) {
+                call_user_func_array( array( $this, $function ), $parameters );
             }
 
         }
@@ -377,7 +357,7 @@ class Form
     {
         $field = new Fields\Text();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -386,7 +366,7 @@ class Form
     {
         $field = new Fields\Text();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label )->setType( $type );
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -396,7 +376,7 @@ class Form
         $field = new Fields\Text();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
         $field->setType( 'password' )->setAttribute( 'autocomplete', 'off' );
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -406,7 +386,7 @@ class Form
         $field = new Fields\Text();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
         $field->setType( 'hidden' )->setAttribute( 'html', false );
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -416,7 +396,7 @@ class Form
         $field = new Fields\Submit();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
         $field->setAttribute( 'value', $name );
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -425,7 +405,16 @@ class Form
     {
         $field = new Fields\Textarea();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
-        $this->addField( $field );
+        $this->renderField( $field );
+
+        return $this;
+    }
+
+    public function editor( $name, array $attr = array(), array $settings = array(), $label = true )
+    {
+        $field = new Fields\Editor();
+        $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -435,7 +424,7 @@ class Form
         $field = new Fields\Radio();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
         $field->options = $options;
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -444,7 +433,7 @@ class Form
     {
         $field = new Fields\Checkbox();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -454,17 +443,22 @@ class Form
         $field = new Fields\Select();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
         $field->options = $options;
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
 
-    public function wp_editor( $name, array $options = array(), array $attr = array(), array $settings = array(), $label = true
+    public function wp_editor(
+        $name,
+        array $options = array(),
+        array $attr = array(),
+        array $settings = array(),
+        $label = true
     ) {
-        $field = new Fields\Editor();
+        $field = new Fields\WordPressEditor();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
         $field->options = $options;
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -473,7 +467,7 @@ class Form
     {
         $field = new Fields\Color();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -482,7 +476,7 @@ class Form
     {
         $field = new Fields\Date();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -491,7 +485,7 @@ class Form
     {
         $field = new Fields\Image();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -500,7 +494,7 @@ class Form
     {
         $field = new Fields\File();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -509,7 +503,7 @@ class Form
     {
         $field = new Fields\Gallery();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -518,17 +512,22 @@ class Form
     {
         $field = new Fields\Items();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
 
-    public function matrix( $name,  array $options = array(), array $attr = array(), array $settings = array(), $label = true )
-    {
+    public function matrix(
+        $name,
+        array $options = array(),
+        array $attr = array(),
+        array $settings = array(),
+        $label = true
+    ) {
         $field = new Fields\Matrix();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
         $field->options = $options;
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
@@ -538,24 +537,29 @@ class Form
         $field = new Fields\Repeater();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
         $field->fields = $fields;
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }
 
     /**
      * @param Fields\Field $field
-     * @param $name
+     * @param string $name the name of the field
      * @param array $attr
      * @param array $settings
-     * @param bool|true $label
+     * @param bool|true $label show the label
      *
      * @return $this
      */
-    public function renderCustomField( $field, $name, array $attr = array(), array $settings = array(), $label = true )
-    {
+    public function renderCustomField(
+        Field $field,
+        $name,
+        array $attr = array(),
+        array $settings = array(),
+        $label = true
+    ) {
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
-        $this->addField( $field );
+        $this->renderField( $field );
 
         return $this;
     }

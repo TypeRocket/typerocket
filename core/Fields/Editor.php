@@ -1,41 +1,42 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Sanitize as Sanitize;
+use \TypeRocket\Html\Generator as Generator,
+    \TypeRocket\Sanitize as Sanitize,
+    \TypeRocket\Config as Config;
 
-class Editor extends Field
+class Editor extends Textarea
 {
-
-    public $options = array();
 
     function __construct()
     {
+        $paths = Config::getPaths();
         wp_enqueue_media();
-        $this->repeatable = false;
+        wp_enqueue_script( 'typerocket-editor', $paths['urls']['assets'] . '/js/redactor.min.js', array( 'jquery' ), '1.0',
+            true );
     }
 
     function getString()
     {
-        $value    = Sanitize::editor( $this->getValue() );
-        $settings = $this->options;
+        $max = '';
+        $generator = new Generator();
+        $value = $this->getValue();
+        $this->appendStringToAttribute('class', ' typerocket-editor ');
 
-        $override = array(
-            'textarea_name' => $this->getAttribute('name')
-        );
+        if ($this->getSetting('sanitize') != 'raw') {
+            $value = Sanitize::textarea( $value );
+        }
 
-        $defaults = array(
-            'textarea_rows' => 10,
-            'teeny'         => true,
-            'tinymce'       => array( 'plugins' => 'wordpress' )
-        );
+        $maxLength = $this->getAttribute('maxlength');
 
-        $settings = array_merge( $defaults, $settings, $override );
+        if ( $maxLength != null && $maxLength > 0) {
+            $left = (int) $maxLength - strlen( utf8_decode( $value ) );
+            $max = new Generator();
+            $max->newElement('p', array('class' => 'tr-maxlength'), 'Characters left: ')->appendInside('span', array(), $left);
+            $max = $max->getString();
+        }
 
-        ob_start();
-        wp_editor( $value, 'wp_editor_' . $this->getName(), $settings );
-        $html = ob_get_clean();
-
-        return $html;
+        return $generator->newElement( 'textarea', $this->getAttributes(), $value )->getString() . $max;
     }
 
 }

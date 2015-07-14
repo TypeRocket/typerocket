@@ -22,24 +22,8 @@ jQuery(document).ready(function($) {
         success: function(data) {
           data = $( data );
 
-          if( $.isFunction($.fn.datepicker) ) {
-            data.find('.date-picker[name]').each(function(){
-              $(this).datepicker();
-            });
-          }
-
-          if( $.isFunction($.fn.wpColorPicker) ) {
-            data.find('.color-picker[name]').each(function(){
-              var pal = $(this).attr('id') + '_color_palette',
-                settings = { palettes: window[pal] };
-              $(this).wpColorPicker(settings);
-            });
-          }
-
-          // callback group
           for(var ri = 0; callbacks.length > ri; ri++) {
             if (typeof callbacks[ri] === "function") {
-              // Call it, since we have confirmed it is callable​
               callbacks[ri](data);
             }
           }
