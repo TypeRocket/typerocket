@@ -6,6 +6,13 @@ class SeoPlugin
 
     public $item_id = null;
 
+    function __construct() {
+        if ( !function_exists( 'add_action' ) ) {
+            echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
+            exit;
+        }
+    }
+
     function setup()
     {
         if ( ! defined( 'WPSEO_URL' ) && ! defined( 'AIOSEOP_VERSION' )) {

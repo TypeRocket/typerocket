@@ -2,6 +2,7 @@
 #########################
 /config.php
 .htaccess
+/matrix
 
 # Compiled source #
 ###################

@@ -1,24 +1,37 @@
 <?php
 namespace TypeRocket;
 
-class DevPlugin {
+class DevPlugin
+{
 
-	function make() {
-		add_filter( 'admin_footer_text', array( $this, 'tr_remove_footer_admin' ) );
-		add_action( 'admin_menu', array( $this, 'menu' ) );
-	}
+    function __construct()
+    {
+        if ( ! function_exists( 'add_action' )) {
+            echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
+            exit;
+        }
+    }
 
-	function tr_remove_footer_admin() {
-		echo 'TypeRocket developer mode is on!';
-	}
+    function make()
+    {
+        add_filter( 'admin_footer_text', array( $this, 'tr_remove_footer_admin' ) );
+        add_action( 'admin_menu', array( $this, 'menu' ) );
+    }
 
-	public function menu() {
-		add_menu_page( 'Dev', 'Dev', 'manage_options', 'tr_dev', array( $this, 'page' ) );
-	}
+    function tr_remove_footer_admin()
+    {
+        echo 'TypeRocket developer mode is on!';
+    }
 
-	function page() {
-		include( __DIR__ . '/page.php' );
-	}
+    public function menu()
+    {
+        add_menu_page( 'Dev', 'Dev', 'manage_options', 'tr_dev', array( $this, 'page' ) );
+    }
+
+    function page()
+    {
+        include( __DIR__ . '/page.php' );
+    }
 
 }
 

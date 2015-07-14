@@ -1,4 +1,8 @@
 <?php
+if ( ! function_exists( 'add_action' )) {
+    exit;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Time Stamp App
@@ -29,21 +33,21 @@ define( 'TR_VERSION', '2.0' );
 */
 spl_autoload_register( function ( $class ) {
 
-	$prefix   = 'TypeRocket\\';
-	$base_dir = __DIR__ . '/../core/';
+    $prefix   = 'TypeRocket\\';
+    $base_dir = __DIR__ . '/../core/';
 
-	$len = strlen( $prefix );
-	if ( strncmp( $prefix, $class, $len ) !== 0 ) {
-		return;
-	}
+    $len = strlen( $prefix );
+    if (strncmp( $prefix, $class, $len ) !== 0) {
+        return;
+    }
 
-	$relative_class = substr( $class, $len );
+    $relative_class = substr( $class, $len );
 
-	$file = $base_dir . str_replace( '\\', '/', $relative_class ) . '.php';
+    $file = $base_dir . str_replace( '\\', '/', $relative_class ) . '.php';
 
-	if ( file_exists( $file ) ) {
-		require $file;
-	}
+    if (file_exists( $file )) {
+        require $file;
+    }
 } );
 
 /*

@@ -1,12 +1,17 @@
 <?php
 namespace TypeRocket;
 
-use \TypeRocket\Config as Config;
-
 class ThemeOptionsPlugin
 {
 
     public $name = 'tr_theme_options';
+
+    function __construct() {
+        if ( !function_exists( 'add_action' ) ) {
+            echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
+            exit;
+        }
+    }
 
     function make()
     {
