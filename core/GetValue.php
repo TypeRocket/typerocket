@@ -51,24 +51,24 @@ class GetValue
     function controller_switch( $the_field, $item_id, $controller, $builtin )
     {
         switch ($controller) {
-            case 'post' :
+            case 'posts' :
                 if ($builtin == true) {
                     $data = get_post_field( $the_field, $item_id, 'raw' );
                 } else {
                     $data = get_metadata( 'post', $item_id, $the_field, true );
                 }
                 break;
-            case 'user' :
+            case 'users' :
                 if ($builtin == true) {
                     $data = $this->get_user_data( $item_id, $the_field );
                 } else {
                     $data = get_metadata( 'user', $item_id, $the_field, true );
                 }
                 break;
-            case 'comment' :
+            case 'comments' :
                 $data = get_metadata( 'comment', $item_id, $the_field, true );
                 break;
-            case 'option' :
+            case 'options' :
                 $data = get_option( $the_field );
                 break;
             default :

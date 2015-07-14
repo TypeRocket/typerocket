@@ -18,19 +18,22 @@ class RestApi {
         $this->version = $version;
         $this->method = strtoupper($method);
 
-        $class = "\\TypeRocket\\Controllers\\$resource";
-        /** @var Controller $model */
-        $controller = new $class();
+        $class = "\\TypeRocket\\Controllers\\{$this->resource}Controller";
 
-        if($controller instanceof Controller) {
-            $controller->requestType = 'TypeRocketApi';
-            $data = $controller->handleRest($this->id, $this->method);
+        if(class_exists($class)) {
+            /** @var Controller $model */
+            $controller = new $class();
 
-            if ($data == null) {
-                $data = array('api_v' => $this->version);
+            if($controller instanceof Controller) {
+                $controller->requestType = 'TypeRocketApi';
+                $data = $controller->handleRest($this->id, $this->method);
+
+                if ($data == null) {
+                    $data = array('api_v' => $this->version);
+                }
+
+                $this->render($data);
             }
-
-            $this->render($data);
         }
 
     }

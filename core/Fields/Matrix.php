@@ -44,7 +44,6 @@ class Matrix extends Field {
 
         // setup select list of files
         $select = $this->get_select_html();
-        $group = $this->getForm()->getGroup();
         $name = $this->getName();
         $blocks = $this->getMatrixBlocks();
         $settings = $this->getSettings();

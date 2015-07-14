@@ -206,16 +206,16 @@ class Form
 
             if (isset( $post->ID )) {
                 $item_id    = $post->ID;
-                $controller = 'post';
+                $controller = 'posts';
             } elseif (isset( $comment->comment_ID )) {
                 $item_id    = $comment->comment_ID;
-                $controller = 'comment';
+                $controller = 'comments';
             } elseif (isset( $user_id )) {
                 $item_id    = $user_id;
-                $controller = 'user';
+                $controller = 'users';
             } else {
                 $item_id    = null;
-                $controller = 'option';
+                $controller = 'options';
             }
 
             $this->setItemId( $item_id );
@@ -306,15 +306,26 @@ class Form
         return $html;
     }
 
+    function getFieldHelpFunction(Fields\Field $field) {
+
+        $brackets = $field->getBrackets();
+        $controller = $field->getController();
+        $function = "tr_{$controller}_field('{$brackets}');";
+
+        if($field->getBuiltin() && $field->getController() == 'post') {
+            $function = 'Builtin as: ' . $field->getName();
+        }
+
+        return $function;
+    }
+
 
     private function getDebug()
     {
         $generator = new Generator();
         $html      = '';
         if ($this->getDebugStatus() === true) {
-
-            $dev      = new Dev();
-            $dev_html = $dev->getFieldHelpFunction( $this->currentField );
+            $dev_html = $this->getFieldHelpFunction( $this->currentField );
 
             $generator->newElement( 'div', array( 'class' => 'dev' ), '<i class="tr-icon-info"></i>' );
             $navTag       = new Tag( 'span', array( 'class' => 'nav' ) );

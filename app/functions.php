@@ -49,7 +49,7 @@ function tr_post_field( $name, $item_id = null ) {
 
 	$getter = new \TypeRocket\GetValue();
 
-	return $getter->value( $name, $item_id, 'post' );
+	return $getter->value( $name, $item_id, 'posts' );
 }
 
 function tr_user_field( $name, $item_id = null ) {
@@ -65,13 +65,13 @@ function tr_user_field( $name, $item_id = null ) {
 
 	$getter = new \TypeRocket\GetValue();
 
-	return $getter->value( $name, $item_id, 'user' );
+	return $getter->value( $name, $item_id, 'users' );
 }
 
 function tr_option_field( $name ) {
 	$getter = new \TypeRocket\GetValue();
 
-	return $getter->value( $name, null, 'option' );
+	return $getter->value( $name, null, 'options' );
 }
 
 function tr_comment_field( $name, $item_id = null ) {
@@ -83,17 +83,5 @@ function tr_comment_field( $name, $item_id = null ) {
 
 	$getter = new \TypeRocket\GetValue();
 
-	return $getter->value( $name, $item_id, 'comment' );
-}
-
-function tr_db_field( $the_field, $item_id, $controller ) {
-	/** @var \wpdb $wpdb */
-	global $wpdb;
-
-	$table  = $wpdb->prefix . $controller;
-	$data   = null;
-	$fields = $wpdb->get_row( "SELECT * FROM {$table} WHERE id = '{$item_id}';", ARRAY_A ); // WP caches for you
-	$data   = $fields[ $the_field ];
-
-	return maybe_unserialize( $data );
+	return $getter->value( $name, $item_id, 'comments' );
 }

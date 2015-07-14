@@ -20,7 +20,7 @@ class DevPlugin
 
     function tr_remove_footer_admin()
     {
-        echo 'TypeRocket developer mode is on!';
+        echo 'TypeRocket developer mode! Run time is ' . (TR_END - TR_START);
     }
 
     public function menu()
