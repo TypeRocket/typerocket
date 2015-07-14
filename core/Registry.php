@@ -39,28 +39,28 @@ class Registry
                 if ( $v->getFrom('top') === true) {
                     add_action( 'edit_form_top', array( $v, 'edit_form_top' ) );
                 } elseif(is_callable($v->getFrom('top'))) {
-                    add_action( 'edit_form_top', $v );
+                    add_action( 'edit_form_top', $v->getFrom('top') );
                 }
 
                 // edit_form_after_title
                 if ($v->getFrom('title') === true) {
                     add_action( 'edit_form_after_title', array( $v, 'edit_form_after_title' ) );
                 } elseif(is_callable($v->getFrom('title'))) {
-                    add_action( 'edit_form_after_title', $v );
+                    add_action( 'edit_form_after_title', $v->getFrom('title') );
                 }
 
                 // edit_form_after_editor
                 if ($v->getFrom('editor') === true) {
                     add_action( 'edit_form_after_editor', array( $v, 'edit_form_after_editor' ) );
                 } elseif(is_callable($v->getFrom('editor'))) {
-                    add_action( 'edit_form_after_editor', $v );
+                    add_action( 'edit_form_after_editor', $v->getFrom('editor') );
                 }
 
                 // dbx_post_sidebar
                 if ($v->getFrom('bottom') === true) {
                     add_action( 'dbx_post_sidebar', array( $v, 'dbx_post_sidebar' ) );
                 } elseif(is_callable($v->getFrom('bottom'))) {
-                    add_action( 'dbx_post_sidebar', $v );
+                    add_action( 'dbx_post_sidebar', $v->getFrom('bottom') );
                 }
 
             } elseif ($v instanceof Metabox) {
