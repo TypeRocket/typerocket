@@ -8,13 +8,13 @@ if ( !function_exists( 'add_action' ) ) {
 function tr_dev_icons()
 {
 
-    $icons = TypeRocket\Icons::$icon;
+    $icons = new TypeRocket\Icons;
 
-    $genorator = new \TypeRocket\Html\Generator();
+    $generator = new \TypeRocket\Html\Generator();
 
     echo '<h3><i class="tr-icon-tools"></i> Icons</h3><p>These can be used with custom post types.</p><ol>';
     foreach ($icons as $k => $v) {
-        echo $genorator->newElement( 'li', array( 'class' => 'tr-icon-' . $k ),
+        echo $generator->newElement( 'li', array( 'class' => 'tr-icon-' . $k ),
             ' ' . $k . ' ( .tr-icon-' . $k . ' )' )->getString();
     }
     echo '</ol>';

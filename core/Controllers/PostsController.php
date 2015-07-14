@@ -17,6 +17,8 @@ class PostsController extends Controller
 
     function getValidate()
     {
+        $this->valid = parent::getValidate();
+
         if ( $this->post->post_author != $this->currentUser->ID && ! current_user_can( 'edit_posts') ) {
             $this->valid = false;
             $this->response['message'] = "Sorry, you don't have enough rights.";

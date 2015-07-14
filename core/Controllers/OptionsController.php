@@ -7,6 +7,8 @@ class OptionsController extends Controller
 
     function getValidate()
     {
+        $this->valid = parent::getValidate();
+
         if( ! current_user_can( 'manage_options')) {
             $this->valid = false;
             $this->response['message'] = "Sorry, you don't have enough rights.";

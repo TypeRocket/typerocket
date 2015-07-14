@@ -133,7 +133,7 @@ class SeoPlugin
     function meta()
     {
         echo '<div class="typerocket-container">';
-        $utility = new Utility();
+        $utility = new Buffer();
 
         // field settings
         $title = array(

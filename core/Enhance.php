@@ -11,12 +11,12 @@ class Enhance
      */
     public function run()
     {
-        add_action( 'post_updated_messages', array( $this, 'set_messages' ) );
-        add_action( 'edit_user_profile', array( $this, 'user_content' ) );
-        add_action( 'show_user_profile', array( $this, 'user_content' ) );
-        add_action( 'admin_init', array( $this, 'add_css' ) );
-        add_action( 'admin_init', array( $this, 'add_js' ) );
-        add_action( 'admin_footer', array( $this, 'add_bottom_js' ) );
+        add_action( 'post_updated_messages', array( $this, 'setMessages' ) );
+        add_action( 'edit_user_profile', array( $this, 'userContent' ) );
+        add_action( 'show_user_profile', array( $this, 'userContent' ) );
+        add_action( 'admin_init', array( $this, 'addCss' ) );
+        add_action( 'admin_init', array( $this, 'addJs' ) );
+        add_action( 'admin_footer', array( $this, 'addBottomJs' ) );
     }
 
     /**
@@ -26,7 +26,7 @@ class Enhance
      *
      * @return mixed
      */
-    public function set_messages( $messages )
+    public function setMessages( $messages )
     {
         global $post;
 
@@ -66,7 +66,7 @@ class Enhance
         return $messages;
     }
 
-    public function add_css()
+    public function addCss()
     {
         if (is_admin()) {
             $paths = Config::getPaths();
@@ -77,7 +77,7 @@ class Enhance
         }
     }
 
-    public function add_js()
+    public function addJs()
     {
         if (is_admin()) {
             $paths = Config::getPaths();
@@ -87,7 +87,7 @@ class Enhance
         }
     }
 
-    public function add_bottom_js()
+    public function addBottomJs()
     {
         if (is_admin()) {
             $paths = Config::getPaths();
@@ -101,7 +101,7 @@ class Enhance
         }
     }
 
-    public function user_content( $user_obj )
+    public function userContent( $user_obj )
     {
         echo '<div class="typerocket-container typerocket-wp-style-guide">';
         do_action( 'tr_user_profile', $user_obj );

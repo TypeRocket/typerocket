@@ -49,7 +49,7 @@ function tr_post_field( $name, $item_id = null ) {
 
 	$getter = new \TypeRocket\GetValue();
 
-	return $getter->value( $name, $item_id, 'posts' );
+	return $getter->getFromBrackets( $name, $item_id, 'posts' );
 }
 
 function tr_user_field( $name, $item_id = null ) {
@@ -65,13 +65,13 @@ function tr_user_field( $name, $item_id = null ) {
 
 	$getter = new \TypeRocket\GetValue();
 
-	return $getter->value( $name, $item_id, 'users' );
+	return $getter->getFromBrackets( $name, $item_id, 'users' );
 }
 
 function tr_option_field( $name ) {
 	$getter = new \TypeRocket\GetValue();
 
-	return $getter->value( $name, null, 'options' );
+	return $getter->getFromBrackets( $name, null, 'options' );
 }
 
 function tr_comment_field( $name, $item_id = null ) {
@@ -83,5 +83,5 @@ function tr_comment_field( $name, $item_id = null ) {
 
 	$getter = new \TypeRocket\GetValue();
 
-	return $getter->value( $name, $item_id, 'comments' );
+	return $getter->getFromBrackets( $name, $item_id, 'comments' );
 }

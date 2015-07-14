@@ -17,6 +17,7 @@ class CommentsController extends Controller
 
     function getValidate()
     {
+        $this->valid = parent::getValidate();
 
         if ( $this->comment->user_id != $this->currentUser->ID && ! current_user_can( 'edit_comment' ) ) {
             $this->valid = false;

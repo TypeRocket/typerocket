@@ -21,7 +21,8 @@ class PostType extends Registrable
     function setIcon( $name )
     {
         $name       = strtolower( $name );
-        $this->icon = Icons::$icon[$name];
+        $icons = new Icons();
+        $this->icon = $icons[$name];
         add_action( 'admin_head', array( $this, 'style' ) );
 
         return $this;
@@ -47,6 +48,10 @@ class PostType extends Registrable
         $this->id = $id;
 
         return $this;
+    }
+
+    function getId() {
+        return $this->id;
     }
 
     /**
@@ -194,8 +199,8 @@ class PostType extends Registrable
         // setup object for later use
         $this->plural   = $plural;
         $this->singular = $singular;
-        $this->plural   = Sanitize::string( $this->plural );
-        $this->singular = Sanitize::string( $this->singular );
+        $this->plural   = Sanitize::underscore( $this->plural );
+        $this->singular = Sanitize::underscore( $this->singular );
         $this->id       = ! $this->id ? $this->singular : $this->id;
 
         // make lowercase
@@ -277,11 +282,11 @@ class PostType extends Registrable
 
     function bake()
     {
-        if (array_key_exists( $this->id, $this->reserved_names )) :
+        if (array_key_exists( $this->id, $this->reservedNames )) :
             die( 'TypeRocket: Error, you are using the reserved wp name "' . $this->id . '".' );
         endif;
 
-        $id = Sanitize::string( $this->id );
+        $id = Sanitize::underscore( $this->id );
 
         do_action( 'tr_register_post_type_' . $id, $this );
         register_post_type( $this->id, $this->args );
@@ -289,28 +294,39 @@ class PostType extends Registrable
         return $this;
     }
 
-    function add_meta_box( $s )
+    /**
+     * @param string|Metabox $s
+     */
+    function addMetaBox( $s )
     {
-        if (is_string( $s )) {
-            $this->args['supports'] = array_merge( $this->args['supports'], array( $s ) );
-            $this->args['supports'] = array_unique( $this->args['supports'] );
+        if (! is_string( $s )) {
+            $s = (string) $s->getId();
         }
+        $this->args['supports'] = array_merge( $this->args['supports'], array( $s ) );
+        $this->args['supports'] = array_unique( $this->args['supports'] );
+
     }
 
-    function add_taxonomy( $s )
+    /**
+     * @param string|Taxonomy $s
+     */
+    function addTaxonomy( $s )
     {
-        if (is_string( $s )) {
-            $this->taxonomies         = array_merge( $this->taxonomies, array( $s ) );
-            $this->taxonomies         = array_unique( $this->taxonomies );
-            $this->args['taxonomies'] = $this->taxonomies;
+
+        if (! is_string( $s )) {
+            $s = (string) $s->getId();
         }
+
+        $this->taxonomies         = array_merge( $this->taxonomies, array( $s ) );
+        $this->taxonomies         = array_unique( $this->taxonomies );
+        $this->args['taxonomies'] = $this->taxonomies;
     }
 
-    function add_form_content( $post, $args )
+    function addFormContent( $post, $args )
     {
         if ($post->post_type == $this->id) :
 
-            $id = Sanitize::string( $this->id );
+            $id = Sanitize::underscore( $this->id );
 
             $func = 'add_form_content_' . $id . '_' . $args;
 
@@ -326,31 +342,31 @@ class PostType extends Registrable
         endif;
     }
 
-    function edit_form_top( $post )
+    function editFormTop( $post )
     {
         $args = 'top';
-        $this->add_form_content( $post, $args );
+        $this->addFormContent( $post, $args );
     }
 
     function edit_form_after_title( $post )
     {
         $args = 'title';
-        $this->add_form_content( $post, $args );
+        $this->addFormContent( $post, $args );
     }
 
-    function edit_form_after_editor( $post )
+    function editFormAfterEditor( $post )
     {
         $args = 'editor';
-        $this->add_form_content( $post, $args );
+        $this->addFormContent( $post, $args );
     }
 
-    function dbx_post_sidebar( $post )
+    function dbxPostSidebar( $post )
     {
         $args = 'bottom';
-        $this->add_form_content( $post, $args );
+        $this->addFormContent( $post, $args );
     }
 
-    function enter_title_here( $s )
+    function enterTitleHere( $s )
     {
         global $post;
 
@@ -361,19 +377,9 @@ class PostType extends Registrable
         endif;
     }
 
-    function tr_taxonomy( $v )
+    function trUses( $v )
     {
-        $this->add_taxonomy( $v->id );
-    }
-
-    function tr_meta_box( $v )
-    {
-        $this->add_meta_box( $v->id );
-    }
-
-    function tr_uses( $v )
-    {
-        $this->add_taxonomy( $v );
+        $this->addTaxonomy( $v );
     }
 
 }

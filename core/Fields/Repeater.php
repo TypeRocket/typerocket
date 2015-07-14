@@ -2,7 +2,7 @@
 namespace TypeRocket\Fields;
 
 use TypeRocket\Config as Config,
-    TypeRocket\Utility as Utility,
+    TypeRocket\Buffer as Buffer,
     TypeRocket\Html\Generator as Generator;
 
 class Repeater extends Field
@@ -27,7 +27,7 @@ class Repeater extends Field
         $fields   = $this->fields;
         $name     = $this->getName();
         $html     = '';
-        $utility  = new Utility();
+        $utility  = new Buffer();
 
         // add controls
         if (isset( $settings['help'] )) {
@@ -100,7 +100,7 @@ class Repeater extends Field
 
     public function getTemplateFields()
     {
-        $utility = new Utility();
+        $utility = new Buffer();
 
         $utility->startBuffer();
         $this->getForm()->setSetting('template', true)->renderFields( $this->fields );

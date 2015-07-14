@@ -4,12 +4,12 @@ namespace TypeRocket;
 class GetValue
 {
 
-    function value( $brackets, $item_id, $controller, $builtin = false )
+    public function getFromBrackets( $brackets, $item_id, $controller, $builtin = false )
     {
-        $keys = $this->get_bracket_keys( $brackets );
-        $data = $this->controller_switch( $keys[0], $item_id, $controller, $builtin );
+        $keys = $this->geBracketKeys( $brackets );
+        $data = $this->controllerSwitch( $keys[0], $item_id, $controller, $builtin );
 
-        return $this->parse_value_data( $data, $keys );
+        return $this->parseValueData( $data, $keys );
     }
 
 
@@ -18,16 +18,16 @@ class GetValue
      *
      * @return string|false
      */
-    function getFromField( $field )
+    public function getFromField( $field )
     {
         $brackets = $field->getBrackets();
         $item_id =$field->getItemID();
         $controller = $field->getController();
         $builtin = $field->getBuiltin();
-        return $this->value( $brackets, $item_id, $controller, $builtin);
+        return $this->getFromBrackets( $brackets, $item_id, $controller, $builtin);
     }
 
-    function parse_value_data( $data, $keys )
+    private function parseValueData( $data, $keys )
     {
         if (isset( $keys[1] ) && ! empty( $data )) {
             $data = maybe_unserialize( $data );
@@ -42,13 +42,23 @@ class GetValue
             }
 
         }
-        $utility = new Utility();
-        $utility->unslash( $data );
+
+        $data = $this->decode( $data );
 
         return $data;
     }
 
-    function controller_switch( $the_field, $item_id, $controller, $builtin )
+    private function decode($v) {
+        if (is_string($v)) {
+            $v = wp_unslash($v);
+        } elseif (is_array($v)) {
+            $v = stripslashes_deep($v);
+        }
+
+        return $v;
+    }
+
+    private function controllerSwitch( $the_field, $item_id, $controller, $builtin )
     {
         switch ($controller) {
             case 'posts' :
@@ -60,7 +70,7 @@ class GetValue
                 break;
             case 'users' :
                 if ($builtin == true) {
-                    $data = $this->get_user_data( $item_id, $the_field );
+                    $data = $this->getUserData( $item_id, $the_field );
                 } else {
                     $data = get_metadata( 'user', $item_id, $the_field, true );
                 }
@@ -82,7 +92,7 @@ class GetValue
         return $data !== '' ? $data : null;
     }
 
-    function get_bracket_keys( $str, $set = 1 )
+    private function geBracketKeys( $str, $set = 1 )
     {
         $regex = '/\[([^]]+)\]/i';
         preg_match_all( $regex, $str, $matches, PREG_PATTERN_ORDER );
@@ -90,7 +100,7 @@ class GetValue
         return $matches[$set];
     }
 
-    function get_user_data( $item_id, $the_field )
+    private function getUserData( $item_id, $the_field )
     {
         switch ($the_field) {
             case 'user_login' :

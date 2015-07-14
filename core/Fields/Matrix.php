@@ -3,7 +3,8 @@ namespace TypeRocket\Fields;
 
 use TypeRocket\Html\Generator as Generator,
     TypeRocket\Config as Config,
-    TypeRocket\Utility as Utility;
+    TypeRocket\Buffer as Buffer,
+    \TypeRocket\Sanitize as Sanitize;
 
 class Matrix extends Field {
 
@@ -87,8 +88,7 @@ class Matrix extends Field {
     private function clean_file_name( $name )
     {
 
-        $utility = new Utility();
-        $name = $utility->get_sanitized_string($name);
+        $name = Sanitize::underscore($name);
         $name = str_replace( '-', ' ', $name );
 
         return ucwords( $name );
@@ -132,7 +132,7 @@ class Matrix extends Field {
     {
 
         $val = $this->getValue();
-        $utility = new Utility();
+        $utility = new Buffer();
         $blocks = '';
         $form = $this->getForm();
 
@@ -151,14 +151,14 @@ class Matrix extends Field {
 
                     $form->setGroup($root_group . "[{$tr_matrix_group}][{$tr_matrix_key}][{$tr_matrix_type}]");
                     $file        = TR_MATRIX_DIR . "/" . $this->getName() . "/{$tr_matrix_type}.php";
-                    $classes = "matrix-field-group tr-repeater-group matrix-type-{$tr_matrix_type} matrix-group-{$tr_matrix_group}"
-
+                    $classes = "matrix-field-group tr-repeater-group matrix-type-{$tr_matrix_type} matrix-group-{$tr_matrix_group}";
+                    $remove = '#remove';
                     ?>
                     <div class="<?php echo $classes; ?>">
                         <div class="repeater-controls">
                             <div class="collapse"></div>
                             <div class="move"></div>
-                            <a href="#remove" class="remove" title="remove"></a>
+                            <a href="<?php echo $remove; ?>" class="remove" title="remove"></a>
                         </div>
                         <div class="repeater-inputs">
                             <?php

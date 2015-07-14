@@ -52,7 +52,7 @@ class Sanitize {
     return $default;
   }
 
-  static function string( $name, $spacer = '_' )
+  static function underscore( $name, $spacer = '_' )
   {
     if (is_string( $name )) {
       $name        = strtolower( trim( sanitize_title( $name, '' ) ) );

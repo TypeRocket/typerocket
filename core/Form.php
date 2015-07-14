@@ -327,7 +327,7 @@ class Form
         if ($this->getDebugStatus() === true) {
             $dev_html = $this->getFieldHelpFunction( $this->currentField );
 
-            $generator->newElement( 'div', array( 'class' => 'dev' ), '<i class="tr-icon-info"></i>' );
+            $generator->newElement( 'div', array( 'class' => 'dev' ), '<i class="tr-icon-bug"></i>' );
             $navTag       = new Tag( 'span', array( 'class' => 'nav' ) );
             $fieldCopyTag = new Tag( 'span', array( 'class' => 'field' ), $dev_html );
             $navTag->appendInnerTag( $fieldCopyTag );

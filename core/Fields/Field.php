@@ -3,7 +3,7 @@ namespace TypeRocket\Fields;
 
 use \TypeRocket\Form as Form,
     \TypeRocket\Validate as Validate,
-    \TypeRocket\Utility as Utility,
+    \TypeRocket\Sanitize as Sanitize,
     \TypeRocket\GetValue as GetValue;
 
 abstract class Field
@@ -207,9 +207,7 @@ abstract class Field
 
     public function setName( $name )
     {
-        $utility = new Utility();
-        $utility->sanitize_string( $name );
-        $this->name = $name;
+        $this->name = Sanitize::underscore($name);
 
         return $this;
     }

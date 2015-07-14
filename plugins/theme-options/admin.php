@@ -18,7 +18,7 @@ $form->make();
     <?php
 
     $form->open();
-    $utility = new \TypeRocket\Utility();
+    $utility = new \TypeRocket\Buffer();
 
     // about
     $utility->startBuffer();

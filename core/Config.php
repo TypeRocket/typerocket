@@ -14,7 +14,7 @@ class Config {
 		    self::$folder = defined('TR_FOLDER') ? TR_FOLDER : 'typerocket';
 		    self::$seed = defined('TR_SEED') ? TR_SEED : 'replaceThis';
 		    self::$plugins = defined('TR_PLUGINS') ? TR_PLUGINS : '';
-		    self::$paths = apply_filters('tr_paths', require __DIR__ . '/../app/paths.php' );
+		    self::$paths = apply_filters('tr_paths', $this->defaultPaths() );
 	    }
     }
 
@@ -37,5 +37,17 @@ class Config {
 	static public function getPlugins() {
 		return explode('|', self::$plugins);
 	}
+
+    private function defaultPaths() {
+        return array(
+            'assets'  => __DIR__ . '/../assets',
+            'plugins' => __DIR__ . '/../plugins',
+            'urls'    => array(
+                'theme'   => get_stylesheet_directory_uri(),
+                'assets'  => get_stylesheet_directory_uri() . '/' . self::$folder . '/assets',
+                'plugins' => get_stylesheet_directory_uri() . '/' . self::$folder . '/plugins'
+            )
+        );
+    }
 
 }

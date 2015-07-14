@@ -5,112 +5,135 @@ namespace TypeRocket;
  * Class Metabox
  * @package TypeRocket
  */
-class Metabox extends Registrable {
+class Metabox extends Registrable
+{
 
-	public $id = null;
-	public $label = null;
-	public $use = array();
-	public $post_types = array();
-	public $args = array();
+    private $id = null;
+    public $label = null;
+    public $use = array();
+    public $post_types = array();
+    public $args = array();
 
-	/**
-	 * Make Meta Box
-	 *
-	 * @param null $name
-	 * @param array $settings
-	 *
-	 * @return $this
-	 */
-	function make( $name, $settings = array() ) {
+    /**
+     * @param $id
+     *
+     * @return $this
+     */
+    function setId( $id )
+    {
+        $this->id = $id;
 
-		$this->label = $this->id = $name;
-		$utility     = new Utility;
-		$utility->sanitize_string( $this->id );
-		if ( empty( $settings['callback'] ) ) {
-			$settings['callback'] = array( $this, 'meta_content' );
-		}
-		if ( empty( $settings['label'] ) ) {
-			$settings['label'] = $this->label;
-		} else {
-			$this->label = $settings['label'];
-		}
+        return $this;
+    }
 
-		unset( $settings['label'] );
+    function getId()
+    {
+        $this->getId();
+    }
 
-		$defaults = array(
-			'context'  => 'normal', // 'normal', 'advanced', or 'side'
-			'priority' => 'high', // 'high', 'core', 'default' or 'low'
-			'args'     => array()
-		); // arguments to pass into your callback function.
+    /**
+     * Make Meta Box
+     *
+     * @param null $name
+     * @param array $settings
+     *
+     * @return $this
+     */
+    function make( $name, $settings = array() )
+    {
 
-		$settings = array_merge( $defaults, $settings );
+        $this->label = $this->id = $name;
+        $this->id    = Sanitize::underscore( $this->id );
+        if (empty( $settings['callback'] )) {
+            $settings['callback'] = array( $this, 'meta_content' );
+        }
+        if (empty( $settings['label'] )) {
+            $settings['label'] = $this->label;
+        } else {
+            $this->label = $settings['label'];
+        }
 
-		$this->args = $settings;
+        unset( $settings['label'] );
 
-		return $this;
-	}
+        $defaults = array(
+            'context'  => 'normal', // 'normal', 'advanced', or 'side'
+            'priority' => 'high', // 'high', 'core', 'default' or 'low'
+            'args'     => array()
+        ); // arguments to pass into your callback function.
 
-	function apply( $use ) {
+        $settings = array_merge( $defaults, $settings );
 
-		if ( isset( $use ) ) :
-			$this->uses( $use );
-			$this->use = $use;
-		endif;
+        $this->args = $settings;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	function meta_content( $object, $box ) {
-		$func = 'add_meta_content_' . $this->id;
+    function apply( $use )
+    {
 
-		echo '<div class="typerocket-container">';
-		if ( function_exists( $func ) ) :
-			$func( $object, $box );
-		elseif ( TR_DEBUG == true ) :
-			echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by defining: <code>function {$func}() {}</code></div>";
-		endif;
-		echo '</div>';
-	}
+        if (isset( $use )) :
+            $this->uses( $use );
+            $this->use = $use;
+        endif;
 
-	function add_post_type( $s ) {
-		if ( is_string( $s ) ) {
-			$utility = new Utility();
-			$utility->merge( $this->post_types, array( $s ) );
-			$this->post_types = array_unique( $this->post_types );
-		}
-	}
+        return $this;
+    }
 
-	function tr_post_type( $v ) {
-		$this->add_post_type( $v->id );
-	}
+    function metaContent( $object, $box )
+    {
+        $func = 'add_meta_content_' . $this->id;
 
-	function tr_uses( $v ) {
-		$this->add_post_type( $v );
-	}
+        echo '<div class="typerocket-container">';
+        if (function_exists( $func )) :
+            $func( $object, $box );
+        elseif (TR_DEBUG == true) :
+            echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by defining: <code>function {$func}() {}</code></div>";
+        endif;
+        echo '</div>';
+    }
 
-	function bake() {
+    /**
+     * @param string|PostType $s
+     */
+    function addPostType( $s )
+    {
+        if (! is_string( $s )) {
+            $s = (string) $s->getId();
+        }
+        $this->post_types = array_merge( $this->post_types, array( $s ) );
+        $this->post_types = array_unique( $this->post_types );
 
-		global $post, $comment;
-		$type = get_post_type( $post->ID );
-		if ( post_type_supports( $type, $this->id ) ) {
-			$this->add_post_type( $type );
-		}
+    }
 
-		foreach ( $this->post_types as $v ) {
-			if ( $type == $v || ( $v == 'comment' && isset( $comment ) ) ) {
-				add_meta_box(
-					$this->id,
-					$this->label,
-					$this->args['callback'],
-					$v,
-					$this->args['context'],
-					$this->args['priority'],
-					$this->args['args']
-				);
-			}
-		}
+    function trUses( $v )
+    {
+        $this->addPostType( $v );
+    }
 
-		return $this;
-	}
+    function bake()
+    {
+
+        global $post, $comment;
+        $type = get_post_type( $post->ID );
+        if (post_type_supports( $type, $this->id )) {
+            $this->addPostType( $type );
+        }
+
+        foreach ($this->post_types as $v) {
+            if ($type == $v || ( $v == 'comment' && isset( $comment ) )) {
+                add_meta_box(
+                    $this->id,
+                    $this->label,
+                    $this->args['callback'],
+                    $v,
+                    $this->args['context'],
+                    $this->args['priority'],
+                    $this->args['args']
+                );
+            }
+        }
+
+        return $this;
+    }
 
 }

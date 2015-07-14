@@ -9,7 +9,7 @@ namespace TypeRocket;
 class Taxonomy extends Registrable
 {
 
-    public $id = null;
+    private $id = null;
     public $singular = null;
     public $plural = null;
     public $use = null;
@@ -17,10 +17,14 @@ class Taxonomy extends Registrable
     public $post_types = array();
     public $args = array();
 
-    function setId($id) {
+    public function setId($id) {
         $this->id = $id;
 
         return $this;
+    }
+
+    public function getId() {
+        return $this->id;
     }
 
     /**
@@ -44,8 +48,8 @@ class Taxonomy extends Registrable
 
         $this->plural   = $plural;
         $this->singular = $singular;
-        $this->plural = Sanitize::string( $this->plural );
-        $this->singular = Sanitize::string( $this->singular );
+        $this->plural = Sanitize::underscore( $this->plural );
+        $this->singular = Sanitize::underscore( $this->singular );
         $this->id = ! $this->id ? $this->singular : $this->id;
 
         $labels = array(
@@ -112,7 +116,7 @@ class Taxonomy extends Registrable
 
     function bake()
     {
-        if (array_key_exists( $this->id, $this->reserved_names )) :
+        if (array_key_exists( $this->id, $this->reservedNames )) :
             die( 'TypeRocket: Error, you are using the reserved wp name "' . $this->id . '".' );
         endif;
 
@@ -122,7 +126,7 @@ class Taxonomy extends Registrable
         return $this;
     }
 
-    function add_form_content( $tag, $taxonomy, $args )
+    private function addFormContent( $tag, $taxonomy, $args )
     {
 
         $func = 'add_form_content_' . $this->id . '_' . $args;
@@ -137,27 +141,27 @@ class Taxonomy extends Registrable
 
     }
 
-    function edit_form_bottom( $tag = null, $taxonomy = null )
+    function editFormBottom( $tag = null, $taxonomy = null )
     {
         $args = 'bottom';
-        $this->add_form_content( $tag, $taxonomy, $args );
+        $this->addFormContent( $tag, $taxonomy, $args );
     }
 
-    function add_form_bottom( $taxonomy = null )
+    function addFormBottom( $taxonomy = null )
     {
         $args = 'bottom';
         $tag  = null;
-        $this->add_form_content( $tag, $taxonomy, $args );
+        $this->addFormContent( $tag, $taxonomy, $args );
     }
 
-    function tr_post_type( $v )
+    function addPostType( $v )
     {
         if (is_string( $v->id )) {
             $this->post_types = array_merge( $this->post_types, array( $v->id ) );
         }
     }
 
-    function tr_uses( $v )
+    function trUses( $v )
     {
         if (is_string( $v )) {
             $this->post_types = array_merge( $this->post_types, array( $v ) );
