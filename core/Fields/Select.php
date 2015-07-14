@@ -16,7 +16,8 @@ class Select extends Field
     function getString()
     {
         $default = $this->getSetting('default');
-        $option     = ! is_null($this->getValue()) ? $this->getValue() : $default;
+        $option = $this->getValue();
+        $option     = ! is_null($option) ? $this->getValue() : $default;
 
         $generator  = new Generator();
         $generator->newElement( 'select', $this->getAttributes() );

@@ -35,6 +35,10 @@ class WordPressEditor extends Field
         wp_editor( $value, 'wp_editor_' . $this->getName(), $settings );
         $html = ob_get_clean();
 
+        if($this->getForm()->getSetting('template')) {
+            $html =  "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> No templating a WordPress Editor Field.</div>";
+        }
+
         return $html;
     }
 

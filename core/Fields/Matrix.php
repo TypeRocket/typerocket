@@ -57,6 +57,9 @@ class Matrix extends Field {
             $help = '';
         }
 
+        $generator = new Generator();
+        $default_null = $generator->newInput('hidden', $this->getAttribute('name'), null)->getString();
+
         // add it all
         $html = "
 <div class='tr-matrix control-section tr-repeater'>
@@ -72,8 +75,12 @@ class Matrix extends Field {
 </div>
 {$help}
 </div>
-<div><input type='hidden' name='tr{$group}[{$name}]' /></div>
+<div>{$default_null}</div>
 <div id=\"{$this->mxid}\" class='matrix-fields tr-repeater-fields ui-sortable'>{$blocks}</div></div>";
+
+        if($this->getForm()->getSetting('template')) {
+            $html =  "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> No templating a Matrix Field.</div>";
+        }
 
         return $html;
     }

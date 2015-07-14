@@ -358,7 +358,8 @@ class Form
         if ($html === false) {
             $html = $field;
         } else {
-            $html = "<div class=\"control-section\" {$id}>{$label}<div class=\"control\">{$field}{$help}</div></div>";
+            $type = strtolower(str_ireplace('\\', '-', get_class($this->getCurrentField())));
+            $html = "<div class=\"control-section {$type}\" {$id}>{$label}<div class=\"control\">{$field}{$help}</div></div>";
         }
 
         $this->_e( $html );

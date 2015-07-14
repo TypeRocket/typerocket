@@ -118,7 +118,6 @@ jQuery(document).ready(function ($) {
           var name = obj.nameParse($(this).data('name'), hash, replacement_id);
           $(this).attr('name', name);
           $(this).attr('data-name', null);
-          $(this).attr('value', null);
         });
 
         $(dev_notes).each(function () {
@@ -129,7 +128,6 @@ jQuery(document).ready(function ($) {
         $(data_name_filtered).each(function () {
           $(this).attr('data-name', $(this).attr('name'));
           $(this).attr('name', null);
-          $(this).attr('value', null);
         });
 
         // add sorting

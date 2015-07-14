@@ -15,11 +15,14 @@ class Checkbox extends Field
     {
         $name   = $this->getAttribute( 'name' );
         $this->removeAttribute( 'name' );
-        $option = esc_attr( $this->getValue() );
+        $default = $this->getSetting( 'default' );
+        $option = $this->getValue();
         $checkbox = new Generator();
         $field = new Generator();
 
-        if ($option == '1' || $option == $this->getAttribute('value')) {
+        if ($option == '1' || ! is_null($option) && $option == $this->getAttribute('value')) {
+            $this->setAttribute( 'checked', 'checked' );
+        } elseif($default === true && is_null($option)) {
             $this->setAttribute( 'checked', 'checked' );
         }
 
@@ -29,7 +32,7 @@ class Checkbox extends Field
             ->appendInside( $checkbox )
             ->appendInside( 'span', array(), $this->getSetting( 'text' ) );
 
-        if ($this->getSetting( 'default' ) !== false) {
+        if ($default !== false) {
             $hidden = new Generator();
             $field->prependInside( $hidden->newInput('hidden', $name, '0' ) );
         }
