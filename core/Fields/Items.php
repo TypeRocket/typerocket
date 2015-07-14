@@ -40,7 +40,7 @@ class Items extends Field
         }
 
         $this->removeAttribute('id');
-        $html = $generator->newInput( 'hidden', $name, 'no', $this->getAttributes() )->getString();
+        $html = $generator->newInput( 'hidden', $name, '0', $this->getAttributes() )->getString();
         $html .= '<div class="button-group">';
         $html .= $generator->newElement( 'input', array(
             'type'  => 'button',
