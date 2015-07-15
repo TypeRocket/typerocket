@@ -24,9 +24,10 @@ function tr_dev_icons()
 function tr_dev_stats()
 { ?>
 
-    <h3><i class="tr-icon-pie"></i> Run Time</h3>
+    <h3>Run Time</h3>
     <p>If you are using xDebug profiling or tracking times will be slower.</p>
     <p><b>TR Run Time</b>: <?php echo TR_END - TR_START; ?></p>
+    <p>Also noted in the footer at every page load when debug mode is on.</p>
 
 
 <?php } ?>
@@ -38,17 +39,17 @@ function tr_dev_stats()
         <div id="tr-dev-content" class="typerocket-container">
             <?php
             $screen = new \TypeRocket\Layout();
-            $screen->add_tab( array(
+            $screen->addTab( array(
                 'id'       => 'stats',
                 'title'    => 'Stats',
                 'content'  => '',
                 'callback' => 'tr_dev_stats'
-            ) )->add_tab( array(
+            ) )->addTab( array(
                 'id'       => 'icons',
                 'title'    => 'Icon Names',
                 'content'  => '',
                 'callback' => 'tr_dev_icons'
-            ) )->make(); ?>
+            ) )->render(); ?>
         </div>
     </div>
 
