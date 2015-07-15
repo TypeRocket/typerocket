@@ -32,6 +32,42 @@ class Sanitize
     }
 
     /**
+     * Sanitize Attribute.
+     *
+     * @param $input
+     *
+     * @return string
+     */
+    static function attribute( $input )
+    {
+        return esc_attr($input);
+    }
+
+    /**
+     * Sanitize URL
+     *
+     * @param $input
+     *
+     * @return string
+     */
+    static function url( $input )
+    {
+        return esc_url($input);
+    }
+
+    /**
+     * Sanitize SQL
+     *
+     * @param $input
+     *
+     * @return string
+     */
+    static function sql( $input )
+    {
+        return esc_sql($input);
+    }
+
+    /**
      * Sanitize text as plaintext.
      *
      * @param $input

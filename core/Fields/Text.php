@@ -17,9 +17,10 @@ class Text extends Field
         $input = new Generator();
         $value = $this->getValue();
         $name = $this->getAttribute('name');
+        $sanitize = "Sanitize::" . $this->getSetting('sanitize', 'attribute');
 
-        if ($this->getSetting('sanitize') !== 'raw') {
-            $value = esc_attr( $value );
+        if ( is_callable($sanitize)) {
+            $value = call_user_func($sanitize, $value );
         }
 
         $maxLength = $this->getAttribute('maxlength');

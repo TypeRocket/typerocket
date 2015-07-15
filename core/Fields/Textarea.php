@@ -1,8 +1,7 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html\Generator as Generator,
-    \TypeRocket\Sanitize as Sanitize;
+use \TypeRocket\Html\Generator as Generator;
 
 class Textarea extends Field
 {
@@ -12,9 +11,10 @@ class Textarea extends Field
         $max = '';
         $generator = new Generator();
         $value = $this->getValue();
+        $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'textarea');
 
-        if ($this->getSetting('sanitize') != 'raw') {
-            $value = Sanitize::editor( $value );
+        if ( is_callable($sanitize)) {
+            $value = call_user_func($sanitize, $value );
         }
 
         $maxLength = $this->getAttribute('maxlength');

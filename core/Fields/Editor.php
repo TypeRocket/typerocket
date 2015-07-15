@@ -22,9 +22,10 @@ class Editor extends Textarea
         $generator = new Generator();
         $value = $this->getValue();
         $this->appendStringToAttribute('class', ' typerocket-editor ');
+        $sanitize = "Sanitize::" . $this->getSetting('sanitize', 'editor');
 
-        if ($this->getSetting('sanitize') != 'raw') {
-            $value = Sanitize::editor( $value );
+        if ( is_callable($sanitize)) {
+            $value = call_user_func($sanitize, $value );
         }
 
         $maxLength = $this->getAttribute('maxlength');
