@@ -43,7 +43,7 @@ abstract class Field
      *
      * @return $this
      */
-    public function setupByForm( Form $form )
+    public function configureToForm( Form $form )
     {
         $this->setGroup( $form->getGroup() );
         $this->setSub( $form->getSub() );
