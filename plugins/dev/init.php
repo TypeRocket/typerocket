@@ -12,7 +12,7 @@ class DevPlugin
         }
     }
 
-    function make()
+    function setup()
     {
         add_filter( 'admin_footer_text', array( $this, 'tr_remove_footer_admin' ) );
         add_action( 'admin_menu', array( $this, 'menu' ) );
@@ -36,5 +36,5 @@ class DevPlugin
 }
 
 $tr_dev_plugin = new DevPlugin();
-$tr_dev_plugin->make();
+add_action( 'typerocket_loaded', array( $tr_dev_plugin, 'setup' ) );
 unset( $tr_dev_plugin );

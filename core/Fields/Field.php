@@ -80,7 +80,7 @@ abstract class Field
 
     public function setGroup( $group )
     {
-        $this->sub = null;
+        $this->group = null;
 
         if ( Validate::bracket( $group ) ) {
             $this->group = $group;

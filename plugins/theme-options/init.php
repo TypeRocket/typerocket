@@ -4,7 +4,7 @@ namespace TypeRocket;
 class ThemeOptionsPlugin
 {
 
-    public $name = 'tr_theme_options';
+    private $name = 'tr_theme_options';
 
     function __construct() {
         if ( !function_exists( 'add_action' ) ) {
@@ -13,7 +13,16 @@ class ThemeOptionsPlugin
         }
     }
 
-    function make()
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name) {
+        $this->name = (string) $name;
+    }
+
+    function setup()
     {
         add_action( 'admin_menu', array( $this, 'menu' ) );
         add_action( 'wp_before_admin_bar_render', array( $this, 'admin_bar_menu' ), 100 );
@@ -110,5 +119,5 @@ class ThemeOptionsPlugin
 }
 
 $tr_theme_options = new ThemeOptionsPlugin();
-$tr_theme_options->make();
+add_action( 'typerocket_loaded', array( $tr_theme_options, 'setup' ) );
 unset( $tr_theme_options );

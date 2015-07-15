@@ -8,8 +8,8 @@ if ( !function_exists( 'add_action' ) ) {
 
 <?php
 $form = new \TypeRocket\Form();
-$form->setId($this->name);
-$form->setGroup($this->name);
+$form->setId($this->getName());
+$form->setGroup($this->getName());
 $form->setAction('update');
 $form->setup();
 ?>
@@ -39,6 +39,7 @@ $form->setup();
 
     // save
     $utility->startBuffer();
+    $form->setDebugStatus(false);
     $form->submit('Save');
     $utility->indexBuffer('save');
 
