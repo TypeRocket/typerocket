@@ -323,8 +323,9 @@ class Form
         $close_html = '</span></div>';
         $debug      = $this->getDebug();
         $html       = '';
+        $label = $this->currentField->getLabel();
 
-        if ($this->currentField->getLabel()) {
+        if ($label) {
             $label = $this->currentField->getSetting( 'label' );
             $html  = "{$open_html}{$label} {$debug}{$close_html}";
         } elseif ($debug !== '') {
