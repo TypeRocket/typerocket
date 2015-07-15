@@ -141,7 +141,6 @@ class Matrix extends Field {
             foreach ($val as $tr_matrix_key => $data) {
                 foreach ($data as $tr_matrix_type => $fields) {
 
-                    $form->setCurrentField(null);
                     $tr_matrix_group = $this->getName();
                     $tr_matrix_type  = lcfirst( $tr_matrix_type );
                     $root_group        = $form->getGroup();
