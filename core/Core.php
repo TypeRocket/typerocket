@@ -18,6 +18,20 @@ class Core
     }
 
     /**
+     * Core Init
+     */
+    public function initCore()
+    {
+        $this->initAdmin();
+        $this->loadPlugins( new Plugin\PluginCollection() );
+
+        $posts = new Controllers\PostsController();
+        $comments = new Controllers\CommentsController();
+        $users = new Controllers\UsersController();
+        $this->loadControllers($posts, $comments, $users );
+    }
+
+    /**
      * Admin Init
      */
     public function initAdmin()
@@ -38,18 +52,6 @@ class Core
         add_action( 'wp_enqueue_scripts', array( $this, 'addCss' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'addJs' ) );
         add_action( 'wp_footer', array( $this, 'addBottomJs' ) );
-    }
-
-
-    public function initCore()
-    {
-        $this->initAdmin();
-        $this->loadPlugins( new Plugin\PluginCollection() );
-
-        $posts = new Controllers\PostsController();
-        $comments = new Controllers\CommentsController();
-        $users = new Controllers\UsersController();
-        $this->loadControllers($posts, $comments, $users );
     }
 
     /**
