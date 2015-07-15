@@ -195,16 +195,17 @@
     text-decoration: none;
     color: #555;
     border: 1px solid #d5d5d5;
+    box-shadow: none;
 }
 
 .tabbed-sections .tr-tabs li a:active {
-    outline: none;
+    box-shadow: none;
 }
 
 .tabbed-sections .tr-tabs li.active a {
     background: #fff;
     position: relative;
-    top: 1px;
+    border-bottom-color: #fff;
 }
 
 /* tabs help in post type */
