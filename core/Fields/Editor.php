@@ -24,7 +24,7 @@ class Editor extends Textarea
         $this->appendStringToAttribute('class', ' typerocket-editor ');
 
         if ($this->getSetting('sanitize') != 'raw') {
-            $value = Sanitize::textarea( $value );
+            $value = Sanitize::editor( $value );
         }
 
         $maxLength = $this->getAttribute('maxlength');

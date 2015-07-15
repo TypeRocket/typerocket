@@ -14,7 +14,7 @@ class Textarea extends Field
         $value = $this->getValue();
 
         if ($this->getSetting('sanitize') != 'raw') {
-            $value = Sanitize::textarea( $value );
+            $value = Sanitize::editor( $value );
         }
 
         $maxLength = $this->getAttribute('maxlength');

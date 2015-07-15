@@ -20,6 +20,18 @@ class Sanitize
     }
 
     /**
+     * Sanitize nothing.
+     *
+     * @param $input
+     *
+     * @return string
+     */
+    static function raw( $input )
+    {
+        return $input;
+    }
+
+    /**
      * Sanitize text as plaintext.
      *
      * @param $input
