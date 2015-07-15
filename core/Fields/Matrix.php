@@ -78,10 +78,6 @@ class Matrix extends Field {
 <div>{$default_null}</div>
 <div id=\"{$this->mxid}\" class='matrix-fields tr-repeater-fields ui-sortable'>{$blocks}</div></div>";
 
-        if($this->getForm()->getSetting('template')) {
-            $html =  "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> No templating a Matrix Field.</div>";
-        }
-
         return $html;
     }
 
@@ -168,7 +164,7 @@ class Matrix extends Field {
                                 /** @noinspection PhpIncludeInspection */
                                 include( $file );
                             } else {
-                                echo '<p>No Matrix file found.</p>';
+                                echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> No Matrix file found <code>{$file}</code></div>";
                             }
                             ?>
                         </div>

@@ -295,12 +295,6 @@ abstract class Field
         $this->setPrefix( 'tr' )->setName( $name )->setBrackets( $this->getBrackets() );
         $this->attr['name'] = $this->prefix . $this->brackets;
 
-        if ($this->getForm()->getSetting('template') == true) {
-            $this->attr['data-name'] = $this->attr['name'];
-            unset( $this->attr['name'] );
-            unset( $this->attr['id'] );
-        }
-
         $this->attr['class'] = apply_filters( 'tr_field_html_class_filter', $this->attr['class'], $this );
 
         if ( ! isset( $settings['label'] )) {

@@ -16,7 +16,7 @@ class MatrixApi {
             }
 
             $form->setGroup($form_group . "[{$group}][{$tr_matrix_id}][{$type}]");
-            $path = TR_MATRIX_DIR . "/{$group}/{$type}.php";
+            $file = TR_MATRIX_DIR . "/{$group}/{$type}.php";
         } else {
             http_response_code(404);
             exit();
@@ -31,11 +31,11 @@ class MatrixApi {
             </div>
             <div class="repeater-inputs">
                 <?php
-                if(file_exists($path)) {
+                if(file_exists($file)) {
                     /** @noinspection PhpIncludeInspection */
-                    include($path);
+                    include($file);
                 } else {
-                    echo "<p>No Matrix File</p>";
+                    echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> No Matrix file found <code>{$file}</code></div>";
                 }
                 ?>
             </div>

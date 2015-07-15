@@ -61,17 +61,14 @@ class Repeater extends Field
         // add controls (add, flip, clear all)
         $generator = new Generator();
         $default_null = $generator->newInput('hidden', $this->getAttribute('name'), null)->getString();
-        if($this->getForm()->getSetting('template')) {
-            $default_null = array('data-name' => $this->getAttribute('data-name'));
-            $default_null = $generator->newInput('hidden', null, null, $default_null)->getString();
-        }
-
 
         $html .= "<div class=\"controls\"><div class=\"tr-repeater-button-add\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /></div><div class=\"button-group\"><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Contract\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}<div>{$default_null}</div></div>";
 
+        $templateFields = str_replace(' name="', ' data-name="', $this->getTemplateFields());
+
         // render js template data
         $html .= "<div class=\"tr-repeater-group-template\" data-id=\"{$name}\">";
-        $html .= $openContainer . $this->getTemplateFields() . $endContainer;
+        $html .= $openContainer . $templateFields . $endContainer;
         $html .= '</div>';
 
         // render saved data
