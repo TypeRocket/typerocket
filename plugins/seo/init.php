@@ -84,7 +84,7 @@ class SeoPlugin
         if ( ! empty( $robots )) {
             $robot_data = '';
             foreach ($robots as $value) {
-                if ( ! empty( $value )) {
+                if ( ! empty( $value ) && $value != 'none') {
                     $robot_data .= $value . ', ';
                 }
             }
@@ -187,13 +187,13 @@ class SeoPlugin
 
         // select options
         $follow_opts = array(
-            'Not Set'      => '',
+            'Not Set'      => 'none',
             'Follow'       => 'follow',
             "Don't Follow" => 'nofollow'
         );
 
         $index_opts = array(
-            'Not Set'     => '',
+            'Not Set'     => 'none',
             'Index'       => 'index',
             "Don't Index" => 'noindex'
         );
@@ -233,8 +233,8 @@ class SeoPlugin
                  'content' => $utility->getBuffer('social')
              ) )
              ->addTab( array(
-                 'id'      => 'seo-extra',
-                 'title'   => "Extras",
+                 'id'      => 'seo-advanced',
+                 'title'   => "Advanced",
                  'content' => $utility->getBuffer('extra')
              ) )
              ->render( 'meta' );
