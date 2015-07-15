@@ -24,6 +24,16 @@
     color: #468847;
 }
 
+@media screen and (max-width: 782px) {
+    .typerocket-rest-alert {
+        top: 46px;
+    }
+
+    #wpbody .control-label .dev {
+        display: none;
+    }
+}
+
 .tr-dev-alert-helper {
     padding: 15px;
     -webkit-box-sizing: border-box;
