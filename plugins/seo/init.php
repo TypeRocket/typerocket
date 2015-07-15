@@ -6,8 +6,9 @@ class SeoPlugin
 
     public $item_id = null;
 
-    function __construct() {
-        if ( !function_exists( 'add_action' ) ) {
+    function __construct()
+    {
+        if ( ! function_exists( 'add_action' ) ) {
             echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
             exit;
         }
@@ -15,7 +16,7 @@ class SeoPlugin
 
     function setup()
     {
-        if ( ! defined( 'WPSEO_URL' ) && ! defined( 'AIOSEOP_VERSION' )) {
+        if ( ! defined( 'WPSEO_URL' ) && ! defined( 'AIOSEOP_VERSION' ) ) {
             define( 'TR_SEO', '1.0' );
             add_action( 'wp_head', array( $this, 'head_data' ), 0 );
             add_action( 'template_redirect', array( $this, 'loaded' ), 0 );
@@ -23,14 +24,15 @@ class SeoPlugin
             remove_action( 'wp_head', 'rel_canonical' );
             add_action( 'wp', array( $this, 'redirect' ), 99, 1 );
 
-            if(is_admin()) {
+            if ( is_admin() ) {
                 add_action( 'admin_init', array( $this, 'css' ) );
                 add_action( 'add_meta_boxes', array( $this, 'seo_meta' ) );
             }
         }
     }
 
-    function loaded() {
+    function loaded()
+    {
         $this->item_id = get_queried_object_id();
     }
 
@@ -39,7 +41,10 @@ class SeoPlugin
         $publicTypes = get_post_types( array( 'public' => true ) );
         $obj         = new Metabox();
         $obj->setup( 'tr_seo',
-            array( 'label' => 'Search Engine Optimization', 'priority' => 'low', 'callback' => array($this, 'meta') ) )->apply( $publicTypes )->register();
+            array( 'label'    => 'Search Engine Optimization',
+                   'priority' => 'low',
+                   'callback' => array( $this, 'meta' )
+            ) )->apply( $publicTypes )->register();
     }
 
     // Page Title
@@ -47,7 +52,7 @@ class SeoPlugin
     {
         $newTitle = tr_post_field( '[seo][meta][title]', $this->item_id );
 
-        if ($newTitle != null) {
+        if ( $newTitle != null ) {
             return $newTitle;
         } else {
             return $title;
@@ -55,7 +60,8 @@ class SeoPlugin
 
     }
 
-    function title_tag() {
+    function title_tag()
+    {
         echo '<title>' . $this->title( '|', false, 'right' ) . "</title>";
     }
 
@@ -74,40 +80,40 @@ class SeoPlugin
         $robots['follow'] = esc_attr( tr_post_field( '[seo][meta][follow]', $object_id ) );
 
         // Extra
-        if ( ! empty( $canon )) {
+        if ( ! empty( $canon ) ) {
             echo "<link rel=\"canonical\" href=\"{$canon}\" />";
         } else {
             rel_canonical();
         }
 
         // Robots
-        if ( ! empty( $robots )) {
+        if ( ! empty( $robots ) ) {
             $robot_data = '';
-            foreach ($robots as $value) {
-                if ( ! empty( $value ) && $value != 'none') {
+            foreach ( $robots as $value ) {
+                if ( ! empty( $value ) && $value != 'none' ) {
                     $robot_data .= $value . ', ';
                 }
             }
 
             $robot_data = substr( $robot_data, 0, - 2 );
-            if ( ! empty( $robot_data )) {
+            if ( ! empty( $robot_data ) ) {
                 echo "<meta name=\"robots\" content=\"{$robot_data}\" />";
             }
         }
 
         // OG
-        if ( ! empty( $og_title )) {
+        if ( ! empty( $og_title ) ) {
             echo "<meta property=\"og:title\" content=\"{$og_title}\" />";
         }
-        if ( ! empty( $og_desc )) {
+        if ( ! empty( $og_desc ) ) {
             echo "<meta property=\"og:description\" content=\"{$og_desc}\" />";
         }
-        if ( ! empty( $img )) {
+        if ( ! empty( $img ) ) {
             echo "<meta property=\"og:image\" content=\"{$img}\" />";
         }
 
         // Basic
-        if ( ! empty( $desc )) {
+        if ( ! empty( $desc ) ) {
             echo "<meta name=\"Description\" content=\"{$desc}\" />";
         }
     }
@@ -115,9 +121,9 @@ class SeoPlugin
     // 301 Redirect
     function redirect()
     {
-        if (is_singular()) {
+        if ( is_singular() ) {
             $redirect = tr_post_field( '[seo][meta][redirect]', $this->item_id );
-            if ( ! empty( $redirect )) {
+            if ( ! empty( $redirect ) ) {
                 wp_redirect( $redirect, 301 );
                 exit;
             }
@@ -201,8 +207,8 @@ class SeoPlugin
         // build form
         /** @var \TypeRocket\Form $form */
         $form = new Form();
-        $form->setDebugStatus(false);
-        $form->setGroup('[seo][meta]');
+        $form->setDebugStatus( false );
+        $form->setGroup( '[seo][meta]' );
         $form->setup();
         $utility->startBuffer();
         $form->text( 'title', array( 'id' => 'tr_title' ), $title )
@@ -224,18 +230,18 @@ class SeoPlugin
         $tabs->addTab( array(
             'id'       => 'seo-general',
             'title'    => "Basic",
-            'content'  => $utility->getBuffer('general'),
-            'callback' => array($this, 'general')
+            'content'  => $utility->getBuffer( 'general' ),
+            'callback' => array( $this, 'general' )
         ) )
              ->addTab( array(
                  'id'      => 'seo-social',
-                 'title'   => "OG",
-                 'content' => $utility->getBuffer('social')
+                 'title'   => "Social",
+                 'content' => $utility->getBuffer( 'social' )
              ) )
              ->addTab( array(
                  'id'      => 'seo-advanced',
                  'title'   => "Advanced",
-                 'content' => $utility->getBuffer('advanced')
+                 'content' => $utility->getBuffer( 'advanced' )
              ) )
              ->render( 'meta' );
 
@@ -249,17 +255,18 @@ class SeoPlugin
         <div id="tr-seo-preview" class="control-group">
             <h4>Example Preview</h4>
 
-            <p>Google has <b>no definitive character limits</b> for page "Titles" and "Descriptions". Because of this there
+            <p>Google has <b>no definitive character limits</b> for page "Titles" and "Descriptions". Because of this
+                there
                 is no way to provide an accurate preview. But, your Google search result may look something like:</p>
 
             <div class="tr-seo-preview-google">
-        <span style="display: none" id="tr-seo-preview-google-title-orig">
+        <span id="tr-seo-preview-google-title-orig">
           <?php echo substr( strip_tags( $post->post_title ), 0, 59 ); ?>
         </span>
         <span id="tr-seo-preview-google-title">
           <?php
           $title = tr_post_field( '[seo][meta][title]' );
-          if ( ! empty( $title )) {
+          if ( ! empty( $title ) ) {
               $s  = strip_tags( $title );
               $tl = strlen( $s );
               echo substr( $s, 0, 59 );
@@ -269,22 +276,22 @@ class SeoPlugin
               echo substr( $s, 0, 59 );
           }
 
-          if ($tl > 59) {
+          if ( $tl > 59 ) {
               echo '...';
           }
           ?>
         </span>
 
-        <div id="tr-seo-preview-google-url">
-            <?php echo get_permalink( $post->ID ); ?>
-        </div>
-        <span style="display: none" id="tr-seo-preview-google-desc-orig">
+                <div id="tr-seo-preview-google-url">
+                    <?php echo get_permalink( $post->ID ); ?>
+                </div>
+        <span id="tr-seo-preview-google-desc-orig">
           <?php echo substr( strip_tags( $post->post_content ), 0, 150 ); ?>
         </span>
         <span id="tr-seo-preview-google-desc">
           <?php
           $desc = tr_post_field( '[seo][meta][description]' );
-          if ( ! empty( $desc )) {
+          if ( ! empty( $desc ) ) {
               $s  = strip_tags( $desc );
               $dl = strlen( $s );
               echo substr( $s, 0, 150 );
@@ -294,7 +301,7 @@ class SeoPlugin
               echo substr( $s, 0, 150 );
           }
 
-          if ($dl > 150) {
+          if ( $dl > 150 ) {
               echo ' ...';
           }
           ?>
