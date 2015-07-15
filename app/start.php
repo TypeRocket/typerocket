@@ -34,7 +34,7 @@ define( 'TR_VERSION', '2.0' );
 spl_autoload_register( function ( $class ) {
 
     $prefix   = 'TypeRocket\\';
-    $base_dir = __DIR__ . '/../core/';
+    $base_dir = __DIR__ . '/../src/';
 
     $len = strlen( $prefix );
     if (strncmp( $prefix, $class, $len ) !== 0) {
