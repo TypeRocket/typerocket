@@ -132,6 +132,8 @@ class Layout
      * @since 3.3.0
      *
      * @param string $style meta|default
+     *
+     * @return $this
      */
     public function render( $style = 'default' )
     {
@@ -143,6 +145,8 @@ class Layout
                 $this->metaboxStyleTabs();
                 break;
         }
+
+        return $this;
 
     }
 
@@ -192,7 +196,7 @@ class Layout
                     <div id="<?php echo esc_attr( $panel_id ); ?>" class="<?php echo $classes; ?>">
                         <?php
                         // Print tab content.
-                        echo $tab['content'];
+                        echo (string) $tab['content'];
 
                         // If it exists, fire tab callback.
                         if ( ! empty( $tab['callback'] )) {
@@ -263,7 +267,7 @@ class Layout
                             <div id="<?php echo esc_attr( $panel_id ); ?>" class="inside <?php echo $classes; ?>">
                                 <?php
                                 // Print tab content.
-                                echo $tab['content'];
+                                echo (string) $tab['content'];
 
                                 // If it exists, fire tab callback.
                                 if ( ! empty( $tab['callback'] )) {

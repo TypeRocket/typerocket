@@ -55,11 +55,6 @@ $form->setup();
       'title' => 'APIs',
       'content' => $utility->getBuffer('api')
     ) );
-    $tabs->addTab( array(
-        'id' => 'test',
-        'title' => 'Test',
-        'content' => function() { echo 'text'; }
-    ) );
     $tabs->render();
     $form->close();
   ?>

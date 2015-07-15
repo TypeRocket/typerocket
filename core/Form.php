@@ -276,7 +276,8 @@ class Form
         $rest     = array();
         $defaults = array(
             'action' => $_SERVER['REQUEST_URI'],
-            'method' => $method,
+            'method' => 'POST',
+            'data-method' => $method,
             'id'     => $this->id
         );
 
