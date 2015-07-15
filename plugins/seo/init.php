@@ -17,13 +17,16 @@ class SeoPlugin
     {
         if ( ! defined( 'WPSEO_URL' ) && ! defined( 'AIOSEOP_VERSION' )) {
             define( 'TR_SEO', '1.0' );
-            add_action( 'admin_init', array( $this, 'css' ) );
             add_action( 'wp_head', array( $this, 'head_data' ), 0 );
             add_action( 'template_redirect', array( $this, 'loaded' ), 0 );
-            add_action( 'add_meta_boxes', array( $this, 'seo_meta' ) );
             add_filter( 'wp_title', array( $this, 'title' ), 100, 3 );
             remove_action( 'wp_head', 'rel_canonical' );
             add_action( 'wp', array( $this, 'redirect' ), 99, 1 );
+
+            if(is_admin()) {
+                add_action( 'admin_init', array( $this, 'css' ) );
+                add_action( 'add_meta_boxes', array( $this, 'seo_meta' ) );
+            }
         }
     }
 

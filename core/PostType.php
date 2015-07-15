@@ -4,12 +4,10 @@ namespace TypeRocket;
 class PostType extends Registrable
 {
 
-    public $id = null;
     public $singular = null;
     public $plural = null;
     private $title = null;
     private $form = null;
-    public $use = array();
     public $taxonomies = array();
     public $args = array();
     private $icon = null;
@@ -17,7 +15,7 @@ class PostType extends Registrable
     function setIcon( $name )
     {
         $name       = strtolower( $name );
-        $icons = new Icons();
+        $icons      = new Icons();
         $this->icon = $icons[$name];
         add_action( 'admin_head', array( $this, 'style' ) );
 
@@ -29,25 +27,9 @@ class PostType extends Registrable
         return $this->title;
     }
 
-    public function setTitlePlaceholder($text)
+    public function setTitlePlaceholder( $text )
     {
         return $this->title = (string) $text;
-    }
-
-    /**
-     * @param $id
-     *
-     * @return $this
-     */
-    function setId( $id )
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    function getId() {
-        return $this->id;
     }
 
     /**
@@ -55,7 +37,7 @@ class PostType extends Registrable
      *
      * @return mixed
      */
-    public function getFrom( $key )
+    public function getForm( $key )
     {
         return $this->form[$key];
     }
@@ -65,9 +47,10 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    public function setTitleFrom($value = true) {
+    public function setTitleFrom( $value = true )
+    {
 
-        if( is_callable($value) ) {
+        if (is_callable( $value )) {
             $this->form['title'] = $value;
         } else {
             $this->form['title'] = true;
@@ -79,7 +62,8 @@ class PostType extends Registrable
     /**
      * @return $this
      */
-    public function removeTitleFrom() {
+    public function removeTitleFrom()
+    {
         $this->form['title'] = null;
 
         return $this;
@@ -90,8 +74,9 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    public function setTopFrom($value = true) {
-        if( is_callable($value) ) {
+    public function setTopFrom( $value = true )
+    {
+        if (is_callable( $value )) {
             $this->form['top'] = $value;
         } else {
             $this->form['top'] = true;
@@ -103,7 +88,8 @@ class PostType extends Registrable
     /**
      * @return $this
      */
-    public function removeTopFrom() {
+    public function removeTopFrom()
+    {
         $this->form['top'] = null;
 
         return $this;
@@ -114,8 +100,9 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    public function setBottomFrom($value = true) {
-        if( is_callable($value) ) {
+    public function setBottomFrom( $value = true )
+    {
+        if (is_callable( $value )) {
             $this->form['bottom'] = $value;
         } else {
             $this->form['bottom'] = true;
@@ -127,7 +114,8 @@ class PostType extends Registrable
     /**
      * @return $this
      */
-    public function removeBottomFrom() {
+    public function removeBottomFrom()
+    {
         $this->form['bottom'] = null;
 
         return $this;
@@ -138,8 +126,9 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    public function setEditorFrom($value = true) {
-        if( is_callable($value) ) {
+    public function setEditorFrom( $value = true )
+    {
+        if (is_callable( $value )) {
             $this->form['editor'] = $value;
         } else {
             $this->form['editor'] = true;
@@ -151,7 +140,8 @@ class PostType extends Registrable
     /**
      * @return $this
      */
-    public function removeEditorFrom() {
+    public function removeEditorFrom()
+    {
         $this->form['editor'] = null;
 
         return $this;
@@ -265,29 +255,11 @@ class PostType extends Registrable
         return $this;
     }
 
-    function apply( $use )
-    {
-
-        if (is_array( $use )) {
-          $this->use = array_merge($this->use, $use);
-        } else {
-          array_push($this->use, $use);
-        }
-
-        $this->uses();
-
-        return $this;
-    }
-
     function bake()
     {
-        if (array_key_exists( $this->id, $this->reservedNames )) :
-            die( 'TypeRocket: Error, you are using the reserved wp name "' . $this->id . '".' );
-        endif;
+        $this->dieIfReserved();
 
-        $id = Sanitize::underscore( $this->id );
-
-        do_action( 'tr_register_post_type_' . $id, $this );
+        do_action( 'tr_register_post_type_' . $this->id, $this );
         register_post_type( $this->id, $this->args );
 
         return $this;
@@ -296,45 +268,51 @@ class PostType extends Registrable
     /**
      * @param string|Metabox $s
      */
-    function addMetaBox( $s )
+    function metaboxRegistrationById( $s )
     {
-        if (! is_string( $s )) {
+        if ( ! is_string( $s )) {
             $s = (string) $s->getId();
         }
-        $this->args['supports'] = array_merge( $this->args['supports'], array( $s ) );
-        $this->args['supports'] = array_unique( $this->args['supports'] );
 
+        if ( ! in_array( $s, $this->args['supports'] )) {
+            $this->args['supports'][] = $s;
+        }
     }
 
     /**
      * @param string|Taxonomy $s
      */
-    function addTaxonomy( $s )
+    function taxonomyRegistrationById( $s )
     {
 
-        if (! is_string( $s )) {
+        if ( ! is_string( $s )) {
             $s = (string) $s->getId();
         }
 
-        $this->taxonomies         = array_merge( $this->taxonomies, array( $s ) );
-        $this->taxonomies         = array_unique( $this->taxonomies );
-        $this->args['taxonomies'] = $this->taxonomies;
+        if ( ! in_array( $s, $this->taxonomies )) {
+            $this->taxonomies[]       = $s;
+            $this->args['taxonomies'] = $this->taxonomies;
+        }
+
     }
 
-    function addFormContent( $post, $args )
+    function addFormContent( $post, $type )
     {
         if ($post->post_type == $this->id) :
 
-            $id = Sanitize::underscore( $this->id );
-
-            $func = 'add_form_content_' . $id . '_' . $args;
+            $func = 'add_form_content_' . $this->id . '_' . $type;
 
             echo '<div class="typerocket-container">';
-            if (function_exists( $func )) :
-                $func( $post );
-            elseif (TR_DEBUG == true) :
+
+            $form = $this->getForm( $type );
+            if (is_callable( $form )) {
+                call_user_func( $form );
+            } elseif (function_exists( $func )) {
+                call_user_func( $func, $post );
+            } elseif (TR_DEBUG == true) {
                 echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by defining: <code>function {$func}() {}</code></div>";
-            endif;
+            }
+
             echo '</div>';
 
 
@@ -343,26 +321,22 @@ class PostType extends Registrable
 
     function editFormTop( $post )
     {
-        $args = 'top';
-        $this->addFormContent( $post, $args );
+        $this->addFormContent( $post, 'top' );
     }
 
-    function edit_form_after_title( $post )
+    function editFormAfterTitle( $post )
     {
-        $args = 'title';
-        $this->addFormContent( $post, $args );
+        $this->addFormContent( $post, 'title' );
     }
 
     function editFormAfterEditor( $post )
     {
-        $args = 'editor';
-        $this->addFormContent( $post, $args );
+        $this->addFormContent( $post, 'editor' );
     }
 
     function dbxPostSidebar( $post )
     {
-        $args = 'bottom';
-        $this->addFormContent( $post, $args );
+        $this->addFormContent( $post, 'bottom' );
     }
 
     function enterTitleHere( $s )
@@ -376,9 +350,9 @@ class PostType extends Registrable
         endif;
     }
 
-    function trUses( $v )
+    function stringRegistration( $v )
     {
-        $this->addTaxonomy( $v );
+        $this->taxonomyRegistrationById( $v );
     }
 
 }

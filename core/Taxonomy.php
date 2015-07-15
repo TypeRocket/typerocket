@@ -9,23 +9,11 @@ namespace TypeRocket;
 class Taxonomy extends Registrable
 {
 
-    private $id = null;
     public $singular = null;
     public $plural = null;
-    public $use = array();
     public $form = null;
     public $post_types = array();
     public $args = array();
-
-    public function setId($id) {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getId() {
-        return $this->id;
-    }
 
     /**
      * Make Taxonomy. Do not use before init.
@@ -38,9 +26,11 @@ class Taxonomy extends Registrable
      */
     function make( $singular, $plural, $settings = array() )
     {
-        $this->form = array( array(
-            'bottom' => null
-        ) );
+        $this->form = array(
+            array(
+                'bottom' => null
+            )
+        );
 
         $upperPlural   = ucwords( $plural );
         $upperSingular = ucwords( $singular );
@@ -48,9 +38,9 @@ class Taxonomy extends Registrable
 
         $this->plural   = $plural;
         $this->singular = $singular;
-        $this->plural = Sanitize::underscore( $this->plural );
+        $this->plural   = Sanitize::underscore( $this->plural );
         $this->singular = Sanitize::underscore( $this->singular );
-        $this->id = ! $this->id ? $this->singular : $this->id;
+        $this->id       = ! $this->id ? $this->singular : $this->id;
 
         $labels = array(
             'add_new_item'               => __( 'Add New ' . $upperSingular ),
@@ -103,25 +93,9 @@ class Taxonomy extends Registrable
         return $this;
     }
 
-    function apply( $use )
-    {
-
-        if (is_array( $use )) {
-          $this->use = array_merge($this->use, $use);
-        } else {
-          array_push($this->use, $use);
-        }
-
-        $this->uses();
-
-        return $this;
-    }
-
     function bake()
     {
-        if (array_key_exists( $this->id, $this->reservedNames )) :
-            die( 'TypeRocket: Error, you are using the reserved wp name "' . $this->id . '".' );
-        endif;
+        $this->dieIfReserved();
 
         do_action( 'tr_register_taxonomy_' . $this->id, $this );
         register_taxonomy( $this->id, $this->post_types, $this->args );
@@ -129,46 +103,25 @@ class Taxonomy extends Registrable
         return $this;
     }
 
-    private function addFormContent( $tag, $taxonomy, $args )
+    /**
+     * @param string|PostType $s
+     */
+    function postTypeRegistrationById( $s )
     {
 
-        $func = 'add_form_content_' . $this->id . '_' . $args;
-
-        echo '<div class="typerocket-container">';
-        if (function_exists( $func )) :
-            $func( $tag, $taxonomy );
-        elseif (TR_DEBUG == true) :
-            echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by defining: <code>function {$func}() {}</code></div>";
-        endif;
-        echo '</div>';
-
-    }
-
-    function editFormBottom( $tag = null, $taxonomy = null )
-    {
-        $args = 'bottom';
-        $this->addFormContent( $tag, $taxonomy, $args );
-    }
-
-    function addFormBottom( $taxonomy = null )
-    {
-        $args = 'bottom';
-        $tag  = null;
-        $this->addFormContent( $tag, $taxonomy, $args );
-    }
-
-    function addPostType( $v )
-    {
-        if (is_string( $v->id )) {
-            $this->post_types = array_merge( $this->post_types, array( $v->id ) );
+        if ( ! is_string( $s )) {
+            $s = (string) $s->getId();
         }
+
+        if ( ! in_array( $s, $this->post_types )) {
+            $this->post_types[] = $s;
+        }
+
     }
 
-    function trUses( $v )
+    function stringRegistration( $s )
     {
-        if (is_string( $v )) {
-            $this->post_types = array_merge( $this->post_types, array( $v ) );
-        }
+        $this->postTypeRegistrationById( $s );
     }
 
 }

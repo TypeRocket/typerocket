@@ -4,28 +4,9 @@ namespace TypeRocket;
 class Metabox extends Registrable
 {
 
-    private $id = null;
     public $label = null;
-    public $use = array();
     public $post_types = array();
     public $args = array();
-
-    /**
-     * @param $id
-     *
-     * @return $this
-     */
-    function setId( $id )
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Make Meta Box
@@ -64,20 +45,6 @@ class Metabox extends Registrable
         return $this;
     }
 
-    function apply( $use )
-    {
-
-        if (is_array( $use )) {
-            $this->use = array_merge($this->use, $use);
-        } else {
-            array_push($this->use, $use);
-        }
-
-        $this->uses();
-
-        return $this;
-    }
-
     function metaContent( $object, $box )
     {
         $func = 'add_meta_content_' . $this->id;
@@ -94,19 +61,21 @@ class Metabox extends Registrable
     /**
      * @param string|PostType $s
      */
-    function addPostType( $s )
+    function postTypeRegistrationById( $s )
     {
-        if (! is_string( $s )) {
+        if ( ! is_string( $s )) {
             $s = (string) $s->getId();
         }
-        $this->post_types = array_merge( $this->post_types, array( $s ) );
-        $this->post_types = array_unique( $this->post_types );
+
+        if ( ! in_array( $s, $this->post_types )) {
+            $this->post_types[] = $s;
+        }
 
     }
 
-    function trUses( $v )
+    function stringRegistration( $v )
     {
-        $this->addPostType( $v );
+        $this->postTypeRegistrationById( $v );
     }
 
     function bake()
@@ -115,7 +84,7 @@ class Metabox extends Registrable
         global $post, $comment;
         $type = get_post_type( $post->ID );
         if (post_type_supports( $type, $this->id )) {
-            $this->addPostType( $type );
+            $this->postTypeRegistrationById( $type );
         }
 
         foreach ($this->post_types as $v) {

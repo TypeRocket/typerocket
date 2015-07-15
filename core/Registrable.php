@@ -5,6 +5,7 @@ abstract class Registrable
 {
 
     public $use = array();
+    protected $id = null;
 
     protected $reservedNames = array(
         'attachment'                  => true,
@@ -89,9 +90,9 @@ abstract class Registrable
     );
 
     public $registrable = array(
-        'TypeRocket\Taxonomy' => 'addTaxonomy',
-        'TypeRocket\PostType' => 'addPostType',
-        'TypeRocket\Metabox'  => 'addMetabox',
+        'TypeRocket\Taxonomy' => 'taxonomyRegistrationById',
+        'TypeRocket\PostType' => 'postTypeRegistrationById',
+        'TypeRocket\Metabox'  => 'metaboxRegistrationById',
     );
 
     function __construct()
@@ -105,6 +106,46 @@ abstract class Registrable
 
     public function __set( $property, $value )
     {
+    }
+
+    /**
+     * @param $id
+     *
+     * @return $this
+     */
+    function setId( $id )
+    {
+        $this->id = Sanitize::underscore( $id );
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    function getId()
+    {
+        return $this->id;
+    }
+
+    protected function dieIfReserved() {
+        if (array_key_exists( $this->id, $this->reservedNames )) {
+            die( 'TypeRocket: Error, you are using the reserved wp name "' . $this->id . '".' );
+        }
+    }
+
+    function apply( $use )
+    {
+
+        if (is_array( $use )) {
+            $this->use = array_merge( $this->use, $use );
+        } else {
+            $this->use[] = $use;
+        }
+
+        $this->uses();
+
+        return $this;
     }
 
     function reg()
@@ -135,9 +176,9 @@ abstract class Registrable
                 } else {
                     die( 'TypeRocket: You are passing the unsupported object ' . $class . ' into ' . $current_class . '.' );
                 }
-            } else {
-                if (method_exists( $this, 'trUses' )) {
-                    $this->trUses( $obj );
+            } elseif(is_string($obj)) {
+                if (method_exists( $this, 'stringRegistration' )) {
+                    $this->stringRegistration( $obj );
                 }
             }
         }

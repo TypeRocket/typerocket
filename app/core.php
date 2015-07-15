@@ -107,11 +107,11 @@ add_action('admin_init', function() {
 });
 
 add_filter( 'query_vars', function($vars) {
-    array_push($vars, 'typerocket_rest_controller');
-    array_push($vars, 'typerocket_rest_item');
-    array_push($vars, 'typerocket_matrix_group');
-    array_push($vars, 'typerocket_matrix_type');
-    array_push($vars, 'typerocket_matrix_form');
+    $vars[] = 'typerocket_rest_controller';
+    $vars[] = 'typerocket_rest_item';
+    $vars[] = 'typerocket_matrix_group';
+    $vars[] = 'typerocket_matrix_type';
+    $vars[] = 'typerocket_matrix_form';
     return $vars;
 } );
 
