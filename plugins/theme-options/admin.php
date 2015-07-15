@@ -43,19 +43,24 @@ $form->setup();
     $utility->indexBuffer('save');
 
     // layout
-    $screen = new TypeRocket\Layout();
-    $screen->setSidebar($utility->getBuffer('save'));
-    $screen->addTab( array(
+    $tabs = new TypeRocket\Layout();
+    $tabs->setSidebar($utility->getBuffer('save'));
+    $tabs->addTab( array(
       'id' => 'about',
       'title' => 'About',
       'content' => $utility->getBuffer('about')
     ) );
-    $screen->addTab( array(
+    $tabs->addTab( array(
       'id' => 'advanced',
       'title' => 'APIs',
       'content' => $utility->getBuffer('api')
     ) );
-    $screen->render();
+    $tabs->addTab( array(
+        'id' => 'test',
+        'title' => 'Test',
+        'content' => function() { echo 'text'; }
+    ) );
+    $tabs->render();
     $form->close();
   ?>
 

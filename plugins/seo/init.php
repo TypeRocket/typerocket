@@ -221,23 +221,23 @@ class SeoPlugin
         $utility->indexBuffer( 'extra' ); // index buffer
 
         $tabs = new Layout();
-        $tabs->add_tab( array(
+        $tabs->addTab( array(
             'id'       => 'seo-general',
             'title'    => "Basic",
             'content'  => $utility->getBuffer('general'),
             'callback' => array($this, 'general')
         ) )
-             ->add_tab( array(
+             ->addTab( array(
                  'id'      => 'seo-social',
                  'title'   => "OG",
                  'content' => $utility->getBuffer('social')
              ) )
-             ->add_tab( array(
+             ->addTab( array(
                  'id'      => 'seo-extra',
                  'title'   => "Extras",
                  'content' => $utility->getBuffer('extra')
              ) )
-             ->make( 'meta' );
+             ->render( 'meta' );
 
         echo '</div>';
 

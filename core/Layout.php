@@ -182,7 +182,7 @@ class Layout
                 </div>
             <?php endif; ?>
 
-            <div class="tr-sections clearfix">
+            <div class="tr-sections cf">
                 <?php
                 $classes = 'tab-section active';
                 foreach ($tabs as $tab):
@@ -223,7 +223,7 @@ class Layout
         ?>
         <div class="tr-options metabox-prefs">
 
-            <div class="tr-contextual-help-wrap <?php echo esc_attr( $help_class ); ?>">
+            <div class="tr-contextual-help-wrap <?php echo esc_attr( $help_class ); ?> cf">
                 <div class="tr-contextual-help-back"></div>
                 <div class="tr-contextual-help-columns">
                     <div class="contextual-help-tabs">
