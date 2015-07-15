@@ -29,7 +29,7 @@ class Image extends Field
         }
 
         if ($value != "") {
-            $image = wp_get_attachment_image( $value, 'thumbnail' );
+            $image = wp_get_attachment_image( (int) $value, 'thumbnail' );
         } else {
             $image = '';
         }

@@ -32,7 +32,7 @@ class Gallery extends Field
         if (is_array( $images )) {
             foreach ($images as $id) {
                 $input = $generator->newInput( 'hidden', $name . '[]', $id )->getString();
-                $image = wp_get_attachment_image( $id, 'thumbnail' );
+                $image = wp_get_attachment_image( (int) $id, 'thumbnail' );
                 $remove = '#remove';
 
                 if ( ! empty( $image )) {
