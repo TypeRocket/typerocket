@@ -9,7 +9,6 @@ class Submit extends Field
     function __construct()
     {
         $this->setType('submit');
-        $this->debuggable = false;
     }
 
     function getString()

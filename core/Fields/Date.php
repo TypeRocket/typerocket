@@ -1,15 +1,13 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html\Generator as Generator,
-    \TypeRocket\Config as Config;
+use \TypeRocket\Html\Generator as Generator;
 
 class Date extends Field
 {
 
     function __construct()
     {
-        $paths = Config::getPaths();
         wp_enqueue_script( 'jquery-ui-datepicker', array( 'jquery' ), '1.0', true );
         $this->setType('text');
     }

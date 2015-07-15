@@ -11,7 +11,6 @@ class WordPressEditor extends Field
     function __construct()
     {
         wp_enqueue_media();
-        $this->repeatable = false;
     }
 
     function getString()
