@@ -33,3 +33,16 @@ Ready to get started?
 ==========
 
 Visit TypeRocket (http://typerocket.com) to get access to the tutorials and documentation.
+
+Example
+==========
+
+```php
+
+// In your themes functions.php
+include( 'typerocket/init.php' );
+
+// Add a post type with icon gracefully without hooks
+tr_post_type('Book', 'Books')->setIcon('book');
+
+```
