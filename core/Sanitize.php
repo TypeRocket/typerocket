@@ -1,77 +1,97 @@
 <?php
 namespace TypeRocket;
 
-class Sanitize {
+class Sanitize
+{
 
-  /**
-   * Sanitize a textarea input field. Removes bad html like <script> and <html>.
-   *
-   * @param $input
-   *
-   * @return string
-   */
-  static function textarea($input) {
-    global $allowedposttags;
-    $output = wp_kses( $input, $allowedposttags);
-    return $output;
-  }
+    /**
+     * Sanitize a textarea input field. Removes bad html like <script> and <html>.
+     *
+     * @param $input
+     *
+     * @return string
+     */
+    static function textarea( $input )
+    {
+        global $allowedposttags;
+        $output = wp_kses( $input, $allowedposttags );
 
-  /**
-   * Sanitize editor data. Much like textarea remove <script> and <html>.
-   * However, if the user can create unfiltered HTML allow it.
-   *
-   * @param $input
-   *
-   * @return string
-   */
-  static function editor($input) {
-    if ( current_user_can( 'unfiltered_html' ) ) {
-      $output = $input;
-    }
-    else {
-      global $allowedtags;
-      $output = wpautop(wp_kses( $input, $allowedtags));
-    }
-    return $output;
-  }
-
-  /**
-   * Sanitize Hex Color Value
-   *
-   * If the hex does not validate return a default instead.
-   *
-   * @param $hex
-   * @param string $default
-   *
-   * @return string
-   */
-  static function hex( $hex, $default = '#000000' ) {
-    if ( Validate::hex( $hex ) ) {
-      return $hex;
-    }
-    return $default;
-  }
-
-  static function underscore( $name )
-  {
-    if (is_string( $name )) {
-      $name        = strtolower( trim( sanitize_title( $name, '' ) ) );
-      $pattern     = '/(\-+)/';
-      $name        = preg_replace( $pattern, '_', $name );
+        return $output;
     }
 
-    return $name;
-  }
+    /**
+     * Sanitize a textarea input field. Removes bad html like <script> and <html>.
+     *
+     * @param $input
+     *
+     * @return string
+     */
+    static function plaintext( $input )
+    {
+        $output = wp_kses( $input, array() );
 
-  static function dash( $name )
-  {
-    if (is_string( $name )) {
-      $name        = strtolower( trim( sanitize_title( $name, '' ) ) );
-      $pattern     = '/(\-+)/';
-      $name        = preg_replace( $pattern, '-', $name );
+        return $output;
     }
 
-    return $name;
-  }
+    /**
+     * Sanitize editor data. Much like textarea remove <script> and <html>.
+     * However, if the user can create unfiltered HTML allow it.
+     *
+     * @param $input
+     *
+     * @return string
+     */
+    static function editor( $input )
+    {
+        if (current_user_can( 'unfiltered_html' )) {
+            $output = $input;
+        } else {
+            global $allowedtags;
+            $output = wpautop( wp_kses( $input, $allowedtags ) );
+        }
+
+        return $output;
+    }
+
+    /**
+     * Sanitize Hex Color Value
+     *
+     * If the hex does not validate return a default instead.
+     *
+     * @param $hex
+     * @param string $default
+     *
+     * @return string
+     */
+    static function hex( $hex, $default = '#000000' )
+    {
+        if (Validate::hex( $hex )) {
+            return $hex;
+        }
+
+        return $default;
+    }
+
+    static function underscore( $name )
+    {
+        if (is_string( $name )) {
+            $name    = strtolower( trim( sanitize_title( $name, '' ) ) );
+            $pattern = '/(\-+)/';
+            $name    = preg_replace( $pattern, '_', $name );
+        }
+
+        return $name;
+    }
+
+    static function dash( $name )
+    {
+        if (is_string( $name )) {
+            $name    = strtolower( trim( sanitize_title( $name, '' ) ) );
+            $pattern = '/(\-+)/';
+            $name    = preg_replace( $pattern, '-', $name );
+        }
+
+        return $name;
+    }
 
 }

@@ -218,7 +218,7 @@ class SeoPlugin
              ->text( 'redirect', array( 'readonly' => 'readonly', 'id' => 'tr_redirect' ), $redirect )
              ->select( 'follow', $follow_opts, array(), $follow )
              ->select( 'index', $index_opts, array(), $help );
-        $utility->indexBuffer( 'extra' ); // index buffer
+        $utility->indexBuffer( 'advanced' ); // index buffer
 
         $tabs = new Layout();
         $tabs->addTab( array(
@@ -235,7 +235,7 @@ class SeoPlugin
              ->addTab( array(
                  'id'      => 'seo-advanced',
                  'title'   => "Advanced",
-                 'content' => $utility->getBuffer('extra')
+                 'content' => $utility->getBuffer('advanced')
              ) )
              ->render( 'meta' );
 
