@@ -25,8 +25,6 @@ class Form
     {
         $paths = Config::getPaths();
         wp_enqueue_script( 'typerocket-http', $paths['urls']['assets'] . '/js/http.js', array( 'jquery' ), '1', true );
-        wp_enqueue_script( 'typerocket-scripts', $paths['urls']['assets'] . '/js/typerocket.js', array( 'jquery' ), '1',
-            true );
     }
 
     public function __get( $property )

@@ -1,11 +1,6 @@
 <?php
-
 namespace TypeRocket;
 
-/**
- * Class Buffer
- * @package TypeRocket
- */
 class Buffer
 {
 

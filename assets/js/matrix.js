@@ -60,9 +60,6 @@ jQuery(document).ready(function($) {
         },
         error: function(jqXHR) {
           $that.val('Try again - Error ' + jqXHR.status).removeAttr("disabled", "disabled");
-        },
-        complete: function(jqXHR) {
-          // nothing right now
         }
       });
     }

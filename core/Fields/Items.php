@@ -10,7 +10,7 @@ class Items extends Field
     function __construct()
     {
         $paths = Config::getPaths();
-        wp_enqueue_script( 'typerocket-items-list', $paths['urls']['assets'] . '/js/items-list.js', array( 'jquery' ),
+        wp_enqueue_script( 'typerocket-items', $paths['urls']['assets'] . '/js/items.js', array( 'jquery' ),
             '1.0', true );
     }
 

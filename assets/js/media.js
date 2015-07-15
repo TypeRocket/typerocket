@@ -70,9 +70,10 @@ jQuery(document).ready(function($) {
     temp_frame.on( 'select', function() {
       // We set multiple to false so only get one image from the uploader
       var attachment = temp_frame.state().get('selection').first().toJSON();
+      var link = '<a target="_blank" href="'+attachment.url+'">'+attachment.url+'</a>';
 
       $(field).val(attachment.id);
-      $(button).parent().next().html('<a target="_blank" href="'+attachment.url+'">'+attachment.url+'</a>');
+      $(button).parent().next().html(link);
 
     });
 

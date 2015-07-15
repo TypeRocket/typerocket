@@ -1,10 +1,6 @@
 <?php
 namespace TypeRocket;
 
-/**
- * Class Metabox
- * @package TypeRocket
- */
 class Metabox extends Registrable
 {
 

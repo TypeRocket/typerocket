@@ -34,8 +34,7 @@ var booyah = {
   },
 
   addTemplate: function(string) {
-    var key = this.templateArray.length + 1;
-    this.templateArray[key] = string;
+    this.templateArray.push(string);
 
     return this;
   },

@@ -1,7 +1,7 @@
 TypeRocket 2.0
 ==========
 
-TypeRocket is created to make building WordPress themes a pleasure and designed to work with WordPress 3.8+ and PHP 5.3+.
+TypeRocket is created to make building WordPress themes a pleasure and designed to work with WordPress 4.0+ and PHP 5.3+.
 
 Happy coding!
 
@@ -30,4 +30,4 @@ Developer? TypeRocket takes advantage some cool design patterns. Ripped up docum
 Ready to get started?
 ==========
 
-Sign-up on the TypeRocket (http://typerocket.com) to get access to the tutorials, videos and plugins.
+Visit TypeRocket (http://typerocket.com) to get access to the tutorials, videos and documentation.

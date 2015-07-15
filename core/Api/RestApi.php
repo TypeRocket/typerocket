@@ -1,5 +1,4 @@
 <?php
-
 namespace TypeRocket\Api;
 
 use \TypeRocket\Controllers\Controller as Controller;

@@ -1,10 +1,6 @@
 <?php
 namespace TypeRocket\Html;
 
-/**
- * Class Html
- * @package TypeRocket\Html
- */
 class Tag
 {
 

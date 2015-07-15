@@ -7,8 +7,8 @@ use \TypeRocket\Config as Config;
 | Plugin Loader
 |--------------------------------------------------------------------------
 |
-| Load plugins. All plugins should live in a dir and must include an
-| init.php file to get loaded. There are no file only plugins folders
+| Load plugins. All plugins should live in a folder and must include an
+| init.php file to be loaded. There are no file-only-plugins, folders
 | must be used.
 |
 */

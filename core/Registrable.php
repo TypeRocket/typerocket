@@ -1,5 +1,4 @@
 <?php
-
 namespace TypeRocket;
 
 abstract class Registrable

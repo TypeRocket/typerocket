@@ -19,7 +19,6 @@ jQuery.fn.selectText = function(){
 jQuery(document).ready(function($) {
 
   $('.typerocket-container').on('click', '.field', function() {
-
     $(this).selectText();
   })
 

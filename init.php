@@ -5,9 +5,8 @@
 |--------------------------------------------------------------------------
 |
 | TypeRocket is designed to work with WordPress 4.0+ and PHP 5.3+. You
-| must initialize it exactly once. DO NOT require it from a PLUGIN.
-| Require TypeRocket from your THEME and let plugins use the theme's
-| version.
+| must initialize it exactly once. We suggest including TypeRocket
+| from your theme and let plugins access TypeRocket from there.
 |
 | Happy coding!
 |

@@ -70,9 +70,10 @@ class Enhance
     {
         if (is_admin()) {
             $paths = Config::getPaths();
-            wp_enqueue_style( 'typerocket-tr-icons', $paths['urls']['assets'] . '/css/tr-icons.css' );
+            wp_enqueue_style( 'typerocket-icons', $paths['urls']['assets'] . '/css/icons.css' );
             wp_enqueue_style( 'typerocket-styles', $paths['urls']['assets'] . '/css/typerocket.css' );
             wp_enqueue_style( 'typerocket-tabs', $paths['urls']['assets'] . '/css/tabs.css' );
+            wp_enqueue_style( 'typerocket-date-picker', $paths['urls']['assets'] . '/css/date-picker.css' );
             wp_enqueue_style( 'typerocket-editor', $paths['urls']['assets'] . '/css/redactor.css' );
         }
     }

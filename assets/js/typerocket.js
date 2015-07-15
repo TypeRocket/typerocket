@@ -81,7 +81,6 @@ jQuery(document).ready(function ($) {
 
   // Tabs
   $('.tr-tabs li').each(function () {
-
     $(this).click(function (e) {
       $(this).addClass('active').siblings().removeClass('active');
       var section = $(this).find('a').attr('href');
@@ -250,5 +249,3 @@ jQuery(document).ready(function ($) {
   });
 
 });
-
-

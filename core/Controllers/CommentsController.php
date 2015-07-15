@@ -1,5 +1,4 @@
 <?php
-
 namespace TypeRocket\Controllers;
 
 class CommentsController extends Controller
