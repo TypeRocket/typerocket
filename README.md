@@ -3,6 +3,8 @@ TypeRocket 2.0
 
 TypeRocket is created to make building WordPress themes a pleasure and designed to work with WordPress 4.0+ and PHP 5.3+.
 
+Currently TypeRocket language support is for English only.
+
 Happy coding!
 
 http://typerocket.com
