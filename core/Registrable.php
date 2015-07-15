@@ -6,6 +6,7 @@ abstract class Registrable
 
     public $use = array();
     protected $id = null;
+    protected $registered = false;
 
     protected $reservedNames = array(
         'attachment'                  => true,
@@ -128,7 +129,8 @@ abstract class Registrable
         return $this->id;
     }
 
-    protected function dieIfReserved() {
+    protected function dieIfReserved()
+    {
         if (array_key_exists( $this->id, $this->reservedNames )) {
             die( 'TypeRocket: Error, you are using the reserved wp name "' . $this->id . '".' );
         }
@@ -151,6 +153,7 @@ abstract class Registrable
     function reg()
     {
         Registry::add( $this );
+        $this->registered = true;
 
         return $this;
     }
@@ -168,7 +171,7 @@ abstract class Registrable
     {
         $current_class = get_class( $this );
         foreach ($this->use as $obj) {
-            if ( $obj instanceof Registrable) {
+            if ($obj instanceof Registrable) {
                 $class  = get_class( $obj );
                 $method = $this->registrable[$class];
                 if (method_exists( $this, $method )) {
@@ -176,7 +179,7 @@ abstract class Registrable
                 } else {
                     die( 'TypeRocket: You are passing the unsupported object ' . $class . ' into ' . $current_class . '.' );
                 }
-            } elseif(is_string($obj)) {
+            } elseif (is_string( $obj )) {
                 if (method_exists( $this, 'stringRegistration' )) {
                     $this->stringRegistration( $obj );
                 }

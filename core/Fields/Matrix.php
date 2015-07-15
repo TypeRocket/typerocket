@@ -33,7 +33,7 @@ class Matrix extends Field {
         wp_enqueue_media();
         wp_enqueue_script( 'typerocket-media', $paths['urls']['assets'] . '/js/media.js', array( 'jquery' ), '1.0',
             true );
-        wp_enqueue_script( 'typerocket-items-list', $paths['urls']['assets'] . '/js/items.js',
+        wp_enqueue_script( 'typerocket-items', $paths['urls']['assets'] . '/js/items.js',
             array( 'jquery' ), '1.0', true );
 
         // load just matrix :)

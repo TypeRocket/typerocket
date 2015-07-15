@@ -237,6 +237,23 @@ abstract class Field
         return $this->settings[$key];
     }
 
+    public function getRender( )
+    {
+        if( ! array_key_exists('render', $this->settings)) {
+            return null;
+        }
+
+        return $this->settings['render'];
+    }
+
+    public function setRender( $value )
+    {
+
+        $this->settings['render'] = $value;
+
+        return $this;
+    }
+
     public function setPrefix( $prefix )
     {
 

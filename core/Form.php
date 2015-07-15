@@ -159,6 +159,23 @@ class Form
         return $this;
     }
 
+    public function getRender( )
+    {
+        if( ! array_key_exists('render', $this->settings)) {
+            return null;
+        }
+
+        return $this->settings['render'];
+    }
+
+    public function setRender( $value )
+    {
+
+        $this->settings['render'] = $value;
+
+        return $this;
+    }
+
     public function removeSetting( $key )
     {
         if( array_key_exists($key, $this->settings)) {
@@ -359,12 +376,13 @@ class Form
         $label = $this->getLabel();
         $id    = $this->getCurrentField()->getSetting( 'id' );
         $help  = $this->getCurrentField()->getSetting( 'help' );
-        $html  = $this->getCurrentField()->getSetting( 'html' );
+        $fieldHtml  = $this->getCurrentField()->getSetting( 'render' );
+        $formHtml = $this->getSetting('render');
 
         $id   = $id ? "id=\"{$id}\"" : '';
         $help = $help ? "<div class=\"help\"><p>{$help}</p></div>" : '';
 
-        if ($html === false) {
+        if ($fieldHtml == 'raw' || $formHtml == 'raw') {
             $html = $field;
         } else {
             $type = strtolower(str_ireplace('\\', '-', get_class($this->getCurrentField())));
