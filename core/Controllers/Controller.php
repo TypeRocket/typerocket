@@ -51,7 +51,7 @@ abstract class Controller
         return $this->valid = true;
     }
 
-    function getResponseArrayByItemId( $item_id, $method )
+    function getResponseArrayByItemId( $item_id, $method = 'GET')
     {
         $method        = strtoupper( $method );
         $this->item_id = $item_id;

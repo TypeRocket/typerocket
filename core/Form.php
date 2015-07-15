@@ -399,6 +399,8 @@ class Form
             $html = "<div class=\"control-section {$type}\" {$id}>{$label}<div class=\"control\">{$field}{$help}</div></div>";
         }
 
+        $html = apply_filters( 'tr_from_field_html', $html, $this );
+
         $this->_e( $html );
         $this->currentField = null;
 
