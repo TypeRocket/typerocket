@@ -274,7 +274,7 @@ class PostType extends Registrable
           array_push($this->use, $use);
         }
 
-        $this->uses( $this->use );
+        $this->uses();
 
         return $this;
     }

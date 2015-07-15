@@ -96,7 +96,7 @@ class Taxonomy extends Registrable
         $this->args = array_merge( $defaults, $settings );
 
         if (isset( $use )) :
-            $this->uses( $use );
+            $this->uses();
             $this->use = $use;
         endif;
 
@@ -112,7 +112,7 @@ class Taxonomy extends Registrable
           array_push($this->use, $use);
         }
 
-        $this->uses( $this->use );
+        $this->uses();
 
         return $this;
     }

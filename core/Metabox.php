@@ -24,7 +24,7 @@ class Metabox extends Registrable
 
     function getId()
     {
-        $this->getId();
+        return $this->id;
     }
 
     /**
@@ -41,7 +41,7 @@ class Metabox extends Registrable
         $this->label = $this->id = $name;
         $this->id    = Sanitize::underscore( $this->id );
         if (empty( $settings['callback'] )) {
-            $settings['callback'] = array( $this, 'meta_content' );
+            $settings['callback'] = array( $this, 'metaContent' );
         }
         if (empty( $settings['label'] )) {
             $settings['label'] = $this->label;
@@ -67,10 +67,13 @@ class Metabox extends Registrable
     function apply( $use )
     {
 
-        if (isset( $use )) :
-            $this->uses( $use );
-            $this->use = $use;
-        endif;
+        if (is_array( $use )) {
+            $this->use = array_merge($this->use, $use);
+        } else {
+            array_push($this->use, $use);
+        }
+
+        $this->uses();
 
         return $this;
     }
