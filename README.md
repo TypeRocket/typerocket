@@ -27,9 +27,9 @@ TypeRocket makes coding advanced WordPress themes a blast. Get custom fields for
 
 Designer? TypeRocket we designed with you in mind. We take care of knowing what WordPress hooks to use so you can with 1 line of code have a post type with a custom icon of your choice. With 1 more and get a metabox. Another and you have a custom taxonomy. Custom fields are just as easy to add.
 
-Developer? TypeRocket takes advantage some cool design patterns. Ripped up documentation and classes. You will also love including extensible fields.
+Developer? TypeRocket takes advantage some cool design patterns. You will also love building custom fields.
 
 Ready to get started?
 ==========
 
-Visit TypeRocket (http://typerocket.com) to get access to the tutorials, videos and documentation.
+Visit TypeRocket (http://typerocket.com) to get access to the tutorials and documentation.
