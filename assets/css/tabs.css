@@ -1,10 +1,14 @@
-#screen-meta.tr-options {
-    display: block !important;
-    margin-top: 20px;
-    border-top: 1px solid #DDD;
+.tr-options {
+    display: block;
+    margin: 20px 20px -1px 0;
+    border: 1px solid #DDD;
+    position: relative;
+    background-color: #fff;
+    -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.025);
+    box-shadow: 0 1px 0 rgba(0,0,0,.025);
 }
 
-.tr-options #contextual-help-back,
+.tr-options .tr-contextual-help-back,
 .tr-options .contextual-help-tabs .active,
 .tr-options .contextual-help-tabs .active a,
 .tr-options .contextual-help-tabs .active a:hover {
@@ -13,8 +17,77 @@
     box-shadow: none;
 }
 
+.tr-options .tr-contextual-help-back {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 150px;
+    right: 170px;
+    border: 1px solid #e1e1e1;
+    border-top: none;
+    border-bottom: none;
+}
+
+.tr-contextual-help-columns {
+    position: relative;
+}
+
 .tr-options .help-tab-content {
     padding-top: 17px;
+}
+
+.tr-options .contextual-help-tabs {
+    float: left;
+    width: 150px;
+    margin: 0;
+}
+
+.tr-options .contextual-help-tabs ul {
+    margin: 1em 0;
+}
+
+.tr-options .contextual-help-tabs li {
+    margin-bottom: 0;
+    list-style-type: none;
+    border-style: solid;
+    border-width: 0 0 0 2px;
+    border-color: transparent;
+}
+
+.tr-options .contextual-help-sidebar {
+    width: 150px;
+    float: right;
+    padding: 0 8px 0 12px;
+    overflow: auto;
+}
+
+.tr-options .contextual-help-tabs-wrap {
+    padding: 0 20px;
+    overflow: auto;
+}
+
+.tr-options .contextual-help-tabs .active {
+    padding: 0;
+    margin: 0 -1px 0 0;
+    border-left: 2px solid #00a0d2;
+    background: #f6fbfd;
+    -webkit-box-shadow: 0 2px 0 rgba(0,0,0,.02),0 1px 0 rgba(0,0,0,.02);
+    box-shadow: 0 2px 0 rgba(0,0,0,.02),0 1px 0 rgba(0,0,0,.02);
+}
+
+.tr-options .contextual-help-tabs .active a {
+    border-color: #e1e1e1;
+    color: #32373c;
+}
+
+.tr-options .contextual-help-tabs a {
+    display: block;
+    padding: 5px 5px 5px 12px;
+    line-height: 18px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-right: none;
+    border-left: none;
 }
 
 .tr-options input[type="submit"] {

@@ -44,18 +44,18 @@ $form->setup();
 
     // layout
     $screen = new TypeRocket\Layout();
-    $screen->set_sidebar($utility->getBuffer('save'));
-    $screen->add_tab( array(
+    $screen->setSidebar($utility->getBuffer('save'));
+    $screen->addTab( array(
       'id' => 'about',
       'title' => 'About',
       'content' => $utility->getBuffer('about')
     ) );
-    $screen->add_tab( array(
+    $screen->addTab( array(
       'id' => 'advanced',
       'title' => 'APIs',
       'content' => $utility->getBuffer('api')
     ) );
-    $screen->make();
+    $screen->render();
     $form->close();
   ?>
 
