@@ -17,7 +17,7 @@ https://typerocket.com/documentation/
 Icons
 ==========
 
-http://icomoon.io/#preview-free licenced under the GPL
+http://icomoon.io/#preview-free licensed under the GPL.
 
 
 What does TypeRocket Do?
