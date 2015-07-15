@@ -3,61 +3,13 @@ if ( !function_exists( 'add_action' ) ) { exit; }
 
 /*
 |--------------------------------------------------------------------------
-| Enhance WordPress
+| Core TypeRocket
 |--------------------------------------------------------------------------
 |
-| Enhance WordPress with a few functions that help clean up the interface
+| Enhance WordPress by starting TypeRocket.
 |
 */
-$tr_enhance = new \TypeRocket\Enhance();
-$tr_enhance->run();
-unset( $tr_enhance_obj );
-
-/*
-|--------------------------------------------------------------------------
-| Load Plugins
-|--------------------------------------------------------------------------
-|
-| Load TypeRocket plugins.
-|
-*/
-if ( \TypeRocket\Config::getPlugins() ) {
-    $tr_plugins_collection = new \TypeRocket\Plugin\PluginCollection();
-    $tr_plugins_in_config = \TypeRocket\Config::getPlugins();
-
-    foreach($tr_plugins_in_config as $plugin) {
-        $tr_plugins_collection->append($plugin);
-    }
-
-	$tr_plugin_loader      = new \TypeRocket\Plugin\Loader( $tr_plugins_collection );
-	$tr_plugin_loader->load();
-	unset( $tr_plugin_loader );
-    unset( $tr_plugins_collection );
-    unset( $tr_plugins_in_config );
-}
-
-/*
-|--------------------------------------------------------------------------
-| Init WordPress Hooks
-|--------------------------------------------------------------------------
-|
-| Add hook into WordPress to give the main functionality needed for
-| TypeRocket to work.
-|
-*/
-$tr_model_post = new TypeRocket\Controllers\PostsController();
-add_action( 'save_post', array( $tr_model_post, 'hook' ), 1999909, 3 );
-unset($tr_model_post);
-
-$tr_model_comment = new TypeRocket\Controllers\CommentsController();
-add_action( 'wp_insert_comment', array( $tr_model_comment, 'hook' ), 1999909, 3 );
-add_action( 'edit_comment', array( $tr_model_comment, 'hook' ), 1999909, 3 );
-unset($tr_model_comment);
-
-$tr_model_user = new TypeRocket\Controllers\UsersController();
-add_action( 'edit_user_profile_update', array( $tr_model_user, 'hook' ), 1999909, 3  );
-add_action( 'personal_options_update', array( $tr_model_user, 'hook' ), 1999909, 3 );
-unset($tr_model_user);
+new \TypeRocket\Core(true);
 
 /*
 |--------------------------------------------------------------------------
@@ -77,7 +29,7 @@ add_action( 'after_setup_theme', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Add Form API
+| Add APIs
 |--------------------------------------------------------------------------
 |
 | Add a url that will allow you to save to forms using an API. This is not
@@ -123,7 +75,8 @@ add_filter( 'template_include', function($template) {
     $load_template = apply_filters('tr_rest_api_template', $load_template);
 
     if($load_template) {
-        $template = __DIR__ . '/api/rest-v1.php';
+        require __DIR__ . '/api/rest-v1.php';
+        exit();
     }
 
     return $template;
@@ -138,7 +91,8 @@ add_filter( 'template_include', function($template) {
     $load_template = apply_filters('tr_matrix_api_template', $load_template);
 
     if($load_template) {
-        $template = __DIR__ . '/api/matrix-v1.php';
+        require __DIR__ . '/api/matrix-v1.php';
+        exit();
     }
 
     return $template;

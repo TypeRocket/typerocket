@@ -168,6 +168,16 @@ class Form
         return $this->settings['render'];
     }
 
+    /**
+     * Render Mode
+     *
+     * By setting render to 'raw' the form will not add any special html wrappers.
+     * You have more control of the design when render is set to raw.
+     *
+     * @param string $value
+     *
+     * @return $this
+     */
     public function setRender( $value )
     {
 
@@ -202,7 +212,7 @@ class Form
         return $this->currentField;
     }
 
-    function setCurrentField( $field )
+    function setCurrentField( Field $field )
     {
 
         $this->currentField = null;

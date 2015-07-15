@@ -13,4 +13,6 @@ if($tr_loaded) {
         new TypeRocket\Api\MatrixApi($matrix_group, $matrix_type, $_GET['form_group']);
     }
 }
-unset($tr_loaded);
+
+status_header(404);
+exit();

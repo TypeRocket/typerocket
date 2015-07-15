@@ -243,9 +243,4 @@ jQuery(document).ready(function ($) {
     }
   };
 
-  $("form.typerocket-rest-form").on("submit", function (e) {
-    e.preventDefault();
-    $.typerocketHttp.send($(this).attr('method'), $(this).attr('rest-api'), $(this).serialize());
-  });
-
 });

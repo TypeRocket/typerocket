@@ -10,7 +10,7 @@ class RestApi {
     public $method;
     public $version;
 
-    function init($resource, $id, $method, $version) {
+    function __construct($resource, $id, $method, $version) {
 
         $this->resource = ucfirst($resource);
         $this->id = $id;
@@ -25,7 +25,7 @@ class RestApi {
 
             if($controller instanceof Controller) {
                 $controller->requestType = 'TypeRocketApi';
-                $data = $controller->handleRest($this->id, $this->method);
+                $data = $controller->getResponseArrayByItemId($this->id, $this->method);
 
                 if ($data == null) {
                     $data = array('api_v' => $this->version);

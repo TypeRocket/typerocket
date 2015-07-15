@@ -41,6 +41,8 @@ class MatrixApi {
             </div>
         </div>
         <?php
+
+        exit();
     }
 
 }
