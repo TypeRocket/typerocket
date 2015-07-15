@@ -36,10 +36,8 @@ class Taxonomy extends Registrable
         $upperSingular = ucwords( $singular );
         $lowerPlural   = strtolower( $plural );
 
-        $this->plural   = $plural;
-        $this->singular = $singular;
-        $this->plural   = Sanitize::underscore( $this->plural );
-        $this->singular = Sanitize::underscore( $this->singular );
+        $this->plural   = Sanitize::underscore( $plural );
+        $this->singular = Sanitize::underscore( $singular );
         $this->id       = ! $this->id ? $this->singular : $this->id;
 
         $labels = array(

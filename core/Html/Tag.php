@@ -97,6 +97,13 @@ class Tag
         return $this;
     }
 
+    public function setAttribute( $attribute, $value )
+    {
+        $this->attributes[$attribute] = $value;
+
+        return $this;
+    }
+
     public function updateAttributes( array $attributes )
     {
         $this->attributes = array_merge( $this->attributes, $attributes );

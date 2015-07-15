@@ -51,7 +51,8 @@ abstract class Field
         return $this;
     }
 
-    public function setForm(Form $form) {
+    public function setForm( Form $form )
+    {
         $this->form = clone $form;
 
         return $this;
@@ -75,8 +76,9 @@ abstract class Field
         return $this;
     }
 
-    public function getGroup() {
-        return  $this->group;
+    public function getGroup()
+    {
+        return $this->group;
     }
 
     public function setSub( $sub )
@@ -92,49 +94,57 @@ abstract class Field
         return $this;
     }
 
-    public function setAttributes( array $attributes) {
+    public function setAttributes( array $attributes )
+    {
         $this->attr = $attributes;
 
         return $this;
     }
 
-    public function setPopulate($populate) {
+    public function setPopulate( $populate )
+    {
         $this->populate = (bool) $populate;
 
         return $this;
     }
 
-    function getPopulate() {
+    function getPopulate()
+    {
         return $this->populate;
     }
 
-    public function setBuiltin($in) {
+    public function setBuiltin( $in )
+    {
         $this->builtin = (bool) $in;
 
         return $this;
     }
 
-    function getBuiltin() {
+    function getBuiltin()
+    {
         return $this->builtin;
     }
 
-    public function setLabel($label) {
+    public function setLabel( $label )
+    {
         $this->label = (bool) $label;
 
         return $this;
     }
 
-    function getLabel() {
+    function getLabel()
+    {
         return $this->label;
     }
 
-    public function getAttributes() {
+    public function getAttributes()
+    {
         return $this->attr;
     }
 
     public function getAttribute( $key )
     {
-        if( ! array_key_exists($key, $this->attr)) {
+        if ( ! array_key_exists( $key, $this->attr )) {
             return null;
         }
 
@@ -143,24 +153,26 @@ abstract class Field
 
     public function setAttribute( $key, $value )
     {
-        $this->attr[ (string) $key] = $value;
+        $this->attr[(string) $key] = $value;
 
         return $this;
     }
 
-    public function removeAttribute($key) {
+    public function removeAttribute( $key )
+    {
 
-        if(array_key_exists($key, $this->attr)) {
-            unset($this->attr[$key]);
+        if (array_key_exists( $key, $this->attr )) {
+            unset( $this->attr[$key] );
         }
 
         return $this;
     }
 
-    public function removeSetting($key) {
+    public function removeSetting( $key )
+    {
 
-        if(array_key_exists($key, $this->settings)) {
-            unset($this->settings[$key]);
+        if (array_key_exists( $key, $this->settings )) {
+            unset( $this->settings[$key] );
         }
 
         return $this;
@@ -180,14 +192,16 @@ abstract class Field
         return $this->item_id;
     }
 
-    public function setType($type) {
+    public function setType( $type )
+    {
 
         $this->type = (string) $type;
 
         return $this;
     }
 
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
@@ -207,7 +221,7 @@ abstract class Field
 
     public function setName( $name )
     {
-        $this->name = Sanitize::underscore($name);
+        $this->name = Sanitize::underscore( $name );
 
         return $this;
     }
@@ -224,22 +238,24 @@ abstract class Field
         return $this;
     }
 
-    public function getSettings() {
+    public function getSettings()
+    {
         return $this->settings;
     }
 
-    public function getSetting($key) {
+    public function getSetting( $key )
+    {
 
-        if( ! array_key_exists($key, $this->settings)) {
+        if ( ! array_key_exists( $key, $this->settings )) {
             return null;
         }
 
         return $this->settings[$key];
     }
 
-    public function getRender( )
+    public function getRender()
     {
-        if( ! array_key_exists('render', $this->settings)) {
+        if ( ! array_key_exists( 'render', $this->settings )) {
             return null;
         }
 
@@ -266,9 +282,10 @@ abstract class Field
         return $this;
     }
 
-    public function appendStringToAttribute($key, $text) {
+    public function appendStringToAttribute( $key, $text )
+    {
 
-        if(array_key_exists($key, $this->attr)) {
+        if (array_key_exists( $key, $this->attr )) {
             $text = $this->attr[$key] . (string) $text;
         }
 
@@ -277,7 +294,8 @@ abstract class Field
         return $this;
     }
 
-    public function getPrefix() {
+    public function getPrefix()
+    {
         return $this->prefix;
     }
 
@@ -306,19 +324,23 @@ abstract class Field
             $attr['class'] .= ' ' . $this->attr['class'];
         }
 
+        $this->attr['class'] = apply_filters( 'tr_field_class_attribute_filter', $this->attr['class'], $this );
+
+        if ( ! $this->attr['class']) {
+            unset( $this->attr['class'] );
+        }
+
         $this->attr = array_merge( $this->attr, $attr );
 
         // setup name for field
         $this->setPrefix( 'tr' )->setName( $name )->setBrackets( $this->getBrackets() );
         $this->attr['name'] = $this->prefix . $this->brackets;
 
-        $this->attr['class'] = apply_filters( 'tr_field_html_class_filter', $this->attr['class'], $this );
-
         if ( ! isset( $settings['label'] )) {
             $this->settings['label'] = $name;
         }
 
-        do_action( 'tr_end_setup_field', $this, $name, $attr, $settings, $label);
+        do_action( 'tr_end_setup_field', $this, $name, $attr, $settings, $label );
 
         return $this;
 

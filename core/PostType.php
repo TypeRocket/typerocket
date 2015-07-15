@@ -183,10 +183,8 @@ class PostType extends Registrable
         );
 
         // setup object for later use
-        $this->plural   = $plural;
-        $this->singular = $singular;
-        $this->plural   = Sanitize::underscore( $this->plural );
-        $this->singular = Sanitize::underscore( $this->singular );
+        $this->plural   = Sanitize::underscore( $plural );
+        $this->singular = Sanitize::underscore( $singular );
         $this->id       = ! $this->id ? $this->singular : $this->id;
 
         // make lowercase
