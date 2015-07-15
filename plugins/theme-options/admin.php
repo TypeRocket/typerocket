@@ -11,7 +11,7 @@ $form = new \TypeRocket\Form();
 $form->setId($this->name);
 $form->setGroup($this->name);
 $form->setAction('update');
-$form->make();
+$form->setup();
 ?>
 
 <div id="tr-dev-content" class="typerocket-container">

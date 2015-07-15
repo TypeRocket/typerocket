@@ -52,13 +52,23 @@ class Sanitize {
     return $default;
   }
 
-  static function underscore( $name, $spacer = '_' )
+  static function underscore( $name )
   {
     if (is_string( $name )) {
       $name        = strtolower( trim( sanitize_title( $name, '' ) ) );
       $pattern     = '/(\-+)/';
-      $replacement = $spacer;
-      $name        = preg_replace( $pattern, $replacement, $name );
+      $name        = preg_replace( $pattern, '_', $name );
+    }
+
+    return $name;
+  }
+
+  static function dash( $name )
+  {
+    if (is_string( $name )) {
+      $name        = strtolower( trim( sanitize_title( $name, '' ) ) );
+      $pattern     = '/(\-+)/';
+      $name        = preg_replace( $pattern, '-', $name );
     }
 
     return $name;

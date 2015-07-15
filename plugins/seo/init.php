@@ -38,8 +38,8 @@ class SeoPlugin
     {
         $publicTypes = get_post_types( array( 'public' => true ) );
         $obj         = new Metabox();
-        $obj->make( 'tr_seo',
-            array( 'label' => 'Search Engine Optimization', 'priority' => 'low', 'callback' => array($this, 'meta') ) )->apply( $publicTypes )->bake();
+        $obj->setup( 'tr_seo',
+            array( 'label' => 'Search Engine Optimization', 'priority' => 'low', 'callback' => array($this, 'meta') ) )->apply( $publicTypes )->register();
     }
 
     // Page Title
@@ -56,7 +56,7 @@ class SeoPlugin
     }
 
     function title_tag() {
-        echo '<title>' . $this->title( '|', false, 'right' ) . "</title>\n";
+        echo '<title>' . $this->title( '|', false, 'right' ) . "</title>";
     }
 
     // head meta data
@@ -203,7 +203,7 @@ class SeoPlugin
         $form = new Form();
         $form->setDebugStatus(false);
         $form->setGroup('[seo][meta]');
-        $form->make();
+        $form->setup();
         $utility->startBuffer();
         $form->text( 'title', array( 'id' => 'tr_title' ), $title )
              ->textarea( 'description', array( 'id' => 'tr_description' ), $desc );

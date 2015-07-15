@@ -4,10 +4,9 @@ namespace TypeRocket;
 abstract class Registrable
 {
 
-    public $use = array();
+    protected $use = array();
     protected $id = null;
-    protected $registered = false;
-
+    protected $args = array();
     protected $reservedNames = array(
         'attachment'                  => true,
         'attachment_id'               => true,
@@ -90,7 +89,7 @@ abstract class Registrable
         'year'                        => true
     );
 
-    public $registrable = array(
+    protected $registrable = array(
         'TypeRocket\Taxonomy' => 'taxonomyRegistrationById',
         'TypeRocket\PostType' => 'postTypeRegistrationById',
         'TypeRocket\Metabox'  => 'metaboxRegistrationById',
@@ -129,6 +128,44 @@ abstract class Registrable
         return $this->id;
     }
 
+    public function setArguments( array $args )
+    {
+        $this->args = $args;
+
+        return $this;
+    }
+
+    public function getArguments()
+    {
+        return $this->args;
+    }
+
+    public function getArgument( $key )
+    {
+        if( ! array_key_exists($key, $this->args)) {
+            return null;
+        }
+
+        return $this->args[$key];
+    }
+
+    public function setArgument( $key, $value )
+    {
+
+        $this->args[$key] = $value;
+
+        return $this;
+    }
+
+    public function removeArgument( $key )
+    {
+        if( array_key_exists($key, $this->args)) {
+            unset($this->args[$key]);
+        }
+
+        return $this;
+    }
+
     protected function dieIfReserved()
     {
         if (array_key_exists( $this->id, $this->reservedNames )) {
@@ -150,15 +187,14 @@ abstract class Registrable
         return $this;
     }
 
-    function reg()
+    function addToRegistry()
     {
         Registry::add( $this );
-        $this->registered = true;
 
         return $this;
     }
 
-    public function bake()
+    public function register()
     {
         return $this;
     }

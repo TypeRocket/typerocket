@@ -17,10 +17,10 @@ class Registry
     {
         foreach (self::$collection as $obj) {
             if ($obj instanceof Taxonomy) {
-                 add_action( 'init', array( $obj, 'bake' ) );
+                add_action( 'init', array( $obj, 'register' ) );
             } elseif ($obj instanceof PostType) {
                 /** @var PostType $obj */
-                add_action( 'init', array( $obj, 'bake' ) );
+                add_action( 'init', array( $obj, 'register' ) );
 
                 if (is_string( $obj->getTitlePlaceholder() )) {
                     add_filter( 'enter_title_here', array( $obj->getTitlePlaceholder(), 'enterTitleHere' ) );
@@ -47,7 +47,7 @@ class Registry
                 }
 
             } elseif ($obj instanceof Metabox) {
-                add_action( 'add_meta_boxes', array( $obj, 'bake' ) );
+                add_action( 'add_meta_boxes', array( $obj, 'register' ) );
             }
         }
     }

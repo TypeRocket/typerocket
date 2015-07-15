@@ -9,11 +9,19 @@ namespace TypeRocket;
 class Taxonomy extends Registrable
 {
 
-    public $singular = null;
-    public $plural = null;
-    public $form = null;
-    public $post_types = array();
-    public $args = array();
+    private $post_types = array();
+
+    public function setSlug( $slug )
+    {
+        $this->args['rewrite'] = array( 'slug' => Sanitize::dash( $slug ) );
+
+        return $this;
+    }
+
+    public function getSlug()
+    {
+        return $this->args['rewrite']['slug'];
+    }
 
     /**
      * Make Taxonomy. Do not use before init.
@@ -24,21 +32,12 @@ class Taxonomy extends Registrable
      *
      * @return $this
      */
-    function make( $singular, $plural, $settings = array() )
+    function setup( $singular, $plural, $settings = array() )
     {
-        $this->form = array(
-            array(
-                'bottom' => null
-            )
-        );
 
         $upperPlural   = ucwords( $plural );
         $upperSingular = ucwords( $singular );
         $lowerPlural   = strtolower( $plural );
-
-        $this->plural   = Sanitize::underscore( $plural );
-        $this->singular = Sanitize::underscore( $singular );
-        $this->id       = ! $this->id ? $this->singular : $this->id;
 
         $labels = array(
             'add_new_item'               => __( 'Add New ' . $upperSingular ),
@@ -66,11 +65,16 @@ class Taxonomy extends Registrable
             $settings['hierarchical'] = false;
         endif;
 
+        // setup object for later use
+        $plural   = Sanitize::underscore( $plural );
+        $singular = Sanitize::underscore( $singular );
+        $this->id = ! $this->id ? $singular : $this->id;
+
         if (array_key_exists( 'capabilities', $settings ) && $settings['capabilities'] === true) :
             $settings['capabilities'] = array(
-                'manage_terms' => 'manage_' . $this->plural,
-                'edit_terms'   => 'manage_' . $this->plural,
-                'delete_terms' => 'manage_' . $this->plural,
+                'manage_terms' => 'manage_' . $plural,
+                'edit_terms'   => 'manage_' . $plural,
+                'delete_terms' => 'manage_' . $plural,
                 'assign_terms' => 'edit_posts',
             );
         endif;
@@ -78,20 +82,15 @@ class Taxonomy extends Registrable
         $defaults = array(
             'labels'            => $labels,
             'show_admin_column' => false,
-            'rewrite'           => array( 'slug' => $this->singular ),
+            'rewrite'           => array( 'slug' => Sanitize::dash( $this->id ) ),
         );
 
         $this->args = array_merge( $defaults, $settings );
 
-        if (isset( $use )) :
-            $this->uses();
-            $this->use = $use;
-        endif;
-
         return $this;
     }
 
-    function bake()
+    function register()
     {
         $this->dieIfReserved();
 

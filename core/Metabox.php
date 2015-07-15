@@ -4,9 +4,8 @@ namespace TypeRocket;
 class Metabox extends Registrable
 {
 
-    public $label = null;
-    public $post_types = array();
-    public $args = array();
+    private $label = null;
+    private $post_types = array();
 
     /**
      * Make Meta Box
@@ -16,7 +15,7 @@ class Metabox extends Registrable
      *
      * @return $this
      */
-    function make( $name, $settings = array() )
+    function setup( $name, $settings = array() )
     {
 
         $this->label = $this->id = $name;
@@ -78,7 +77,7 @@ class Metabox extends Registrable
         $this->postTypeRegistrationById( $v );
     }
 
-    function bake()
+    function register()
     {
 
         global $post, $comment;

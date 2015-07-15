@@ -4,12 +4,9 @@ namespace TypeRocket;
 class PostType extends Registrable
 {
 
-    public $singular = null;
-    public $plural = null;
     private $title = null;
     private $form = null;
-    public $taxonomies = array();
-    public $args = array();
+    private $taxonomies = array();
     private $icon = null;
 
     function setIcon( $name )
@@ -147,6 +144,18 @@ class PostType extends Registrable
         return $this;
     }
 
+    public function setSlug( $slug )
+    {
+        $this->args['rewrite'] = array( 'slug' => Sanitize::dash( $slug ) );
+
+        return $this;
+    }
+
+    public function getSlug()
+    {
+        return $this->args['rewrite']['slug'];
+    }
+
     public function style()
     { ?>
 
@@ -170,7 +179,7 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    function make( $singular, $plural, $settings = array() )
+    function setup( $singular, $plural, $settings = array() )
     {
 
         $this->form = array(
@@ -181,11 +190,6 @@ class PostType extends Registrable
                 'bottom' => null
             )
         );
-
-        // setup object for later use
-        $this->plural   = Sanitize::underscore( $plural );
-        $this->singular = Sanitize::underscore( $singular );
-        $this->id       = ! $this->id ? $this->singular : $this->id;
 
         // make lowercase
         $singular      = strtolower( $singular );
@@ -208,24 +212,29 @@ class PostType extends Registrable
             'view_item'          => 'View ' . $upperSingular,
         );
 
+        // setup object for later use
+        $plural   = Sanitize::underscore( $plural );
+        $singular = Sanitize::underscore( $singular );
+        $this->id       = ! $this->id ? $singular : $this->id;
+
         if (array_key_exists( 'capabilities', $settings ) && $settings['capabilities'] === true) :
             $settings['capabilities'] = array(
-                'publish_posts'       => 'publish_' . $this->plural,
-                'edit_post'           => 'edit_' . $this->singular,
-                'edit_posts'          => 'edit_' . $this->plural,
-                'edit_others_posts'   => 'edit_others_' . $this->plural,
-                'delete_post'         => 'delete_' . $this->singular,
-                'delete_posts'        => 'delete_' . $this->plural,
-                'delete_others_posts' => 'delete_others_' . $this->plural,
-                'read_post'           => 'read_' . $this->singular,
-                'read_private_posts'  => 'read_private_' . $this->plural,
+                'publish_posts'       => 'publish_' . $plural,
+                'edit_post'           => 'edit_' . $singular,
+                'edit_posts'          => 'edit_' . $plural,
+                'edit_others_posts'   => 'edit_others_' . $plural,
+                'delete_post'         => 'delete_' . $singular,
+                'delete_posts'        => 'delete_' . $plural,
+                'delete_others_posts' => 'delete_others_' . $plural,
+                'read_post'           => 'read_' . $singular,
+                'read_private_posts'  => 'read_private_' . $plural,
             );
         endif;
 
         $defaults = array(
             'labels'      => $labels,
             'description' => $plural,
-            'rewrite'     => array( 'slug' => $this->plural ),
+            'rewrite'     => array( 'slug' => Sanitize::dash( $this->id ) ),
             'public'      => true,
             'supports'    => array( 'title', 'editor' ),
             'has_archive' => true,
@@ -253,7 +262,7 @@ class PostType extends Registrable
         return $this;
     }
 
-    function bake()
+    function register()
     {
         $this->dieIfReserved();
 

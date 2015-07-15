@@ -35,7 +35,7 @@ class Form
     {
     }
 
-    public function make( $controller = 'auto', $action = 'update', $item_id = null )
+    public function setup( $controller = 'auto', $action = 'update', $item_id = null )
     {
 
         $this->setController( $controller );
@@ -159,6 +159,15 @@ class Form
         return $this;
     }
 
+    public function removeSetting( $key )
+    {
+        if( array_key_exists($key, $this->settings)) {
+            unset($this->settings[$key]);
+        }
+
+        return $this;
+    }
+
     public function getRender( )
     {
         if( ! array_key_exists('render', $this->settings)) {
@@ -182,15 +191,6 @@ class Form
     {
 
         $this->settings['render'] = $value;
-
-        return $this;
-    }
-
-    public function removeSetting( $key )
-    {
-        if( array_key_exists($key, $this->settings)) {
-            unset($this->settings[$key]);
-        }
 
         return $this;
     }
@@ -458,7 +458,7 @@ class Form
     {
         $field = new Fields\Text();
         $field->setupByForm( $this )->setup( $name, $attr, $settings, $label );
-        $field->setType( 'hidden' )->setAttribute( 'html', false );
+        $field->setType( 'hidden' )->setSetting( 'render', 'raw' );
         $this->renderField( $field );
 
         return $this;

@@ -6,7 +6,7 @@ function tr_taxonomy(
 	$use = array()
 ) {
 	$obj = new \TypeRocket\Taxonomy();
-	$obj->make( $singular, $plural, $settings )->apply( $use )->reg();
+	$obj->setup( $singular, $plural, $settings )->apply( $use )->addToRegistry();
 
 	return $obj;
 }
@@ -18,7 +18,7 @@ function tr_post_type(
 	$use = array()
 ) {
 	$obj = new \TypeRocket\PostType();
-	$obj->make( $singular, $plural, $settings )->apply( $use )->reg();
+	$obj->setup( $singular, $plural, $settings )->apply( $use )->addToRegistry();
 
 	return $obj;
 }
@@ -29,14 +29,14 @@ function tr_meta_box(
 	$use = array()
 ) {
 	$obj = new \TypeRocket\Metabox();
-	$obj->make( $name, $settings )->apply( $use )->reg();
+	$obj->setup( $name, $settings )->apply( $use )->addToRegistry();
 
 	return $obj;
 }
 
 function tr_form() {
 	$obj = new \TypeRocket\Form();
-	$obj->make();
+	$obj->setup();
 	return $obj;
 }
 

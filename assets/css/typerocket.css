@@ -13,15 +13,15 @@
 
 .typerocket-rest-alert {
     position: fixed;
-    top: 0;
+    top: 32px;
     left: 0;
     z-index: 100000;
     padding: 20px 20px;
     line-height: 1.4em;
     width: 100%;
     text-align: center;
-    background: green;
-    color: #fff;
+    background: #dff0d8;
+    color: #468847;
 }
 
 .tr-dev-alert-helper {
@@ -45,7 +45,8 @@
     padding-top: 14px;
 }
 
-.typerocket-container .control-section + .control-section:after {
+.postbox-container .typerocket-container .control-section + .control-section:after,
+.repeater-inputs .control-section + .control-section:after {
     content: '';
     display: block;
     width: 100%;
@@ -129,7 +130,11 @@
     margin-top: -4px;
 }
 
-
+.typerocket-container .repeater-inputs .control-label,
+.postbox-container .typerocket-container .control-label {
+    font-size: 12px;
+    margin-bottom: 6px;
+}
 
 .typerocket-container input[type="text"],
 .typerocket-container input[type="email"],
@@ -458,7 +463,7 @@
 
 .typerocket-container .control-section .dev:hover > i,
 .typerocket-container .tr-repeater-group .control-section .dev:hover > i {
-    color: #219b3b;
+    color: #68823e;
 }
 
 .typerocket-container .control-section:hover .dev .nav,
@@ -487,7 +492,7 @@
 }
 
 .typerocket-container .dev:hover .nav .field {
-    color: #21759B;
+    color: #0073aa;
 }
 
 .typerocket-container .dev .nav .field {
@@ -543,38 +548,6 @@
     content: "\f333";
 }
 
-#poststuff .control-division h2,
-.control-division h2 {
-    color: #0074a2;
-    margin-top: 30px;
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 0;
-    padding: 0;
-}
-
-#poststuff .control-division h2:only-child,
-.control-division h2:only-child {
-    margin-bottom: 15px;
-}
-
-.control-division:first-child h2 {
-    margin-top: 0;
-}
-
-#poststuff .repeater-inputs .control-division:first-child h2,
-.repeater-inputs .control-division:first-child h2,
-.control-division h2 {
-    margin-top: 0;
-}
-
-.control-division p {
-    color: #222;
-    font-weight: normal;
-    margin: 0 0 15px;
-    padding: 0;
-}
-
 /* matrix */
 .matrix-controls {
     margin-bottom: 20px;
@@ -605,7 +578,7 @@
 }
 
 .tr-maxlength span {
-    color: #0074a2;
+    color: #0073aa;
     font-weight: bold;
 }
 
