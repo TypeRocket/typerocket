@@ -9,18 +9,15 @@ use \TypeRocket\Form as Form,
 abstract class Field
 {
 
-    // Element attributes
     private $name = null;
     private $type = null;
     private $attr = array();
 
-    // form settings
     private $item_id = null;
     private $controller = null;
     /** @var Form */
     private $form = null;
 
-    // used to build the attribute name
     private $prefix = null;
     private $group = null;
     private $sub = null;
@@ -39,6 +36,13 @@ abstract class Field
     {
     }
 
+    /**
+     * Setup to use with a Form.
+     *
+     * @param Form $form
+     *
+     * @return $this
+     */
     public function setupByForm( Form $form )
     {
         $this->setGroup( $form->getGroup() );
@@ -51,6 +55,14 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Set the From for the field not as a reference. From is
+     * cloned to help eliminate errors.
+     *
+     * @param Form $form
+     *
+     * @return $this
+     */
     public function setForm( Form $form )
     {
         $this->form = clone $form;
@@ -58,6 +70,9 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * @return Form
+     */
     public function getForm()
     {
         return $this->form;
@@ -67,9 +82,9 @@ abstract class Field
     {
         $this->sub = null;
 
-        if (Validate::bracket( $group )) {
+        if ( Validate::bracket( $group ) ) {
             $this->group = $group;
-        } elseif (is_string( $group )) {
+        } elseif ( is_string( $group ) ) {
             $this->group = "[{$group}]";
         }
 
@@ -85,9 +100,9 @@ abstract class Field
     {
         $this->sub = null;
 
-        if (Validate::bracket( $sub )) {
+        if ( Validate::bracket( $sub ) ) {
             $this->sub = $sub;
-        } elseif (is_string( $sub )) {
+        } elseif ( is_string( $sub ) ) {
             $this->sub = "[{$sub}]";
         }
 
@@ -142,18 +157,24 @@ abstract class Field
         return $this->attr;
     }
 
-    public function getAttribute( $key )
+    /**
+     * @param string $key
+     * @param null $default
+     *
+     * @return null
+     */
+    public function getAttribute( $key, $default = null )
     {
-        if ( ! array_key_exists( $key, $this->attr )) {
-            return null;
+        if ( ! array_key_exists( $key, $this->attr ) ) {
+            return $default;
         }
 
-        return $this->attr[$key];
+        return $this->attr[ $key ];
     }
 
     public function setAttribute( $key, $value )
     {
-        $this->attr[(string) $key] = $value;
+        $this->attr[ (string) $key ] = $value;
 
         return $this;
     }
@@ -161,8 +182,8 @@ abstract class Field
     public function removeAttribute( $key )
     {
 
-        if (array_key_exists( $key, $this->attr )) {
-            unset( $this->attr[$key] );
+        if ( array_key_exists( $key, $this->attr ) ) {
+            unset( $this->attr[ $key ] );
         }
 
         return $this;
@@ -171,8 +192,8 @@ abstract class Field
     public function removeSetting( $key )
     {
 
-        if (array_key_exists( $key, $this->settings )) {
-            unset( $this->settings[$key] );
+        if ( array_key_exists( $key, $this->settings ) ) {
+            unset( $this->settings[ $key ] );
         }
 
         return $this;
@@ -180,7 +201,7 @@ abstract class Field
 
     public function setItemId( $item_id )
     {
-        if (isset( $item_id )) {
+        if ( isset( $item_id ) ) {
             $this->item_id = (int) $item_id;
         }
 
@@ -207,7 +228,7 @@ abstract class Field
 
     public function setController( $controller )
     {
-        if (isset( $controller )) {
+        if ( isset( $controller ) ) {
             $this->controller = $controller;
         }
 
@@ -219,6 +240,14 @@ abstract class Field
         return $this->controller;
     }
 
+
+    /**
+     * Set name of field. Not the same as the html name attribute.
+     *
+     * @param string $name
+     *
+     * @return $this
+     */
     public function setName( $name )
     {
         $this->name = Sanitize::underscore( $name );
@@ -226,6 +255,11 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Get name of field. Not the same as the html name attribute.
+     *
+     * @return null|string
+     */
     public function getName()
     {
         return $this->name;
@@ -233,7 +267,7 @@ abstract class Field
 
     public function setSetting( $key, $value )
     {
-        $this->settings[$key] = $value;
+        $this->settings[ $key ] = $value;
 
         return $this;
     }
@@ -254,16 +288,16 @@ abstract class Field
     public function getSetting( $key, $default = null )
     {
 
-        if ( ! array_key_exists( $key, $this->settings )) {
+        if ( ! array_key_exists( $key, $this->settings ) ) {
             return $default;
         }
 
-        return $this->settings[$key];
+        return $this->settings[ $key ];
     }
 
     public function getRender()
     {
-        if ( ! array_key_exists( 'render', $this->settings )) {
+        if ( ! array_key_exists( 'render', $this->settings ) ) {
             return null;
         }
 
@@ -278,26 +312,43 @@ abstract class Field
         return $this;
     }
 
-    public function setPrefix( $prefix )
+    /**
+     * Set the prefix that goes before the brackets when setting
+     * the initial name attribute.
+     *
+     * @param string $prefix set to tr by default
+     *
+     * @return $this
+     */
+    public function setPrefix( $prefix = 'tr' )
     {
 
         $this->prefix = (string) $prefix;
 
-        if ($this->builtin == true) {
+        if ( $this->builtin == true ) {
             $this->prefix = '_tr_builtin_data';
         }
 
         return $this;
     }
 
-    public function appendStringToAttribute( $key, $text )
+    /**
+     * Append a string to an attribute
+     *
+     * @param string $key the attribute if set
+     * @param string $text the string to append
+     * @param string $separator separate stings by this
+     *
+     * @return $this
+     */
+    public function appendStringToAttribute( $key, $text, $separator = ' ' )
     {
 
-        if (array_key_exists( $key, $this->attr )) {
-            $text = $this->attr[$key] . (string) $text;
+        if ( array_key_exists( $key, $this->attr ) ) {
+            $text = $this->attr[ $key ] . $separator . (string) $text;
         }
 
-        $this->attr[$key] = $text;
+        $this->attr[ $key ] = $text;
 
         return $this;
     }
@@ -308,11 +359,33 @@ abstract class Field
     }
 
     /**
-     * @param $name
-     * @param array $attr
-     * @param array $settings
+     * Generate the string needed for the html name attribute. This
+     * does not set the name attribute.
      *
-     * @param bool $label
+     * @return string
+     */
+    public function generateNameAttributeString()
+    {
+
+        if ( empty( $this->prefix ) ) {
+            $this->setPrefix();
+        }
+
+        if ( empty( $this->brackets ) ) {
+            $this->setBrackets( $this->getBrackets() );
+        }
+
+        return $this->prefix . $this->brackets;
+    }
+
+    /**
+     * Setup the field
+     *
+     * @param string $name the name of the field
+     * @param array $attr attributes of the html element
+     * @param array $settings settings for the field
+     *
+     * @param bool $label show the label
      *
      * @return $this
      */
@@ -324,27 +397,25 @@ abstract class Field
         $this->settings = $settings;
         $this->label    = $label;
 
-        if (isset( $settings['builtin'] ) && $settings['builtin'] == true) {
+        if ( isset( $settings['builtin'] ) && $settings['builtin'] == true ) {
             $this->builtin = true;
         }
 
-        if (array_key_exists( 'class', $attr )) {
+        if ( array_key_exists( 'class', $attr ) ) {
             $attr['class'] .= ' ' . $this->attr['class'];
         }
 
         $this->attr['class'] = apply_filters( 'tr_field_class_attribute_filter', $this->attr['class'], $this );
 
-        if ( ! $this->attr['class']) {
+        if ( ! $this->attr['class'] ) {
             unset( $this->attr['class'] );
         }
 
         $this->attr = array_merge( $this->attr, $attr );
+        $this->setName( $name );
+        $this->attr['name'] = $this->generateNameAttributeString();
 
-        // setup name for field
-        $this->setPrefix( 'tr' )->setName( $name )->setBrackets( $this->getBrackets() );
-        $this->attr['name'] = $this->prefix . $this->brackets;
-
-        if ( ! isset( $settings['label'] )) {
+        if ( ! isset( $settings['label'] ) ) {
             $this->settings['label'] = $name;
         }
 
@@ -354,10 +425,16 @@ abstract class Field
 
     }
 
+
+    /**
+     * Get the value from the database
+     *
+     * @return null|string return the fields value
+     */
     public function getValue()
     {
 
-        if ($this->populate == false) {
+        if ( $this->populate == false ) {
             return null;
         }
 
@@ -366,18 +443,41 @@ abstract class Field
         return $getter->getFromField( $this );
     }
 
+
+    /**
+     * Get bracket syntax used to name the input and get the
+     * value from the database using the GetValue class.
+     *
+     * @return string format [group][name][sub]
+     */
     public function getBrackets()
     {
         return "{$this->group}[{$this->name}]{$this->sub}";
     }
 
+
+    /**
+     * Set the brackets
+     *
+     * @param string $brackets format [group][name][sub]
+     *
+     * @return $this
+     */
     public function setBrackets( $brackets )
     {
-        $this->brackets = $brackets;
+        if ( Validate::bracket( $brackets ) ) {
+            $this->brackets = $brackets;
+        }
 
         return $this;
     }
 
+
+    /**
+     * Configure in all concrete Field classes
+     *
+     * @return string
+     */
     public function getString()
     {
         return '';
