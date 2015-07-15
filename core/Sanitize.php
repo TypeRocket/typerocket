@@ -20,7 +20,7 @@ class Sanitize
     }
 
     /**
-     * Sanitize a textarea input field. Removes bad html like <script> and <html>.
+     * Sanitize text as plaintext.
      *
      * @param $input
      *
