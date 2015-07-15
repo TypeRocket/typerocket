@@ -1,5 +1,4 @@
-TypeRocket 2.0
-==========
+## TypeRocket 2.0
 
 TypeRocket is created to make building WordPress themes a pleasure and designed to work with WordPress 4.0+ and PHP 5.3+.
 
@@ -9,19 +8,16 @@ Happy coding!
 
 http://typerocket.com
 
-Documentation
-==========
+### Documentation
 
 https://typerocket.com/documentation/
 
-Icons
-==========
+### Icons
 
 http://icomoon.io/#preview-free licensed under the GPL.
 
 
-What does TypeRocket Do?
-==========
+### What does TypeRocket Do?
 
 TypeRocket makes coding advanced WordPress themes a blast. Get custom fields for post types, taxonomies, comments, option pages, user profiles and even on the front-end inside theme template files. You can access a number of pre-made TypeRocket plugins for features like SEO and Theme Options installed directly into your theme.
 
@@ -29,20 +25,22 @@ Designer? TypeRocket we designed with you in mind. We take care of knowing what 
 
 Developer? TypeRocket takes advantage some cool design patterns. You will also love building custom fields.
 
-Ready to get started?
-==========
+### Ready to get started?
 
 Visit TypeRocket (http://typerocket.com) to get access to the tutorials and documentation.
 
-Example
-==========
+### Example
+
+Gracefully configure WordPress without needing hooks.
 
 ```php
-
 // In your themes functions.php
 include( 'typerocket/init.php' );
 
-// Add a post type with icon gracefully without hooks
-tr_post_type('Book', 'Books')->setIcon('book');
+// Add taxonomy with custom name gracefully
+$bookAuthor = tr_taxonomy('Author', 'Authors')->setId('book_author');
+
+// Add post type with icon and taxonomy gracefully
+tr_post_type('Book', 'Books')->setIcon('book')->apply($bookAuthor);
 
 ```

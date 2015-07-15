@@ -12,7 +12,7 @@ class Taxonomy extends Registrable
     private $id = null;
     public $singular = null;
     public $plural = null;
-    public $use = null;
+    public $use = array();
     public $form = null;
     public $post_types = array();
     public $args = array();
@@ -106,10 +106,13 @@ class Taxonomy extends Registrable
     function apply( $use )
     {
 
-        if (isset( $use )) :
-            $this->uses( $use );
-            $this->use = $use;
-        endif;
+        if (is_array( $use )) {
+          $this->use = array_merge($this->use, $use);
+        } else {
+          array_push($this->use, $use);
+        }
+
+        $this->uses( $this->use );
 
         return $this;
     }

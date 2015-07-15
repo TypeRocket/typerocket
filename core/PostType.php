@@ -9,7 +9,7 @@ class PostType extends Registrable
     public $plural = null;
     private $title = null;
     private $form = null;
-    public $use = null;
+    public $use = array();
     public $taxonomies = array();
     public $args = array();
     private $icon = null;
@@ -268,10 +268,13 @@ class PostType extends Registrable
     function apply( $use )
     {
 
-        if (isset( $use )) :
-            $this->uses( $use );
-            $this->use = $use;
-        endif;
+        if (is_array( $use )) {
+          $this->use = array_merge($this->use, $use);
+        } else {
+          array_push($this->use, $use);
+        }
+
+        $this->uses( $this->use );
 
         return $this;
     }

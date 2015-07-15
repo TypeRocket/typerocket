@@ -4,6 +4,8 @@ namespace TypeRocket;
 abstract class Registrable
 {
 
+    public $use = array();
+
     protected $reservedNames = array(
         'attachment'                  => true,
         'attachment_id'               => true,
@@ -121,26 +123,21 @@ abstract class Registrable
     {
     }
 
-    protected function uses( $use )
+    protected function uses()
     {
-
-        if (isset( $use ) && ! is_array( $use )) {
-            $use = array( $use );
-        }
-
         $current_class = get_class( $this );
-        foreach ($use as $v) {
-            if (is_object( $v )) {
-                $class  = get_class( $v );
+        foreach ($this->use as $obj) {
+            if ( $obj instanceof Registrable) {
+                $class  = get_class( $obj );
                 $method = $this->registrable[$class];
                 if (method_exists( $this, $method )) {
-                    $this->$method( $v );
+                    $this->$method( $obj );
                 } else {
                     die( 'TypeRocket: You are passing the unsupported object ' . $class . ' into ' . $current_class . '.' );
                 }
             } else {
                 if (method_exists( $this, 'trUses' )) {
-                    $this->trUses( $v );
+                    $this->trUses( $obj );
                 }
             }
         }
