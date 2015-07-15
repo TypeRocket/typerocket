@@ -60,6 +60,8 @@ class GetValue
 
     private function controllerSwitch( $the_field, $item_id, $controller, $builtin )
     {
+        $data = null;
+
         switch ($controller) {
             case 'posts' :
                 if ($builtin == true) {
@@ -83,7 +85,12 @@ class GetValue
                 break;
             default :
                 $func = 'tr_get_data_' . $controller;
-                $data = call_user_func( $func, $controller, $item_id, $the_field );
+                if(function_exists($func)) {
+                    $data = call_user_func( $func, $controller, $item_id, $the_field );
+                } else {
+                    echo('TypeRocket: Create a custom controller <code>function '. $func . '($controller, $item_id, $the_field) { return $data; }</code>');
+                    exit();
+                }
                 break;
         }
 

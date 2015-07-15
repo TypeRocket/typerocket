@@ -246,6 +246,8 @@ class Form
             $this->setItemId( $item_id );
             $this->setController( $controller );
         }
+
+        return $this;
     }
 
     private function _e( $v )
