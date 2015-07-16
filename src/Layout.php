@@ -135,14 +135,14 @@ class Layout
      *
      * @return $this
      */
-    public function render( $style = 'default' )
+    public function render( $style = null )
     {
         switch ($style) {
-            case 'default' :
-                $this->contentStyleTabs();
+            case 'boxed' :
+                $this->leftBoxedStyleTabs();
                 break;
-            case 'meta' :
-                $this->metaboxStyleTabs();
+            default :
+                $this->topStyleTabs();
                 break;
         }
 
@@ -150,7 +150,7 @@ class Layout
 
     }
 
-    private function metaboxStyleTabs()
+    private function topStyleTabs()
     {
         // Default help only if there is no old-style block of text and no new-style help tabs.
         $help_sidebar = $this->getSidebar();
@@ -158,7 +158,7 @@ class Layout
         // Time to render!
         ?>
 
-        <div class="tabbed">
+        <div class="tr-tabbed-top">
             <div class="tabbed-sections">
                 <ul class="tr-tabs alignleft">
                     <?php
@@ -213,7 +213,7 @@ class Layout
         <?php
     }
 
-    private function contentStyleTabs()
+    private function leftBoxedStyleTabs()
     {
         // Default help only if there is no old-style block of text and no new-style help tabs.
         $help_sidebar = $this->getSidebar();
@@ -225,7 +225,7 @@ class Layout
 
         // Time to render!
         ?>
-        <div class="tr-options metabox-prefs">
+        <div class="tr-tabbed-box metabox-prefs">
 
             <div class="tr-contextual-help-wrap <?php echo esc_attr( $help_class ); ?> cf">
                 <div class="tr-contextual-help-back"></div>

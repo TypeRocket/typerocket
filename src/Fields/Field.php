@@ -29,6 +29,8 @@ abstract class Field
     private $populate = true;
 
     /**
+     * When instancing a Field use reflection to connect the Form
+     *
      * @param string $name the name of the field
      * @param array $attr the html attributes
      * @param array $settings the settings of the field

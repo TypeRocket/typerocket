@@ -56,7 +56,7 @@ $form->setup();
       'title' => 'APIs',
       'content' => $utility->getBuffer('api')
     ) );
-    $tabs->render();
+    $tabs->render('boxed');
     $form->close();
   ?>
 

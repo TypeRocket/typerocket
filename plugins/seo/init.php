@@ -243,7 +243,7 @@ class SeoPlugin
                  'title'   => "Advanced",
                  'content' => $utility->getBuffer( 'advanced' )
              ) )
-             ->render( 'meta' );
+             ->render();
 
         echo '</div>';
 

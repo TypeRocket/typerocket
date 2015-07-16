@@ -180,6 +180,13 @@ abstract class Registrable
 
         $args = func_get_args();
 
+        foreach($args as $key => $arg) {
+            if(is_array($arg)) {
+                $this->use = array_merge( $this->use, $arg );
+                unset($args[$key]);
+            }
+        }
+
         if ( ! empty($args) && is_array( $args ) ) {
             $this->use = array_merge( $this->use, $args );
         }
