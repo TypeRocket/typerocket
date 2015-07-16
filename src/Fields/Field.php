@@ -415,7 +415,7 @@ abstract class Field
         $this->setName( $name );
         $this->attr['name'] = $this->generateNameAttributeString();
 
-        if ( ! isset( $settings['label'] ) ) {
+        if ( ! empty( $settings['label'] ) ) {
             $this->settings['label'] = $name;
         }
 
