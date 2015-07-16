@@ -173,13 +173,20 @@ abstract class Registrable
         }
     }
 
+    /**
+     * Use other Registrable objects or string IDs
+     *
+     * @param string|PostType|Taxonomy|Metabox $use variadic
+     *
+     * @return $this
+     */
     function apply( $use )
     {
 
-        if (is_array( $use )) {
-            $this->use = array_merge( $this->use, $use );
-        } else {
-            $this->use[] = $use;
+        $args = func_get_args();
+
+        if ( ! empty($args) && is_array( $args ) ) {
+            $this->use = array_merge( $this->use, $args );
         }
 
         $this->uses();
