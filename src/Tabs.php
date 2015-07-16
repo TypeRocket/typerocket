@@ -43,16 +43,32 @@ class Tabs
      *
      * @since 3.3.0
      *
-     * @param array $args
+     * @param array|string $settings
      * - string   - title    - Title for the tab.
      * - string   - id       - Tab ID. Must be HTML-safe.
      * - string   - content  - Help tab content in plain text or HTML. Optional.
      * - callback - callback - A callback to generate the tab content. Optional.
      *
+     * @param array $content the content if settings is not an array
+     *
      * @return $this
      */
-    public function addTab( $args )
+    public function addTab( $settings, $content = null )
     {
+
+        if( ! is_array($settings)) {
+            $args = func_get_args();
+            $settings = array();
+            $settings['id'] = Sanitize::underscore($args[0]);
+            $settings['title'] = $args[0];
+            $settings['content'] = $args[1];
+        }
+
+        $this->addTabFromArray($settings);
+        return $this;
+    }
+
+    private function addTabFromArray($settings) {
         $defaults = array(
             'title'    => false,
             'id'       => false,
@@ -60,18 +76,18 @@ class Tabs
             'callback' => false,
             'url'      => false
         );
-        $args     = wp_parse_args( $args, $defaults );
+        $settings     = wp_parse_args( $settings, $defaults );
 
-        $args['id'] = sanitize_html_class( $args['id'] );
+        $settings['id'] = sanitize_html_class( $settings['id'] );
 
         // Ensure we have an ID and title.
-        if ( ! $args['id'] || ! $args['title']) {
+        if ( ! $settings['id'] || ! $settings['title']) {
             echo "TypeRocket: Tab needs ID and Title";
             die();
         }
 
         // Allows for overriding an existing tab with that ID.
-        $this->_tabs[$args['id']] = $args;
+        $this->_tabs[$settings['id']] = $settings;
 
         return $this;
     }
@@ -82,10 +98,14 @@ class Tabs
      * @since 3.3.0
      *
      * @param string $id The help tab ID.
+     *
+     * @return $this
      */
     public function removeTab( $id )
     {
         unset( $this->_tabs[$id] );
+
+        return $this;
     }
 
     /**
@@ -96,6 +116,8 @@ class Tabs
     public function removeTabs()
     {
         $this->_tabs = array();
+
+        return $this;
     }
 
     /**
@@ -118,10 +140,14 @@ class Tabs
      * @since 3.3.0
      *
      * @param string $content Sidebar content in plain text or HTML.
+     *
+     * @return $this
      */
     public function setSidebar( $content )
     {
         $this->_sidebar = $content;
+
+        return $this;
     }
 
     /**
