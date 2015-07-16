@@ -24,6 +24,18 @@ class Taxonomy extends Registrable
     }
 
     /**
+     * Convert word singular to plural
+     *
+     * @param $singular
+     *
+     * @return string|void
+     */
+    public function singularToPlural($singular)
+    {
+        return apply_filters('tr_singular_to_plural', $singular . 's');
+    }
+
+    /**
      * Make Taxonomy. Do not use before init.
      *
      * @param string $singular singular name is required
@@ -32,8 +44,12 @@ class Taxonomy extends Registrable
      *
      * @return $this
      */
-    function setup( $singular, $plural, $settings = array() )
+    function setup( $singular, $plural = null, $settings = array() )
     {
+
+        if(is_null($plural)) {
+            $plural = $this->singularToPlural($singular);
+        }
 
         $upperPlural   = ucwords( $plural );
         $upperSingular = ucwords( $singular );

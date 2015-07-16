@@ -171,6 +171,18 @@ class PostType extends Registrable
     <?php }
 
     /**
+     * Convert word singular to plural
+     *
+     * @param $singular
+     *
+     * @return string|void
+     */
+    public function singularToPlural($singular)
+    {
+        return apply_filters('tr_singular_to_plural', $singular . 's');
+    }
+
+    /**
      * Make Post Type. Do not use before init.
      *
      * @param string $singular singular name is required
@@ -179,7 +191,7 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    function setup( $singular, $plural, $settings = array() )
+    function setup( $singular, $plural = null, $settings = array() )
     {
 
         $this->form = array(
@@ -190,6 +202,10 @@ class PostType extends Registrable
                 'bottom' => null
             )
         );
+
+        if(is_null($plural)) {
+            $plural = $this->singularToPlural($singular);
+        }
 
         // make lowercase
         $singular      = strtolower( $singular );

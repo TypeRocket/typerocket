@@ -405,7 +405,7 @@ abstract class Field
      *
      * @return string
      */
-    public function generateNameAttributeString()
+    public function getNameAttributeString()
     {
 
         if (empty( $this->prefix )) {
@@ -454,7 +454,7 @@ abstract class Field
 
         $this->attr = array_merge( $this->attr, $attr );
         $this->setName( $name );
-        $this->attr['name'] = $this->generateNameAttributeString();
+        $this->attr['name'] = $this->getNameAttributeString();
 
         if (empty( $settings['label'] )) {
             $this->settings['label'] = $name;

@@ -1,7 +1,7 @@
 <?php
 function tr_taxonomy(
     $singular,
-    $plural,
+    $plural = null,
     $settings = array()
 ) {
     $obj = new \TypeRocket\Taxonomy();
@@ -22,7 +22,7 @@ function tr_buffer()
 
 function tr_post_type(
     $singular,
-    $plural,
+    $plural = null,
     $settings = array()
 ) {
     $obj = new \TypeRocket\PostType();
