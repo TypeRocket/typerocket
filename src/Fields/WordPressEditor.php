@@ -3,20 +3,22 @@ namespace TypeRocket\Fields;
 
 use \TypeRocket\Sanitize as Sanitize;
 
-class WordPressEditor extends Field implements FieldOptions
+class WordPressEditor extends Field implements FieldScript
 {
 
-    private $options = array();
-
-    function __construct()
+    public function init()
     {
+        $this->setType( 'wp_editor' );
+    }
+
+    public function enqueueScripts() {
         wp_enqueue_media();
     }
 
-    function getString()
+    public function getString()
     {
         $value    = Sanitize::editor( $this->getValue() );
-        $settings = $this->options;
+        $settings = $this->getSetting('options', array());
 
         $override = array(
             'textarea_name' => $this->getAttribute('name')
@@ -37,41 +39,4 @@ class WordPressEditor extends Field implements FieldOptions
         return $html;
     }
 
-
-    public function setOption( $key, $value )
-    {
-        $this->options[ $key ] = $value;
-
-        return $this;
-    }
-
-    public function setOptions( $options )
-    {
-        $this->options = $options;
-
-        return $this;
-    }
-
-    public function getOption( $key, $default = null )
-    {
-        if ( ! array_key_exists( $key, $this->options ) ) {
-            return $default;
-        }
-
-        return $this->options[ $key ];
-    }
-
-    public function getOptions()
-    {
-        return $this->options;
-    }
-
-    public function removeOption( $key )
-    {
-        if ( array_key_exists( $key, $this->options ) ) {
-            unset( $this->options[ $key ] );
-        }
-
-        return $this;
-    }
 }

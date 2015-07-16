@@ -6,12 +6,12 @@ use \TypeRocket\Html as Html;
 class Submit extends Field
 {
 
-    function __construct()
+    public function init()
     {
-        $this->setType('submit');
+        $this->setType( 'submit' );
     }
 
-    function getString()
+    public function getString()
     {
         $name = '_tr_submit_form';
 
@@ -24,7 +24,7 @@ class Submit extends Field
         $this->appendStringToAttribute('class', ' button button-primary');
 
         $generator = new Html\Generator();
-        return $generator->newInput( $this->getType(), $name, $value, $this->getAttributes() )->getString();
+        return $generator->newInput( 'submit', $name, $value, $this->getAttributes() )->getString();
     }
 
 }

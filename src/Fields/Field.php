@@ -28,12 +28,43 @@ abstract class Field
     private $builtin = false;
     private $populate = true;
 
+    /**
+     * @param string $name the name of the field
+     * @param array $attr the html attributes
+     * @param array $settings the settings of the field
+     * @param bool|true $label show the label
+     */
+    function __construct( $name, array $attr = array(), array $settings = array(), $label = true)
+    {
+        $args = func_get_args();
+        $this->init();
+        $reflection = new \ReflectionMethod($this, 'setup');
+
+        foreach($args as $key => $arg) {
+            if($arg instanceof Form) {
+                $this->configureToForm($arg);
+                unset($args[$key]);
+            }
+        }
+
+        if($this instanceof FieldScript) {
+            $this->enqueueScripts();
+        }
+
+        $reflection->invokeArgs($this, $args);
+    }
+
     public function __get( $property )
     {
     }
 
     public function __set( $property, $value )
     {
+    }
+
+    public function init()
+    {
+        return $this;
     }
 
     /**
@@ -213,6 +244,14 @@ abstract class Field
         return $this->item_id;
     }
 
+    /**
+     * Set the type of Field. This is not always the input type. For
+     * example in custom fields. Text Field is the only that does.
+     *
+     * @param string $type
+     *
+     * @return $this
+     */
     public function setType( $type )
     {
 
@@ -415,7 +454,7 @@ abstract class Field
         $this->setName( $name );
         $this->attr['name'] = $this->generateNameAttributeString();
 
-        if ( ! empty( $settings['label'] ) ) {
+        if ( empty( $settings['label'] ) ) {
             $this->settings['label'] = $name;
         }
 

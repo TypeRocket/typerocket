@@ -4,18 +4,22 @@ namespace TypeRocket\Fields;
 use \TypeRocket\Html\Generator as Generator,
     \TypeRocket\Config as Config;
 
-class Image extends Field
+class Image extends Field implements FieldScript
 {
 
-    function __construct()
+    public function init()
     {
+        $this->setType( 'image' );
+    }
+
+    public function enqueueScripts() {
         $paths = Config::getPaths();
         wp_enqueue_media();
         wp_enqueue_script( 'typerocket-media', $paths['urls']['assets'] . '/js/media.js', array( 'jquery' ), '1.0',
             true );
     }
 
-    function getString()
+    public function getString()
     {
         $name = $this->getAttribute( 'name' );
         $this->setAttribute( 'class', 'image-picker' );

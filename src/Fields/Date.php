@@ -3,16 +3,19 @@ namespace TypeRocket\Fields;
 
 use \TypeRocket\Html\Generator as Generator;
 
-class Date extends Field
+class Date extends Field implements FieldScript
 {
 
-    function __construct()
+    public function init()
     {
-        wp_enqueue_script( 'jquery-ui-datepicker', array( 'jquery' ), '1.0', true );
-        $this->setType('text');
+        $this->setType( 'date' );
     }
 
-    function getString()
+    public function enqueueScripts() {
+        wp_enqueue_script( 'jquery-ui-datepicker', array( 'jquery' ), '1.0', true );
+    }
+
+    public function getString()
     {
         $name  = $this->getAttribute( 'name' );
         $value = esc_attr( $this->getValue() );
@@ -21,7 +24,7 @@ class Date extends Field
 
         $input = new Generator();
 
-        return $input->newInput( $this->getType(), $name, $value, $this->getAttributes() )->getString();
+        return $input->newInput( 'text', $name, $value, $this->getAttributes() )->getString();
     }
 
 }

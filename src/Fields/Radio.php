@@ -3,17 +3,17 @@ namespace TypeRocket\Fields;
 
 use \TypeRocket\Html as Html;
 
-class Radio extends Field
+class Radio extends Field implements FieldOptions
 {
 
     private $options = array();
 
-    public function __construct()
+    public function init()
     {
         $this->setType( 'radio' );
     }
 
-    function getString()
+    public function getString()
     {
         $name       = $this->getAttribute('name');
         $default = $this->getSetting('default');
@@ -33,7 +33,7 @@ class Radio extends Field
             }
 
             $field .= "<li><label>";
-            $field .= $generator->newInput( $this->getType(), $name, $value, $this->getAttributes() )->getString();
+            $field .= $generator->newInput( 'radio', $name, $value, $this->getAttributes() )->getString();
             $field .= "<span>{$key}</span></label>";
         }
 

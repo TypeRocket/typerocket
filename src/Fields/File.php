@@ -4,11 +4,15 @@ namespace TypeRocket\Fields;
 use \TypeRocket\Html as Html;
 use \TypeRocket\Config as Config;
 
-class File extends Field
+class File extends Field implements FieldScript
 {
 
-    function __construct()
+    public function init()
     {
+        $this->setType( 'file' );
+    }
+
+    public function enqueueScripts() {
         $paths = Config::getPaths();
         wp_enqueue_media();
         wp_enqueue_script( 'typerocket-media', $paths['urls']['assets'] . '/js/media.js', array( 'jquery' ), '1.0',

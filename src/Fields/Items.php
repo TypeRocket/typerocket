@@ -4,17 +4,21 @@ namespace TypeRocket\Fields;
 use \TypeRocket\Html\Generator as Generator,
     \TypeRocket\Config as Config;
 
-class Items extends Field
+class Items extends Field implements FieldScript
 {
 
-    function __construct()
+    public function init()
     {
+        $this->setType( 'items' );
+    }
+
+    public function enqueueScripts() {
         $paths = Config::getPaths();
         wp_enqueue_script( 'typerocket-items', $paths['urls']['assets'] . '/js/items.js', array( 'jquery' ),
             '1.0', true );
     }
 
-    function getString()
+    public function getString()
     {
         $name = $this->getAttribute( 'name' );
         $this->appendStringToAttribute( 'class', ' items-list' );

@@ -8,12 +8,12 @@ class Select extends Field implements FieldOptions
 
     private $options = array();
 
-    public function __construct()
+    public function init()
     {
-        $this->setType('select');
+        $this->setType( 'select' );
     }
 
-    function getString()
+    public function getString()
     {
         $default = $this->getSetting('default');
         $option = $this->getValue();

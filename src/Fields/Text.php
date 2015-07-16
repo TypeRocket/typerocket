@@ -6,18 +6,18 @@ use \TypeRocket\Html\Generator as Generator;
 class Text extends Field
 {
 
-    function __construct()
+    public function init()
     {
-        $this->setType('text');
+        $this->setType( 'text' );
     }
 
-    function getString()
+    public function getString()
     {
         $max = '';
         $input = new Generator();
         $value = $this->getValue();
         $name = $this->getAttribute('name');
-        $sanitize = "Sanitize::" . $this->getSetting('sanitize', 'attribute');
+        $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'attribute');
 
         if ( is_callable($sanitize)) {
             $value = call_user_func($sanitize, $value );

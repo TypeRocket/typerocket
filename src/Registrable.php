@@ -95,11 +95,6 @@ abstract class Registrable
         'TypeRocket\Metabox'  => 'metaboxRegistrationById',
     );
 
-    function __construct()
-    {
-        $this->init();
-    }
-
     public function __get( $property )
     {
     }
@@ -204,10 +199,6 @@ abstract class Registrable
     public function register()
     {
         return $this;
-    }
-
-    private function init()
-    {
     }
 
     protected function uses()

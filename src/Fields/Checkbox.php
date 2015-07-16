@@ -6,12 +6,12 @@ use \TypeRocket\Html\Generator as Generator;
 class Checkbox extends Field
 {
 
-    public function __construct()
+    public function init()
     {
         $this->setType( 'checkbox' );
     }
 
-    function getString()
+    public function getString()
     {
         $name   = $this->getAttribute( 'name' );
         $this->removeAttribute( 'name' );
@@ -26,7 +26,7 @@ class Checkbox extends Field
             $this->setAttribute( 'checked', 'checked' );
         }
 
-        $checkbox->newInput( $this->getType(), $name, '1', $this->getAttributes() );
+        $checkbox->newInput( 'checkbox', $name, '1', $this->getAttributes() );
 
         $field->newElement( 'label' )
             ->appendInside( $checkbox )

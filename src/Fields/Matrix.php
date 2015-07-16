@@ -6,16 +6,19 @@ use TypeRocket\Html\Generator as Generator,
     TypeRocket\Buffer as Buffer,
     \TypeRocket\Sanitize as Sanitize;
 
-class Matrix extends Field implements FieldOptions {
+class Matrix extends Field implements FieldOptions, FieldScript {
 
     private $mxid = null;
     private $options = null;
 
-    function __construct()
+    public function init()
     {
+        $this->mxid = md5( microtime( true ) ); // set id for matrix random
+        $this->setType( 'matrix' );
+    }
 
+    public function enqueueScripts() {
         $paths = Config::getPaths();
-        $this->mxid          = md5( microtime( true ) ); // set id for matrix random
         // load everything :(
         wp_enqueue_script( 'typerocket-booyah', $paths['urls']['assets'] . '/js/booyah.js', array( 'jquery' ),
             '1.0', true );
@@ -40,7 +43,7 @@ class Matrix extends Field implements FieldOptions {
         wp_enqueue_script( 'tr-matrix-core', $paths['urls']['assets'] . '/js/matrix.js', array( 'jquery' ), '1.0', true );
     }
 
-    function getString()
+    public function getString()
     {
 
         // setup select list of files

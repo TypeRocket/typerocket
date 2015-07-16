@@ -6,7 +6,12 @@ use \TypeRocket\Html\Generator as Generator;
 class Textarea extends Field
 {
 
-    function getString()
+    public function init()
+    {
+        $this->setType( 'textarea' );
+    }
+
+    public function getString()
     {
         $max = '';
         $generator = new Generator();

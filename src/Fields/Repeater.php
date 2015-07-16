@@ -5,13 +5,17 @@ use TypeRocket\Config as Config,
     TypeRocket\Buffer as Buffer,
     TypeRocket\Html\Generator as Generator;
 
-class Repeater extends Field
+class Repeater extends Field implements FieldScript
 {
 
-    private $options;
+    private $fields;
 
-    public function __construct()
+    public function init()
     {
+        $this->setType( 'repeater' );
+    }
+
+    public function enqueueScripts() {
         $paths = Config::getPaths();
         wp_enqueue_script( 'typerocket-booyah', $paths['urls']['assets'] . '/js/booyah.js', array( 'jquery' ), '1.0',
             true );
@@ -24,7 +28,7 @@ class Repeater extends Field
         $form = $this->getForm();
         $form->setDebugStatus( false );
         $settings = $this->getSettings();
-        $fields   = $this->options;
+        $fields   = $this->fields;
         $name     = $this->getName();
         $html     = '';
         $utility  = new Buffer();
@@ -100,48 +104,22 @@ class Repeater extends Field
         $utility = new Buffer();
 
         $utility->startBuffer();
-        $this->getForm()->setSetting('template', true)->renderFields( $this->options );
+        $this->getForm()->renderFields( $this->fields );
         $fields = $utility->indexBuffer( 'template' )->getBuffer( 'template' );
-        $this->getForm()->removeSetting('template');
 
         return $fields;
     }
 
-    public function setOption( $key, $value )
+    public function setFields( $fields )
     {
-        $this->options[ $key ] = $value;
+        $this->fields = $fields;
 
         return $this;
     }
 
-    public function setOptions( $options )
+    public function getFields()
     {
-        $this->options = $options;
-
-        return $this;
-    }
-
-    public function getOption( $key, $default = null )
-    {
-        if ( ! array_key_exists( $key, $this->options ) ) {
-            return $default;
-        }
-
-        return $this->options[ $key ];
-    }
-
-    public function getOptions()
-    {
-        return $this->options;
-    }
-
-    public function removeOption( $key )
-    {
-        if ( array_key_exists( $key, $this->options ) ) {
-            unset( $this->options[ $key ] );
-        }
-
-        return $this;
+        return $this->fields;
     }
 
 }

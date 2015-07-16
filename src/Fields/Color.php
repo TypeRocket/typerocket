@@ -3,16 +3,20 @@ namespace TypeRocket\Fields;
 
 use \TypeRocket\Html\Generator as Generator;
 
-class Color extends Field
+class Color extends Field implements FieldScript
 {
 
-    function __construct()
+    public function init()
     {
+        $this->setType( 'color' );
+    }
+
+    public function enqueueScripts() {
         wp_enqueue_style( 'wp-color-picker' );
         wp_enqueue_script( 'wp-color-picker' );
     }
 
-    function getString()
+    public function getString()
     {
         $name  = $this->getAttribute( 'name' );
         $value = esc_attr( $this->getValue() );
@@ -27,7 +31,7 @@ class Color extends Field
 
         $input = new Generator();
 
-        return $input->newInput( $this->getType(), $name, $value, $this->getAttributes() )->getString();
+        return $input->newInput( 'text', $name, $value, $this->getAttributes() )->getString();
     }
 
 }
