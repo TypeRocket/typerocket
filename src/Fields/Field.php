@@ -36,24 +36,24 @@ abstract class Field
      * @param array $settings the settings of the field
      * @param bool|true $label show the label
      */
-    function __construct( $name, array $attr = array(), array $settings = array(), $label = true)
+    function __construct( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $args = func_get_args();
         $this->init();
-        $setup = new \ReflectionMethod($this, 'setup');
+        $setup = new \ReflectionMethod( $this, 'setup' );
 
-        foreach($args as $key => $arg) {
-            if($arg instanceof Form) {
-                $this->configureToForm($arg);
-                unset($args[$key]);
+        foreach ($args as $key => $arg) {
+            if ($arg instanceof Form) {
+                $this->configureToForm( $arg );
+                unset( $args[$key] );
             }
         }
 
-        if($this instanceof FieldScript) {
+        if ($this instanceof FieldScript) {
             $this->enqueueScripts();
         }
 
-        $setup->invokeArgs($this, $args);
+        $setup->invokeArgs( $this, $args );
     }
 
     public function __get( $property )
@@ -115,9 +115,9 @@ abstract class Field
     {
         $this->group = null;
 
-        if ( Validate::bracket( $group ) ) {
+        if (Validate::bracket( $group )) {
             $this->group = $group;
-        } elseif ( is_string( $group ) ) {
+        } elseif (is_string( $group )) {
             $this->group = "[{$group}]";
         }
 
@@ -133,9 +133,9 @@ abstract class Field
     {
         $this->sub = null;
 
-        if ( Validate::bracket( $sub ) ) {
+        if (Validate::bracket( $sub )) {
             $this->sub = $sub;
-        } elseif ( is_string( $sub ) ) {
+        } elseif (is_string( $sub )) {
             $this->sub = "[{$sub}]";
         }
 
@@ -198,16 +198,16 @@ abstract class Field
      */
     public function getAttribute( $key, $default = null )
     {
-        if ( ! array_key_exists( $key, $this->attr ) ) {
+        if ( ! array_key_exists( $key, $this->attr )) {
             return $default;
         }
 
-        return $this->attr[ $key ];
+        return $this->attr[$key];
     }
 
     public function setAttribute( $key, $value )
     {
-        $this->attr[ (string) $key ] = $value;
+        $this->attr[(string) $key] = $value;
 
         return $this;
     }
@@ -215,8 +215,8 @@ abstract class Field
     public function removeAttribute( $key )
     {
 
-        if ( array_key_exists( $key, $this->attr ) ) {
-            unset( $this->attr[ $key ] );
+        if (array_key_exists( $key, $this->attr )) {
+            unset( $this->attr[$key] );
         }
 
         return $this;
@@ -225,8 +225,8 @@ abstract class Field
     public function removeSetting( $key )
     {
 
-        if ( array_key_exists( $key, $this->settings ) ) {
-            unset( $this->settings[ $key ] );
+        if (array_key_exists( $key, $this->settings )) {
+            unset( $this->settings[$key] );
         }
 
         return $this;
@@ -234,7 +234,7 @@ abstract class Field
 
     public function setItemId( $item_id )
     {
-        if ( isset( $item_id ) ) {
+        if (isset( $item_id )) {
             $this->item_id = (int) $item_id;
         }
 
@@ -269,7 +269,7 @@ abstract class Field
 
     public function setController( $controller )
     {
-        if ( isset( $controller ) ) {
+        if (isset( $controller )) {
             $this->controller = $controller;
         }
 
@@ -308,7 +308,7 @@ abstract class Field
 
     public function setSetting( $key, $value )
     {
-        $this->settings[ $key ] = $value;
+        $this->settings[$key] = $value;
 
         return $this;
     }
@@ -329,16 +329,16 @@ abstract class Field
     public function getSetting( $key, $default = null )
     {
 
-        if ( ! array_key_exists( $key, $this->settings ) ) {
+        if ( ! array_key_exists( $key, $this->settings )) {
             return $default;
         }
 
-        return $this->settings[ $key ];
+        return $this->settings[$key];
     }
 
     public function getRender()
     {
-        if ( ! array_key_exists( 'render', $this->settings ) ) {
+        if ( ! array_key_exists( 'render', $this->settings )) {
             return null;
         }
 
@@ -366,7 +366,7 @@ abstract class Field
 
         $this->prefix = (string) $prefix;
 
-        if ( $this->builtin == true ) {
+        if ($this->builtin == true) {
             $this->prefix = '_tr_builtin_data';
         }
 
@@ -385,11 +385,11 @@ abstract class Field
     public function appendStringToAttribute( $key, $text, $separator = ' ' )
     {
 
-        if ( array_key_exists( $key, $this->attr ) ) {
-            $text = $this->attr[ $key ] . $separator . (string) $text;
+        if (array_key_exists( $key, $this->attr )) {
+            $text = $this->attr[$key] . $separator . (string) $text;
         }
 
-        $this->attr[ $key ] = $text;
+        $this->attr[$key] = $text;
 
         return $this;
     }
@@ -408,11 +408,11 @@ abstract class Field
     public function generateNameAttributeString()
     {
 
-        if ( empty( $this->prefix ) ) {
+        if (empty( $this->prefix )) {
             $this->setPrefix();
         }
 
-        if ( empty( $this->brackets ) ) {
+        if (empty( $this->brackets )) {
             $this->setBrackets( $this->getBrackets() );
         }
 
@@ -438,17 +438,17 @@ abstract class Field
         $this->settings = $settings;
         $this->label    = $label;
 
-        if ( isset( $settings['builtin'] ) && $settings['builtin'] == true ) {
+        if (isset( $settings['builtin'] ) && $settings['builtin'] == true) {
             $this->builtin = true;
         }
 
-        if ( array_key_exists( 'class', $attr ) ) {
+        if (array_key_exists( 'class', $attr )) {
             $attr['class'] .= ' ' . $this->attr['class'];
         }
 
         $this->attr['class'] = apply_filters( 'tr_field_class_attribute_filter', $this->attr['class'], $this );
 
-        if ( ! $this->attr['class'] ) {
+        if ( ! $this->attr['class']) {
             unset( $this->attr['class'] );
         }
 
@@ -456,7 +456,7 @@ abstract class Field
         $this->setName( $name );
         $this->attr['name'] = $this->generateNameAttributeString();
 
-        if ( empty( $settings['label'] ) ) {
+        if (empty( $settings['label'] )) {
             $this->settings['label'] = $name;
         }
 
@@ -475,7 +475,7 @@ abstract class Field
     public function getValue()
     {
 
-        if ( $this->populate == false ) {
+        if ($this->populate == false) {
             return null;
         }
 
@@ -506,7 +506,7 @@ abstract class Field
      */
     public function setBrackets( $brackets )
     {
-        if ( Validate::bracket( $brackets ) ) {
+        if (Validate::bracket( $brackets )) {
             $this->brackets = $brackets;
         }
 
