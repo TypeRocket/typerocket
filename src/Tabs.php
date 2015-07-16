@@ -164,7 +164,7 @@ class Tabs
     public function render( $style = null )
     {
         switch ($style) {
-            case 'boxed' :
+            case 'box' :
                 $this->leftBoxedStyleTabs();
                 break;
             default :

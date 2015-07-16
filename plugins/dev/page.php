@@ -38,7 +38,7 @@ function tr_dev_stats()
     <div>
         <div id="tr-dev-content" class="typerocket-container">
             <?php
-            $screen = new \TypeRocket\Layout();
+            $screen = new \TypeRocket\Tabs();
             $screen->addTab( array(
                 'id'       => 'stats',
                 'title'    => 'Stats',
@@ -49,7 +49,7 @@ function tr_dev_stats()
                 'title'    => 'Icon Names',
                 'content'  => '',
                 'callback' => 'tr_dev_icons'
-            ) )->render(); ?>
+            ) )->render('box'); ?>
         </div>
     </div>
 

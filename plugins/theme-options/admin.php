@@ -46,7 +46,7 @@ $form->setup();
     tr_tabs()->setSidebar( $buffer->getBuffer( 'save' ) )
     ->addTab( 'About', $buffer->getBuffer( 'about' ) )
     ->addTab( 'APIs', $buffer->getBuffer( 'api' ) )
-    ->render( 'boxed' );
+    ->render( 'box' );
     $form->close();
     ?>
 
