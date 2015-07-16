@@ -35,6 +35,13 @@ class Items extends Field implements FieldScript
 
         if (is_array( $items )) {
             foreach ($items as $value) {
+
+                $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'attribute');
+
+                if ( is_callable($sanitize)) {
+                    $value = call_user_func($sanitize, $value );
+                }
+
                 $input = $generator->newInput( 'text', $name . '[]', esc_attr( $value ) )->getString();
                 $remove = '#remove';
                 $list .= $generator->newElement( 'li', array( 'class' => 'item' ),

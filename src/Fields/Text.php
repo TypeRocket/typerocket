@@ -20,7 +20,7 @@ class Text extends Field
         $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'attribute');
 
         if ( is_callable($sanitize)) {
-            $value = call_user_func($sanitize, $value );
+            $value = esc_attr( call_user_func($sanitize, $value ) );
         }
 
         $maxLength = $this->getAttribute('maxlength');

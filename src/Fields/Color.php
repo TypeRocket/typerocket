@@ -1,7 +1,8 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html\Generator as Generator;
+use \TypeRocket\Html\Generator as Generator,
+    \TypeRocket\Sanitize as Sanitize;
 
 class Color extends Field implements FieldScript
 {
@@ -19,7 +20,7 @@ class Color extends Field implements FieldScript
     public function getString()
     {
         $name  = $this->getAttribute( 'name' );
-        $value = esc_attr( $this->getValue() );
+        $value = Sanitize::hex( $this->getValue() );
         $this->removeAttribute( 'name' );
         $this->appendStringToAttribute( 'class', ' color-picker' );
 
