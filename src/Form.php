@@ -8,7 +8,6 @@ use TypeRocket\Html\Generator as Generator,
 class Form
 {
 
-    private $id = 'tr_the_form';
     private $controller = null;
     private $action = null;
     private $item_id = null;
@@ -81,17 +80,6 @@ class Form
     public function getItemId()
     {
         return $this->item_id;
-    }
-
-    public function setId( $id )
-    {
-        $this->id = null;
-
-        if (is_string( $id )) {
-            $this->id = $id;
-        }
-
-        return $this;
     }
 
     public function setGroup( $group )
@@ -277,14 +265,13 @@ class Form
         $defaults = array(
             'action'      => $_SERVER['REQUEST_URI'],
             'method'      => 'POST',
-            'data-method' => $method,
-            'id'          => $this->id
+            'data-method' => $method
         );
 
         if ($use_rest == true) {
             $rest = array(
                 'class'    => 'typerocket-rest-form',
-                'rest-api' => home_url() . '/typerocket_rest_api/v1/' . $this->controller . '/' . $this->item_id
+                'data-api' => home_url() . '/typerocket_rest_api/v1/' . $this->controller . '/' . $this->item_id
             );
         }
 
