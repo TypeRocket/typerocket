@@ -1,7 +1,7 @@
 <?php
 namespace TypeRocket;
 
-class Layout
+class Tabs
 {
 
     private $_tabs = array();

@@ -226,7 +226,7 @@ class SeoPlugin
              ->select( 'index', $index_opts, array(), $help );
         $utility->indexBuffer( 'advanced' ); // index buffer
 
-        $tabs = new Layout();
+        $tabs = new Tabs();
         $tabs->addTab( array(
             'id'       => 'seo-general',
             'title'    => "Basic",

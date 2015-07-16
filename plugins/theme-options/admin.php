@@ -44,7 +44,7 @@ $form->setup();
     $utility->indexBuffer('save');
 
     // layout
-    $tabs = new TypeRocket\Layout();
+    $tabs = new TypeRocket\Tabs();
     $tabs->setSidebar($utility->getBuffer('save'));
     $tabs->addTab( array(
       'id' => 'about',
