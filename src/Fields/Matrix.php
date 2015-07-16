@@ -6,10 +6,10 @@ use TypeRocket\Html\Generator as Generator,
     TypeRocket\Buffer as Buffer,
     \TypeRocket\Sanitize as Sanitize;
 
-class Matrix extends Field {
+class Matrix extends Field implements FieldOptions {
 
     private $mxid = null;
-    public $options = null;
+    private $options = null;
 
     function __construct()
     {
@@ -44,7 +44,7 @@ class Matrix extends Field {
     {
 
         // setup select list of files
-        $select = $this->get_select_html();
+        $select = $this->getSelectHtml();
         $name = $this->getName();
         $blocks = $this->getMatrixBlocks();
         $settings = $this->getSettings();
@@ -81,7 +81,7 @@ class Matrix extends Field {
         return $html;
     }
 
-    private function clean_file_name( $name )
+    private function cleanFileName( $name )
     {
 
         $name = Sanitize::underscore($name);
@@ -90,8 +90,40 @@ class Matrix extends Field {
         return ucwords( $name );
     }
 
-    private function get_select_html()
+    private function getSelectHtml()
     {
+
+        $name = $this->getName();
+        $options = $this->getOptions();
+        $options = $options ? $options : $this->setOptionsFromFolder()->getOptions();
+
+        if ($options) {
+            $generator = new Generator();
+            $generator->newElement( 'select', array(
+                'data-mxid' => $this->mxid,
+                'class' => "matrix-select-{$name}",
+                'data-group' => $this->getForm()->getGroup()
+            ) );
+
+            foreach ($options as $name => $value) {
+                $generator->appendInside( 'option', array('value' => $value), $name );
+            }
+
+            $select = $generator->getString();
+
+        } else {
+
+            $paths = Config::getPaths();
+            $dir = $paths['matrix'] . '/' . $name;
+
+            $select = "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add a files for Matrix <code>{$dir}</code> and add your matrix files to it.</div>";
+        }
+
+        return $select;
+
+    }
+
+    public function setOptionsFromFolder() {
         $paths = Config::getPaths();
         $name = $this->getName();
         $dir = $paths['matrix'] . '/' . $name;
@@ -100,29 +132,17 @@ class Matrix extends Field {
 
             $files = preg_grep( '/^([^.])/', scandir( $dir ) );
 
-            $select = "<select data-mxid=\"{$this->mxid}\" class=\"matrix-select-{$name}\">";
-
-            foreach ($files as $f) {
-                if (file_exists( $dir . '/' . $f )) {
-                    $path = pathinfo( $f );
-                    $generator = new Generator();
-
-                    $attr = array( 'value'      => $path['filename'],
-                                   'data-file'  => $path['filename'],
-                                   'data-group' => $this->getForm()->getGroup()
-                    );
-                    $select .= $generator->newElement( 'option', $attr, $this->clean_file_name( $path['filename'] ) )->getString();
+            foreach ($files as $file) {
+                if (file_exists( $dir . '/' . $file )) {
+                    $path = pathinfo( $file );
+                    $key = $this->cleanFileName( $path['filename'] );
+                    $this->options[$key] = $path['filename'];
                 }
             }
 
-            $select .= '</select>';
-
-        } else {
-            $select = "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add a folder for Matrix <code>{$dir}</code> and add your matrix files to it.</div>";
         }
 
-        return $select;
-
+        return $this;
     }
 
     private function getMatrixBlocks()
@@ -185,6 +205,43 @@ class Matrix extends Field {
 
         return trim($blocks);
 
+    }
+
+    public function setOption( $key, $value )
+    {
+        $this->options[ $key ] = $value;
+
+        return $this;
+    }
+
+    public function setOptions( $options )
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    public function getOption( $key, $default = null )
+    {
+        if ( ! array_key_exists( $key, $this->options ) ) {
+            return $default;
+        }
+
+        return $this->options[ $key ];
+    }
+
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    public function removeOption( $key )
+    {
+        if ( array_key_exists( $key, $this->options ) ) {
+            unset( $this->options[ $key ] );
+        }
+
+        return $this;
     }
 
 }

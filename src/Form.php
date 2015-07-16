@@ -498,7 +498,7 @@ class Form
     {
         $field = new Fields\Radio();
         $field->configureToForm( $this )->setup( $name, $attr, $settings, $label );
-        $field->options = $options;
+        $field->setOptions($options);
         $this->renderField( $field );
 
         return $this;
@@ -517,7 +517,7 @@ class Form
     {
         $field = new Fields\Select();
         $field->configureToForm( $this )->setup( $name, $attr, $settings, $label );
-        $field->options = $options;
+        $field->setOptions($options);
         $this->renderField( $field );
 
         return $this;
@@ -532,7 +532,7 @@ class Form
     ) {
         $field = new Fields\WordPressEditor();
         $field->configureToForm( $this )->setup( $name, $attr, $settings, $label );
-        $field->options = $options;
+        $field->setOptions($options);
         $this->renderField( $field );
 
         return $this;
@@ -601,7 +601,7 @@ class Form
     ) {
         $field = new Fields\Matrix();
         $field->configureToForm( $this )->setup( $name, $attr, $settings, $label );
-        $field->options = $options;
+        $field->setOptions($options);
         $this->renderField( $field );
 
         return $this;
@@ -611,7 +611,7 @@ class Form
     {
         $field = new Fields\Repeater();
         $field->configureToForm( $this )->setup( $name, $attr, $settings, $label );
-        $field->fields = $fields;
+        $field->setOptions($fields);
         $this->renderField( $field );
 
         return $this;

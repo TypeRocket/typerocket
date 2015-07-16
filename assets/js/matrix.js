@@ -13,12 +13,12 @@ jQuery(document).ready(function($) {
 
       $that.attr("disabled", "disabled").val('Adding...');
 
-      var url = '/typerocket_matrix_api/v1/' + group + '/' + type, $option = $select.find('option[value="' +$select.val()+ '"]');
+      var url = '/typerocket_matrix_api/v1/' + group + '/' + type, form_group = $select.data('group');
 
       $.ajax({
         url:  url,
         dataType: 'html',
-        data: { form_group: $option.data('group') },
+        data: { form_group: form_group },
         success: function(data) {
           data = $( data );
 

@@ -35,12 +35,24 @@ define('TR_PLUGINS', 'seo|dev|theme-options');
 | TypeRocket Matrix Folder
 |--------------------------------------------------------------------------
 |
-| The folder where you wish to locate your matrix groups. This can be set
+| The folder where you wish to locate your matrix groups. This should be set
 | to a location outside of TypeRocket. For example, directly in your
 | current theme.
 |
 */
-define('TR_MATRIX_DIR', __DIR__ . '/matrix');
+define('TR_MATRIX_FOLDER', __DIR__ . '/matrix');
+
+/*
+|--------------------------------------------------------------------------
+| TypeRocket Plugins Folder
+|--------------------------------------------------------------------------
+|
+| The folder where you wish to locate your plugins. This should be set
+| to a location outside of TypeRocket. For example, directly in your
+| current theme.
+|
+*/
+define('TR_PLUGINS_FOLDER', __DIR__ . '/plugins');
 
 /*
 |--------------------------------------------------------------------------

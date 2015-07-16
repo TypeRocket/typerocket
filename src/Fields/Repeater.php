@@ -8,7 +8,7 @@ use TypeRocket\Config as Config,
 class Repeater extends Field
 {
 
-    public $fields;
+    private $options;
 
     public function __construct()
     {
@@ -24,7 +24,7 @@ class Repeater extends Field
         $form = $this->getForm();
         $form->setDebugStatus( false );
         $settings = $this->getSettings();
-        $fields   = $this->fields;
+        $fields   = $this->options;
         $name     = $this->getName();
         $html     = '';
         $utility  = new Buffer();
@@ -100,11 +100,48 @@ class Repeater extends Field
         $utility = new Buffer();
 
         $utility->startBuffer();
-        $this->getForm()->setSetting('template', true)->renderFields( $this->fields );
+        $this->getForm()->setSetting('template', true)->renderFields( $this->options );
         $fields = $utility->indexBuffer( 'template' )->getBuffer( 'template' );
         $this->getForm()->removeSetting('template');
 
         return $fields;
+    }
+
+    public function setOption( $key, $value )
+    {
+        $this->options[ $key ] = $value;
+
+        return $this;
+    }
+
+    public function setOptions( $options )
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    public function getOption( $key, $default = null )
+    {
+        if ( ! array_key_exists( $key, $this->options ) ) {
+            return $default;
+        }
+
+        return $this->options[ $key ];
+    }
+
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    public function removeOption( $key )
+    {
+        if ( array_key_exists( $key, $this->options ) ) {
+            unset( $this->options[ $key ] );
+        }
+
+        return $this;
     }
 
 }
