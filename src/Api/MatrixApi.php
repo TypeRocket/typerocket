@@ -1,6 +1,7 @@
 <?php
 namespace TypeRocket\Api;
 
+use TypeRocket\Config;
 use TypeRocket\Validate;
 
 class MatrixApi {
@@ -17,8 +18,10 @@ class MatrixApi {
                 $form_group = '';
             }
 
+            $paths = Config::getPaths();
+
             $form->setGroup($form_group . "[{$group}][{$tr_matrix_id}][{$type}]");
-            $file = TR_MATRIX_FOLDER . "/{$group}/{$type}.php";
+            $file = $paths['matrix'] . "/{$group}/{$type}.php";
         } else {
             http_response_code(404);
             exit();
