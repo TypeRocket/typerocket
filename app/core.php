@@ -32,9 +32,7 @@ add_action( 'after_setup_theme', function () {
 | Add APIs
 |--------------------------------------------------------------------------
 |
-| Add a url that will allow you to save to forms using an API. This is not
-| REST but more like RPC. This API is designed to create, update and
-| delete data in WordPress. Item ID's should be sent via $_POST.
+| Add slim REST and Matrix APIs.
 |
 */
 add_action('admin_init', function() {
@@ -53,9 +51,6 @@ add_action('admin_init', function() {
     $location = 'index.php?typerocket_matrix_group=$matches[1]&typerocket_matrix_type=$matches[2]';
     add_rewrite_rule( $regex, $location, 'top' );
 
-    $regex = 'typerocket_matrix_api/v1/([^/]*)/([^/]*)/([^/]*)/?$';
-    $location = 'index.php?typerocket_matrix_group=$matches[1]&typerocket_matrix_type=$matches[2]&typerocket_matrix_form=$matches[3]';
-    add_rewrite_rule( $regex, $location, 'top' );
 });
 
 add_filter( 'query_vars', function($vars) {
@@ -63,7 +58,6 @@ add_filter( 'query_vars', function($vars) {
     $vars[] = 'typerocket_rest_item';
     $vars[] = 'typerocket_matrix_group';
     $vars[] = 'typerocket_matrix_type';
-    $vars[] = 'typerocket_matrix_form';
     return $vars;
 } );
 

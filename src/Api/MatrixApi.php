@@ -1,6 +1,8 @@
 <?php
 namespace TypeRocket\Api;
 
+use TypeRocket\Validate;
+
 class MatrixApi {
 
     function __construct($group, $type, $form_group, $load = true) {
@@ -11,7 +13,7 @@ class MatrixApi {
             $form->setPopulate(false);
             $form->setDebugStatus(false);
 
-            if(!$form_group) {
+            if( ! Validate::bracket($form_group)) {
                 $form_group = '';
             }
 
