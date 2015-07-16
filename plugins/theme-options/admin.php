@@ -17,10 +17,10 @@ $form->setup();
     <?php
 
     $form->open();
-    $utility = tr_buffer();
+    $buffer = tr_buffer();
 
     // about
-    $utility->startBuffer();
+    $buffer->startBuffer();
     $form->text( 'Company Name' );
     $contact = array(
         array( 'text', array( 'Phone' ) ),
@@ -28,24 +28,24 @@ $form->setup();
     );
 
     $form->renderFields( $contact );
-    $utility->indexBuffer( 'about' );
+    $buffer->indexBuffer( 'about' );
 
     // api
-    $utility->startBuffer();
+    $buffer->startBuffer();
     $help = '<a target="blank" href="https://developers.google.com/maps/documentation/embed/guide#api_key">Get Your Google Maps API</a> to activate maps in the theme.';
     $form->text( 'Google Maps API Key', array(), array( 'help' => $help ) );
-    $utility->indexBuffer( 'api' );
+    $buffer->indexBuffer( 'api' );
 
     // save
-    $utility->startBuffer();
+    $buffer->startBuffer();
     $form->setDebugStatus( false );
     $form->submit( 'Save' );
-    $utility->indexBuffer( 'save' );
+    $buffer->indexBuffer( 'save' );
 
     // layout
-    tr_tabs()->setSidebar( $utility->getBuffer( 'save' ) )
-    ->addTab( 'About', $utility->getBuffer( 'about' ) )
-    ->addTab( 'APIs', $utility->getBuffer( 'api' ) )
+    tr_tabs()->setSidebar( $buffer->getBuffer( 'save' ) )
+    ->addTab( 'About', $buffer->getBuffer( 'about' ) )
+    ->addTab( 'APIs', $buffer->getBuffer( 'api' ) )
     ->render( 'boxed' );
     $form->close();
     ?>

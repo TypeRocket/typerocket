@@ -142,7 +142,7 @@ class SeoPlugin
     function meta()
     {
         echo '<div class="typerocket-container">';
-        $utility = new Buffer();
+        $buffer = new Buffer();
 
         // field settings
         $title = array(
@@ -210,38 +210,38 @@ class SeoPlugin
         $form->setDebugStatus( false );
         $form->setGroup( '[seo][meta]' );
         $form->setup();
-        $utility->startBuffer();
+        $buffer->startBuffer();
         $form->text( 'title', array( 'id' => 'tr_title' ), $title )
              ->textarea( 'description', array( 'id' => 'tr_description' ), $desc );
-        $utility->indexBuffer( 'general' ); // index buffer
-        $utility->startBuffer();
+        $buffer->indexBuffer( 'general' ); // index buffer
+        $buffer->startBuffer();
         $form->text( 'og_title', array(), $og_title )
              ->textarea( 'og_desc', array(), $og_desc )
              ->image( 'meta_img', array(), $img );
-        $utility->indexBuffer( 'social' ); // index buffer
-        $utility->startBuffer();
+        $buffer->indexBuffer( 'social' ); // index buffer
+        $buffer->startBuffer();
         $form->text( 'canonical', array(), $canon )
              ->text( 'redirect', array( 'readonly' => 'readonly', 'id' => 'tr_redirect' ), $redirect )
              ->select( 'follow', $follow_opts, array(), $follow )
              ->select( 'index', $index_opts, array(), $help );
-        $utility->indexBuffer( 'advanced' ); // index buffer
+        $buffer->indexBuffer( 'advanced' ); // index buffer
 
         $tabs = new Tabs();
         $tabs->addTab( array(
             'id'       => 'seo-general',
             'title'    => "Basic",
-            'content'  => $utility->getBuffer( 'general' ),
+            'content'  => $buffer->getBuffer( 'general' ),
             'callback' => array( $this, 'general' )
         ) )
              ->addTab( array(
                  'id'      => 'seo-social',
                  'title'   => "Social",
-                 'content' => $utility->getBuffer( 'social' )
+                 'content' => $buffer->getBuffer( 'social' )
              ) )
              ->addTab( array(
                  'id'      => 'seo-advanced',
                  'title'   => "Advanced",
-                 'content' => $utility->getBuffer( 'advanced' )
+                 'content' => $buffer->getBuffer( 'advanced' )
              ) )
              ->render();
 
