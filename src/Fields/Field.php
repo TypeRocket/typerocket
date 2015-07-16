@@ -40,7 +40,7 @@ abstract class Field
     {
         $args = func_get_args();
         $this->init();
-        $reflection = new \ReflectionMethod($this, 'setup');
+        $setup = new \ReflectionMethod($this, 'setup');
 
         foreach($args as $key => $arg) {
             if($arg instanceof Form) {
@@ -53,7 +53,7 @@ abstract class Field
             $this->enqueueScripts();
         }
 
-        $reflection->invokeArgs($this, $args);
+        $setup->invokeArgs($this, $args);
     }
 
     public function __get( $property )
