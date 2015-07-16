@@ -107,7 +107,17 @@
     display: block;
 }
 
-.postbox-container .tr-tabbed-top {
+.tabbed-sidebar {
+    width: 25%;
+    float: right;
+}
+
+.tabbed-sidebar + .tr-sections {
+    float: left;
+    width: 70%;
+}
+
+#wpbody #poststuff .postbox-container .tr-tabbed-top {
     margin: -6px -10px -8px -10px;
     padding: 0 8px 10px;
     background: #fff;
@@ -151,6 +161,11 @@
     font-weight: normal;
     font-size: 13px;
     line-height: 1em;
+}
+
+#wpbody #poststuff .postbox-container .tabbed-sections {
+    margin: 0 -10px 15px;
+    padding-bottom: 0;
 }
 
 .tabbed-sections .tr-tabs li a {
@@ -208,10 +223,6 @@
     padding: 15px 19px;
 }
 
-.tabbed-sections {
-    margin: 0 -10px 15px;
-}
-
 .tabbed-sidebar {
     float: right;
 }
@@ -220,6 +231,18 @@
     display: inline;
     margin: 5px 0;
     padding: 5px;
+}
+
+.tabbed-sections {
+    padding-bottom: 30px;
+}
+
+.tr-tabbed-top {
+    padding-right: 30px;
+}
+
+#wpbody #poststuff .tr-tabbed-top  {
+    padding-right: 0;
 }
 
 .tabbed-sections.ui-tabs {

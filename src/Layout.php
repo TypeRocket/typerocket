@@ -158,7 +158,7 @@ class Layout
         // Time to render!
         ?>
 
-        <div class="tr-tabbed-top">
+        <div class="tr-tabbed-top cf">
             <div class="tabbed-sections">
                 <ul class="tr-tabs alignleft">
                     <?php
@@ -186,7 +186,7 @@ class Layout
                 </div>
             <?php endif; ?>
 
-            <div class="tr-sections cf">
+            <div class="tr-sections">
                 <?php
                 $classes = 'tab-section active';
                 foreach ($tabs as $tab):
