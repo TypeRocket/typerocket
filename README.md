@@ -94,6 +94,8 @@ add_filter('tr_posts_controller_fillable', function($fillable, $controller) {
 }, 10, 2);
 ```
 
+Now only "ISBN Number" and "Book Cover" will be saved.
+
 ### Filter Fields Example
 
 If we want to filter the fields we can do this as well. Lets use the controller filter to sanitize the data being saved.
