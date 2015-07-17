@@ -39,7 +39,7 @@ class CommentsController extends Controller
     function save( $item_id, $action = 'update' )
     {
         $fillable = apply_filters( 'tr_comments_controller_fillable', $this->getFillable(), $this );
-        $this->setFillable($fillable)->filterFillable();
+        $this->setFillable($fillable);
         parent::save( $item_id, $action );
 
         return $this;

@@ -34,7 +34,7 @@ class OptionsController extends Controller
     function save( $item_id, $action = 'update' )
     {
         $fillable = apply_filters( 'tr_options_controller_fillable', $this->getFillable(), $this );
-        $this->setFillable($fillable)->filterFillable();
+        $this->setFillable($fillable);
         parent::save( $item_id, $action );
 
         return $this;

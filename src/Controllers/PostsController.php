@@ -45,7 +45,7 @@ class PostsController extends Controller
     function save( $item_id, $action = 'update' )
     {
         $fillable = apply_filters( 'tr_posts_controller_fillable', $this->getFillable(), $this );
-        $this->setFillable($fillable)->filterFillable();
+        $this->setFillable($fillable);
         parent::save( $item_id, $action );
 
         return $this;
