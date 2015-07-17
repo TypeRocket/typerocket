@@ -62,7 +62,7 @@ $book = tr_post_type('Book')->setIcon('book')->apply($bookAuthor);
 
 ```php
 $bookDetails = tr_metabox('Details');
-$book->apply($bookDetails)->setTitlePlaceholder('Enter Book Title Here');
+$book->apply($bookDetails)->setTitlePlaceholder('Enter Book Title');
 ```
 
 - Use debug mode to get metabox content provider function
