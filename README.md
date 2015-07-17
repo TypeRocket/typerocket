@@ -38,9 +38,13 @@ Kevin
 
 Visit TypeRocket http://typerocket.com to get access to the tutorials and documentation.
 
-### Examples
+### Book Post Type Example
 
-Gracefully configure WordPress without needing hooks. Adding a Book post type.
+Gracefully configure WordPress without needing hooks.
+
+- Add a "Book" post type
+- Add a custom menu icon to "Book" (200+ icons)
+- Add an "Author" taxonomy to "Book" post type
 
 ```php
 // In your themes functions.php
@@ -53,9 +57,7 @@ $bookAuthor = tr_taxonomy('Author')->setId('book_author');
 $book = tr_post_type('Book')->setIcon('book')->apply($bookAuthor);
 ```
 
-Keep coding:
-
-- Add a Metabox
+- Add a Metabox to "Book"
 - Set custom Title placeholder text
 
 ```php
