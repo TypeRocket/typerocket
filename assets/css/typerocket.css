@@ -24,6 +24,11 @@
     color: #468847;
 }
 
+.typerocket-rest-alert.node-error {
+    color: #a94442;
+    background-color: #f2dede;
+}
+
 @media screen and (max-width: 782px) {
     .typerocket-rest-alert {
         top: 46px;

@@ -1,6 +1,8 @@
 <?php
 namespace TypeRocket;
 
+use \TypeRocket\Controllers\OptionsController;
+
 class ThemeOptionsPlugin
 {
 
@@ -26,6 +28,7 @@ class ThemeOptionsPlugin
     {
         add_action( 'admin_menu', array( $this, 'menu' ) );
         add_action( 'wp_before_admin_bar_render', array( $this, 'admin_bar_menu' ), 100 );
+        add_filter('tr_controller_data_fillable', array($this, 'fillable'), 9999999998, 2 );
 
         // process import and export
         if (count( $_POST ) < 1 && $_GET['theme-options'] == 'export') {
@@ -34,6 +37,22 @@ class ThemeOptionsPlugin
             $files = $_FILES;
             $this->json_import( $files );
         }
+
+    }
+
+    public function fillable($fillable, $controller) {
+
+        if($controller instanceof OptionsController) {
+
+            if(is_array($fillable)) {
+
+                $fillable = array_merge($fillable, array($this->name));
+
+            }
+
+        }
+
+        return $fillable;
 
     }
 

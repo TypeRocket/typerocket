@@ -18,20 +18,24 @@ abstract class Controller
     public $valid = null;
     public $defaultValues = null;
     public $staticValues = null;
-    public $response = array('message' => 'Message...', 'errors' => array());
+    public $response = array( 'message' => 'Message...', 'errors' => array() );
     /** @var \WP_User */
     public $currentUser = null;
     public $requestType = null;
+    private $fillable = true;
 
-    function save( $item_id, $action = 'update' )
+    public function save( $item_id, $action = 'update' )
     {
-
-        $this->fields  = isset( $_POST['tr'] ) ? $_POST['tr'] : array();
-        $this->item_id = $item_id;
-        $this->action  = $action;
+        $fillable = apply_filters( 'tr_controller_data_fillable', $this->fillable, $this );
+        $this->filterFillable( $fillable );
+        $this->fields      = ! empty( $_POST['tr'] ) ? $_POST['tr'] : array();
+        $this->item_id     = $item_id;
+        $this->action      = $action;
         $this->currentUser = wp_get_current_user();
 
-        if ($this->getValidate()) {
+        if(empty($this->fields)) {
+            $this->messageNoFields();
+        } elseif ($this->getValidate()) {
             $this->filter();
 
             if ($this->action === 'update') {
@@ -46,12 +50,46 @@ abstract class Controller
 
     }
 
-    function getValidate()
+    public function getValidate()
     {
         return $this->valid = true;
     }
 
-    function getResponseArrayByItemId( $item_id, $method = 'GET')
+    public function setFillable( array $fillable )
+    {
+        $this->fillable = $fillable;
+
+        return $this;
+    }
+
+    private function filterFillable( $fillable )
+    {
+        if (is_array( $fillable )) {
+
+            $keep = array();
+            foreach ($fillable as $field) {
+
+                if (isset( $_POST['tr'][$field] )) {
+                    $keep[$field] = $_POST['tr'][$field];
+                }
+
+            }
+
+            $_POST['tr'] = $keep;
+        } elseif ($fillable === false) {
+            $_POST['tr'] = array();
+        }
+
+        return $this;
+
+    }
+
+    function getFillable()
+    {
+        return $this->fillable;
+    }
+
+    function getResponseArrayByItemId( $item_id, $method = 'GET' )
     {
         $method        = strtoupper( $method );
         $this->item_id = $item_id;
@@ -77,10 +115,20 @@ abstract class Controller
                 break;
         }
 
-        $data = array( 'message' => $this->response['message'], 'valid' => $this->valid, 'redirect' => false, 'errors' => $this->response['errors'] );
+        $data = array(
+            'message'  => $this->response['message'],
+            'valid'    => $this->valid,
+            'redirect' => false,
+            'errors'   => $this->response['errors']
+        );
 
         return $data;
 
+    }
+
+    function messageNoFields() {
+        $this->response['message'] = 'No Data Updated';
+        $this->valid = false;
     }
 
     function filter()

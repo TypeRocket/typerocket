@@ -67,34 +67,14 @@ jQuery.typerocketHttp = {
 
       if(data.valid == true) {
         type = 'node-success';
-        jQuery('.control-error').fadeOut(100);
       } else {
         type = 'node-error';
-        jQuery('.control-error').remove();
-        this.alertRequired(data.required);
       }
 
       jQuery('body').prepend(jQuery('<div class="typerocket-rest-alert '+type+' ">'+data.message+'</div>').delay(1500).fadeOut(100, function() {
         jQuery(this).remove();
       }));
 
-    },
-    alertRequired: function(required) {
-      if(typeof required === 'object') {
-
-        for (var key in required) {
-          if (required.hasOwnProperty(key)) {
-            var message = required[key];
-            var field = jQuery('[field-id='+key+'] .control-input')[0];
-            var input = jQuery('[field-id='+key+'] input')[0];
-
-            if(! jQuery(input).val()) {
-              jQuery(field).prepend('<div class="control-error">'+message+'</div>');
-            }
-          }
-        }
-
-      }
     }
   }
 
