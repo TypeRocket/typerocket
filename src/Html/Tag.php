@@ -43,6 +43,11 @@ class Tag
     {
     }
 
+    public function __toString()
+    {
+        return $this->getString();
+    }
+
     public function getTag()
     {
         return $this->tag;
