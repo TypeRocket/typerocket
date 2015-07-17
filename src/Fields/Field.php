@@ -64,6 +64,11 @@ abstract class Field
     {
     }
 
+    public function __toString()
+    {
+        return $this->getString();
+    }
+
     public function init()
     {
         return $this;
