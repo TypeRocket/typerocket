@@ -1,8 +1,6 @@
 <?php
 namespace TypeRocket;
 
-use \TypeRocket\Controllers\OptionsController;
-
 class ThemeOptionsPlugin
 {
 
@@ -20,12 +18,9 @@ class ThemeOptionsPlugin
         return $this->name;
     }
 
-    public function setName($name) {
-        $this->name = (string) $name;
-    }
-
     function setup()
     {
+        $this->name = apply_filters('tr_theme_options_name', $this->name);
         add_action( 'admin_menu', array( $this, 'menu' ) );
         add_action( 'wp_before_admin_bar_render', array( $this, 'admin_bar_menu' ), 100 );
         add_filter('tr_options_controller_fillable', array($this, 'fillable'), 9999999999 );
@@ -58,10 +53,11 @@ class ThemeOptionsPlugin
     function page()
     {
         echo '<div id="wrap">';
-        $file = apply_filters( 'tr_theme_options_admin', __DIR__ . '/admin.php' );
+        $file = apply_filters( 'tr_theme_options_page', __DIR__ . '/admin.php' );
         if (file_exists( $file )) {
             include( $file );
         }
+
         include( __DIR__ . '/import.php' );
         echo '</div>';
     }
