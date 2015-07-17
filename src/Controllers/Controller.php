@@ -24,7 +24,7 @@ abstract class Controller
     public $requestType = null;
     private $fillable = true;
 
-    public function save( $item_id, $action = 'update' )
+    protected function save( $item_id, $action = 'update' )
     {
         $this->fillable = apply_filters( 'tr_controller_fillable', $this->fillable, $this );
         $this->filterFillable();

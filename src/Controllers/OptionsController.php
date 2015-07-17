@@ -26,7 +26,7 @@ class OptionsController extends Controller
     function filter()
     {
         parent::filter();
-        $this->fields = apply_filters( 'tr_options_controller_filter', $_POST['tr'], $this );
+        $this->fields = apply_filters( 'tr_options_controller_filter', $this->fields, $this );
 
         return $this;
     }
