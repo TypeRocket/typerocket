@@ -15,6 +15,11 @@ class Generator
     {
     }
 
+    public function __toString()
+    {
+        return $this->getString();
+    }
+
     function newElement( $tag, array $attributes = array(), $text = '' )
     {
         $this->tag = new Tag( $tag, $attributes, $text );
