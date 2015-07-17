@@ -38,21 +38,41 @@ Kevin
 
 Visit TypeRocket http://typerocket.com to get access to the tutorials and documentation.
 
-### Example
+### Examples
 
-Gracefully configure WordPress without needing hooks.
+Gracefully configure WordPress without needing hooks. Adding a Book post type.
 
 ```php
 // In your themes functions.php
 include( 'typerocket/init.php' );
 
-// Add taxonomy with custom name gracefully
-$bookAuthor = tr_taxonomy('Author', 'Authors')->setId('book_author');
+// Add taxonomy with custom "name" gracefully
+$bookAuthor = tr_taxonomy('Author')->setId('book_author');
 
 // Add post type with icon and taxonomy gracefully
-tr_post_type('Book', 'Books')->setIcon('book')->apply($bookAuthor);
-
+$book = tr_post_type('Book')->setIcon('book')->apply($bookAuthor);
 ```
+
+Keep coding:
+
+- Add a Metabox
+- Set custom Title placeholder text
+
+```php
+$bookDetails = tr_metabox('Details');
+$book->apply($bookDetails)->setTitlePlaceholder('Enter Book Title Here');
+```
+
+- Use debug mode to get metabox content provider function
+- Add custom fields for ISBN and Book Cover
+
+```php
+function add_meta_content_details() {
+    tr_form()->text('ISBN Number')->image('Book Cover');
+}
+```
+
+![GitHub Logo](http://typerocket.com/github/typerocket-book-example.png)
 
 ### Designers
 

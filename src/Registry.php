@@ -23,7 +23,7 @@ class Registry
                 add_action( 'init', array( $obj, 'register' ) );
 
                 if (is_string( $obj->getTitlePlaceholder() )) {
-                    add_filter( 'enter_title_here', array( $obj->getTitlePlaceholder(), 'enterTitleHere' ) );
+                    add_filter( 'enter_title_here', array( $obj, 'enterTitleHere' ) );
                 }
 
                 // edit_form_top

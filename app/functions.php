@@ -31,7 +31,7 @@ function tr_post_type(
     return $obj;
 }
 
-function tr_meta_box(
+function tr_metabox(
     $name = null,
     $settings = array()
 ) {

@@ -374,7 +374,7 @@ class Form
     private function renderField( Field $field )
     {
         $this->setCurrentField( $field );
-        $field     = $this->getCurrentField()->getString();
+        $field     = $this->getCurrentField();
         $label     = $this->getLabel();
         $id        = $this->getCurrentField()->getSetting( 'id' );
         $help      = $this->getCurrentField()->getSetting( 'help' );
