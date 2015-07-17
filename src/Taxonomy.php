@@ -36,7 +36,7 @@ class Taxonomy extends Registrable
     {
 
         if(is_null($plural)) {
-            $plural = apply_filters('tr_singular_to_plural', $singular . 's');
+            $plural = Inflect::pluralize($singular);
         }
 
         $upperPlural   = ucwords( $plural );

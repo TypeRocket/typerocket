@@ -24,7 +24,6 @@ class Core
     {
         $this->initAdmin();
         $this->loadPlugins( new Plugin\PluginCollection() );
-
         $posts = new Controllers\PostsController();
         $comments = new Controllers\CommentsController();
         $users = new Controllers\UsersController();
