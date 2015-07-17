@@ -69,7 +69,7 @@ abstract class Controller
             $keep = array();
             foreach ($this->fillable as $field) {
 
-                if (isset( $_POST['tr'][$field] )) {
+                if (isset( $_POST['tr'][$field] ) && ! is_bool($field) ) {
                     $keep[$field] = $_POST['tr'][$field];
                 }
 

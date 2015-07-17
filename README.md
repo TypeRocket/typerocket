@@ -87,7 +87,8 @@ Lets make the fields for the "Book" post type the only fillable fields to make t
 ```php
 add_filter('tr_posts_controller_fillable', function($fillable, $controller) {
     if($controller->post->post_type == 'book') {
-        $fillable = array('book_cover', 'isbn_number');
+        $bookFields = array('book_cover', 'isbn_number');
+        $fillable = array_merge( (array) $fillable, $bookFields);
     }
     return $fillable;
 }, 10, 2);
