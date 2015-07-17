@@ -15,7 +15,7 @@ abstract class Controller
     public $item_id = null;
     public $action = null;
     public $fields = null;
-    public $valid = null;
+    public $valid = true;
     public $defaultValues = null;
     public $staticValues = null;
     public $response = array( 'message' => 'Message...', 'errors' => array() );
