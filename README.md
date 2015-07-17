@@ -78,11 +78,11 @@ function add_meta_content_details() {
 
 ### Fillable Fields Example
 
-By default TypeRocket will save any and all fields. This is just fine in many cases and make life easy.
+By default TypeRocket will save any and all fields. This is just fine in many cases and makes life easy.
 
 When you need to filter, validate or fill only specific fields we have some simple hooks to help you out.
 
-Lets make the fields for the "Book" post type the only fillable fields.
+Lets make the fields for the "Book" post type the only fillable fields to make things a little more secure.
 
 ```php
 add_filter('tr_posts_controller_fillable', function($fillable, $controller) {
