@@ -23,7 +23,7 @@ class PostsController extends Controller
             $this->response['message'] = "Sorry, you don't have enough rights.";
         }
 
-        $this->valid = apply_filters( 'tr_post_controller_validate', $this->valid, $this );
+        $this->valid = apply_filters( 'tr_posts_controller_validate', $this->valid, $this );
 
         return $this->valid;
     }
@@ -31,7 +31,7 @@ class PostsController extends Controller
     function filter()
     {
         parent::filter();
-        $this->fields = apply_filters( 'tr_post_controller_filter', $_POST['tr'], $this );
+        $this->fields = apply_filters( 'tr_posts_controller_filter', $_POST['tr'], $this );
 
         return $this;
     }
@@ -44,6 +44,8 @@ class PostsController extends Controller
      */
     function save( $item_id, $action = 'update' )
     {
+        $fillable = apply_filters( 'tr_posts_controller_fillable', $this->getFillable(), $this );
+        $this->setFillable($fillable)->filterFillable();
         parent::save( $item_id, $action );
 
         return $this;

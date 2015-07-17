@@ -26,8 +26,8 @@ abstract class Controller
 
     public function save( $item_id, $action = 'update' )
     {
-        $fillable = apply_filters( 'tr_controller_data_fillable', $this->fillable, $this );
-        $this->filterFillable( $fillable );
+        $this->fillable = apply_filters( 'tr_controller_fillable', $this->fillable, $this );
+        $this->filterFillable();
         $this->fields      = ! empty( $_POST['tr'] ) ? $_POST['tr'] : array();
         $this->item_id     = $item_id;
         $this->action      = $action;
@@ -52,22 +52,22 @@ abstract class Controller
 
     public function getValidate()
     {
-        return $this->valid = true;
+        return $this->valid = apply_filters( 'tr_controller_validate', $this->valid, $this );
     }
 
-    public function setFillable( array $fillable )
+    public function setFillable( $fillable )
     {
         $this->fillable = $fillable;
 
         return $this;
     }
 
-    private function filterFillable( $fillable )
+    public function filterFillable()
     {
-        if (is_array( $fillable )) {
+        if (is_array( $this->fillable )) {
 
             $keep = array();
-            foreach ($fillable as $field) {
+            foreach ($this->fillable as $field) {
 
                 if (isset( $_POST['tr'][$field] )) {
                     $keep[$field] = $_POST['tr'][$field];
@@ -76,7 +76,7 @@ abstract class Controller
             }
 
             $_POST['tr'] = $keep;
-        } elseif ($fillable === false) {
+        } elseif ($this->fillable === false) {
             $_POST['tr'] = array();
         }
 
@@ -133,6 +133,7 @@ abstract class Controller
 
     function filter()
     {
+        $this->fields = apply_filters( 'tr_controller_filter', $_POST['tr'], $this );
         return $this;
     }
 

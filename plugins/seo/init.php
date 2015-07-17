@@ -20,7 +20,7 @@ class SeoPlugin
     {
         if ( ! defined( 'WPSEO_URL' ) && ! defined( 'AIOSEOP_VERSION' ) ) {
             define( 'TR_SEO', '1.0' );
-            add_filter('tr_controller_data_fillable', array($this, 'fillable'), 9999999999, 2 );
+            add_filter('tr_controller_fillable', array($this, 'fillable'), 9999999999, 2 );
             add_action( 'wp_head', array( $this, 'head_data' ), 0 );
             add_action( 'template_redirect', array( $this, 'loaded' ), 0 );
             add_filter( 'wp_title', array( $this, 'title' ), 100, 3 );

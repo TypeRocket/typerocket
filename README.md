@@ -76,6 +76,23 @@ function add_meta_content_details() {
 
 ![GitHub Logo](http://typerocket.com/github/typerocket-book-example.png)
 
+### Fillable Fields Example
+
+By default TypeRocket will save any and all fields. This is just fine in many cases and make life easy.
+
+When you need to filter, validate or fill only specific fields we have some simple hooks to help you out.
+
+Lets make the fields for the "Book" post type the only fillable fields.
+
+```php
+add_filter('tr_posts_controller_fillable', function($fillable, $controller) {
+    if($controller->post->post_type == 'book') {
+        $fillable = array('book_cover', 'isbn_number');
+    }
+    return $fillable;
+}, 10, 2);
+```
+
 ### Designers
 
 We made Typerocket with design in mind first. Inside and out. Writing your code to replace plugins is super simple. We give you a development mode so building your custom feature is as simple as copy and paste. Don't let that fool you though. TypeRocket uses all the best available programing patterns that are compatible with WordPress.

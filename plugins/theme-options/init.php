@@ -28,7 +28,7 @@ class ThemeOptionsPlugin
     {
         add_action( 'admin_menu', array( $this, 'menu' ) );
         add_action( 'wp_before_admin_bar_render', array( $this, 'admin_bar_menu' ), 100 );
-        add_filter('tr_controller_data_fillable', array($this, 'fillable'), 9999999998, 2 );
+        add_filter('tr_controller_fillable', array($this, 'fillable'), 9999999998, 2 );
 
         // process import and export
         if (count( $_POST ) < 1 && $_GET['theme-options'] == 'export') {

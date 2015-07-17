@@ -18,7 +18,7 @@ class OptionsController extends Controller
             $this->response['message'] = 'Invalid CSRF Token';
         }
 
-        $this->valid = apply_filters( 'tr_option_controller_validate', $this->valid, $this );
+        $this->valid = apply_filters( 'tr_options_controller_validate', $this->valid, $this );
 
         return $this->valid;
     }
@@ -26,13 +26,15 @@ class OptionsController extends Controller
     function filter()
     {
         parent::filter();
-        $this->fields = apply_filters( 'tr_option_controller_filter', $_POST['tr'], $this );
+        $this->fields = apply_filters( 'tr_options_controller_filter', $_POST['tr'], $this );
 
         return $this;
     }
 
     function save( $item_id, $action = 'update' )
     {
+        $fillable = apply_filters( 'tr_options_controller_fillable', $this->getFillable(), $this );
+        $this->setFillable($fillable)->filterFillable();
         parent::save( $item_id, $action );
 
         return $this;

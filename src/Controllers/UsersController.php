@@ -25,7 +25,7 @@ class UsersController extends Controller
             $this->response['message'] = "Sorry, you don't have enough rights.";
         }
 
-        $this->valid = apply_filters( 'tr_user_controller_validate', $this->valid, $this );
+        $this->valid = apply_filters( 'tr_users_controller_validate', $this->valid, $this );
 
         return $this->valid;
     }
@@ -33,7 +33,22 @@ class UsersController extends Controller
     function filter()
     {
         parent::filter();
-        $this->fields = apply_filters( 'tr_user_controller_filter', $_POST['tr'], $this );
+        $this->fields = apply_filters( 'tr_users_controller_filter', $_POST['tr'], $this );
+    }
+
+    /**
+     * @param $item_id
+     * @param string $action
+     *
+     * @return PostsController $this
+     */
+    function save( $item_id, $action = 'update' )
+    {
+        $fillable = apply_filters( 'tr_users_controller_fillable', $this->getFillable(), $this );
+        $this->setFillable($fillable)->filterFillable();
+        parent::save( $item_id, $action );
+
+        return $this;
     }
 
     function update()
