@@ -156,7 +156,7 @@ class Form
         return $this;
     }
 
-    public function getRender()
+    public function getRenderSetting()
     {
         if ( ! array_key_exists( 'render', $this->settings )) {
             return null;
@@ -166,7 +166,7 @@ class Form
     }
 
     /**
-     * Render Mode
+     * Render Setting
      *
      * By setting render to 'raw' the form will not add any special html wrappers.
      * You have more control of the design when render is set to raw.
@@ -175,7 +175,7 @@ class Form
      *
      * @return $this
      */
-    public function setRender( $value )
+    public function setRenderSetting( $value )
     {
 
         $this->settings['render'] = $value;
