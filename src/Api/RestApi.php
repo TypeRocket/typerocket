@@ -25,7 +25,7 @@ class RestApi {
 
             if($controller instanceof Controller) {
                 $controller->requestType = 'TypeRocketApi';
-                $data = $controller->getResponseArrayByItemId($this->id, $this->method);
+                $data = $controller->getResponseArrayFromRequest($this->id, $this->method);
 
                 if ($data == null) {
                     $data = array('api_v' => $this->version);

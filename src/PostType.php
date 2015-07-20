@@ -153,6 +153,19 @@ class PostType extends Registrable
         return $this;
     }
 
+    /**
+     * Set the post type to only show in WordPress Admin
+     *
+     * @return $this
+     */
+    public function setAdminOnly() {
+        $this->args['public'] = false;
+        $this->args['has_archive'] = false;
+        $this->args['show_ui'] = true;
+
+        return $this;
+    }
+
     public function getSlug()
     {
         return $this->args['rewrite']['slug'];
@@ -246,17 +259,6 @@ class PostType extends Registrable
             'has_archive' => true,
             'taxonomies'  => array()
         );
-
-        if (array_key_exists( 'admin_only', $settings ) && $settings['admin_only'] == true) {
-            $admin_only = array(
-                'public'      => false,
-                'has_archive' => false,
-                'show_ui'     => true
-            );
-            unset( $settings['admin_only'] );
-            $defaults = array_merge( $defaults, $admin_only );
-        }
-
 
         if (array_key_exists( 'taxonomies', $settings )) {
             $this->taxonomies       = array_merge( $this->taxonomies, $settings['taxonomies'] );

@@ -89,7 +89,21 @@ abstract class Controller
         return $this->fillable;
     }
 
-    function getResponseArrayByItemId( $item_id, $method = 'GET' )
+    /**
+     * This is a very basic interface to handle REST requests.
+     *
+     * @param $item_id
+     * @param string $method
+     *
+     * @return array
+     *
+     * The returned array should include
+     *   - message The text to display
+     *   - valid A bool value
+     *   - redirect The url to redirect to if needed
+     *   - errors An array of errors
+     */
+    function getResponseArrayFromRequest( $item_id, $method = 'GET' )
     {
         $method        = strtoupper( $method );
         $this->item_id = $item_id;
