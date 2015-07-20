@@ -539,11 +539,15 @@ class Form
     /**
      * Set the form debug status
      *
-     * @param $status
+     * @param bool $status
+     *
+     * @return $this
      */
     public function setDebugStatus( $status )
     {
         $this->debugStatus = (bool) $status;
+
+        return $this;
     }
 
     /**
