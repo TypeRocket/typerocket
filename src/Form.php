@@ -561,7 +561,7 @@ class Form
     {
         $this->setCurrentField( $field );
         $field     = $field->getString();
-        $label     = $this->getLabelOption();
+        $label     = $this->getLabel();
         $id        = $this->getCurrentField()->getSetting( 'id' );
         $help      = $this->getCurrentField()->getSetting( 'help' );
         $fieldHtml = $this->getCurrentField()->getSetting( 'render' );
