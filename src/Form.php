@@ -471,7 +471,7 @@ class Form
         $close_html = '</span></div>';
         $debug      = $this->getDebug();
         $html       = '';
-        $label      = $this->currentField->getLabel();
+        $label      = $this->currentField->getLabelOption();
 
         if ($label) {
             $label = $this->currentField->getSetting( 'label' );
