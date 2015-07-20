@@ -123,7 +123,7 @@ class Form
     }
 
     /**
-     * Set group into bracket syntax
+     * Set Group into bracket syntax
      *
      * @param $group
      *
@@ -143,7 +143,7 @@ class Form
     }
 
     /**
-     * Get group
+     * Get Group
      *
      * @return null
      */
@@ -153,7 +153,7 @@ class Form
     }
 
     /**
-     * Set sub Group into bracket syntax
+     * Set Sub Group into bracket syntax
      *
      * @param $sub
      *

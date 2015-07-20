@@ -116,6 +116,13 @@ abstract class Field
         return $this->form;
     }
 
+    /**
+     * Set Group into bracket syntax
+     *
+     * @param $group
+     *
+     * @return $this
+     */
     public function setGroup( $group )
     {
         $this->group = null;
@@ -129,11 +136,23 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Get Group
+     *
+     * @return null
+     */
     public function getGroup()
     {
         return $this->group;
     }
 
+    /**
+     * Set Sub Group into bracket syntax
+     *
+     * @param $sub
+     *
+     * @return $this
+     */
     public function setSub( $sub )
     {
         $this->sub = null;
@@ -147,6 +166,23 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Get Sub Group
+     *
+     * @return null
+     */
+    public function getSub()
+    {
+        return $this->sub;
+    }
+
+    /**
+     * Set Attributes
+     *
+     * @param array $attributes
+     *
+     * @return $this
+     */
     public function setAttributes( array $attributes )
     {
         $this->attr = $attributes;
@@ -154,6 +190,14 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Set whether to populate Field from database. If set to false fields will
+     * always be left empty and with their default values.
+     *
+     * @param $populate
+     *
+     * @return $this
+     */
     public function setPopulate( $populate )
     {
         $this->populate = (bool) $populate;
@@ -161,11 +205,23 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Get populate
+     *
+     * @return bool
+     */
     function getPopulate()
     {
         return $this->populate;
     }
 
+    /**
+     * Set if field is built in.
+     *
+     * @param $in
+     *
+     * @return $this
+     */
     public function setBuiltin( $in )
     {
         $this->builtin = (bool) $in;
@@ -173,11 +229,25 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Get builtin
+     *
+     * If the field is a built in value of a meta value
+     *
+     * @return bool
+     */
     function getBuiltin()
     {
         return $this->builtin;
     }
 
+    /**
+     * Set whether label should be displayed
+     *
+     * @param $label
+     *
+     * @return $this
+     */
     public function setLabel( $label )
     {
         $this->label = (bool) $label;
@@ -185,11 +255,24 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Get Label
+     *
+     * This is not the label text but the label setting. Whether it
+     * should be displayed.
+     *
+     * @return bool
+     */
     function getLabel()
     {
         return $this->label;
     }
 
+    /**
+     * Get Attribute by key
+     *
+     * @return array
+     */
     public function getAttributes()
     {
         return $this->attr;
@@ -210,6 +293,14 @@ abstract class Field
         return $this->attr[$key];
     }
 
+    /**
+     * Set Attribute by key
+     *
+     * @param $key
+     * @param $value
+     *
+     * @return $this
+     */
     public function setAttribute( $key, $value )
     {
         $this->attr[(string) $key] = $value;
@@ -217,6 +308,13 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Remove Attribute by key
+     *
+     * @param $key
+     *
+     * @return $this
+     */
     public function removeAttribute( $key )
     {
 
@@ -227,6 +325,13 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Remove Setting by key
+     *
+     * @param $key
+     *
+     * @return $this
+     */
     public function removeSetting( $key )
     {
 
@@ -237,6 +342,13 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Set the Item Id
+     *
+     * @param int $item_id
+     *
+     * @return $this
+     */
     public function setItemId( $item_id )
     {
         if (isset( $item_id )) {
@@ -246,6 +358,11 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Get Item ID
+     *
+     * @return null
+     */
     public function getItemId()
     {
         return $this->item_id;
@@ -267,11 +384,23 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Get Type
+     *
+     * @return null
+     */
     public function getType()
     {
         return $this->type;
     }
 
+    /**
+     * Set Controller
+     *
+     * @param $controller
+     *
+     * @return $this
+     */
     public function setController( $controller )
     {
         if (isset( $controller )) {
@@ -281,6 +410,11 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Get Controller
+     *
+     * @return null
+     */
     public function getController()
     {
         return $this->controller;
@@ -318,6 +452,11 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Get Settings
+     *
+     * @return array
+     */
     public function getSettings()
     {
         return $this->settings;
@@ -341,6 +480,11 @@ abstract class Field
         return $this->settings[$key];
     }
 
+    /**
+     * Get render mode
+     *
+     * @return null
+     */
     public function getRender()
     {
         if ( ! array_key_exists( 'render', $this->settings )) {
@@ -350,6 +494,16 @@ abstract class Field
         return $this->settings['render'];
     }
 
+    /**
+     * Render Setting
+     *
+     * By setting render to 'raw' the form will not add any special html wrappers.
+     * You have more control of the design when render is set to raw.
+     *
+     * @param string $value
+     *
+     * @return $this
+     */
     public function setRender( $value )
     {
 
@@ -399,6 +553,11 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Get the prefix
+     *
+     * @return null
+     */
     public function getPrefix()
     {
         return $this->prefix;
