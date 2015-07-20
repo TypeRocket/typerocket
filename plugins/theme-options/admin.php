@@ -21,25 +21,25 @@ $form->setup();
 
     // about
     $buffer->startBuffer();
-    $form->text( 'Company Name' );
+    echo $form->text( 'Company Name' );
     $contact = array(
         array( 'text', array( 'Phone' ) ),
         array( 'text', array( 'Email' ) ),
     );
 
-    $form->renderFields( $contact );
+    echo $form->getFromFieldsString( $contact );
     $buffer->indexBuffer( 'about' );
 
     // api
     $buffer->startBuffer();
     $help = '<a target="blank" href="https://developers.google.com/maps/documentation/embed/guide#api_key">Get Your Google Maps API</a> to activate maps in the theme.';
-    $form->text( 'Google Maps API Key', array(), array( 'help' => $help ) );
+    echo $form->text( 'Google Maps API Key')->setSetting('help', $help);
     $buffer->indexBuffer( 'api' );
 
     // save
     $buffer->startBuffer();
     $form->setDebugStatus( false );
-    $form->submit( 'Save' );
+    echo $form->submit( 'Save' );
     $buffer->indexBuffer( 'save' );
 
     // layout

@@ -64,9 +64,20 @@ abstract class Field
     {
     }
 
+    /**
+     * Get Field object as string
+     *
+     * @return string
+     */
     public function __toString()
     {
-        return $this->getString();
+        if($this->getForm() instanceof From) {
+            $string = $this->getForm()->getFromFieldString($this);
+        } else {
+            $string = $this->getString();
+        }
+
+        return $string;
     }
 
     public function init()
@@ -248,7 +259,7 @@ abstract class Field
      *
      * @return $this
      */
-    public function setLabel( $label )
+    public function setLabelOption( $label )
     {
         $this->label = (bool) $label;
 
@@ -263,7 +274,7 @@ abstract class Field
      *
      * @return bool
      */
-    function getLabel()
+    function getLabelOption()
     {
         return $this->label;
     }
@@ -510,6 +521,32 @@ abstract class Field
         $this->settings['render'] = $value;
 
         return $this;
+    }
+
+    /**
+     * Label Text
+     *
+     * Set the label text to be used
+     *
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function setLabel( $value )
+    {
+
+        $this->settings['label'] = $value;
+
+        return $this;
+    }
+
+    public function getLabel()
+    {
+        if ( ! array_key_exists( 'label', $this->settings )) {
+            return null;
+        }
+
+        return $this->settings['label'];
     }
 
     /**

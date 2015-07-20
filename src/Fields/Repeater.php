@@ -31,7 +31,6 @@ class Repeater extends Field implements FieldScript
         $fields   = $this->fields;
         $name     = $this->getName();
         $html     = '';
-        $utility  = new Buffer();
 
         // add controls
         if (isset( $settings['help'] )) {
@@ -83,9 +82,7 @@ class Repeater extends Field implements FieldScript
                 $html .= '<div class="tr-repeater-group">';
                 $html .= $openContainer;
                 $form->setGroup( $root_group . "[{$k}]" );
-                $utility->startBuffer();
-                $form->renderFields( $fields );
-                $html .= $utility->indexBuffer( 'fields' )->getBuffer( 'fields' );
+                $html .= $form->getFromFieldsString( $fields );
                 $html .= $endContainer;
                 $html .= '</div>';
             }
@@ -94,20 +91,13 @@ class Repeater extends Field implements FieldScript
         $form->setGroup( $cache_group );
         $form->setSub( $cache_sub );
         $html .= '</div>'; // end tr-repeater
-        $utility->cleanBuffer();
 
         return $html;
     }
 
     public function getTemplateFields()
     {
-        $utility = new Buffer();
-
-        $utility->startBuffer();
-        $this->getForm()->renderFields( $this->fields );
-        $fields = $utility->indexBuffer( 'template' )->getBuffer( 'template' );
-
-        return $fields;
+        return $this->getForm()->getFromFieldsString( $this->fields );
     }
 
     public function setFields( $fields )

@@ -551,17 +551,17 @@ class Form
     }
 
     /**
+     * Get Form Field string
+     *
      * @param Field $field
      *
-     * @return $this
-     * @internal param Field $field_obj
-     *
+     * @return string
      */
-    private function renderField( Field $field )
+    public function getFromFieldString( Field $field )
     {
         $this->setCurrentField( $field );
-        $field     = $this->getCurrentField();
-        $label     = $this->getLabel();
+        $field     = $field->getString();
+        $label     = $this->getLabelOption();
         $id        = $this->getCurrentField()->getSetting( 'id' );
         $help      = $this->getCurrentField()->getSetting( 'help' );
         $fieldHtml = $this->getCurrentField()->getSetting( 'render' );
@@ -578,34 +578,34 @@ class Form
         }
 
         $html = apply_filters( 'tr_from_field_html', $html, $this );
-
-        $this->_e( $html );
         $this->currentField = null;
 
-        return $this;
+        return $html;
     }
 
     /**
-     * Render fields from array
+     * Get From fields string from array
      *
      * @param array $fields
      *
-     * @return $this
+     * @return string
      */
-    public function renderFields( array $fields = array() )
+    public function getFromFieldsString( array $fields = array() )
     {
+        $html = '';
+
         foreach ($fields as $functionSetup) {
 
             $function   = array_shift( $functionSetup );
             $parameters = array_pop( $functionSetup );
 
             if (method_exists( $this, $function ) && is_array( $parameters )) {
-                call_user_func_array( array( $this, $function ), $parameters );
+                $html .= (string) call_user_func_array( array( $this, $function ), $parameters );
             }
 
         }
 
-        return $this;
+        return $html;
     }
 
     /**
@@ -616,14 +616,11 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function text( $name, array $attr = array(), array $settings = array(), $label = true )
     {
-        $field = new Fields\Text( $name, $attr, $settings, $label, $this );
-        $this->renderField( $field );
-
-        return $this;
+        return new Fields\Text( $name, $attr, $settings, $label, $this );
     }
 
     /**
@@ -634,15 +631,14 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function password( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Text( $name, $attr, $settings, $label, $this );
         $field->setType( 'password' )->setAttribute( 'autocomplete', 'off' );
-        $this->renderField( $field );
 
-        return $this;
+        return $field;
     }
 
     /**
@@ -653,15 +649,14 @@ class Form
      * @param array $settings
      * @param bool|false $label
      *
-     * @return $this
+     * @return Field
      */
     public function hidden( $name, array $attr = array(), array $settings = array(), $label = false )
     {
         $field = new Fields\Text( $name, $attr, $settings, $label, $this );
         $field->setType( 'hidden' )->setRender( 'raw' );
-        $this->renderField( $field );
 
-        return $this;
+        return $field;
     }
 
     /**
@@ -672,15 +667,14 @@ class Form
      * @param array $settings
      * @param bool|false $label
      *
-     * @return $this
+     * @return Field
      */
     public function submit( $name, array $attr = array(), array $settings = array(), $label = false )
     {
         $field = new Fields\Submit( $name, $attr, $settings, $label, $this );
         $field->setAttribute( 'value', $name );
-        $this->renderField( $field );
 
-        return $this;
+        return $field;
     }
 
     /**
@@ -691,14 +685,11 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function textarea( $name, array $attr = array(), array $settings = array(), $label = true )
     {
-        $field = new Fields\Textarea( $name, $attr, $settings, $label, $this );
-        $this->renderField( $field );
-
-        return $this;
+        return new Fields\Textarea( $name, $attr, $settings, $label, $this );
     }
 
     /**
@@ -709,14 +700,11 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function editor( $name, array $attr = array(), array $settings = array(), $label = true )
     {
-        $field = new Fields\Editor( $name, $attr, $settings, $label, $this );
-        $this->renderField( $field );
-
-        return $this;
+        return new Fields\Editor( $name, $attr, $settings, $label, $this );
     }
 
     /**
@@ -728,15 +716,14 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function radio( $name, array $options, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Radio( $name, $attr, $settings, $label, $this );
         $field->setOptions( $options );
-        $this->renderField( $field );
 
-        return $this;
+        return $field;
     }
 
     /**
@@ -747,14 +734,11 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function checkbox( $name, array $attr = array(), array $settings = array(), $label = true )
     {
-        $field = new Fields\Checkbox( $name, $attr, $settings, $label, $this );
-        $this->renderField( $field );
-
-        return $this;
+        return new Fields\Checkbox( $name, $attr, $settings, $label, $this );
     }
 
     /**
@@ -766,15 +750,14 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function select( $name, array $options, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Select( $name, $attr, $settings, $label, $this );
         $field->setOptions( $options );
-        $this->renderField( $field );
 
-        return $this;
+        return $field;
     }
 
     /**
@@ -788,14 +771,11 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function wpEditor( $name, array $attr = array(), array $settings = array(), $label = true )
     {
-        $field = new Fields\WordPressEditor( $name, $attr, $settings, $label, $this );
-        $this->renderField( $field );
-
-        return $this;
+        return new Fields\WordPressEditor( $name, $attr, $settings, $label, $this );
     }
 
     /**
@@ -806,14 +786,11 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function color( $name, array $attr = array(), array $settings = array(), $label = true )
     {
-        $field = new Fields\Color( $name, $attr, $settings, $label, $this );
-        $this->renderField( $field );
-
-        return $this;
+        return new Fields\Color( $name, $attr, $settings, $label, $this );
     }
 
     /**
@@ -824,14 +801,11 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function date( $name, array $attr = array(), array $settings = array(), $label = true )
     {
-        $field = new Fields\Date( $name, $attr, $settings, $label, $this );
-        $this->renderField( $field );
-
-        return $this;
+        return new Fields\Date( $name, $attr, $settings, $label, $this );
     }
 
     /**
@@ -842,14 +816,11 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function image( $name, array $attr = array(), array $settings = array(), $label = true )
     {
-        $field = new Fields\Image( $name, $attr, $settings, $label, $this );
-        $this->renderField( $field );
-
-        return $this;
+        return new Fields\Image( $name, $attr, $settings, $label, $this );
     }
 
     /**
@@ -860,14 +831,11 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function file( $name, array $attr = array(), array $settings = array(), $label = true )
     {
-        $field = new Fields\File( $name, $attr, $settings, $label, $this );
-        $this->renderField( $field );
-
-        return $this;
+        return new Fields\File( $name, $attr, $settings, $label, $this );
     }
 
     /**
@@ -878,14 +846,11 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function gallery( $name, array $attr = array(), array $settings = array(), $label = true )
     {
-        $field = new Fields\Gallery( $name, $attr, $settings, $label, $this );
-        $this->renderField( $field );
-
-        return $this;
+        return new Fields\Gallery( $name, $attr, $settings, $label, $this );
     }
 
     /**
@@ -896,14 +861,11 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function items( $name, array $attr = array(), array $settings = array(), $label = true )
     {
-        $field = new Fields\Items( $name, $attr, $settings, $label, $this );
-        $this->renderField( $field );
-
-        return $this;
+        return new Fields\Items( $name, $attr, $settings, $label, $this );
     }
 
     /**
@@ -915,7 +877,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function matrix(
         $name,
@@ -926,9 +888,8 @@ class Form
     ) {
         $field = new Fields\Matrix( $name, $attr, $settings, $label, $this );
         $field->setOptions( $options );
-        $this->renderField( $field );
 
-        return $this;
+        return $field;
     }
 
     /**
@@ -940,15 +901,14 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return $this
+     * @return Field
      */
     public function repeater( $name, array $fields, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Repeater( $name, $attr, $settings, $label, $this );
         $field->setFields( $fields );
-        $this->renderField( $field );
 
-        return $this;
+        return $field;
     }
 
     /**
@@ -956,13 +916,11 @@ class Form
      *
      * @param Fields\Field $field
      *
-     * @return $this
+     * @return Field $field
      */
     public function renderCustomField( Field $field )
     {
-        $this->renderField( $field );
-
-        return $this;
+        return $field;
     }
 
 }

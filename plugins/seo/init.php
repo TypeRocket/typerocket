@@ -228,19 +228,19 @@ class SeoPlugin
         $form->setGroup( '[seo][meta]' );
         $form->setup();
         $buffer->startBuffer();
-        $form->text( 'title', array( 'id' => 'tr_title' ), $title )
-             ->textarea( 'description', array( 'id' => 'tr_description' ), $desc );
+        echo $form->text( 'title', array( 'id' => 'tr_title' ), $title );
+        echo $form->textarea( 'description', array( 'id' => 'tr_description' ), $desc );
         $buffer->indexBuffer( 'general' ); // index buffer
         $buffer->startBuffer();
-        $form->text( 'og_title', array(), $og_title )
-             ->textarea( 'og_desc', array(), $og_desc )
-             ->image( 'meta_img', array(), $img );
+        echo $form->text( 'og_title', array(), $og_title );
+        echo $form->textarea( 'og_desc', array(), $og_desc );
+        echo $form->image( 'meta_img', array(), $img );
         $buffer->indexBuffer( 'social' ); // index buffer
         $buffer->startBuffer();
-        $form->text( 'canonical', array(), $canon )
-             ->text( 'redirect', array( 'readonly' => 'readonly', 'id' => 'tr_redirect' ), $redirect )
-             ->select( 'follow', $follow_opts, array(), $follow )
-             ->select( 'index', $index_opts, array(), $help );
+        echo $form->text( 'canonical', array(), $canon );
+        echo $form->text( 'redirect', array( 'readonly' => 'readonly', 'id' => 'tr_redirect' ), $redirect );
+        echo $form->select( 'follow', $follow_opts, array(), $follow );
+        echo $form->select( 'index', $index_opts, array(), $help );
         $buffer->indexBuffer( 'advanced' ); // index buffer
 
         $tabs = new Tabs();
