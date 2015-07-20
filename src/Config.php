@@ -21,31 +21,61 @@ class Config
         }
     }
 
+    /**
+     * Get paths array
+     *
+     * @return mixed|null|void
+     */
     static public function getPaths()
     {
         return self::$paths;
     }
 
+    /**
+     * Get debug status
+     *
+     * @return bool
+     */
     static public function getDebugStatus()
     {
         return self::$debug;
     }
 
+    /**
+     * Get Seed
+     *
+     * @return null|string
+     */
     static public function getSeed()
     {
         return self::$seed;
     }
 
+    /**
+     * Get the TypeRocket folder name
+     *
+     * @return null|string
+     */
     static public function getFolder()
     {
         return self::$folder;
     }
 
+    /**
+     * Get array of plugins
+     *
+     * @return array
+     */
     static public function getPlugins()
     {
         return explode( '|', self::$plugins );
     }
 
+    /**
+     * Set default paths
+     *
+     * @return array
+     */
     private function defaultPaths()
     {
         return array(

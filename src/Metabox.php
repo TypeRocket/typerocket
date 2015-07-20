@@ -15,7 +15,7 @@ class Metabox extends Registrable
      *
      * @return $this
      */
-    function setup( $name, $settings = array() )
+    public function setup( $name, $settings = array() )
     {
 
         $this->label = $this->id = $name;
@@ -44,7 +44,13 @@ class Metabox extends Registrable
         return $this;
     }
 
-    function metaContent( $object, $box )
+    /**
+     * Add content inside form hook and wrap with the TypeRocket container
+     *
+     * @param $object
+     * @param $box
+     */
+    public function metaContent( $object, $box )
     {
         $func = 'add_meta_content_' . $this->id;
 
@@ -58,9 +64,11 @@ class Metabox extends Registrable
     }
 
     /**
+     * Add metabox to post type
+     *
      * @param string|PostType $s
      */
-    function postTypeRegistrationById( $s )
+    public function postTypeRegistrationById( $s )
     {
         if ( ! is_string( $s )) {
             $s = (string) $s->getId();
@@ -72,12 +80,22 @@ class Metabox extends Registrable
 
     }
 
-    function stringRegistration( $v )
+    /**
+     * Apply taxonomy to a post type by string
+     *
+     * @param $postTypeId
+     */
+    public function stringRegistration( $postTypeId )
     {
-        $this->postTypeRegistrationById( $v );
+        $this->postTypeRegistrationById( $postTypeId );
     }
 
-    function register()
+    /**
+     * Register metabox with WordPress
+     *
+     * @return $this
+     */
+    public function register()
     {
 
         global $post, $comment;

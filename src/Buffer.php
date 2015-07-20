@@ -7,6 +7,11 @@ class Buffer
     private $buffering = false;
     private $buffer = array();
 
+    /**
+     * Start Buffering output
+     *
+     * @return $this
+     */
     public function startBuffer()
     {
         $this->buffering = true;
@@ -16,6 +21,13 @@ class Buffer
 
     }
 
+    /**
+     * Index Buffered output
+     *
+     * @param $index
+     *
+     * @return $this
+     */
     public function indexBuffer($index) {
 
         if($this->buffering) {
@@ -28,11 +40,21 @@ class Buffer
         return $this;
     }
 
+    /**
+     * Getting Index output by key
+     *
+     * @param $index
+     *
+     * @return mixed
+     */
     public function getBuffer( $index )
     {
         return $this->buffer[$index];
     }
 
+    /**
+     * Remove all data from Buffer
+     */
     public function cleanBuffer() {
         $this->buffer = array();
     }

@@ -1,6 +1,13 @@
 <?php
 namespace TypeRocket;
 
+/**
+ * Class Icons
+ *
+ * A collection of icons and their font-face content strings
+ *
+ * @package TypeRocket
+ */
 class Icons extends Collection
 {
 

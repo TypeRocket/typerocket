@@ -139,6 +139,9 @@ class Core
         return $messages;
     }
 
+    /**
+     * Add CSS
+     */
     public function addCss()
     {
         $paths = Config::getPaths();
@@ -152,6 +155,9 @@ class Core
         }
     }
 
+    /**
+     * Add JavaScript
+     */
     public function addJs()
     {
 
@@ -161,6 +167,9 @@ class Core
             '1.0' );
     }
 
+    /**
+     * Add JavaScript to very bottom
+     */
     public function addBottomJs()
     {
 
@@ -175,6 +184,11 @@ class Core
 
     }
 
+    /**
+     * Hook for both user edit and add pages
+     *
+     * @param $user_obj
+     */
     public function userContent( $user_obj )
     {
         echo '<div class="typerocket-container typerocket-wp-style-guide">';

@@ -4,6 +4,16 @@ namespace TypeRocket;
 class GetValue
 {
 
+    /**
+     * Get value from database from typeRocket bracket syntax
+     *
+     * @param $brackets
+     * @param $item_id
+     * @param $controller
+     * @param bool|false $builtin
+     *
+     * @return array|mixed|null|string
+     */
     public function getFromBrackets( $brackets, $item_id, $controller, $builtin = false )
     {
         $keys = $this->geBracketKeys( $brackets );
@@ -14,6 +24,8 @@ class GetValue
 
 
     /**
+     * Get value from Field object
+     *
      * @param \TypeRocket\Fields\Field $field
      *
      * @return string|false
@@ -27,6 +39,14 @@ class GetValue
         return $this->getFromBrackets( $brackets, $item_id, $controller, $builtin);
     }
 
+    /**
+     * Parse data by walking through keys
+     *
+     * @param $data
+     * @param $keys
+     *
+     * @return array|mixed|null|string
+     */
     private function parseValueData( $data, $keys )
     {
         if (isset( $keys[1] ) && ! empty( $data )) {
@@ -48,6 +68,13 @@ class GetValue
         return $data;
     }
 
+    /**
+     * Decode data by removing slashes
+     *
+     * @param $v
+     *
+     * @return array|mixed|string
+     */
     private function decode($v) {
         if (is_string($v)) {
             $v = wp_unslash($v);
@@ -58,6 +85,16 @@ class GetValue
         return $v;
     }
 
+    /**
+     * Get data from correct source in WordPress
+     *
+     * @param $the_field
+     * @param $item_id
+     * @param $controller
+     * @param $builtin
+     *
+     * @return mixed|null|void
+     */
     private function controllerSwitch( $the_field, $item_id, $controller, $builtin )
     {
         $data = null;
@@ -99,6 +136,14 @@ class GetValue
         return $data !== '' ? $data : null;
     }
 
+    /**
+     * Get keys from TypeRocket brackets
+     *
+     * @param $str
+     * @param int $set
+     *
+     * @return mixed
+     */
     private function geBracketKeys( $str, $set = 1 )
     {
         $regex = '/\[([^]]+)\]/i';
@@ -107,6 +152,14 @@ class GetValue
         return $matches[$set];
     }
 
+    /**
+     * Getting user data is a little more complicated. Use this to get the correct data.
+     *
+     * @param $item_id
+     * @param $the_field
+     *
+     * @return bool|mixed|string|\WP_User
+     */
     private function getUserData( $item_id, $the_field )
     {
         switch ($the_field) {

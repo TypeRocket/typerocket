@@ -6,13 +6,21 @@ class Registry
 
     public static $collection = array();
 
+    /**
+     * Add Registrable objects to collection
+     *
+     * @param null $obj
+     */
     public static function add( $obj = null )
     {
-        if (is_object( $obj )) {
+        if ( $obj instanceof Registrable) {
             self::$collection[] = $obj;
         }
     }
 
+    /**
+     * Loop through each Registrable and add hooks automatically
+     */
     public static function run()
     {
         foreach (self::$collection as $obj) {

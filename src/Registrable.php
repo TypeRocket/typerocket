@@ -89,7 +89,12 @@ abstract class Registrable
         'year'                        => true
     );
 
-    protected $registrable = array(
+    /**
+     * Functions to call on Registrable objects per class
+     *
+     * @var array
+     */
+    protected $registrableMethods = array(
         'TypeRocket\Taxonomy' => 'taxonomyRegistrationById',
         'TypeRocket\PostType' => 'postTypeRegistrationById',
         'TypeRocket\Metabox'  => 'metaboxRegistrationById',
@@ -104,18 +109,27 @@ abstract class Registrable
     }
 
     /**
+     * Set the Registrable ID for WordPress to use. Don't use reserved names.
+     *
      * @param $id
      *
      * @return $this
      */
-    function setId( $id )
+    public function setId( $id )
     {
-        $this->id = Sanitize::underscore( $id );
+
+        if(in_array($id, $this->reservedNames)) {
+            $this->id = Sanitize::underscore( $id );
+        } else {
+            die('ID Reserved: ' . $id);
+        }
 
         return $this;
     }
 
     /**
+     * Get the ID
+     *
      * @return string
      */
     function getId()
@@ -123,6 +137,13 @@ abstract class Registrable
         return $this->id;
     }
 
+    /**
+     * Set Arguments
+     *
+     * @param array $args
+     *
+     * @return $this
+     */
     public function setArguments( array $args )
     {
         $this->args = $args;
@@ -130,11 +151,21 @@ abstract class Registrable
         return $this;
     }
 
+    /**
+     * Get Arguments
+     *
+     * @return array
+     */
     public function getArguments()
     {
         return $this->args;
     }
 
+    /**
+     * Get Argument by key
+     *
+     * @return string
+     */
     public function getArgument( $key )
     {
         if( ! array_key_exists($key, $this->args)) {
@@ -144,6 +175,14 @@ abstract class Registrable
         return $this->args[$key];
     }
 
+    /**
+     * Set Argument by key
+     *
+     * @param $key
+     * @param $value
+     *
+     * @return $this
+     */
     public function setArgument( $key, $value )
     {
 
@@ -152,6 +191,13 @@ abstract class Registrable
         return $this;
     }
 
+    /**
+     * Remove Argument by key
+     *
+     * @param $key
+     *
+     * @return $this
+     */
     public function removeArgument( $key )
     {
         if( array_key_exists($key, $this->args)) {
@@ -175,7 +221,7 @@ abstract class Registrable
      *
      * @return $this
      */
-    function apply( $use )
+    public function apply( $use )
     {
 
         $args = func_get_args();
@@ -196,25 +242,40 @@ abstract class Registrable
         return $this;
     }
 
-    function addToRegistry()
+    /**
+     * Add Registrable to the registry
+     *
+     * @return $this
+     */
+    public function addToRegistry()
     {
         Registry::add( $this );
 
         return $this;
     }
 
+    /**
+     * Register with WordPress
+     *
+     * Override this in concrete classes
+     *
+     * @return $this
+     */
     public function register()
     {
         return $this;
     }
 
+    /**
+     * Used with the apply method to connect Registrable objects together.
+     */
     protected function uses()
     {
         $current_class = get_class( $this );
         foreach ($this->use as $obj) {
             if ($obj instanceof Registrable) {
                 $class  = get_class( $obj );
-                $method = $this->registrable[$class];
+                $method = $this->registrableMethods[$class];
                 if (method_exists( $this, $method )) {
                     $this->$method( $obj );
                 } else {

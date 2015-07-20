@@ -68,6 +68,13 @@ class Tabs
         return $this;
     }
 
+    /**
+     * Add tabs using array format
+     *
+     * @param $settings
+     *
+     * @return $this
+     */
     private function addTabFromArray($settings) {
         $defaults = array(
             'title'    => false,
@@ -176,6 +183,9 @@ class Tabs
 
     }
 
+    /**
+     * Tabs at the top
+     */
     private function topStyleTabs()
     {
         // Default help only if there is no old-style block of text and no new-style help tabs.
@@ -239,6 +249,9 @@ class Tabs
         <?php
     }
 
+    /**
+     * Tabs boxes in like with help tabs
+     */
     private function leftBoxedStyleTabs()
     {
         // Default help only if there is no old-style block of text and no new-style help tabs.

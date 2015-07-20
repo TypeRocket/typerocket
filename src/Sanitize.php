@@ -120,6 +120,15 @@ class Sanitize
         return $default;
     }
 
+    /**
+     * Sanitize Underscore
+     *
+     * Remove all special characters and replace spaces with underscores
+     *
+     * @param $name
+     *
+     * @return mixed|string
+     */
     static function underscore( $name )
     {
         if (is_string( $name )) {
@@ -131,6 +140,15 @@ class Sanitize
         return $name;
     }
 
+    /**
+     * Sanitize Dash
+     *
+     * Remove all special characters and replace spaces with dashes
+     *
+     * @param $name
+     *
+     * @return mixed|string
+     */
     static function dash( $name )
     {
         if (is_string( $name )) {

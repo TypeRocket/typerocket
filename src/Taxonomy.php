@@ -11,6 +11,13 @@ class Taxonomy extends Registrable
 
     private $post_types = array();
 
+    /**
+     * Set the url slug used for rewrite rules
+     *
+     * @param $slug
+     *
+     * @return $this
+     */
     public function setSlug( $slug )
     {
         $this->args['rewrite'] = array( 'slug' => Sanitize::dash( $slug ) );
@@ -18,6 +25,11 @@ class Taxonomy extends Registrable
         return $this;
     }
 
+    /**
+     * Get the slug
+     *
+     * @return mixed
+     */
     public function getSlug()
     {
         return $this->args['rewrite']['slug'];
@@ -94,6 +106,11 @@ class Taxonomy extends Registrable
         return $this;
     }
 
+    /**
+     * Register the taxonomy with WordPress
+     *
+     * @return $this
+     */
     function register()
     {
         $this->dieIfReserved();
@@ -105,6 +122,8 @@ class Taxonomy extends Registrable
     }
 
     /**
+     * Apply post types
+     *
      * @param string|PostType $s
      */
     function postTypeRegistrationById( $s )
@@ -120,9 +139,14 @@ class Taxonomy extends Registrable
 
     }
 
-    function stringRegistration( $s )
+    /**
+     * Apply taxonomy to a post type by string
+     *
+     * @param $postTypeId
+     */
+    function stringRegistration( $postTypeId )
     {
-        $this->postTypeRegistrationById( $s );
+        $this->postTypeRegistrationById( $postTypeId );
     }
 
 }

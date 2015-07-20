@@ -9,6 +9,13 @@ class PostType extends Registrable
     private $taxonomies = array();
     private $icon = null;
 
+    /**
+     * Set the post type menu icon
+     *
+     * @param $name
+     *
+     * @return $this
+     */
     function setIcon( $name )
     {
         $name       = strtolower( $name );
@@ -19,11 +26,23 @@ class PostType extends Registrable
         return $this;
     }
 
+    /**
+     * Get the placeholder title
+     *
+     * @return null
+     */
     public function getTitlePlaceholder()
     {
         return $this->title;
     }
 
+    /**
+     * Set the placeholder title for the title field
+     *
+     * @param $text
+     *
+     * @return $this
+     */
     public function setTitlePlaceholder( $text )
     {
         $this->title = (string) $text;
@@ -32,6 +51,8 @@ class PostType extends Registrable
     }
 
     /**
+     * Get the form hook value by key
+     *
      * @param $key
      *
      * @return mixed
@@ -42,6 +63,10 @@ class PostType extends Registrable
     }
 
     /**
+     * Set the form title hook
+     *
+     * From hook to be added just below the title field
+     *
      * @param bool|true|callable $value
      *
      * @return $this
@@ -59,16 +84,10 @@ class PostType extends Registrable
     }
 
     /**
-     * @return $this
-     */
-    public function removeTitleFrom()
-    {
-        $this->form['title'] = null;
-
-        return $this;
-    }
-
-    /**
+     * Set the form top hook
+     *
+     * From hook to be added just above the title field
+     *
      * @param bool|true|callable $value
      *
      * @return $this
@@ -85,16 +104,10 @@ class PostType extends Registrable
     }
 
     /**
-     * @return $this
-     */
-    public function removeTopFrom()
-    {
-        $this->form['top'] = null;
-
-        return $this;
-    }
-
-    /**
+     * Set the from bottom hook
+     *
+     * From hook to be added below the metaboxes
+     *
      * @param bool|true|callable $value
      *
      * @return $this
@@ -111,16 +124,10 @@ class PostType extends Registrable
     }
 
     /**
-     * @return $this
-     */
-    public function removeBottomFrom()
-    {
-        $this->form['bottom'] = null;
-
-        return $this;
-    }
-
-    /**
+     * Set the form editor hook
+     *
+     * From hook to be added below the editor
+     *
      * @param bool|true|callable $value
      *
      * @return $this
@@ -137,15 +144,12 @@ class PostType extends Registrable
     }
 
     /**
+     * Set the rewrite slug for the post type
+     *
+     * @param $slug
+     *
      * @return $this
      */
-    public function removeEditorFrom()
-    {
-        $this->form['editor'] = null;
-
-        return $this;
-    }
-
     public function setSlug( $slug )
     {
         $this->args['rewrite'] = array( 'slug' => Sanitize::dash( $slug ) );
@@ -166,11 +170,19 @@ class PostType extends Registrable
         return $this;
     }
 
+    /**
+     * Get the rewrite slug
+     *
+     * @return mixed
+     */
     public function getSlug()
     {
         return $this->args['rewrite']['slug'];
     }
 
+    /**
+     * Add the CSS needed to create the icon for the menu
+     */
     public function style()
     { ?>
 
@@ -186,7 +198,7 @@ class PostType extends Registrable
     <?php }
 
     /**
-     * Make Post Type. Do not use before init.
+     * Make Post Type. Do not use before init hook.
      *
      * @param string $singular singular name is required
      * @param string $plural plural name
@@ -270,6 +282,11 @@ class PostType extends Registrable
         return $this;
     }
 
+    /**
+     * Register post type with WordPress
+     *
+     * @return $this
+     */
     function register()
     {
         $this->dieIfReserved();
@@ -281,7 +298,11 @@ class PostType extends Registrable
     }
 
     /**
+     * Add metabox to post type
+     *
      * @param string|Metabox $s
+     *
+     * @return $this
      */
     function metaboxRegistrationById( $s )
     {
@@ -292,10 +313,16 @@ class PostType extends Registrable
         if ( ! in_array( $s, $this->args['supports'] )) {
             $this->args['supports'][] = $s;
         }
+
+        return $this;
     }
 
     /**
+     * Add taxonomy to post type
+     *
      * @param string|Taxonomy $s
+     *
+     * @return $this
      */
     function taxonomyRegistrationById( $s )
     {
@@ -309,8 +336,16 @@ class PostType extends Registrable
             $this->args['taxonomies'] = $this->taxonomies;
         }
 
+        return $this;
+
     }
 
+    /**
+     * Add content inside form hook and wrap with the TypeRocket container
+     *
+     * @param $post
+     * @param $type
+     */
     function addFormContent( $post, $type )
     {
         if ($post->post_type == $this->id) :
@@ -334,40 +369,72 @@ class PostType extends Registrable
         endif;
     }
 
+    /**
+     * Add top from content before the title input
+     *
+     * @param $post
+     */
     function editFormTop( $post )
     {
         $this->addFormContent( $post, 'top' );
     }
 
+    /**
+     * Add after title from content
+     *
+     * @param $post
+     */
     function editFormAfterTitle( $post )
     {
         $this->addFormContent( $post, 'title' );
     }
 
+    /**
+     * Add after editor from content
+     *
+     * @param $post
+     */
     function editFormAfterEditor( $post )
     {
         $this->addFormContent( $post, 'editor' );
     }
 
+    /**
+     * Add bottom from content below all metaboxes
+     *
+     * @param $post
+     */
     function dbxPostSidebar( $post )
     {
         $this->addFormContent( $post, 'bottom' );
     }
 
-    function enterTitleHere( $s )
+    /**
+     * Hook the custom placeholder text for the title element
+     *
+     * @param $title
+     *
+     * @return null
+     */
+    function enterTitleHere( $title )
     {
         global $post;
 
         if ($post->post_type == $this->id) :
             return $this->title;
         else :
-            return $s;
+            return $title;
         endif;
     }
 
-    function stringRegistration( $v )
+    /**
+     * Apply post type to a taxonomy by string
+     *
+     * @param $taxonomyId
+     */
+    function stringRegistration( $taxonomyId )
     {
-        $this->taxonomyRegistrationById( $v );
+        $this->taxonomyRegistrationById( $taxonomyId );
     }
 
 }

@@ -67,6 +67,13 @@ class Validate {
     }
   }
 
+  /**
+   * Validate a url
+   *
+   * @param $url
+   *
+   * @return mixed
+   */
   static function url($url) {
     return filter_var($url, FILTER_VALIDATE_URL);
   }

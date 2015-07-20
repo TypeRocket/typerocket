@@ -34,6 +34,15 @@ class Form
     {
     }
 
+    /**
+     * Setup the From
+     *
+     * @param string $controller
+     * @param string $action
+     * @param null $item_id
+     *
+     * @return $this
+     */
     public function setup( $controller = 'auto', $action = 'update', $item_id = null )
     {
 
@@ -47,6 +56,13 @@ class Form
         return $this;
     }
 
+    /**
+     * Set controller
+     *
+     * @param $controller
+     *
+     * @return $this
+     */
     public function setController( $controller )
     {
         $this->controller = $controller;
@@ -54,11 +70,23 @@ class Form
         return $this;
     }
 
+    /**
+     * Get controller
+     *
+     * @return null
+     */
     public function getController()
     {
         return $this->controller;
     }
 
+    /**
+     * Set Action
+     *
+     * @param $action
+     *
+     * @return $this
+     */
     public function setAction( $action )
     {
         $this->action = $action;
@@ -66,6 +94,13 @@ class Form
         return $this;
     }
 
+    /**
+     * Set Item ID
+     *
+     * @param $item_id
+     *
+     * @return $this
+     */
     public function setItemId( $item_id )
     {
         $this->item_id = null;
@@ -77,11 +112,23 @@ class Form
         return $this;
     }
 
+    /**
+     * Get Item ID
+     *
+     * @return null
+     */
     public function getItemId()
     {
         return $this->item_id;
     }
 
+    /**
+     * Set group into bracket syntax
+     *
+     * @param $group
+     *
+     * @return $this
+     */
     public function setGroup( $group )
     {
         $this->group = null;
@@ -95,11 +142,23 @@ class Form
         return $this;
     }
 
+    /**
+     * Get group
+     *
+     * @return null
+     */
     public function getGroup()
     {
         return $this->group;
     }
 
+    /**
+     * Set sub Group into bracket syntax
+     *
+     * @param $sub
+     *
+     * @return $this
+     */
     public function setSub( $sub )
     {
         $this->sub = null;
@@ -113,11 +172,23 @@ class Form
         return $this;
     }
 
+    /**
+     * Get Sub Group
+     *
+     * @return null
+     */
     public function getSub()
     {
         return $this->sub;
     }
 
+    /**
+     * Set From settings
+     *
+     * @param array $settings
+     *
+     * @return $this
+     */
     public function setSettings( array $settings )
     {
         $this->settings = $settings;
@@ -125,11 +196,23 @@ class Form
         return $this;
     }
 
+    /**
+     * Get Form settings
+     *
+     * @return array
+     */
     public function getSettings()
     {
         return $this->settings;
     }
 
+    /**
+     * Get From setting by key
+     *
+     * @param $key
+     *
+     * @return null
+     */
     public function getSetting( $key )
     {
         if ( ! array_key_exists( $key, $this->settings )) {
@@ -139,6 +222,15 @@ class Form
         return $this->settings[$key];
     }
 
+
+    /**
+     * Set Form setting by key
+     *
+     * @param $key
+     * @param $value
+     *
+     * @return $this
+     */
     public function setSetting( $key, $value )
     {
 
@@ -147,6 +239,13 @@ class Form
         return $this;
     }
 
+    /**
+     * Remove setting bby key
+     *
+     * @param $key
+     *
+     * @return $this
+     */
     public function removeSetting( $key )
     {
         if (array_key_exists( $key, $this->settings )) {
@@ -156,6 +255,11 @@ class Form
         return $this;
     }
 
+    /**
+     * Get the render setting of the form
+     *
+     * @return null
+     */
     public function getRenderSetting()
     {
         if ( ! array_key_exists( 'render', $this->settings )) {
@@ -198,16 +302,33 @@ class Form
         return $this;
     }
 
+    /**
+     * Get Populate
+     *
+     * @return bool
+     */
     function getPopulate()
     {
         return $this->populate;
     }
 
+    /**
+     * Get the current Field the From is processing
+     *
+     * @return Field
+     */
     function getCurrentField()
     {
         return $this->currentField;
     }
-    
+
+    /**
+     * Set the current Field to process
+     *
+     * @param Field $field
+     *
+     * @return $this
+     */
     function setCurrentField( Field $field )
     {
 
@@ -220,6 +341,11 @@ class Form
         return $this;
     }
 
+    /**
+     * Auto config form is no Controller etc. is set
+     *
+     * @return $this
+     */
     private function autoConfig()
     {
         if ($this->controller === 'auto') {
@@ -246,11 +372,26 @@ class Form
         return $this;
     }
 
-    private function _e( $v )
+    /**
+     * Render output
+     *
+     * @param $output
+     */
+    private function _e( $output )
     {
-        echo $v;
+        echo $output;
     }
 
+    /**
+     * Open Form Element
+     *
+     * Not needed post types, for example, since WordPress already opens this for you.
+     *
+     * @param array $attr
+     * @param bool|true $use_rest
+     *
+     * @return $this
+     */
     public function open( $attr = array(), $use_rest = true )
     {
 
@@ -297,7 +438,14 @@ class Form
         return $this;
     }
 
-    public function close( $value = false )
+    /**
+     * Close the From Element and add a submit button if value is string
+     *
+     * @param null|string $value
+     *
+     * @return $this
+     */
+    public function close( $value = null )
     {
         $html = '';
         if (is_string( $value )) {
@@ -312,6 +460,11 @@ class Form
         return $this;
     }
 
+    /**
+     * Get the Form Field Label
+     *
+     * @return string
+     */
     private function getLabel()
     {
         $open_html  = "<div class=\"control-label\"><span class=\"label\">";
@@ -330,6 +483,13 @@ class Form
         return $html;
     }
 
+    /**
+     * Get the debug mode helper content
+     *
+     * @param Field $field
+     *
+     * @return string
+     */
     function getFieldHelpFunction( Fields\Field $field )
     {
 
@@ -344,7 +504,11 @@ class Form
         return $function;
     }
 
-
+    /**
+     * Get the debug HTML for the From Field Label
+     *
+     * @return string
+     */
     private function getDebug()
     {
         $generator = new Generator();
@@ -362,11 +526,21 @@ class Form
         return $html;
     }
 
+    /**
+     * Get the From debug status
+     *
+     * @return bool|null
+     */
     function getDebugStatus()
     {
         return ( $this->debugStatus === false ) ? $this->debugStatus : Config::getDebugStatus();
     }
 
+    /**
+     * Set the form debug status
+     *
+     * @param $status
+     */
     public function setDebugStatus( $status )
     {
         $this->debugStatus = (bool) $status;
@@ -407,6 +581,13 @@ class Form
         return $this;
     }
 
+    /**
+     * Render fields from array
+     *
+     * @param array $fields
+     *
+     * @return $this
+     */
     public function renderFields( array $fields = array() )
     {
         foreach ($fields as $functionSetup) {
@@ -423,6 +604,16 @@ class Form
         return $this;
     }
 
+    /**
+     * Text Input
+     *
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function text( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Text( $name, $attr, $settings, $label, $this );
@@ -431,6 +622,16 @@ class Form
         return $this;
     }
 
+    /**
+     * Password Input
+     *
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function password( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Text( $name, $attr, $settings, $label, $this );
@@ -440,6 +641,16 @@ class Form
         return $this;
     }
 
+    /**
+     * Hidden Input
+     *
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|false $label
+     *
+     * @return $this
+     */
     public function hidden( $name, array $attr = array(), array $settings = array(), $label = false )
     {
         $field = new Fields\Text( $name, $attr, $settings, $label, $this );
@@ -449,6 +660,16 @@ class Form
         return $this;
     }
 
+    /**
+     * Submit Button
+     *
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|false $label
+     *
+     * @return $this
+     */
     public function submit( $name, array $attr = array(), array $settings = array(), $label = false )
     {
         $field = new Fields\Submit( $name, $attr, $settings, $label, $this );
@@ -458,6 +679,16 @@ class Form
         return $this;
     }
 
+    /**
+     * Textarea Input
+     *
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function textarea( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Textarea( $name, $attr, $settings, $label, $this );
@@ -466,6 +697,16 @@ class Form
         return $this;
     }
 
+    /**
+     * Editor Input
+     *
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function editor( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Editor( $name, $attr, $settings, $label, $this );
@@ -474,6 +715,17 @@ class Form
         return $this;
     }
 
+    /**
+     * Radio Input
+     *
+     * @param $name
+     * @param array $options
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function radio( $name, array $options, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Radio( $name, $attr, $settings, $label, $this );
@@ -483,6 +735,16 @@ class Form
         return $this;
     }
 
+    /**
+     * Checkbox Input
+     *
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function checkbox( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Checkbox( $name, $attr, $settings, $label, $this );
@@ -491,6 +753,17 @@ class Form
         return $this;
     }
 
+    /**
+     * Select Input
+     *
+     * @param $name
+     * @param array $options
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function select( $name, array $options, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Select( $name, $attr, $settings, $label, $this );
@@ -500,6 +773,19 @@ class Form
         return $this;
     }
 
+    /**
+     * WordPress Editor
+     *
+     * Use this only once per page. The WordPress Editor is very buggy. You cannot use
+     * this in Metaboxes and repeatable sections.
+     *
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function wpEditor( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\WordPressEditor( $name, $attr, $settings, $label, $this );
@@ -508,6 +794,16 @@ class Form
         return $this;
     }
 
+    /**
+     * Color Input
+     *
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function color( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Color( $name, $attr, $settings, $label, $this );
@@ -516,6 +812,16 @@ class Form
         return $this;
     }
 
+    /**
+     * Date Input
+     *
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function date( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Date( $name, $attr, $settings, $label, $this );
@@ -524,6 +830,16 @@ class Form
         return $this;
     }
 
+    /**
+     * Image Input
+     *
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function image( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Image( $name, $attr, $settings, $label, $this );
@@ -532,6 +848,16 @@ class Form
         return $this;
     }
 
+    /**
+     * File Input
+     *
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function file( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\File( $name, $attr, $settings, $label, $this );
@@ -540,6 +866,16 @@ class Form
         return $this;
     }
 
+    /**
+     * Gallery Input
+     *
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function gallery( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Gallery( $name, $attr, $settings, $label, $this );
@@ -548,6 +884,16 @@ class Form
         return $this;
     }
 
+    /**
+     * Items Input
+     *
+     * @param $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function items( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Items( $name, $attr, $settings, $label, $this );
@@ -556,6 +902,17 @@ class Form
         return $this;
     }
 
+    /**
+     * Matrix Input
+     *
+     * @param $name
+     * @param array $options
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function matrix(
         $name,
         array $options = array(),
@@ -570,6 +927,17 @@ class Form
         return $this;
     }
 
+    /**
+     * Repeater Input
+     *
+     * @param $name
+     * @param array $fields
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
     public function repeater( $name, array $fields, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Repeater( $name, $attr, $settings, $label, $this );
@@ -580,6 +948,8 @@ class Form
     }
 
     /**
+     * Render a Field object in the form
+     *
      * @param Fields\Field $field
      *
      * @return $this
