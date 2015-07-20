@@ -183,6 +183,14 @@ class Form
         return $this;
     }
 
+    /**
+     * Set whether to populate fields in the form. If set to false fields will
+     * always be left empty and with their default values.
+     *
+     * @param $populate
+     *
+     * @return $this
+     */
     public function setPopulate( $populate )
     {
         $this->populate = (bool) $populate;
@@ -199,7 +207,7 @@ class Form
     {
         return $this->currentField;
     }
-
+    
     function setCurrentField( Field $field )
     {
 
