@@ -70,7 +70,9 @@ $book->apply($bookDetails)->setTitlePlaceholder('Enter Book Title');
 
 ```php
 function add_meta_content_details() {
-    tr_form()->text('ISBN Number')->image('Book Cover');
+    $form = tr_form();
+    echo $form->text('ISBN Number');
+    echo $form->image('Book Cover');
 }
 ```
 
