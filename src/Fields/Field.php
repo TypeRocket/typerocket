@@ -71,7 +71,8 @@ abstract class Field
      */
     public function __toString()
     {
-        if($this->getForm() instanceof From) {
+        $form = $this->getForm();
+        if($form instanceof Form) {
             $string = $this->getForm()->getFromFieldString($this);
         } else {
             $string = $this->getString();
