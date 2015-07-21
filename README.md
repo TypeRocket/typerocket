@@ -20,7 +20,7 @@ http://typerocket.com
 
 ### Story
 
-We want you to be good looking and do cool stuff with less code; Whether you're a designer, developer or somewhere in between. This is why TypeRocket is what it is.
+We want you to be good looking and do cool stuff with less code; Whether you're a designer, developer or somewhere in between. This is why TypeRocket exists.
 
 We want to enable everyone so they can build themes that are beautiful, inside and out.
 
