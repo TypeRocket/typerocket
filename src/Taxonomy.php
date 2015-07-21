@@ -26,6 +26,20 @@ class Taxonomy extends Registrable
     }
 
     /**
+     * Set Hierarchical
+     *
+     * @param bool $bool
+     *
+     * @return $this
+     */
+    public function setHierarchical( $bool = true)
+    {
+        $this->args['hierarchical'] = (bool) $bool;
+
+        return $this;
+    }
+
+    /**
      * Get the slug
      *
      * @return mixed
