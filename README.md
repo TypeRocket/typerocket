@@ -20,19 +20,28 @@ http://typerocket.com
 
 ### Story
 
-TypeRocket is the product of a deep desire to make beautiful, powerful, easy to code themes; Whether you're a designer, developer or somewhere in between.
+We want you to be good looking and do cool stuff with less code; Whether you're a designer, developer or somewhere in between. This is why TypeRocket is what it is.
 
-The TypeRocket project works in the belief that content and design shouldn't be dependant on third-party Plugins. Plugins will eventually be updated and lead to loss of information.
+TypeRocket is the product of that core desire. We want to enable everyone to built themes that are simply beautiful, inside and out.
 
-When we decided to share TypeRocket it was an easy decision.
+Every small detail matters to us. The elegance of the framework, the simplicity power of each line of code, the design and emotion behind every element. It all matters.
 
-We want you to be good looking, do cool stuff with less code too.
+We really hope you love TypeRocket and in turn love WordPress even more.
 
-Thanks,
-
+Thank you,
 Kevin
 
-### Ready to get started?
+### Core Values
+
+The TypeRocket project operates by the belief that:
+
+1. Software development should be friendly for designers.
+2. You should be in total control of how content is managed, experienced and displayed.
+3. Managing content should be fun, easy and powerful.
+4. Beauty should never be forgotten.
+5. Content and design shouldn't be dependant on third-party Plugins.
+6. Consistency leads to happiness.
+7. We should give and go further.
 
 Visit TypeRocket http://typerocket.com to get access to the tutorials and documentation.
 
