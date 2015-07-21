@@ -490,7 +490,7 @@ class Form
      *
      * @return string
      */
-    function getFieldHelpFunction( Fields\Field $field )
+    private function getFieldHelpFunction( Fields\Field $field )
     {
 
         $brackets   = $field->getBrackets();
@@ -912,13 +912,13 @@ class Form
     }
 
     /**
-     * Render a Field object in the form
+     * Field object into input
      *
      * @param Fields\Field $field
      *
      * @return Field $field
      */
-    public function renderCustomField( Field $field )
+    public function field( Field $field )
     {
         return $field;
     }
