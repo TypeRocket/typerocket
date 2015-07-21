@@ -20,15 +20,13 @@ http://typerocket.com
 
 ### Story
 
-Plugins. We wanted our themes to look beautiful but using plugins made a mess of things. Constant updating and security bugs were the norm with plugins and we didn't want compromise. The plugin architecture is nice but using plugins for the design of client sites created a lot of problems. With plugins migrating from development to production was a big issue. Adding plugins to fix plugins didn't feel like the right solution.
+TypeRocket is the product of a deep desire to make beautiful, powerful, easy to code themes; Whether you're a designer, developer or somewhere in between.
 
-We needed beautiful themes that were easy to manage; and didn't hassle our clients for updates or slow down their sites. And no plugins!
+The TypeRocket project works in the belief that content and design shouldn't be dependant on third-party Plugins. Plugins will eventually be updated and lead to loss of information.
 
-Building TypeRocket to fixes these problems has been a pure joy. No more updates breaking design and best of all... Every feature lives right in the theme so launching client sites is a celebration and not a disaster.
+When we decided to share TypeRocket it was an easy decision.
 
-When we decided to share TypeRocket it was an easy decision. We want you to be good looking, do cool stuff with less code too.
-
-TypeRocket is just a tool. We want you to be amazing.
+We want you to be good looking, do cool stuff with less code too.
 
 Thanks,
 
