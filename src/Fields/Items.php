@@ -20,7 +20,7 @@ class Items extends Field implements FieldScript
 
     public function getString()
     {
-        $name = $this->getAttribute( 'name' );
+        $name = $this->getNameAttributeString();
         $this->appendStringToAttribute( 'class', ' items-list' );
         // $this->attr['class'] = 'items-list';
         $items = $this->getValue();

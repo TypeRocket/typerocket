@@ -21,7 +21,7 @@ class Image extends Field implements FieldScript
 
     public function getString()
     {
-        $name = $this->getAttribute( 'name' );
+        $name = $this->getNameAttributeString();
         $this->setAttribute( 'class', 'image-picker' );
         $value = esc_attr( $this->getValue() );
 

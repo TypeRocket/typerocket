@@ -16,6 +16,7 @@ class Select extends Field implements FieldOptions
     public function getString()
     {
         $default = $this->getSetting('default');
+        $this->setAttribute('name', $this->getNameAttributeString());
         $option = $this->getValue();
         $option     = ! is_null($option) ? $this->getValue() : $default;
 

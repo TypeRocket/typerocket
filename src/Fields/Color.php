@@ -19,7 +19,7 @@ class Color extends Field implements FieldScript
 
     public function getString()
     {
-        $name  = $this->getAttribute( 'name' );
+        $name  = $this->getNameAttributeString();
         $value = Sanitize::hex( $this->getValue() );
         $this->removeAttribute( 'name' );
         $this->appendStringToAttribute( 'class', ' color-picker' );

@@ -614,9 +614,7 @@ abstract class Field
             $this->setPrefix();
         }
 
-        if (empty( $this->brackets )) {
-            $this->setBrackets( $this->getBrackets() );
-        }
+        $this->setBrackets( $this->getBrackets() );
 
         return $this->prefix . $this->brackets;
     }
@@ -656,7 +654,6 @@ abstract class Field
 
         $this->attr = array_merge( $this->attr, $attr );
         $this->setName( $name );
-        $this->attr['name'] = $this->getNameAttributeString();
 
         if (empty( $settings['label'] )) {
             $this->settings['label'] = $name;

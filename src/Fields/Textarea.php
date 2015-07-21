@@ -15,6 +15,7 @@ class Textarea extends Field
     {
         $max = '';
         $generator = new Generator();
+        $this->setAttribute('name', $this->getNameAttributeString());
         $value = $this->getValue();
         $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'textarea');
 

@@ -53,9 +53,9 @@ class UsersController extends Controller
 
     function update()
     {
-        if (isset( $_POST['_tr_builtin_data'] )) :
-            $_POST['_tr_builtin_data']['ID'] = $this->item_id;
-            wp_update_user( $_POST['_tr_builtin_data'] );
+        if (is_array( $this->fieldsBuiltin )) :
+            $this->fieldsBuiltin['ID'] = $this->item_id;
+            wp_update_user( $this->fieldsBuiltin );
             unset( $this->fields['user_insert'] );
         endif;
 
@@ -66,7 +66,7 @@ class UsersController extends Controller
     {
         $insert        = array_merge(
             $this->defaultValues,
-            $_POST['_tr_builtin_data'],
+            $this->fieldsBuiltin,
             $this->staticValues
         );
         $this->item_id = wp_insert_user( $insert );

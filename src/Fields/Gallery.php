@@ -21,7 +21,7 @@ class Gallery extends Field implements FieldScript
 
     public function getString()
     {
-        $name                = $this->getAttribute('name');
+        $name                = $this->getNameAttributeString();
         $this->setAttribute('class', 'image-picker');
         $images              = $this->getValue();
         $this->removeAttribute('name');

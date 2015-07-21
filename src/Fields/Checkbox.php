@@ -13,7 +13,7 @@ class Checkbox extends Field
 
     public function getString()
     {
-        $name   = $this->getAttribute( 'name' );
+        $name   = $this->getNameAttributeString();
         $this->removeAttribute( 'name' );
         $default = $this->getSetting( 'default' );
         $option = $this->getValue();

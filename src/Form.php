@@ -616,7 +616,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\Text
      */
     public function text( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -631,7 +631,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\Text
      */
     public function password( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -649,7 +649,7 @@ class Form
      * @param array $settings
      * @param bool|false $label
      *
-     * @return Field
+     * @return Fields\Text
      */
     public function hidden( $name, array $attr = array(), array $settings = array(), $label = false )
     {
@@ -667,7 +667,7 @@ class Form
      * @param array $settings
      * @param bool|false $label
      *
-     * @return Field
+     * @return Fields\Submit
      */
     public function submit( $name, array $attr = array(), array $settings = array(), $label = false )
     {
@@ -685,7 +685,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\Textarea
      */
     public function textarea( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -700,7 +700,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\Editor
      */
     public function editor( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -715,7 +715,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\Radio
      */
     public function radio( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -730,7 +730,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\Checkbox
      */
     public function checkbox( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -745,7 +745,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\Select
      */
     public function select( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -763,7 +763,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\WordPressEditor
      */
     public function wpEditor( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -778,7 +778,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\Color
      */
     public function color( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -793,7 +793,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\Date
      */
     public function date( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -808,7 +808,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\Image
      */
     public function image( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -823,7 +823,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\File
      */
     public function file( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -838,7 +838,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\Gallery
      */
     public function gallery( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -853,7 +853,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\Items
      */
     public function items( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -868,7 +868,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\Matrix
      */
     public function matrix(
         $name,
@@ -887,7 +887,7 @@ class Form
      * @param array $settings
      * @param bool|true $label
      *
-     * @return Field
+     * @return Fields\Repeater
      */
     public function repeater( $name, array $attr = array(), array $settings = array(), $label = true )
     {

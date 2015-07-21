@@ -15,8 +15,8 @@ class Text extends Field
     {
         $max = '';
         $input = new Generator();
+        $name = $this->getNameAttributeString();
         $value = $this->getValue();
-        $name = $this->getAttribute('name');
         $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'attribute');
 
         if ( is_callable($sanitize)) {

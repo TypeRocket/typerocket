@@ -15,6 +15,7 @@ abstract class Controller
     public $item_id = null;
     public $action = null;
     public $fields = null;
+    public $fieldsBuiltin = null;
     public $valid = true;
     public $defaultValues = null;
     public $staticValues = null;
@@ -29,6 +30,7 @@ abstract class Controller
         $this->fillable = apply_filters( 'tr_controller_fillable', $this->fillable, $this );
         $this->filterFillable();
         $this->fields      = ! empty( $_POST['tr'] ) ? $_POST['tr'] : array();
+        $this->fieldsBuiltin      = ! empty( $_POST['_tr_builtin_data'] ) ? $_POST['_tr_builtin_data'] : array();
         $this->item_id     = $item_id;
         $this->action      = $action;
         $this->currentUser = wp_get_current_user();

@@ -45,6 +45,7 @@ class Matrix extends Field implements FieldOptions, FieldScript {
 
     public function getString()
     {
+        $this->setAttribute('name', $this->getNameAttributeString());
 
         // setup select list of files
         $select = $this->getSelectHtml();

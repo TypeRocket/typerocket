@@ -53,10 +53,10 @@ class PostsController extends Controller
 
     protected function update()
     {
-        if (isset( $_POST['_tr_builtin_data'] )) {
+        if (is_array( $this->fieldsBuiltin )) {
             remove_action( 'save_post', array( $this, 'hook' ), 1999909 );
-            $_POST['_tr_builtin_data']['ID'] = $this->item_id;
-            wp_update_post( $_POST['_tr_builtin_data'] );
+            $this->fieldsBuiltin['ID'] = $this->item_id;
+            wp_update_post( $this->fieldsBuiltin );
             add_action( 'save_post', array( $this, 'hook' ), 1999909, 2 );
         }
 
@@ -68,7 +68,7 @@ class PostsController extends Controller
         remove_action( 'save_post', array( $this, 'hook' ) );
         $insert        = array_merge(
             $this->defaultValues,
-            $_POST['_tr_builtin_data'],
+            $this->fieldsBuiltin,
             $this->staticValues
         );
         $this->item_id = wp_insert_post( $insert );

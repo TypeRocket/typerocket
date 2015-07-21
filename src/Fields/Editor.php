@@ -24,6 +24,7 @@ class Editor extends Textarea implements FieldScript
         $max = '';
         $generator = new Generator();
         $value = $this->getValue();
+        $this->setAttribute('name', $this->getNameAttributeString());
         $this->appendStringToAttribute('class', ' typerocket-editor ');
         $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'editor');
 

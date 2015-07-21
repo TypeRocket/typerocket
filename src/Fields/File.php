@@ -22,7 +22,7 @@ class File extends Field implements FieldScript
     function getString()
     {
         // $this->attr['class'] = 'file-picker';
-        $name = $this->getAttribute( 'name' );
+        $name = $this->getNameAttributeString();
         $this->appendStringToAttribute( 'class', ' file-picker' );
         $value = (int) $this->getValue() !== 0 ? $this->getValue() : null;
         $this->removeAttribute( 'name' );

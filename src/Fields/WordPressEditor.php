@@ -17,6 +17,7 @@ class WordPressEditor extends Field implements FieldScript
 
     public function getString()
     {
+        $this->setAttribute('name', $this->getNameAttributeString());
         $value    = Sanitize::editor( $this->getValue() );
         $settings = $this->getSetting('options', array());
 

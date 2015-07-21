@@ -17,7 +17,8 @@ class Date extends Field implements FieldScript
 
     public function getString()
     {
-        $name  = $this->getAttribute( 'name' );
+        $name  = $this->getNameAttributeString();
+        $this->removeAttribute( 'name' );
         $value = $this->getValue();
         $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'attribute');
 
@@ -26,7 +27,7 @@ class Date extends Field implements FieldScript
         }
 
         $this->appendStringToAttribute( 'class', ' date-picker' );
-        $this->removeAttribute( 'name' );
+
 
         $input = new Generator();
 

@@ -24,7 +24,7 @@ class Repeater extends Field implements FieldScript
 
     public function getString()
     {
-
+        $this->setAttribute('name', $this->getNameAttributeString());
         $form = $this->getForm();
         $form->setDebugStatus( false );
         $settings = $this->getSettings();

@@ -239,8 +239,8 @@ class SeoPlugin
         $buffer->startBuffer();
         echo $form->text( 'canonical', array(), $canon );
         echo $form->text( 'redirect', array( 'readonly' => 'readonly', 'id' => 'tr_redirect' ), $redirect );
-        echo $form->select( 'follow', $follow_opts, array(), $follow );
-        echo $form->select( 'index', $index_opts, array(), $help );
+        echo $form->select( 'follow', array(), $follow )->setOptions($follow_opts);
+        echo $form->select( 'index', array(), $help )->setOptions($index_opts);
         $buffer->indexBuffer( 'advanced' ); // index buffer
 
         $tabs = new Tabs();

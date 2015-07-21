@@ -15,7 +15,7 @@ class Radio extends Field implements FieldOptions
 
     public function getString()
     {
-        $name       = $this->getAttribute('name');
+        $name       = $this->getNameAttributeString();
         $default = $this->getSetting('default');
         $option = $this->getValue();
         $option     = ! is_null($option) ? $this->getValue() : $default;
