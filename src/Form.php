@@ -711,19 +711,15 @@ class Form
      * Radio Input
      *
      * @param $name
-     * @param array $options
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
      *
      * @return Field
      */
-    public function radio( $name, array $options, array $attr = array(), array $settings = array(), $label = true )
+    public function radio( $name, array $attr = array(), array $settings = array(), $label = true )
     {
-        $field = new Fields\Radio( $name, $attr, $settings, $label, $this );
-        $field->setOptions( $options );
-
-        return $field;
+        return new Fields\Radio( $name, $attr, $settings, $label, $this );
     }
 
     /**
@@ -745,19 +741,15 @@ class Form
      * Select Input
      *
      * @param $name
-     * @param array $options
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
      *
      * @return Field
      */
-    public function select( $name, array $options, array $attr = array(), array $settings = array(), $label = true )
+    public function select( $name, array $attr = array(), array $settings = array(), $label = true )
     {
-        $field = new Fields\Select( $name, $attr, $settings, $label, $this );
-        $field->setOptions( $options );
-
-        return $field;
+        return new Fields\Select( $name, $attr, $settings, $label, $this );
     }
 
     /**
@@ -872,7 +864,6 @@ class Form
      * Matrix Input
      *
      * @param $name
-     * @param array $options
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -881,34 +872,26 @@ class Form
      */
     public function matrix(
         $name,
-        array $options = array(),
         array $attr = array(),
         array $settings = array(),
         $label = true
     ) {
-        $field = new Fields\Matrix( $name, $attr, $settings, $label, $this );
-        $field->setOptions( $options );
-
-        return $field;
+        return new Fields\Matrix( $name, $attr, $settings, $label, $this );
     }
 
     /**
      * Repeater Input
      *
      * @param $name
-     * @param array $fields
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
      *
      * @return Field
      */
-    public function repeater( $name, array $fields, array $attr = array(), array $settings = array(), $label = true )
+    public function repeater( $name, array $attr = array(), array $settings = array(), $label = true )
     {
-        $field = new Fields\Repeater( $name, $attr, $settings, $label, $this );
-        $field->setFields( $fields );
-
-        return $field;
+        return new Fields\Repeater( $name, $attr, $settings, $label, $this );
     }
 
     /**
