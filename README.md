@@ -22,7 +22,7 @@ http://typerocket.com
 
 We want you to be good looking and do cool stuff with less code; Whether you're a designer, developer or somewhere in between. This is why TypeRocket is what it is.
 
-TypeRocket is the product of that core desire. We want to enable everyone so they can built themes that are beautiful, inside and out.
+TypeRocket is the product of that core desire. We want to enable everyone so they can build themes that are beautiful, inside and out.
 
 Every small detail matters to us. The elegance of the framework, the simplicity power of each line of code, the design and emotion behind every element. It all matters.
 
