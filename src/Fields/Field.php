@@ -633,7 +633,7 @@ abstract class Field
     public function setup( $name, array $attr = array(), array $settings = array(), $label = true )
     {
 
-        do_action( 'tr_start_setup_field', $this, $name, $attr, $settings, $label );
+        do_action( 'tr_setup_field_start', $this, $name, $attr, $settings, $label );
 
         $this->settings = $settings;
         $this->label    = $label;
@@ -646,7 +646,7 @@ abstract class Field
             $attr['class'] .= ' ' . $this->attr['class'];
         }
 
-        $this->attr['class'] = apply_filters( 'tr_field_class_attribute_filter', $this->attr['class'], $this );
+        $this->attr['class'] = apply_filters( 'tr_setup_field_class_attribute', $this->attr['class'], $this );
 
         if ( ! $this->attr['class']) {
             unset( $this->attr['class'] );
@@ -659,7 +659,7 @@ abstract class Field
             $this->settings['label'] = $name;
         }
 
-        do_action( 'tr_end_setup_field', $this, $name, $attr, $settings, $label );
+        do_action( 'tr_setup_field_end', $this, $name, $attr, $settings, $label );
 
         return $this;
 
