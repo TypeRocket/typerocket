@@ -26,9 +26,10 @@ We want to enable everyone so they can build themes that are beautiful, inside a
 
 Every small detail matters to us. The elegance of the framework, the simplicity power of each line of code, the design and emotion behind every element. It all matters.
 
-We really hope you love TypeRocket and in turn love WordPress even more.
+We really hope you love TypeRocket and as a result love WordPress even more.
 
 Thank you,
+
 Kevin
 
 ### Core Values
