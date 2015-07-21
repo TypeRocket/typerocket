@@ -24,7 +24,7 @@ We want you to be good looking and do cool stuff with less code; Whether you're 
 
 We want to enable everyone so they can build themes that are beautiful, inside and out.
 
-Every small detail matters to us. The elegance of the framework, the simplicity power of each line of code, the design and emotion behind every element. It all matters.
+Every small detail matters to us. The elegance of the framework, the simplicity and power of each line of code, the design and emotion behind every element. It all matters.
 
 We really hope you love TypeRocket and as a result love WordPress even more.
 
