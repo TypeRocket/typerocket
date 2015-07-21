@@ -40,7 +40,7 @@ define('TR_PLUGINS', 'seo|dev|theme-options');
 | current theme.
 |
 */
-define('TR_MATRIX_FOLDER', __DIR__ . '/matrix');
+define('TR_MATRIX_FOLDER_PATH', __DIR__ . '/matrix');
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +52,8 @@ define('TR_MATRIX_FOLDER', __DIR__ . '/matrix');
 | current theme.
 |
 */
-define('TR_PLUGINS_FOLDER', __DIR__ . '/plugins');
+define('TR_PLUGINS_FOLDER_PATH', __DIR__ . '/plugins');
+define('TR_URL_PLUGINS_FOLDER', get_stylesheet_directory_uri() . '/' .TR_FOLDER . '/plugins');
 
 /*
 |--------------------------------------------------------------------------

@@ -80,12 +80,12 @@ class Config
     {
         return array(
             'assets'  => __DIR__ . '/../assets',
-            'plugins' => defined( 'TR_PLUGINS_FOLDER' ) ? TR_PLUGINS_FOLDER : __DIR__ . '/../plugins',
-            'matrix'  => defined( 'TR_MATRIX_FOLDER' ) ? TR_MATRIX_FOLDER : __DIR__ . '/../matrix',
+            'plugins' => defined( 'TR_PLUGINS_FOLDER_PATH' ) ? TR_PLUGINS_FOLDER_PATH : __DIR__ . '/../plugins',
+            'matrix'  => defined( 'TR_MATRIX_FOLDER_PATH' ) ? TR_MATRIX_FOLDER_PATH : __DIR__ . '/../matrix',
             'urls'    => array(
                 'theme'   => get_stylesheet_directory_uri(),
                 'assets'  => get_stylesheet_directory_uri() . '/' . self::$folder . '/assets',
-                'plugins' => get_stylesheet_directory_uri() . '/' . self::$folder . '/plugins'
+                'plugins' => defined( 'TR_PLUGINS_URL' ) ? TR_PLUGINS_URL : get_stylesheet_directory_uri() . '/' . self::$folder . '/plugins'
             )
         );
     }
