@@ -12,6 +12,7 @@
 *.exe
 *.o
 *.so
+*.css.map
 
 # Packages #
 ############
