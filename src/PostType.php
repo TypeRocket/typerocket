@@ -71,7 +71,7 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    public function setTitleFrom( $value = true )
+    public function setTitleForm( $value = true )
     {
 
         if (is_callable( $value )) {
@@ -92,7 +92,7 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    public function setTopFrom( $value = true )
+    public function setTopForm( $value = true )
     {
         if (is_callable( $value )) {
             $this->form['top'] = $value;
@@ -112,7 +112,7 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    public function setBottomFrom( $value = true )
+    public function setBottomForm( $value = true )
     {
         if (is_callable( $value )) {
             $this->form['bottom'] = $value;
@@ -132,7 +132,7 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    public function setEditorFrom( $value = true )
+    public function setEditorForm( $value = true )
     {
         if (is_callable( $value )) {
             $this->form['editor'] = $value;
