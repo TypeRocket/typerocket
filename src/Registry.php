@@ -23,7 +23,23 @@ class Registry
      */
     public static function run()
     {
-        $collection = self::$collection;
+        $collection = array();
+        $later = array();
+
+        foreach(self::$collection as $obj) {
+            if ( $obj instanceof Registrable) {
+                $collection[] = $obj;
+                $use = $obj->getApplied();
+                foreach($use as $objUsed) {
+                    if( ! in_array($objUsed, $collection)) {
+                        $later[] = $obj;
+                        array_pop($collection);
+                        break 1;
+                    }
+                }
+            }
+        }
+        $collection = array_merge($collection, $later);
 
         foreach ($collection as $obj) {
             if ($obj instanceof Taxonomy) {
