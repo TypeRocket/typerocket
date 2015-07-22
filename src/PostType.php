@@ -209,15 +209,6 @@ class PostType extends Registrable
     function setup( $singular, $plural = null, $settings = array() )
     {
 
-        $this->form = array(
-            array(
-                'top'    => null,
-                'title'  => null,
-                'editor' => null,
-                'bottom' => null
-            )
-        );
-
         if(is_null($plural)) {
             $plural = Inflect::pluralize($singular);
         }
@@ -304,7 +295,7 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    function metaboxRegistrationById( $s )
+    public function metaboxRegistrationById( $s )
     {
         if ( ! is_string( $s )) {
             $s = (string) $s->getId();
@@ -324,7 +315,7 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    function taxonomyRegistrationById( $s )
+    public function taxonomyRegistrationById( $s )
     {
 
         if ( ! is_string( $s )) {
@@ -346,7 +337,7 @@ class PostType extends Registrable
      * @param $post
      * @param $type
      */
-    function addFormContent( $post, $type )
+    public function addFormContent( $post, $type )
     {
         if ($post->post_type == $this->id) :
 
@@ -374,7 +365,7 @@ class PostType extends Registrable
      *
      * @param $post
      */
-    function editFormTop( $post )
+    public function editFormTop( $post )
     {
         $this->addFormContent( $post, 'top' );
     }
@@ -384,7 +375,7 @@ class PostType extends Registrable
      *
      * @param $post
      */
-    function editFormAfterTitle( $post )
+    public function editFormAfterTitle( $post )
     {
         $this->addFormContent( $post, 'title' );
     }
@@ -394,7 +385,7 @@ class PostType extends Registrable
      *
      * @param $post
      */
-    function editFormAfterEditor( $post )
+    public function editFormAfterEditor( $post )
     {
         $this->addFormContent( $post, 'editor' );
     }
@@ -404,7 +395,7 @@ class PostType extends Registrable
      *
      * @param $post
      */
-    function dbxPostSidebar( $post )
+    public function dbxPostSidebar( $post )
     {
         $this->addFormContent( $post, 'bottom' );
     }
@@ -416,7 +407,7 @@ class PostType extends Registrable
      *
      * @return null
      */
-    function enterTitleHere( $title )
+    public function enterTitleHere( $title )
     {
         global $post;
 
@@ -432,7 +423,7 @@ class PostType extends Registrable
      *
      * @param $taxonomyId
      */
-    function stringRegistration( $taxonomyId )
+    public function stringRegistration( $taxonomyId )
     {
         $this->taxonomyRegistrationById( $taxonomyId );
     }

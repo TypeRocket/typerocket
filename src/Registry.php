@@ -9,7 +9,7 @@ class Registry
     /**
      * Add Registrable objects to collection
      *
-     * @param null $obj
+     * @param null|Registrable|string $obj
      */
     public static function add( $obj = null )
     {
@@ -23,7 +23,9 @@ class Registry
      */
     public static function run()
     {
-        foreach (self::$collection as $obj) {
+        $collection = self::$collection;
+
+        foreach ($collection as $obj) {
             if ($obj instanceof Taxonomy) {
                 add_action( 'init', array( $obj, 'register' ) );
             } elseif ($obj instanceof PostType) {

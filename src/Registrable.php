@@ -221,16 +221,11 @@ abstract class Registrable
      *
      * @return $this
      */
-    public function apply( $use )
+    public function apply( $args )
     {
 
-        $args = func_get_args();
-
-        foreach($args as $key => $arg) {
-            if(is_array($arg)) {
-                $this->use = array_merge( $this->use, $arg );
-                unset($args[$key]);
-            }
+        if( ! is_array($args)) {
+            $args = func_get_args();
         }
 
         if ( ! empty($args) && is_array( $args ) ) {
@@ -287,5 +282,15 @@ abstract class Registrable
                 }
             }
         }
+    }
+
+    /**
+     * Get the Use
+     *
+     * @return array
+     */
+    function getApplied()
+    {
+        return $this->use;
     }
 }
