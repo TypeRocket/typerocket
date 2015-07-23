@@ -1,8 +1,6 @@
 <?php
 namespace TypeRocket;
 
-use \TypeRocket\Controllers\PostsController;
-
 class SeoPlugin
 {
 
@@ -67,7 +65,7 @@ class SeoPlugin
     // Page Title
     function title( $title, $sep = '', $other = '' )
     {
-        $newTitle = tr_post_field( '[seo][meta][title]', $this->item_id );
+        $newTitle = tr_posts_field( '[seo][meta][title]', $this->item_id );
 
         if ( $newTitle != null ) {
             return $newTitle;
@@ -88,13 +86,13 @@ class SeoPlugin
         $object_id = $this->item_id;
 
         // meta vars
-        $desc             = esc_attr( tr_post_field( '[seo][meta][description]', $object_id ) );
-        $og_title         = esc_attr( tr_post_field( '[seo][meta][og_title]', $object_id ) );
-        $og_desc          = esc_attr( tr_post_field( '[seo][meta][og_desc]', $object_id ) );
-        $img              = esc_attr( tr_post_field( '[seo][meta][meta_img]', $object_id ) );
-        $canon            = esc_attr( tr_post_field( '[seo][meta][canonical]', $object_id ) );
-        $robots['index']  = esc_attr( tr_post_field( '[seo][meta][index]', $object_id ) );
-        $robots['follow'] = esc_attr( tr_post_field( '[seo][meta][follow]', $object_id ) );
+        $desc             = esc_attr( tr_posts_field( '[seo][meta][description]', $object_id ) );
+        $og_title         = esc_attr( tr_posts_field( '[seo][meta][og_title]', $object_id ) );
+        $og_desc          = esc_attr( tr_posts_field( '[seo][meta][og_desc]', $object_id ) );
+        $img              = esc_attr( tr_posts_field( '[seo][meta][meta_img]', $object_id ) );
+        $canon            = esc_attr( tr_posts_field( '[seo][meta][canonical]', $object_id ) );
+        $robots['index']  = esc_attr( tr_posts_field( '[seo][meta][index]', $object_id ) );
+        $robots['follow'] = esc_attr( tr_posts_field( '[seo][meta][follow]', $object_id ) );
 
         // Extra
         if ( ! empty( $canon ) ) {
@@ -139,7 +137,7 @@ class SeoPlugin
     function redirect()
     {
         if ( is_singular() ) {
-            $redirect = tr_post_field( '[seo][meta][redirect]', $this->item_id );
+            $redirect = tr_posts_field( '[seo][meta][redirect]', $this->item_id );
             if ( ! empty( $redirect ) ) {
                 wp_redirect( $redirect, 301 );
                 exit;
@@ -282,7 +280,7 @@ class SeoPlugin
         </span>
         <span id="tr-seo-preview-google-title">
           <?php
-          $title = tr_post_field( '[seo][meta][title]' );
+          $title = tr_posts_field( '[seo][meta][title]' );
           if ( ! empty( $title ) ) {
               $s  = strip_tags( $title );
               $tl = strlen( $s );
@@ -307,7 +305,7 @@ class SeoPlugin
         </span>
         <span id="tr-seo-preview-google-desc">
           <?php
-          $desc = tr_post_field( '[seo][meta][description]' );
+          $desc = tr_posts_field( '[seo][meta][description]' );
           if ( ! empty( $desc ) ) {
               $s  = strip_tags( $desc );
               $dl = strlen( $s );

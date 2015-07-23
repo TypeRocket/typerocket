@@ -49,7 +49,7 @@ function tr_form()
     return $obj;
 }
 
-function tr_post_field( $name, $item_id = null )
+function tr_posts_field( $name, $item_id = null )
 {
     global $post;
 
@@ -62,7 +62,7 @@ function tr_post_field( $name, $item_id = null )
     return $getter->getFromBrackets( $name, $item_id, 'posts' );
 }
 
-function tr_user_field( $name, $item_id = null )
+function tr_users_field( $name, $item_id = null )
 {
     global $user_id, $post;
 
@@ -79,14 +79,14 @@ function tr_user_field( $name, $item_id = null )
     return $getter->getFromBrackets( $name, $item_id, 'users' );
 }
 
-function tr_option_field( $name )
+function tr_options_field( $name )
 {
     $getter = new \TypeRocket\GetValue();
 
     return $getter->getFromBrackets( $name, null, 'options' );
 }
 
-function tr_comment_field( $name, $item_id = null )
+function tr_comments_field( $name, $item_id = null )
 {
     global $comment;
 
