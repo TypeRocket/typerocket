@@ -1,5 +1,5 @@
 ## TypeRocket 2.0.0
-TypeRocket makes coding advanced WordPress themes a blast. Be good looking, do cool stuff and write less code.
+TypeRocket makes coding advanced WordPress themes a blast. Be good looking and do cool stuff with write less code.
 
 http://typerocket.com
 
