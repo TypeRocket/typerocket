@@ -39,6 +39,10 @@ class Matrix extends Field implements FieldOptions, FieldScript {
         wp_enqueue_script( 'typerocket-items', $paths['urls']['assets'] . '/js/items.js',
             array( 'jquery' ), '1.0', true );
 
+        // editor
+        wp_enqueue_script( 'typerocket-editor', $paths['urls']['assets'] . '/js/redactor.min.js', array( 'jquery' ), '1.0',
+            true );
+
         // load just matrix :)
         wp_enqueue_script( 'tr-matrix-core', $paths['urls']['assets'] . '/js/matrix.js', array( 'jquery' ), '1.0', true );
     }
