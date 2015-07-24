@@ -55,10 +55,8 @@ class Taxonomy extends Registrable
      * @param string $singular singular name is required
      * @param string $plural plural name
      * @param array $settings args override and extend
-     *
-     * @return $this
      */
-    function setup( $singular, $plural = null, $settings = array() )
+    function __construct( $singular, $plural = null, $settings = array() )
     {
 
         if(is_null($plural)) {

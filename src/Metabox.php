@@ -12,12 +12,9 @@ class Metabox extends Registrable
      *
      * @param null $name
      * @param array $settings
-     *
-     * @return $this
      */
-    public function setup( $name, $settings = array() )
+    public function __construct( $name, $settings = array() )
     {
-
         $this->label = $this->id = $name;
         $this->id    = Sanitize::underscore( $this->id );
         if (empty( $settings['callback'] )) {
@@ -40,8 +37,6 @@ class Metabox extends Registrable
         $settings = array_merge( $defaults, $settings );
 
         $this->args = $settings;
-
-        return $this;
     }
 
     /**

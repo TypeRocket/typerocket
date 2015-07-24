@@ -9,8 +9,6 @@ if ( ! function_exists( 'add_action' )) {
 <?php
 $form = new \TypeRocket\Form();
 $form->setGroup( $this->getName() );
-$form->setAction( 'update' );
-$form->setup();
 ?>
 
 <div id="tr-dev-content" class="typerocket-container">

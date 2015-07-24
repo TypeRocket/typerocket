@@ -224,7 +224,6 @@ class SeoPlugin
         $form = new Form();
         $form->setDebugStatus( false );
         $form->setGroup( '[seo][meta]' );
-        $form->setup();
         $buffer->startBuffer();
         echo $form->text( 'title', array( 'id' => 'tr_title' ), $title );
         echo $form->textarea( 'description', array( 'id' => 'tr_description' ), $desc );

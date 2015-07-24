@@ -20,12 +20,6 @@ class Form
     private $debugStatus = null;
     private $settings = array();
 
-    function __construct()
-    {
-        $paths = Config::getPaths();
-        wp_enqueue_script( 'typerocket-http', $paths['urls']['assets'] . '/js/http.js', array( 'jquery' ), '1', true );
-    }
-
     public function __get( $property )
     {
     }
@@ -35,16 +29,16 @@ class Form
     }
 
     /**
-     * Setup the From
+     * Instance the From
      *
-     * @param string $controller
-     * @param string $action
-     * @param null $item_id
-     *
-     * @return $this
+     * @param string $controller posts, users, comments or options
+     * @param string $action update or create
+     * @param null|int $item_id you can set this to null or an integer
      */
-    public function setup( $controller = 'auto', $action = 'update', $item_id = null )
+    public function __construct( $controller = 'auto', $action = 'update', $item_id = null )
     {
+        $paths = Config::getPaths();
+        wp_enqueue_script( 'typerocket-http', $paths['urls']['assets'] . '/js/http.js', array( 'jquery' ), '1', true );
 
         $this->setController( $controller );
         $this->setAction( $action );
@@ -52,8 +46,6 @@ class Form
         $this->autoConfig();
 
         do_action( 'tr_make_form', $this );
-
-        return $this;
     }
 
     /**

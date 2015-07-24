@@ -4,8 +4,29 @@ function tr_taxonomy(
     $plural = null,
     $settings = array()
 ) {
-    $obj = new \TypeRocket\Taxonomy();
-    $obj->setup( $singular, $plural, $settings )->addToRegistry();
+    $obj = new \TypeRocket\Taxonomy($singular, $plural, $settings);
+    $obj->addToRegistry();
+
+    return $obj;
+}
+
+function tr_post_type(
+    $singular,
+    $plural = null,
+    $settings = array()
+) {
+    $obj = new \TypeRocket\PostType($singular, $plural, $settings);
+    $obj->addToRegistry();
+
+    return $obj;
+}
+
+function tr_metabox(
+    $name = null,
+    $settings = array()
+) {
+    $obj = new \TypeRocket\Metabox($name, $settings);
+    $obj->addToRegistry();
 
     return $obj;
 }
@@ -20,32 +41,18 @@ function tr_buffer()
     return new \TypeRocket\Buffer();
 }
 
-function tr_post_type(
-    $singular,
-    $plural = null,
-    $settings = array()
-) {
-    $obj = new \TypeRocket\PostType();
-    $obj->setup( $singular, $plural, $settings )->addToRegistry();
-
-    return $obj;
-}
-
-function tr_metabox(
-    $name = null,
-    $settings = array()
-) {
-    $obj = new \TypeRocket\Metabox();
-    $obj->setup( $name, $settings )->addToRegistry();
-
-    return $obj;
-}
-
-function tr_form()
+/**
+ * Instance the From
+ *
+ * @param string $controller posts, users, comments or options
+ * @param string $action update or create
+ * @param null|int $item_id you can set this to null or an integer
+ *
+ * @return \TypeRocket\Form
+ */
+function tr_form($controller = 'auto', $action = 'update', $item_id = null )
 {
-    $obj = new \TypeRocket\Form();
-    $obj->setup();
-
+    $obj = new \TypeRocket\Form($controller, $action, $item_id);
     return $obj;
 }
 
