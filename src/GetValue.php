@@ -115,7 +115,7 @@ class GetValue
                 }
                 break;
             case 'comments' :
-                $data = get_metadata( 'comment', $item_id, $the_field, true );
+                $data = $this->getCommentData( $item_id, $the_field );
                 break;
             case 'options' :
                 $data = get_option( $the_field );
@@ -177,6 +177,43 @@ class GetValue
                 break;
             default :
                 $data = get_user_meta( $item_id, $the_field, true );
+                break;
+        }
+
+        return $data;
+
+    }
+
+    /**
+     * Get comment data
+     *
+     * @param $item_id
+     * @param $the_field
+     *
+     * @return mixed
+     */
+    private function getCommentData($item_id, $the_field) {
+
+        switch ($the_field) {
+            case 'comment_post_ID' :
+            case 'comment_author' :
+            case 'comment_author_email' :
+            case 'comment_author_url' :
+            case 'comment_type' :
+            case 'comment_parent' :
+            case 'user_id' :
+            case 'comment_author_IP' :
+            case 'comment_date' :
+            case 'comment_date_gmt' :
+            case 'comment_content' :
+            case 'comment_karma' :
+            case 'comment_approved' :
+            case 'comment_agent' :
+                $comment = get_comment( $item_id );
+                $data = $comment->$the_field;
+                break;
+            default :
+                $data = get_metadata( 'comment', $item_id, $the_field, true );
                 break;
         }
 

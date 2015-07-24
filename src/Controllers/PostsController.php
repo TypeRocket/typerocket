@@ -57,7 +57,7 @@ class PostsController extends Controller
             remove_action( 'save_post', array( $this, 'hook' ), 1999909 );
             $this->fieldsBuiltin['ID'] = $this->item_id;
             wp_update_post( $this->fieldsBuiltin );
-            add_action( 'save_post', array( $this, 'hook' ), 1999909, 2 );
+            add_action( 'save_post', array( $this, 'hook' ), 1999909, 3 );
         }
 
         $this->savePostMeta();

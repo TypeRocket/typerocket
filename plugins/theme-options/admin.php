@@ -16,7 +16,7 @@ $form->setup();
 <div id="tr-dev-content" class="typerocket-container">
     <?php
 
-    $form->open();
+    echo $form->open();
     $buffer = tr_buffer();
 
     // about
@@ -40,7 +40,7 @@ $form->setup();
     ->addTab( 'About', $about )
     ->addTab( 'APIs', $api )
     ->render( 'box' );
-    $form->close();
+    echo $form->close();
     ?>
 
 </div>

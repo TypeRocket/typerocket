@@ -234,7 +234,7 @@ abstract class Field
      *
      * @return $this
      */
-    public function setBuiltin( $in )
+    public function setBuiltin( $in = true )
     {
         $this->builtin = (bool) $in;
 

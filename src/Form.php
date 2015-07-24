@@ -373,16 +373,6 @@ class Form
     }
 
     /**
-     * Render output
-     *
-     * @param $output
-     */
-    private function _e( $output )
-    {
-        echo $output;
-    }
-
-    /**
      * Open Form Element
      *
      * Not needed post types, for example, since WordPress already opens this for you.
@@ -401,9 +391,6 @@ class Form
                 break;
             case 'create' :
                 $method = 'POST';
-                break;
-            case 'delete' :
-                $method = 'DELETE';
                 break;
             default :
                 $method = 'PUT';
@@ -433,9 +420,7 @@ class Form
         $r .= $generator->newInput( 'hidden', '_method', $method )->getString();
         $r .= wp_nonce_field( 'form_' . TR_SEED, '_tr_nonce_form', false, false );
 
-        $this->_e( $r );
-
-        return $this;
+        return $r;
     }
 
     /**
@@ -455,9 +440,8 @@ class Form
         }
 
         $html .= '</form>';
-        $this->_e( $html );
 
-        return $this;
+        return $html;
     }
 
     /**

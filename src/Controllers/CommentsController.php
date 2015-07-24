@@ -69,6 +69,14 @@ class CommentsController extends Controller
 
     protected function update()
     {
+
+        if (is_array( $this->fieldsBuiltin )) {
+            remove_action( 'wp_insert_comment', array( $this, 'hook' ), 1999909 );
+            $this->fieldsBuiltin['comment_ID'] = $this->item_id;
+            wp_update_comment( $this->fieldsBuiltin );
+            add_action( 'wp_insert_comment', array( $this, 'hook' ), 1999909, 3 );
+        }
+
         $this->saveCommentMeta();
 
         return $this;
@@ -76,6 +84,16 @@ class CommentsController extends Controller
 
     protected function create()
     {
+        remove_action( 'wp_insert_comment', array( $this, 'hook' ) );
+        $insert        = array_merge(
+            $this->defaultValues,
+            $this->fieldsBuiltin,
+            $this->staticValues
+        );
+        $this->item_id = wp_new_comment( $insert );
+        add_action( 'wp_insert_comment', array( $this, 'hook' ) );
+
+        $this->saveCommentMeta();
         return $this;
     }
 }
