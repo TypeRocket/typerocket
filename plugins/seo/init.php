@@ -54,12 +54,13 @@ class SeoPlugin
     function seo_meta()
     {
         $publicTypes = get_post_types( array( 'public' => true ) );
-        $obj         = new Metabox();
-        $obj->setup( 'tr_seo',
-            array( 'label'    => 'Search Engine Optimization',
-                   'priority' => 'low',
-                   'callback' => array( $this, 'meta' )
-            ) )->apply( $publicTypes )->register();
+        $args        = array(
+            'label'    => 'Search Engine Optimization',
+            'priority' => 'low',
+            'callback' => array( $this, 'meta' )
+        );
+        $obj         = new Metabox( 'tr_seo', $args );
+        $obj->apply( $publicTypes )->register();
     }
 
     // Page Title
