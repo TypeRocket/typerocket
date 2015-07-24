@@ -52,8 +52,7 @@ function tr_buffer()
  */
 function tr_form($controller = 'auto', $action = 'update', $item_id = null )
 {
-    $obj = new \TypeRocket\Form($controller, $action, $item_id);
-    return $obj;
+    return new \TypeRocket\Form($controller, $action, $item_id);
 }
 
 function tr_posts_field( $name, $item_id = null )
