@@ -630,7 +630,7 @@ class Form
     public function hidden( $name, array $attr = array(), array $settings = array(), $label = false )
     {
         $field = new Fields\Text( $name, $attr, $settings, $label, $this );
-        $field->setType( 'hidden' )->setRender( 'raw' );
+        $field->setType( 'hidden' )->setRenderSetting( 'raw' );
 
         return $field;
     }

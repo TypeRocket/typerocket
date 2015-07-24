@@ -497,7 +497,7 @@ abstract class Field
      *
      * @return null
      */
-    public function getRender()
+    public function getRenderSetting()
     {
         if ( ! array_key_exists( 'render', $this->settings )) {
             return null;
@@ -516,7 +516,7 @@ abstract class Field
      *
      * @return $this
      */
-    public function setRender( $value )
+    public function setRenderSetting( $value )
     {
 
         $this->settings['render'] = $value;
