@@ -19,7 +19,7 @@ class GetValue
         $keys = $this->geBracketKeys( $brackets );
         $data = $this->controllerSwitch( $keys[0], $item_id, $controller, $builtin );
 
-        return $this->parseValueData( $data, $keys );
+        return $this->parseValueData( $data, $keys, $item_id, $controller, $builtin );
     }
 
 
@@ -47,9 +47,10 @@ class GetValue
      *
      * @return array|mixed|null|string
      */
-    private function parseValueData( $data, $keys )
+    private function parseValueData( $data, $keys, $item_id, $controller, $builtin )
     {
-        if (isset( $keys[1] ) && ! empty( $data )) {
+        $mainKey = $keys[0];
+        if (isset( $mainKey ) && ! empty( $data )) {
             $data = maybe_unserialize( $data );
 
             // unset first key since $data is already set to it
@@ -60,10 +61,11 @@ class GetValue
                     $data = ( isset( $data[$name] ) && $data[$name] !== '') ? $data[$name] : null;
                 }
             }
+            $data = $this->decode( $data );
 
         }
 
-        $data = $this->decode( $data );
+        $data = apply_filters( 'tr_field_data_filter', $data, $mainKey, $item_id, $controller, $builtin );
 
         return $data;
     }
@@ -130,8 +132,6 @@ class GetValue
                 }
                 break;
         }
-
-        $data = apply_filters( 'tr_field_data_filter', $data, $this, $the_field, $item_id, $controller, $builtin );
 
         return $data !== '' ? $data : null;
     }

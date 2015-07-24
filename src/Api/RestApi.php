@@ -38,6 +38,7 @@ class RestApi {
     }
 
     function render($data) {
+
         wp_send_json( $data );
     }
 }
