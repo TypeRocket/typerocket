@@ -53,11 +53,11 @@ class UsersController extends Controller
 
     function update()
     {
-        if (is_array( $this->fieldsBuiltin )) :
+        if (is_array( $this->fieldsBuiltin )) {
             $this->fieldsBuiltin['ID'] = $this->item_id;
             wp_update_user( $this->fieldsBuiltin );
             unset( $this->fields['user_insert'] );
-        endif;
+        }
 
         $this->saveUserMeta();
     }
