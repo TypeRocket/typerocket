@@ -51,7 +51,10 @@ class GetValue
     {
         $mainKey = $keys[0];
         if (isset( $mainKey ) && ! empty( $data )) {
-            $data = maybe_unserialize( $data );
+
+            if ( is_serialized( $data ) ) {
+                $data = unserialize( $data );
+            }
 
             // unset first key since $data is already set to it
             unset( $keys[0] );
@@ -61,7 +64,9 @@ class GetValue
                     $data = ( isset( $data[$name] ) && $data[$name] !== '') ? $data[$name] : null;
                 }
             }
-            $data = $this->decode( $data );
+            if( ! $builtin ) {
+                $data = $this->decode( $data );
+            }
 
         }
 
