@@ -38,7 +38,7 @@ class SeoPlugin
         $publicTypes = get_post_types( array( 'public' => true ) );
         $postType    = $controller->post->post_type;
 
-        if ( is_array($fillable) && ! empty( $publicTypes[$postType] )) {
+        if ( is_array($fillable) || $fillable === false && ! empty( $publicTypes[$postType] )) {
             $fillable = array_merge($fillable, array('seo'));
         }
 
