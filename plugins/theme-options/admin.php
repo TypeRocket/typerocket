@@ -13,9 +13,7 @@ $form->setGroup( $this->getName() );
 
 <div id="tr-dev-content" class="typerocket-container">
     <?php
-
     echo $form->open();
-    $buffer = tr_buffer();
 
     // about
     $contact = array(
