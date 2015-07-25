@@ -83,9 +83,10 @@ class PostsController extends Controller
         $post = wp_insert_post( $insert );
         add_action( 'save_post', array( $this, 'hook' ) );
 
-        if($post instanceof \WP_Error || ! is_int($post) ) {
+        if($post instanceof \WP_Error || $post === 0 ) {
             $this->response['message'] = 'Post not created';
-            $this->response['errors'] = isset($post->errors) ? $post->errors : array();
+            $default = 'post_name (slug), post_title, post_content, and post_excerpt are required';
+            $this->response['errors'] = ! empty($post->errors) ? $post->errors : array($default);
             $this->valid = false;
         } else {
             $this->item_id = $post;

@@ -36,7 +36,7 @@ abstract class Controller
         $this->action      = $action;
         $this->currentUser = wp_get_current_user();
 
-        if(empty($this->fields)) {
+        if(empty($this->fields) && empty($this->fieldsBuiltin)) {
             $this->messageNoFields();
         } elseif ($this->getValidate()) {
             $this->filter();

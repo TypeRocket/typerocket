@@ -16,6 +16,11 @@ class GetValue
      */
     public function getFromBrackets( $brackets, $item_id, $controller, $builtin = false )
     {
+
+        if($item_id === null) {
+            return null;
+        }
+
         $keys = $this->geBracketKeys( $brackets );
         $data = $this->controllerSwitch( $keys[0], $item_id, $controller, $builtin );
 
@@ -32,10 +37,16 @@ class GetValue
      */
     public function getFromField( $field )
     {
-        $brackets = $field->getBrackets();
         $item_id =$field->getItemID();
+
+        if($item_id === null) {
+            return null;
+        }
+
+        $brackets = $field->getBrackets();
         $controller = $field->getController();
         $builtin = $field->getBuiltin();
+
         return $this->getFromBrackets( $brackets, $item_id, $controller, $builtin);
     }
 
