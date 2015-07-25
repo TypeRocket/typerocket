@@ -27,7 +27,7 @@ $form->setGroup( $this->getName() );
 
     // api
     $help = '<a target="blank" href="https://developers.google.com/maps/documentation/embed/guide#api_key">Get Your Google Maps API</a> to activate maps in the theme.';
-    $api = $form->text( 'Google Maps API Key')->setSetting('help', $help);
+    $api = $form->password( 'Google Maps API Key')->setSetting('help', $help);
 
     // save
     $form->setDebugStatus( false );
