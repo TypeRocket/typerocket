@@ -58,19 +58,20 @@ abstract class Controller
         return $this->valid = apply_filters( 'tr_controller_validate', $this->valid, $this );
     }
 
-    public function setFillable( $fillable )
+    public function setFillable( $fillable, $type = 'meta' )
     {
-        $this->fillable = $fillable;
+        $this->fillable[$type] = $fillable;
 
         return $this;
     }
 
     public function filterFillable()
     {
-        if (is_array( $this->fillable )) {
+        // meta
+        if (is_array( $this->fillable['meta'] )) {
 
             $keep = array();
-            foreach ($this->fillable as $field) {
+            foreach ($this->fillable['meta'] as $field) {
 
                 if (isset( $_POST['tr'][$field] ) && ! is_bool($field) ) {
                     $keep[$field] = $_POST['tr'][$field];
@@ -83,13 +84,30 @@ abstract class Controller
             $_POST['tr'] = array();
         }
 
+        // builtin
+        if (is_array( $this->fillable['builtin'] )) {
+
+            $keep = array();
+            foreach ($this->fillable['builtin'] as $field) {
+
+                if (isset( $_POST['_tr_builtin_data'][$field] ) && ! is_bool($field) ) {
+                    $keep[$field] = $_POST['_tr_builtin_data'][$field];
+                }
+
+            }
+
+            $_POST['_tr_builtin_data'] = $keep;
+        } elseif ($this->fillable === false) {
+            $_POST['_tr_builtin_data'] = array();
+        }
+
         return $this;
 
     }
 
-    function getFillable()
+    function getFillable($type = 'meta')
     {
-        return $this->fillable;
+        return $this->fillable[$type];
     }
 
     /**
