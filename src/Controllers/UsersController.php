@@ -80,9 +80,9 @@ class UsersController extends Controller
         );
         $user = wp_insert_user( $insert );
 
-        if($user instanceof \WP_Error) {
+        if($user instanceof \WP_Error || ! is_int($user) ) {
             $this->response['message'] = 'User not created';
-            $this->response['errors'] = $user->errors;
+            $this->response['errors'] = isset($user->errors) ? $user->errors : array();
             $this->valid = false;
         } else {
             $this->item_id = $user;

@@ -100,9 +100,9 @@ class CommentsController extends Controller
         $comment = wp_new_comment( $insert );
         add_action( 'wp_insert_comment', array( $this, 'hook' ) );
 
-        if($comment instanceof \WP_Error) {
-            $this->response['message'] = 'Post not created';
-            $this->response['errors'] = $comment->errors;
+        if($comment instanceof \WP_Error || ! is_int($comment)) {
+            $this->response['message'] = 'Comment not created';
+            $this->response['errors'] = isset($comment->errors) ? $comment->errors : array();
             $this->valid = false;
         } else {
             $this->item_id = $comment;
