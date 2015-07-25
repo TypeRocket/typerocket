@@ -65,6 +65,11 @@ abstract class Controller
         return $this;
     }
 
+    function getFillable($type = 'meta')
+    {
+        return $this->fillable[$type];
+    }
+
     public function filterFillable()
     {
         // meta
@@ -80,7 +85,7 @@ abstract class Controller
             }
 
             $_POST['tr'] = $keep;
-        } elseif ($this->fillable === false) {
+        } elseif ($this->fillable['meta'] === false) {
             $_POST['tr'] = array();
         }
 
@@ -97,17 +102,12 @@ abstract class Controller
             }
 
             $_POST['_tr_builtin_data'] = $keep;
-        } elseif ($this->fillable === false) {
+        } elseif ($this->fillable['builtin'] === false) {
             $_POST['_tr_builtin_data'] = array();
         }
 
         return $this;
 
-    }
-
-    function getFillable($type = 'meta')
-    {
-        return $this->fillable[$type];
     }
 
     /**
@@ -149,7 +149,7 @@ abstract class Controller
     }
 
     function messageNoFields() {
-        $this->response['message'] = 'No Data Updated';
+        $this->response['message'] = 'No Data';
         $this->valid = false;
     }
 
