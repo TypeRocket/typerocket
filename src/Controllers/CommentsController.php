@@ -102,7 +102,8 @@ class CommentsController extends Controller
 
         if($comment instanceof \WP_Error || ! is_int($comment)) {
             $this->response['message'] = 'Comment not created';
-            $this->response['errors'] = isset($comment->errors) ? $comment->errors : array();
+            $message = 'Missing post ID `comment_post_ID`.';
+            $this->response['errors'] = isset($comment->errors) ? $comment->errors : array($message);
             $this->valid = false;
         } else {
             $this->item_id = $comment;

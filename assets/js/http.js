@@ -53,8 +53,8 @@ jQuery.typerocketHttp = {
                     tools.checkData(data);
 
                 },
-                error: function () {
-                    alert('Error not sent');
+                error: function (hx, error, message) {
+                    alert('Your request had an error. ' + hx.status + ' - ' + message);
                 }
             };
 
