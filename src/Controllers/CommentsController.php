@@ -38,7 +38,6 @@ class CommentsController extends Controller
 
     function save( $item_id, $action = 'update' )
     {
-
         if($this->comment === null && ! empty($item_id) ) {
             $this->comment = get_comment($item_id);
         }
@@ -72,14 +71,35 @@ class CommentsController extends Controller
         return $this;
     }
 
+    private function setCommentUppercaseFields() {
+
+        if(is_array($this->fieldsBuiltin)) {
+
+            if(!empty($this->fieldsBuiltin['comment_post_id'] )) {
+                $this->fieldsBuiltin['comment_post_ID'] = (int) $this->fieldsBuiltin['comment_post_id'];
+                unset($this->fieldsBuiltin['comment_post_id']);
+            }
+
+            if(!empty($this->fieldsBuiltin['comment_author_ip'] )) {
+                $this->fieldsBuiltin['comment_author_IP'] = $this->fieldsBuiltin['comment_author_ip'];
+                unset($this->fieldsBuiltin['comment_author_ip']);
+            }
+
+
+        }
+
+
+    }
+
     protected function update()
     {
+        $this->setCommentUppercaseFields();
 
         if (is_array( $this->fieldsBuiltin )) {
-            remove_action( 'wp_insert_comment', array( $this, 'hook' ), 1999909 );
+            unset($GLOBALS['wp_filter']['edit_comment']['dghp278fndfluhn7']);
             $this->fieldsBuiltin['comment_ID'] = $this->item_id;
             wp_update_comment( $this->fieldsBuiltin );
-            add_action( 'wp_insert_comment', array( $this, 'hook' ), 1999909, 3 );
+            add_action( 'edit_comment', array( $this, 'hook' ), 'dghp278fndfluhn7', 3 );
         }
 
         $this->saveCommentMeta();
@@ -91,14 +111,22 @@ class CommentsController extends Controller
 
     protected function create()
     {
-        remove_action( 'wp_insert_comment', array( $this, 'hook' ) );
-        $insert        = array_merge(
-            $this->defaultValues,
-            $this->fieldsBuiltin,
-            $this->staticValues
-        );
-        $comment = wp_new_comment( $insert );
-        add_action( 'wp_insert_comment', array( $this, 'hook' ) );
+        $this->setCommentUppercaseFields();
+
+        if( ! empty($this->fieldsBuiltin['comment_post_ID']) &&
+            ! empty($this->fieldsBuiltin['comment_content']) ) {
+            unset($GLOBALS['wp_filter']['wp_insert_comment']['dghp278fndfluhn7']);
+            $insert = array_merge(
+                $this->defaultValues,
+                $this->fieldsBuiltin,
+                $this->staticValues
+            );
+            $comment = wp_new_comment($insert);
+            add_action( 'wp_insert_comment', array( $this, 'hook' ), 'dghp278fndfluhn7', 3 );
+        } else {
+            $comment = false;
+        }
+
 
         if($comment instanceof \WP_Error || ! is_int($comment)) {
             $this->response['message'] = 'Comment not created';

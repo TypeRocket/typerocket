@@ -54,7 +54,7 @@ jQuery.typerocketHttp = {
 
                 },
                 error: function (hx, error, message) {
-                    alert('Your request had an error. ' + hx.status + ' - ' + message);
+                    alert('Your request had an error. '+hx.status+' - '+message);
                 }
             };
 

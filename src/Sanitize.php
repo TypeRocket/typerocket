@@ -132,7 +132,7 @@ class Sanitize
     static function underscore( $name )
     {
         if (is_string( $name )) {
-            $name    = strtolower( trim( sanitize_title( $name, '' ) ) );
+            $name    = trim( sanitize_title( $name, '' ) );
             $pattern = '/(\-+)/';
             $name    = preg_replace( $pattern, '_', $name );
         }
@@ -152,7 +152,7 @@ class Sanitize
     static function dash( $name )
     {
         if (is_string( $name )) {
-            $name    = strtolower( trim( sanitize_title( $name, '' ) ) );
+            $name    = trim( sanitize_title( $name, '' ) );
             $pattern = '/(\-+)/';
             $name    = preg_replace( $pattern, '-', $name );
         }

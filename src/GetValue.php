@@ -211,14 +211,12 @@ class GetValue
     private function getCommentData($item_id, $the_field) {
 
         switch ($the_field) {
-            case 'comment_post_ID' :
             case 'comment_author' :
             case 'comment_author_email' :
             case 'comment_author_url' :
             case 'comment_type' :
             case 'comment_parent' :
             case 'user_id' :
-            case 'comment_author_IP' :
             case 'comment_date' :
             case 'comment_date_gmt' :
             case 'comment_content' :
@@ -227,6 +225,14 @@ class GetValue
             case 'comment_agent' :
                 $comment = get_comment( $item_id );
                 $data = $comment->$the_field;
+                break;
+            case 'comment_author_ip' :
+                $comment = get_comment( $item_id );
+                $data = $comment->comment_author_IP;
+                break;
+            case 'comment_post_id' :
+                $comment = get_comment( $item_id );
+                $data = $comment->comment_post_ID;
                 break;
             default :
                 $data = get_metadata( 'comment', $item_id, $the_field, true );

@@ -86,8 +86,8 @@ class Core
         Controllers\UsersController $users
     ) {
         add_action( 'save_post', array( $posts, 'hook' ), 1999909, 3 );
-        add_action( 'wp_insert_comment', array( $comments, 'hook' ), 1999909, 3 );
-        add_action( 'edit_comment', array( $comments, 'hook' ), 1999909, 3 );
+        add_action( 'wp_insert_comment', array( $comments, 'hook' ), 'dghp278fndfluhn7', 3 );
+        add_action( 'edit_comment', array( $comments, 'hook' ), 'dghp278fndfluhn7' , 3 );
         add_action( 'edit_user_profile_update', array( $users, 'hook' ), 1999909, 3 );
         add_action( 'personal_options_update', array( $users, 'hook' ), 1999909, 3 );
     }
