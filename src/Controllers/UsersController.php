@@ -44,6 +44,11 @@ class UsersController extends Controller
      */
     function save( $item_id, $action = 'update' )
     {
+
+        if($this->user === null && ! empty($item_id) ) {
+            $this->user = get_user_by( 'id', $item_id );
+        }
+
         $fillable = apply_filters( 'tr_users_controller_fillable', $this->getFillable(), $this );
         $this->setFillable($fillable);
         parent::save( $item_id, $action );

@@ -38,6 +38,11 @@ class CommentsController extends Controller
 
     function save( $item_id, $action = 'update' )
     {
+
+        if($this->comment === null && ! empty($item_id) ) {
+            $this->comment = get_comment($item_id);
+        }
+
         $fillable = apply_filters( 'tr_comments_controller_fillable', $this->getFillable(), $this );
         $this->setFillable($fillable);
         parent::save( $item_id, $action );
