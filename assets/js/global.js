@@ -1,4 +1,9 @@
-if(typeof window.trRepeaterCallback === 'object') {
+if (typeof window.trRepeaterCallback === 'object') {
 } else {
-  window.trRepeaterCallback = [];
+    window.trRepeaterCallback = [];
+}
+
+if (typeof window.trHttpCallback === 'object') {
+} else {
+    window.trHttpCallback = [];
 }

@@ -94,8 +94,7 @@ abstract class Controller
     /**
      * This is a very basic interface to handle REST requests.
      *
-     * @param $item_id
-     * @param string $method
+     * @param $request
      *
      * @return array
      *
@@ -105,36 +104,28 @@ abstract class Controller
      *   - redirect The url to redirect to if needed
      *   - errors An array of errors
      */
-    function getResponseArrayFromRequest( $item_id, $method = 'GET' )
+    function getResponseArrayFromRequest( $request )
     {
-        $method        = strtoupper( $method );
-        $this->item_id = $item_id;
+        $method        = strtoupper( $request->method );
+        $this->item_id = $request->id;
 
         switch ($method) {
             case 'PUT' :
                 $this->response['message'] = 'Updated';
-                $this->save( $item_id, 'update' );
+                $this->save( $request->id, 'update' );
                 break;
             case 'POST' :
                 $this->response['message'] = 'Created';
-                $this->save( $item_id, 'create' );
-
-                break;
-            case 'GET' :
-                $this->response['message'] = 'GET Requests Not Accepted';
-                $this->read( $item_id );
-
-                break;
-            case 'DELETE' :
-                $this->response['message'] = 'Deleted';
-                $this->delete( $item_id );
+                $this->save( $request->id, 'create' );
                 break;
         }
+
+        $redirect = $this->response['redirect'] ? $this->response['redirect'] : false;
 
         $data = array(
             'message'  => $this->response['message'],
             'valid'    => $this->valid,
-            'redirect' => false,
+            'redirect' => $redirect,
             'errors'   => $this->response['errors']
         );
 
@@ -159,16 +150,6 @@ abstract class Controller
     }
 
     protected function create()
-    {
-        return $this;
-    }
-
-    protected function delete( $id )
-    {
-        return $this;
-    }
-
-    protected function read( $id )
     {
         return $this;
     }

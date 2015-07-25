@@ -40,7 +40,7 @@ class OptionsController extends Controller
         return $this;
     }
 
-    protected function update()
+    protected function addOptions()
     {
         if (is_array( $this->fields )) :
             foreach ($this->fields as $key => $value) :
@@ -61,9 +61,22 @@ class OptionsController extends Controller
         endif;
     }
 
+    protected function update()
+    {
+        $this->addOptions();
+
+        do_action('tr_options_controller_update', $this);
+
+        return $this;
+    }
+
     protected function create()
     {
-        $this->update();
+        $this->addOptions();
+
+        do_action('tr_options_controller_create', $this);
+
+        return $this;
     }
 
 }

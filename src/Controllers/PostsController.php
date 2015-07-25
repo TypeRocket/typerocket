@@ -61,6 +61,10 @@ class PostsController extends Controller
         }
 
         $this->savePostMeta();
+
+        do_action('tr_posts_controller_update', $this);
+
+        return $this;
     }
 
     protected function create()
@@ -73,7 +77,12 @@ class PostsController extends Controller
         );
         $this->item_id = wp_insert_post( $insert );
         add_action( 'save_post', array( $this, 'hook' ) );
+
         $this->savePostMeta();
+
+        do_action('tr_posts_controller_create', $this);
+
+        return $this;
     }
 
     function savePostMeta()

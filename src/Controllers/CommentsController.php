@@ -79,6 +79,8 @@ class CommentsController extends Controller
 
         $this->saveCommentMeta();
 
+        do_action('tr_comments_controller_update', $this);
+
         return $this;
     }
 
@@ -94,6 +96,9 @@ class CommentsController extends Controller
         add_action( 'wp_insert_comment', array( $this, 'hook' ) );
 
         $this->saveCommentMeta();
+
+        do_action('tr_comments_controller_create', $this);
+
         return $this;
     }
 }

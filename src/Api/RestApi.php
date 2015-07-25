@@ -5,19 +5,18 @@ use \TypeRocket\Controllers\Controller as Controller;
 
 class RestApi {
 
-    public $resource;
-    public $id;
-    public $method;
-    public $version;
+    public function __construct($resource, $id, $method) {
 
-    function __construct($resource, $id, $method, $version) {
 
-        $this->resource = ucfirst($resource);
-        $this->id = $id;
-        $this->version = $version;
-        $this->method = strtoupper($method);
+        $request = (object) array(
+            'resource' => ucfirst($resource),
+            'method' => strtoupper($method),
+            'id' => $id,
+            'request_uri' => $_SERVER['REQUEST_URI'],
+            'host' => $_SERVER['HTTP_HOST']
+        );
 
-        $class = "\\TypeRocket\\Controllers\\{$this->resource}Controller";
+        $class = "\\TypeRocket\\Controllers\\{$request->resource}Controller";
 
         if(class_exists($class)) {
             /** @var Controller $model */
@@ -25,19 +24,14 @@ class RestApi {
 
             if($controller instanceof Controller) {
                 $controller->requestType = 'TypeRocketApi';
-                $data = $controller->getResponseArrayFromRequest($this->id, $this->method);
-
-                if ($data == null) {
-                    $data = array('api_v' => $this->version);
-                }
-
+                $data = $controller->getResponseArrayFromRequest($request);
                 $this->render($data);
             }
         }
 
     }
 
-    function render($data) {
+    public function render( array $data) {
 
         wp_send_json( $data );
     }

@@ -60,6 +60,10 @@ class UsersController extends Controller
         }
 
         $this->saveUserMeta();
+
+        do_action('tr_users_controller_update', $this);
+
+        return $this;
     }
 
     function create()
@@ -72,6 +76,10 @@ class UsersController extends Controller
         $this->item_id = wp_insert_user( $insert );
 
         $this->saveUserMeta();
+
+        do_action('tr_users_controller_create', $this);
+
+        return $this;
     }
 
     function saveUserMeta()
