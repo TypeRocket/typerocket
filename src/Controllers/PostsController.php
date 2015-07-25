@@ -80,8 +80,16 @@ class PostsController extends Controller
             $this->fieldsBuiltin,
             $this->staticValues
         );
-        $this->item_id = wp_insert_post( $insert );
+        $post = wp_insert_post( $insert );
         add_action( 'save_post', array( $this, 'hook' ) );
+
+        if($post instanceof \WP_Error) {
+            $this->response['message'] = 'Post not created';
+            $this->response['errors'] = $post->errors;
+            $this->valid = false;
+        } else {
+            $this->item_id = $post;
+        }
 
         $this->savePostMeta();
 
@@ -93,7 +101,7 @@ class PostsController extends Controller
     function savePostMeta()
     {
 
-        if (is_array( $this->fields )) :
+        if (is_array( $this->fields ) && ! empty($this->item_id) ) :
             if ($parent_id = wp_is_post_revision( $this->item_id )) {
                 $this->item_id = $parent_id;
             }

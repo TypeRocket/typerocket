@@ -17,8 +17,8 @@ abstract class Controller
     public $fields = null;
     public $fieldsBuiltin = null;
     public $valid = true;
-    public $defaultValues = null;
-    public $staticValues = null;
+    public $defaultValues = array();
+    public $staticValues = array();
     public $response = array( 'message' => 'Response Message', 'errors' => array() );
     public $request = null;
     /** @var \WP_User */

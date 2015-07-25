@@ -52,7 +52,7 @@ class CommentsController extends Controller
 
     function saveCommentMeta()
     {
-        if (is_array( $this->fields )) :
+        if (is_array( $this->fields ) && ! empty($this->item_id) ) :
             foreach ($this->fields as $key => $value) :
                 if (is_string( $value )) {
                     $value = trim( $value );
@@ -97,8 +97,16 @@ class CommentsController extends Controller
             $this->fieldsBuiltin,
             $this->staticValues
         );
-        $this->item_id = wp_new_comment( $insert );
+        $comment = wp_new_comment( $insert );
         add_action( 'wp_insert_comment', array( $this, 'hook' ) );
+
+        if($comment instanceof \WP_Error) {
+            $this->response['message'] = 'Post not created';
+            $this->response['errors'] = $comment->errors;
+            $this->valid = false;
+        } else {
+            $this->item_id = $comment;
+        }
 
         $this->saveCommentMeta();
 

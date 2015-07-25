@@ -78,7 +78,15 @@ class UsersController extends Controller
             $this->fieldsBuiltin,
             $this->staticValues
         );
-        $this->item_id = wp_insert_user( $insert );
+        $user = wp_insert_user( $insert );
+
+        if($user instanceof \WP_Error) {
+            $this->response['message'] = 'User not created';
+            $this->response['errors'] = $user->errors;
+            $this->valid = false;
+        } else {
+            $this->item_id = $user;
+        }
 
         $this->saveUserMeta();
 
@@ -89,7 +97,7 @@ class UsersController extends Controller
 
     function saveUserMeta()
     {
-        if (is_array( $this->fields )) :
+        if (is_array( $this->fields ) && ! empty($this->item_id) ) :
             foreach ($this->fields as $key => $value) :
                 if (is_string( $value )) {
                     $value = trim( $value );
