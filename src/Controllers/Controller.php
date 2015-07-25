@@ -22,7 +22,7 @@ abstract class Controller
     /** @var \WP_User */
     public $currentUser = null;
     public $requestType = null;
-    private $fillable = true;
+    private $fillable = array('meta' => true, 'builtin' => true);
 
     protected function save( $item_id, $action = 'update' )
     {
