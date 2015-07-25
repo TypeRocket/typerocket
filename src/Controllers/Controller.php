@@ -19,7 +19,7 @@ abstract class Controller
     public $valid = true;
     public $defaultValues = null;
     public $staticValues = null;
-    public $response = array( 'message' => 'Message...', 'errors' => array() );
+    public $response = array( 'message' => 'Response Message', 'errors' => array() );
     /** @var \WP_User */
     public $currentUser = null;
     public $requestType = null;
@@ -120,16 +120,11 @@ abstract class Controller
                 break;
         }
 
-        $redirect = $this->response['redirect'] ? $this->response['redirect'] : false;
+        $this->response['redirect'] = $this->response['redirect'] ? $this->response['redirect'] : false;
 
-        $data = array(
-            'message'  => $this->response['message'],
-            'valid'    => $this->valid,
-            'redirect' => $redirect,
-            'errors'   => $this->response['errors']
-        );
+        $response = array_merge($this->response, array( 'valid' => $this->valid ) );
 
-        return $data;
+        return $response;
 
     }
 
