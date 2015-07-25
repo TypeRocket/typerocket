@@ -20,6 +20,7 @@ abstract class Controller
     public $defaultValues = null;
     public $staticValues = null;
     public $response = array( 'message' => 'Response Message', 'errors' => array() );
+    public $request = null;
     /** @var \WP_User */
     public $currentUser = null;
     public $requestType = null;
@@ -108,6 +109,7 @@ abstract class Controller
     {
         $method        = strtoupper( $request->method );
         $this->item_id = $request->id;
+        $this->request = $request;
 
         switch ($method) {
             case 'PUT' :
