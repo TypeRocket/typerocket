@@ -73,12 +73,8 @@ class UsersController extends Controller
 
     function create()
     {
-        $insert        = array_merge(
-            $this->defaultValues,
-            $this->fieldsBuiltin,
-            $this->staticValues
-        );
-        $user = wp_insert_user( $insert );
+
+        $user = wp_insert_user( $this->fieldsBuiltin );
 
         if($user instanceof \WP_Error || ! is_int($user) ) {
             $this->response['message'] = 'User not created';

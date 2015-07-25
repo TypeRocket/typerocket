@@ -116,12 +116,7 @@ class CommentsController extends Controller
         if( ! empty($this->fieldsBuiltin['comment_post_ID']) &&
             ! empty($this->fieldsBuiltin['comment_content']) ) {
             unset($GLOBALS['wp_filter']['wp_insert_comment']['dghp278fndfluhn7']);
-            $insert = array_merge(
-                $this->defaultValues,
-                $this->fieldsBuiltin,
-                $this->staticValues
-            );
-            $comment = wp_new_comment($insert);
+            $comment = wp_new_comment($this->fieldsBuiltin);
             add_action( 'wp_insert_comment', array( $this, 'hook' ), 'dghp278fndfluhn7', 3 );
         } else {
             $comment = false;

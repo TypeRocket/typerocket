@@ -75,12 +75,7 @@ class PostsController extends Controller
     protected function create()
     {
         remove_action( 'save_post', array( $this, 'hook' ) );
-        $insert        = array_merge(
-            $this->defaultValues,
-            $this->fieldsBuiltin,
-            $this->staticValues
-        );
-        $post = wp_insert_post( $insert );
+        $post = wp_insert_post( $this->fieldsBuiltin );
         add_action( 'save_post', array( $this, 'hook' ) );
 
         if($post instanceof \WP_Error || $post === 0 ) {
