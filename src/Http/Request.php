@@ -9,6 +9,8 @@ class Request {
     private $uri = null;
     private $host = null;
     private $type = null;
+    private $fields = null;
+    private $fieldsBuiltin = null;
     private $post = null;
     private $get = null;
     private $files = null;
@@ -25,6 +27,8 @@ class Request {
         $this->uri = $_SERVER['REQUEST_URI'];
         $this->host = $_SERVER['HTTP_HOST'];
         $this->type = $type;
+        $this->fieldsBuiltin = !empty ($_POST['_tr_builtin_data']) ? $_POST['_tr_builtin_data'] : null;
+        $this->fields = !empty ($_POST['tr']) ? $_POST['tr'] : null;
         $this->post = !empty ($_POST) ? $_POST : null;
         $this->get = !empty ($_GET) ? $_GET : null;
         $this->files = !empty ($_FILES) ? $_FILES : null;
@@ -41,6 +45,14 @@ class Request {
 
     public function setDataFiles(array $files) {
         $this->files = $files;
+    }
+
+    public function setFields(array $files) {
+        $this->fields = $files;
+    }
+
+    public function setBuiltinFields(array $files) {
+        $this->fieldsBuiltin = $files;
     }
 
     public function getMethod() {
@@ -84,6 +96,16 @@ class Request {
     public function getDataFiles()
     {
         return $this->get;
+    }
+
+    public function getFields()
+    {
+        return $this->fields;
+    }
+
+    public function getBuiltinFields()
+    {
+        return $this->fieldsBuiltin;
     }
 
 }
