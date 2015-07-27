@@ -31,6 +31,18 @@ class Request {
 
     }
 
+    public function setDataPost(array $post) {
+        $this->post = $post;
+    }
+
+    public function setDataGet(array $get) {
+        $this->get = $get;
+    }
+
+    public function setDataFiles(array $files) {
+        $this->files = $files;
+    }
+
     public function getMethod() {
         return $this->method;
     }
