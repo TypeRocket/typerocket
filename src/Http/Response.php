@@ -5,9 +5,15 @@ class Response {
 
     private $message = 'No Response';
     private $redirect = false;
+    private $status = 200;
     private $valid = false;
     private $errors = array();
     private $data = array();
+
+    public function setStatus( $status )
+    {
+        $this->status = (int) $status;
+    }
 
 
     public function setMessage( $message )
@@ -56,6 +62,10 @@ class Response {
 
     public function setData( array $data ) {
         $this->data = $data;
+    }
+
+    public function getStatus() {
+        return $this->status;
     }
 
     public function getMessage() {

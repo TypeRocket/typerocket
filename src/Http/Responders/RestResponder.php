@@ -30,14 +30,8 @@ class RestResponder
             }
         }
 
-        $array = $response->getResponseArray();
-
-        $this->render( $array );
-
+        status_header( $response->getStatus() );
+        wp_send_json( $response->getResponseArray() );
     }
 
-    public function render( array $data )
-    {
-        wp_send_json( $data );
-    }
 }
