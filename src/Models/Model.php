@@ -1,6 +1,8 @@
 <?php
-namespace \TypeRocket\Models;
+namespace TypeRocket\Models;
 
 abstract class Model {
+
+    private $fillable = array();
 
 }

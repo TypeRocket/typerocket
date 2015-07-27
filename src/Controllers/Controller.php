@@ -157,7 +157,7 @@ abstract class Controller
     }
 
     function messageNoFields() {
-        $this->response['message'] = 'No Data';
+        $this->response->setMessage('No Data');
         $this->valid = false;
     }
 
