@@ -18,7 +18,7 @@ class SeoPlugin
     {
         if ( ! defined( 'WPSEO_URL' ) && ! defined( 'AIOSEOP_VERSION' ) ) {
             define( 'TR_SEO', '1.0' );
-            add_filter('tr_posts_controller_fillable', array($this, 'fillable'), 9999999999, 2 );
+            add_action('tr_model', array($this, 'fillable'), 9999999999, 2 );
             add_action( 'wp_head', array( $this, 'head_data' ), 0 );
             add_action( 'template_redirect', array( $this, 'loaded' ), 0 );
             add_filter( 'wp_title', array( $this, 'title' ), 100, 3 );
@@ -33,17 +33,14 @@ class SeoPlugin
         }
     }
 
-    function fillable( $fillable, $controller )
+    function fillable( $model )
     {
-        $publicTypes = get_post_types( array( 'public' => true ) );
-        $postType    = $controller->post->post_type;
-
-        if ( is_array($fillable) || $fillable === false && ! empty( $publicTypes[$postType] )) {
-            $fillable = array_merge( (array) $fillable, array('seo'));
+        if($model instanceof Models\PostsModel) {
+            $fillable = $model->getFillableFields();
+            if(!empty($fillable)) {
+                $model->appendFillableField('seo');
+            }
         }
-
-        return $fillable;
-
     }
 
     function loaded()

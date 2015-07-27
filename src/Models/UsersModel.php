@@ -1,6 +1,8 @@
 <?php
 namespace TypeRocket\Models;
 
+use TypeRocket\Http\Responders\UsersResponder;
+
 class UsersModel extends Model
 {
 
@@ -21,7 +23,10 @@ class UsersModel extends Model
     function create( array $fields )
     {
         $fields = $this->secureFields($fields);
+        unset( $GLOBALS['wp_filter']['user_register']['typerocket_responder_hook'] );
         $user = wp_insert_user( $this->getBuiltinFields($fields) );
+        $users = new UsersResponder();
+        add_action( 'user_register', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
 
         if ($user instanceof \WP_Error || ! is_int( $user )) {
             $this->errors = isset( $user->errors ) ? $user->errors : array();
@@ -39,7 +44,10 @@ class UsersModel extends Model
         $fields = $this->secureFields($fields);
         $this->id     = $itemId;
         $fields['ID'] = $this->id;
+        unset( $GLOBALS['wp_filter']['profile_update']['typerocket_responder_hook'] );
         wp_update_user( $this->getBuiltinFields($fields) );
+        $users = new UsersResponder();
+        add_action( 'profile_update', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
 
         $this->saveMeta( $fields );
 

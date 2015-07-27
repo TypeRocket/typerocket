@@ -90,8 +90,8 @@ class Core
         add_action( 'save_post', array( $posts, 'respond' ), 'typerocket_responder_hook', 3 );
         add_action( 'wp_insert_comment', array( $comments, 'respond' ), 'typerocket_responder_hook', 3 );
         add_action( 'edit_comment', array( $comments, 'respond' ), 'typerocket_responder_hook' , 3 );
-        add_action( 'edit_user_profile_update', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
-        add_action( 'personal_options_update', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
+        add_action( 'profile_update', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
+        add_action( 'user_register', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
     }
 
     /**

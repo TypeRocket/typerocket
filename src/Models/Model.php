@@ -11,12 +11,9 @@ abstract class Model
 
     public function __construct()
     {
-        $suffix         = substr( get_class( $this ), 0, -5 );
-        $suffix = $suffix ? '_' . strtolower($suffix) : '';
-
-        $this->fillable = apply_filters( 'tr_fillable' . $suffix, $this->fillable, $this );
-        $this->guard    = apply_filters( 'tr_guard' . $suffix, $this->guard, $this );
-        do_action( 'tr_model' . $suffix , $this );
+        $this->fillable = apply_filters( 'tr_fillable', $this->fillable, $this );
+        $this->guard    = apply_filters( 'tr_guard', $this->guard, $this );
+        do_action( 'tr_model' , $this );
     }
 
     public function setFillableFields( array $fillable )
@@ -56,9 +53,14 @@ abstract class Model
         return $this->errors;
     }
 
-    protected function getFillableFields()
+    public function getFillableFields()
     {
         return $this->fillable;
+    }
+
+    public function getGuardFields()
+    {
+        return $this->guard;
     }
 
     protected function getBuiltin()

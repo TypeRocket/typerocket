@@ -6,8 +6,9 @@ class ThemeOptionsPlugin
 
     private $name = 'tr_theme_options';
 
-    function __construct() {
-        if ( !function_exists( 'add_action' ) ) {
+    function __construct()
+    {
+        if ( ! function_exists( 'add_action' )) {
             echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
             exit;
         }
@@ -20,10 +21,10 @@ class ThemeOptionsPlugin
 
     function setup()
     {
-        $this->name = apply_filters('tr_theme_options_name', $this->name);
+        $this->name = apply_filters( 'tr_theme_options_name', $this->name );
         add_action( 'admin_menu', array( $this, 'menu' ) );
         add_action( 'wp_before_admin_bar_render', array( $this, 'admin_bar_menu' ), 100 );
-        add_filter('tr_options_controller_fillable', array($this, 'fillable'), 9999999999 );
+        add_filter( 'tr_model', array( $this, 'fillable' ), 9999999999 );
 
         // process import and export
         if (count( $_POST ) < 1 && $_GET['theme-options'] == 'export') {
@@ -35,13 +36,16 @@ class ThemeOptionsPlugin
 
     }
 
-    public function fillable($fillable) {
+    public function fillable( $model )
+    {
 
-        if(is_array($fillable)) {
-            $fillable = array_merge($fillable, array($this->name));
+        if ($model instanceof Models\OptionsModel) {
+            $fillable = $model->getFillableFields();
+
+            if ( ! empty( $fillable )) {
+                $model->appendFillableField( $this->name );
+            }
         }
-
-        return $fillable;
 
     }
 

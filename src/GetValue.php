@@ -4,8 +4,6 @@ namespace TypeRocket;
 class GetValue
 {
 
-    private $decodeValue = false;
-
     /**
      * Get value from database from typeRocket bracket syntax
      *
@@ -18,14 +16,14 @@ class GetValue
     public function getFromBrackets( $brackets, $item_id, $controller )
     {
 
-        if($item_id === null && $controller !== 'options') {
+        if ($item_id === null && $controller !== 'options') {
             return null;
         }
 
         $keys = $this->geBracketKeys( $brackets );
         $data = $this->controllerSwitch( $keys[0], $item_id, $controller );
 
-        return $this->parseValueData( $data, $keys, $item_id, $controller );
+        return $this->parseValueData( $data, $keys );
     }
 
 
@@ -38,17 +36,11 @@ class GetValue
      */
     public function getFromField( $field )
     {
-        $item_id =$field->getItemID();
+        $item_id    = $field->getItemID();
+        $brackets   = $field->getBrackets();
         $controller = $field->getController();
 
-        if($item_id === null && $controller !== 'options') {
-            return null;
-        }
-
-        $brackets = $field->getBrackets();
-        $controller = $field->getController();
-
-        return $this->getFromBrackets( $brackets, $item_id, $controller);
+        return $this->getFromBrackets( $brackets, $item_id, $controller );
     }
 
     /**
@@ -56,17 +48,15 @@ class GetValue
      *
      * @param $data
      * @param $keys
-     * @param $item_id
-     * @param $controller
      *
      * @return array|mixed|null|string
      */
-    private function parseValueData( $data, $keys, $item_id, $controller )
+    private function parseValueData( $data, $keys )
     {
         $mainKey = $keys[0];
         if (isset( $mainKey ) && ! empty( $data )) {
 
-            if ( is_serialized( $data ) ) {
+            if (is_serialized( $data )) {
                 $data = unserialize( $data );
             }
 
@@ -75,35 +65,13 @@ class GetValue
 
             if ( ! empty( $keys ) && is_array( $keys )) {
                 foreach ($keys as $name) {
-                    $data = ( isset( $data[$name] ) && $data[$name] !== '') ? $data[$name] : null;
+                    $data = ( isset( $data[$name] ) && $data[$name] !== '' ) ? $data[$name] : null;
                 }
             }
-            if( $this->decodeValue ) {
-                $data = $this->decode( $data );
-            }
 
         }
-
-        $data = apply_filters( 'tr_field_data_filter', $data, $mainKey, $item_id, $controller );
 
         return $data;
-    }
-
-    /**
-     * Decode data by removing slashes
-     *
-     * @param $v
-     *
-     * @return array|mixed|string
-     */
-    private function decode($v) {
-        if (is_string($v)) {
-            $v = wp_unslash($v);
-        } elseif (is_array($v)) {
-            $v = stripslashes_deep($v);
-        }
-
-        return $v;
     }
 
     /**
@@ -134,10 +102,10 @@ class GetValue
                 break;
             default :
                 $func = 'tr_get_data_' . $controller;
-                if(function_exists($func)) {
+                if (function_exists( $func )) {
                     $data = call_user_func( $func, $item_id, $the_field );
                 } else {
-                    echo('TypeRocket: Create a custom controller <code>function '. $func . '($controller, $item_id, $the_field) { return $data; }</code>');
+                    echo( 'TypeRocket: Create a custom controller <code>function ' . $func . '($controller, $item_id, $the_field) { return $data; }</code>' );
                     exit();
                 }
                 break;
@@ -190,7 +158,6 @@ class GetValue
                 $data = '';
                 break;
             default :
-                $this->decodeValue = true;
                 $data = get_metadata( 'user', $item_id, $the_field, true );
                 break;
         }
@@ -207,7 +174,8 @@ class GetValue
      *
      * @return mixed
      */
-    private function getCommentsData($item_id, $the_field) {
+    private function getCommentsData( $item_id, $the_field )
+    {
 
         switch ($the_field) {
             case 'comment_author' :
@@ -223,22 +191,21 @@ class GetValue
             case 'comment_approved' :
             case 'comment_agent' :
                 $comment = get_comment( $item_id );
-                $data = $comment->$the_field;
+                $data    = $comment->$the_field;
                 break;
             case 'comment_author_ip' :
                 $comment = get_comment( $item_id );
-                $data = $comment->comment_author_IP;
+                $data    = $comment->comment_author_IP;
                 break;
             case 'comment_post_id' :
                 $comment = get_comment( $item_id );
-                $data = $comment->comment_post_ID;
+                $data    = $comment->comment_post_ID;
                 break;
             case 'comment_id' :
                 $comment = get_comment( $item_id );
-                $data = $comment->comment_ID;
+                $data    = $comment->comment_ID;
                 break;
             default :
-                $this->decodeValue = true;
                 $data = get_metadata( 'comment', $item_id, $the_field, true );
                 break;
         }
@@ -255,7 +222,8 @@ class GetValue
      *
      * @return mixed
      */
-    private function getPostsData($item_id, $the_field) {
+    private function getPostsData( $item_id, $the_field )
+    {
 
         switch ($the_field) {
             case 'post_author' :
@@ -288,7 +256,6 @@ class GetValue
                 $data = get_post_field( 'ID', $item_id, 'raw' );
                 break;
             default :
-                $this->decodeValue = true;
                 $data = get_metadata( 'post', $item_id, $the_field, true );
                 break;
         }
