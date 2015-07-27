@@ -28,7 +28,6 @@ abstract class Controller
     /** @var \WP_User */
     public $currentUser = null;
 
-    public $requestType = null;
     private $fillable = array('meta' => true, 'builtin' => true);
 
     protected function save( $item_id, $action = 'update' )
@@ -137,7 +136,7 @@ abstract class Controller
         $method        = strtoupper( $request->getMethod() );
         $this->item_id = $request->getResourceId();
         $this->request = $request;
-        $this->response = $response; // TODO: make all response calls obj not array
+        $this->response = $response;
 
         switch ($method) {
             case 'PUT' :
