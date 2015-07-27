@@ -1,6 +1,9 @@
 <?php
 namespace TypeRocket\Controllers;
 
+use \TypeRocket\Http\Request,
+    \TypeRocket\Http\Response;
+
 /**
  * Class Controller
  *
@@ -17,10 +20,14 @@ abstract class Controller
     public $fields = null;
     public $fieldsBuiltin = null;
     public $valid = true;
-    public $response = array( 'message' => 'Response Message', 'errors' => array() );
+
+    /** @var \TypeRocket\Http\Response */
+    public $response = null;
+    /** @var \TypeRocket\Http\Request */
     public $request = null;
     /** @var \WP_User */
     public $currentUser = null;
+
     public $requestType = null;
     private $fillable = array('meta' => true, 'builtin' => true);
 
@@ -113,38 +120,39 @@ abstract class Controller
     /**
      * This is a very basic interface to handle REST requests.
      *
-     * @param $request
+     * @param \TypeRocket\Http\Request $request
      *
-     * @return array
+     * @param \TypeRocket\Http\Response $response
+     *
+     * @return array The returned array should include
      *
      * The returned array should include
-     *   - message The text to display
-     *   - valid A bool value
-     *   - redirect The url to redirect to if needed
-     *   - errors An array of errors
+     * - message The text to display
+     * - valid A bool value
+     * - redirect The url to redirect to if needed
+     * - errors An array of errors
      */
-    function getResponseArrayFromRequest( $request )
+    function getResponseArrayFromRequest( Request $request, Response $response )
     {
-        $method        = strtoupper( $request->method );
-        $this->item_id = $request->id;
+        $method        = strtoupper( $request->getMethod() );
+        $this->item_id = $request->getResourceId();
         $this->request = $request;
+        $this->response = $response; // TODO: make all response calls obj not array
 
         switch ($method) {
             case 'PUT' :
-                $this->response['message'] = 'Updated';
-                $this->save( $request->id, 'update' );
+                $this->response->setMessage('Updated');
+                $this->save( $request->getResourceId(), 'update' );
                 break;
             case 'POST' :
-                $this->response['message'] = 'Created';
-                $this->save( $request->id, 'create' );
+                $this->response->setMessage('Created');
+                $this->save( $request->getResourceId(), 'create' );
                 break;
         }
 
-        $this->response['redirect'] = $this->response['redirect'] ? $this->response['redirect'] : false;
+        $response->setValid($this->valid);
 
-        $response = array_merge($this->response, array( 'valid' => $this->valid ) );
-
-        return $response;
+        return $this->response;
 
     }
 
@@ -159,14 +167,7 @@ abstract class Controller
         return $this;
     }
 
-    protected function update()
-    {
-        return $this;
-    }
-
-    protected function create()
-    {
-        return $this;
-    }
+    abstract function update();
+    abstract function create();
 
 }

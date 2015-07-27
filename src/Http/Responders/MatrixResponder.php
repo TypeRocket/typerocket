@@ -1,10 +1,10 @@
 <?php
-namespace TypeRocket\Api;
+namespace TypeRocket\Http\Responders;
 
 use TypeRocket\Config;
 use TypeRocket\Validate;
 
-class MatrixApi {
+class MatrixResponder {
 
     function __construct($group, $type, $form_group, $load = true) {
 

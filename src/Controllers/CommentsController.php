@@ -91,7 +91,7 @@ class CommentsController extends Controller
 
     }
 
-    protected function update()
+    public function update()
     {
         $this->setCommentUppercaseFields();
 
@@ -109,7 +109,7 @@ class CommentsController extends Controller
         return $this;
     }
 
-    protected function create()
+    public function create()
     {
         $this->setCommentUppercaseFields();
 

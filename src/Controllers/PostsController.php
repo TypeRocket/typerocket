@@ -56,7 +56,7 @@ class PostsController extends Controller
         return $this;
     }
 
-    protected function update()
+    public function update()
     {
         if (is_array( $this->fieldsBuiltin )) {
             remove_action( 'save_post', array( $this, 'hook' ), 1999909 );
@@ -72,7 +72,7 @@ class PostsController extends Controller
         return $this;
     }
 
-    protected function create()
+    public function create()
     {
         remove_action( 'save_post', array( $this, 'hook' ) );
         $post = wp_insert_post( $this->fieldsBuiltin );

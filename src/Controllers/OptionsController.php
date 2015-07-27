@@ -3,8 +3,7 @@ namespace TypeRocket\Controllers;
 
 class OptionsController extends Controller
 {
-
-    function getValidate()
+    public function getValidate()
     {
         $this->valid = parent::getValidate();
 
@@ -13,7 +12,7 @@ class OptionsController extends Controller
             $this->response['message'] = "Sorry, you don't have enough rights.";
         }
 
-        if( $this->requestType != 'TypeRocketApi' && ! check_ajax_referer( 'form_' . TR_SEED, '_tr_nonce_form', false )) {
+        if( $this->request->getType() != 'TypeRocketApi' && ! check_ajax_referer( 'form_' . TR_SEED, '_tr_nonce_form', false )) {
             $this->valid = false;
             $this->response['message'] = 'Invalid CSRF Token';
         }
@@ -23,7 +22,7 @@ class OptionsController extends Controller
         return $this->valid;
     }
 
-    function filter()
+    public function filter()
     {
         parent::filter();
         $this->fields = apply_filters( 'tr_options_controller_filter', $this->fields, $this );
@@ -31,7 +30,7 @@ class OptionsController extends Controller
         return $this;
     }
 
-    function save( $item_id, $action = 'update' )
+    public function save( $item_id, $action = 'update' )
     {
         $fillable = apply_filters( 'tr_options_controller_fillable', $this->getFillable(), $this );
         $this->setFillable($fillable);
@@ -61,7 +60,7 @@ class OptionsController extends Controller
         endif;
     }
 
-    protected function update()
+    public function update()
     {
         $this->addOptions();
 
@@ -70,7 +69,7 @@ class OptionsController extends Controller
         return $this;
     }
 
-    protected function create()
+    public function create()
     {
         $this->addOptions();
 
