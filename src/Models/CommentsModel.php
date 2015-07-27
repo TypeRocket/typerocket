@@ -27,6 +27,7 @@ class CommentsModel extends Model
 
     function create( array $fields )
     {
+        $fields = $this->secureFields($fields);
         $fields = $this->formatFields( $fields );
 
         if ( ! empty( $fields['comment_post_ID'] ) &&
@@ -36,15 +37,18 @@ class CommentsModel extends Model
             $comment = wp_new_comment( $this->getBuiltinFields($fields) );
             $responder = new CommentsResponder();
             add_action( 'wp_insert_comment', array( $responder, 'respond' ), 'typerocket_responder_hook', 3 );
-        } else {
-            $comment = false;
-        }
 
-        if ($comment instanceof \WP_Error || ! is_int( $comment )) {
-            $message      = 'Missing post ID `comment_post_ID`.';
-            $this->errors = isset( $comment->errors ) ? $comment->errors : array( $message );
+            if (empty( $comment ) ) {
+                $message      = 'Comment not created.';
+                $this->errors = array( $message );
+            } else {
+                $this->id = $comment;
+            }
         } else {
-            $this->id = $comment;
+            $this->errors = array(
+                'Missing post ID `comment_post_ID`.',
+                'Missing comment content `comment_content`.'
+                );
         }
 
         $this->saveMeta( $fields );
@@ -54,6 +58,8 @@ class CommentsModel extends Model
 
     function update( $itemId, array $fields )
     {
+        $fields = $this->secureFields($fields);
+
         unset( $GLOBALS['wp_filter']['edit_comment']['typerocket_responder_hook'] );
         $fields['comment_id'] = $itemId;
         wp_update_comment( $this->formatFields( $this->getBuiltinFields($fields) ) );

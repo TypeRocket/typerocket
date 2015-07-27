@@ -11,11 +11,12 @@ abstract class Model
 
     public function __construct()
     {
-        $suffix         = strtolower(substr( get_class( $this ), 0, - 5 ));
-        $this->fillable = apply_filters( 'tr_fillable_' . $suffix, $this->fillable, $this );
-        $this->guard    = apply_filters( 'tr_guard_' . $suffix, $this->guard, $this );
-        do_action( 'tr_model', $this );
+        $suffix         = substr( get_class( $this ), 0, -5 );
+        $suffix = $suffix ? '_' . strtolower($suffix) : '';
 
+        $this->fillable = apply_filters( 'tr_fillable' . $suffix, $this->fillable, $this );
+        $this->guard    = apply_filters( 'tr_guard' . $suffix, $this->guard, $this );
+        do_action( 'tr_model' . $suffix , $this );
     }
 
     public function setFillableFields( array $fillable )

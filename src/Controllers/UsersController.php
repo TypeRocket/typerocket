@@ -26,15 +26,16 @@ class UsersController extends Controller
         $errors = $user->update($id, $this->request->getFields())->getErrors();
 
         if( ! empty ( $errors ) ) {
-            $this->response->setMessage('User not created');
+            $this->response->setMessage('User not updated');
             $this->response->setErrors($errors);
             $this->response->setValid(false);
+        } else {
+            $this->response->setMessage('User updated');
         }
     }
 
     function create()
     {
-
         $user = new UsersModel();
         $errors = $user->create($this->request->getFields())->getErrors();
 
@@ -42,6 +43,8 @@ class UsersController extends Controller
             $this->response->setMessage('User not created');
             $this->response->setErrors($errors);
             $this->response->setValid(false);
+        } else {
+            $this->response->setMessage('User created');
         }
     }
 

@@ -35,6 +35,8 @@ class PostsController extends Controller
             $this->response->setMessage('Post not updated');
             $this->response->setErrors($errors);
             $this->response->setValid(false);
+        } else {
+            $this->response->setMessage('Post updated');
         }
 
     }
@@ -48,6 +50,8 @@ class PostsController extends Controller
             $this->response->setMessage('Post not created');
             $this->response->setErrors($errors);
             $this->response->setValid(false);
+        } else {
+            $this->response->setMessage('Post created');
         }
 
     }

@@ -31,13 +31,31 @@ class OptionsController extends Controller
     public function update($id)
     {
         $options = new OptionsModel();
-        $options->create($this->request->getFields());
+        $errors = $options->update(null, $this->request->getFields() )->getErrors();
+
+        if( ! empty ( $errors ) ) {
+            $this->response->setMessage('Options not updated');
+            $this->response->setErrors($errors);
+            $this->response->setValid(false);
+        } else {
+            $this->response->setMessage('Updated');
+        }
+
     }
 
     public function create()
     {
         $options = new OptionsModel();
-        $options->create($this->request->getFields());
+        $errors = $options->create($this->request->getFields())->getErrors();
+
+        if( ! empty ( $errors ) ) {
+            $this->response->setMessage('Options not created');
+            $this->response->setErrors($errors);
+            $this->response->setValid(false);
+        } else {
+            $this->response->setMessage('Options updated');
+        }
+
     }
 
 }

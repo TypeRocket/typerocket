@@ -18,7 +18,7 @@ class GetValue
     public function getFromBrackets( $brackets, $item_id, $controller )
     {
 
-        if($item_id === null) {
+        if($item_id === null && $controller !== 'options') {
             return null;
         }
 
@@ -39,8 +39,9 @@ class GetValue
     public function getFromField( $field )
     {
         $item_id =$field->getItemID();
+        $controller = $field->getController();
 
-        if($item_id === null) {
+        if($item_id === null && $controller !== 'options') {
             return null;
         }
 
