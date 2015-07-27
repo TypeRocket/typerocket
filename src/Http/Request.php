@@ -47,12 +47,12 @@ class Request {
         $this->files = $files;
     }
 
-    public function setFields(array $files) {
-        $this->fields = $files;
+    public function setFields(array $fields) {
+        $this->fields = $fields;
     }
 
-    public function setBuiltinFields(array $files) {
-        $this->fieldsBuiltin = $files;
+    public function setBuiltinFields(array $fields) {
+        $this->fieldsBuiltin = $fields;
     }
 
     public function getMethod() {
