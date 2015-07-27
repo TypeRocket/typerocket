@@ -1,141 +1,48 @@
 <?php
 namespace TypeRocket\Controllers;
 
+use TypeRocket\Models\CommentsModel;
+
 class CommentsController extends Controller
 {
 
-    public $comment = null;
-
-    function hook( $id )
+    function validate()
     {
-        $this->item_id = $id;
-        $this->comment = get_comment( $id );
-        $this->valid   = true;
-        $this->save( $id );
-    }
+        $valid = $this->response->getValid();
+        $comment = get_comment($this->request->getResourceId());
 
-    function getValidate()
-    {
-        $this->valid = parent::getValidate();
-
-        if ( $this->comment->user_id != $this->currentUser->ID && ! current_user_can( 'edit_comment' ) ) {
-            $this->valid = false;
-            $this->response['message'] = "Sorry, you don't have enough rights.";
+        if ( $comment->user_id != $this->user->ID && ! current_user_can( 'edit_comment' ) ) {
+            $valid = false;
+            $this->response->setMessage("Sorry, you don't have enough rights.");
         }
 
-        $this->valid = apply_filters( 'tr_comment_controller_validate', $this->valid, $this );
-
-        return $this->valid;
+        $valid = apply_filters( 'tr_comments_controller_validate', $valid, $this );
+        $this->response->setValid($valid);
     }
 
-    function filter()
+    public function update($id = null)
     {
-        parent::filter();
-        $this->fields = apply_filters( 'tr_comment_controller_filter', $this->fields, $this );
+        $comments = new CommentsModel();
+        $errors = $comments->update($id, $this->request->getFields())->getErrors();
 
-        return $this;
-    }
-
-    function save( $item_id, $action = 'update' )
-    {
-        if($this->comment === null && ! empty($item_id) ) {
-            $this->comment = get_comment($item_id);
+        if( ! empty ( $errors ) ) {
+            $this->response->setMessage('Comment not updated');
+            $this->response->setErrors($errors);
+            $this->response->setValid(false);
         }
 
-        $fillable = apply_filters( 'tr_comments_controller_fillable', $this->getFillable(), $this );
-        $this->setFillable($fillable);
-        parent::save( $item_id, $action );
-
-        return $this;
-    }
-
-    function saveCommentMeta()
-    {
-        if (is_array( $this->fields ) && ! empty($this->item_id) ) :
-            foreach ($this->fields as $key => $value) :
-                if (is_string( $value )) {
-                    $value = trim( $value );
-                }
-
-                $current_value = get_comment_meta( $this->item_id, $key, true );
-
-                if (( isset( $value ) && $value !== "" ) && $value !== $current_value) :
-                    update_comment_meta( $this->item_id, $key, $value );
-                elseif ( ! isset( $value ) || $value === "" && ( isset( $current_value ) || $current_value === "" )) :
-                    delete_comment_meta( $this->item_id, $key );
-                endif;
-
-            endforeach;
-        endif;
-
-        return $this;
-    }
-
-    private function setCommentUppercaseFields() {
-
-        if(is_array($this->fieldsBuiltin)) {
-
-            if(!empty($this->fieldsBuiltin['comment_post_id'] )) {
-                $this->fieldsBuiltin['comment_post_ID'] = (int) $this->fieldsBuiltin['comment_post_id'];
-                unset($this->fieldsBuiltin['comment_post_id']);
-            }
-
-            if(!empty($this->fieldsBuiltin['comment_author_ip'] )) {
-                $this->fieldsBuiltin['comment_author_IP'] = $this->fieldsBuiltin['comment_author_ip'];
-                unset($this->fieldsBuiltin['comment_author_ip']);
-            }
-
-
-        }
-
-
-    }
-
-    public function update()
-    {
-        $this->setCommentUppercaseFields();
-
-        if (is_array( $this->fieldsBuiltin )) {
-            unset($GLOBALS['wp_filter']['edit_comment']['dghp278fndfluhn7']);
-            $this->fieldsBuiltin['comment_ID'] = $this->item_id;
-            wp_update_comment( $this->fieldsBuiltin );
-            add_action( 'edit_comment', array( $this, 'hook' ), 'dghp278fndfluhn7', 3 );
-        }
-
-        $this->saveCommentMeta();
-
-        do_action('tr_comments_controller_update', $this);
-
-        return $this;
     }
 
     public function create()
     {
-        $this->setCommentUppercaseFields();
+        $comments = new CommentsModel();
+        $errors = $comments->create($this->request->getFields())->getErrors();
 
-        if( ! empty($this->fieldsBuiltin['comment_post_ID']) &&
-            ! empty($this->fieldsBuiltin['comment_content']) ) {
-            unset($GLOBALS['wp_filter']['wp_insert_comment']['dghp278fndfluhn7']);
-            $comment = wp_new_comment($this->fieldsBuiltin);
-            add_action( 'wp_insert_comment', array( $this, 'hook' ), 'dghp278fndfluhn7', 3 );
-        } else {
-            $comment = false;
+        if( ! empty ( $errors ) ) {
+            $this->response->setMessage('Comment not created');
+            $this->response->setErrors($errors);
+            $this->response->setValid(false);
         }
 
-
-        if($comment instanceof \WP_Error || ! is_int($comment)) {
-            $this->response['message'] = 'Comment not created';
-            $message = 'Missing post ID `comment_post_ID`.';
-            $this->response['errors'] = isset($comment->errors) ? $comment->errors : array($message);
-            $this->valid = false;
-        } else {
-            $this->item_id = $comment;
-        }
-
-        $this->saveCommentMeta();
-
-        do_action('tr_comments_controller_create', $this);
-
-        return $this;
     }
 }

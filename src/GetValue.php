@@ -4,17 +4,18 @@ namespace TypeRocket;
 class GetValue
 {
 
+    private $decodeValue = false;
+
     /**
      * Get value from database from typeRocket bracket syntax
      *
      * @param $brackets
      * @param $item_id
      * @param $controller
-     * @param bool|false $builtin
      *
      * @return array|mixed|null|string
      */
-    public function getFromBrackets( $brackets, $item_id, $controller, $builtin = false )
+    public function getFromBrackets( $brackets, $item_id, $controller )
     {
 
         if($item_id === null) {
@@ -22,9 +23,9 @@ class GetValue
         }
 
         $keys = $this->geBracketKeys( $brackets );
-        $data = $this->controllerSwitch( $keys[0], $item_id, $controller, $builtin );
+        $data = $this->controllerSwitch( $keys[0], $item_id, $controller );
 
-        return $this->parseValueData( $data, $keys, $item_id, $controller, $builtin );
+        return $this->parseValueData( $data, $keys, $item_id, $controller );
     }
 
 
@@ -45,9 +46,8 @@ class GetValue
 
         $brackets = $field->getBrackets();
         $controller = $field->getController();
-        $builtin = $field->getBuiltin();
 
-        return $this->getFromBrackets( $brackets, $item_id, $controller, $builtin);
+        return $this->getFromBrackets( $brackets, $item_id, $controller);
     }
 
     /**
@@ -55,10 +55,12 @@ class GetValue
      *
      * @param $data
      * @param $keys
+     * @param $item_id
+     * @param $controller
      *
      * @return array|mixed|null|string
      */
-    private function parseValueData( $data, $keys, $item_id, $controller, $builtin )
+    private function parseValueData( $data, $keys, $item_id, $controller )
     {
         $mainKey = $keys[0];
         if (isset( $mainKey ) && ! empty( $data )) {
@@ -75,13 +77,13 @@ class GetValue
                     $data = ( isset( $data[$name] ) && $data[$name] !== '') ? $data[$name] : null;
                 }
             }
-            if( ! $builtin ) {
+            if( $this->decodeValue ) {
                 $data = $this->decode( $data );
             }
 
         }
 
-        $data = apply_filters( 'tr_field_data_filter', $data, $mainKey, $item_id, $controller, $builtin );
+        $data = apply_filters( 'tr_field_data_filter', $data, $mainKey, $item_id, $controller );
 
         return $data;
     }
@@ -109,31 +111,22 @@ class GetValue
      * @param $the_field
      * @param $item_id
      * @param $controller
-     * @param $builtin
      *
      * @return mixed|null|void
      */
-    private function controllerSwitch( $the_field, $item_id, $controller, $builtin )
+    private function controllerSwitch( $the_field, $item_id, $controller )
     {
         $data = null;
 
         switch ($controller) {
             case 'posts' :
-                if ($builtin == true) {
-                    $data = get_post_field( $the_field, $item_id, 'raw' );
-                } else {
-                    $data = get_metadata( 'post', $item_id, $the_field, true );
-                }
+                $data = $this->getPostsData( $item_id, $the_field );
                 break;
             case 'users' :
-                if ($builtin == true) {
-                    $data = $this->getUserData( $item_id, $the_field );
-                } else {
-                    $data = get_metadata( 'user', $item_id, $the_field, true );
-                }
+                $data = $this->getUsersData( $item_id, $the_field );
                 break;
             case 'comments' :
-                $data = $this->getCommentData( $item_id, $the_field );
+                $data = $this->getCommentsData( $item_id, $the_field );
                 break;
             case 'options' :
                 $data = get_option( $the_field );
@@ -141,7 +134,7 @@ class GetValue
             default :
                 $func = 'tr_get_data_' . $controller;
                 if(function_exists($func)) {
-                    $data = call_user_func( $func, $controller, $item_id, $the_field );
+                    $data = call_user_func( $func, $item_id, $the_field );
                 } else {
                     echo('TypeRocket: Create a custom controller <code>function '. $func . '($controller, $item_id, $the_field) { return $data; }</code>');
                     exit();
@@ -176,7 +169,7 @@ class GetValue
      *
      * @return bool|mixed|string|\WP_User
      */
-    private function getUserData( $item_id, $the_field )
+    private function getUsersData( $item_id, $the_field )
     {
         switch ($the_field) {
             case 'user_login' :
@@ -188,11 +181,16 @@ class GetValue
                 $data = get_userdata( $item_id );
                 $data = $data->$the_field;
                 break;
+            case 'id' :
+                $data = get_userdata( $item_id );
+                $data = $data->ID;
+                break;
             case 'user_pass' :
                 $data = '';
                 break;
             default :
-                $data = get_user_meta( $item_id, $the_field, true );
+                $this->decodeValue = true;
+                $data = get_metadata( 'user', $item_id, $the_field, true );
                 break;
         }
 
@@ -208,7 +206,7 @@ class GetValue
      *
      * @return mixed
      */
-    private function getCommentData($item_id, $the_field) {
+    private function getCommentsData($item_id, $the_field) {
 
         switch ($the_field) {
             case 'comment_author' :
@@ -234,8 +232,63 @@ class GetValue
                 $comment = get_comment( $item_id );
                 $data = $comment->comment_post_ID;
                 break;
+            case 'comment_id' :
+                $comment = get_comment( $item_id );
+                $data = $comment->comment_ID;
+                break;
             default :
+                $this->decodeValue = true;
                 $data = get_metadata( 'comment', $item_id, $the_field, true );
+                break;
+        }
+
+        return $data;
+
+    }
+
+    /**
+     * Get comment data
+     *
+     * @param $item_id
+     * @param $the_field
+     *
+     * @return mixed
+     */
+    private function getPostsData($item_id, $the_field) {
+
+        switch ($the_field) {
+            case 'post_author' :
+            case 'post_date' :
+            case 'post_date_gmt' :
+            case 'post_content' :
+            case 'post_title' :
+            case 'post_excerpt' :
+            case 'post_status' :
+            case 'comment_status' :
+            case 'ping_status' :
+            case 'post_name' :
+            case 'to_ping' :
+            case 'pinged' :
+            case 'post_modified' :
+            case 'post_modified_gmt' :
+            case 'post_content_filtered' :
+            case 'post_parent' :
+            case 'guid' :
+            case 'menu_order' :
+            case 'post_type' :
+            case 'post_mime_type' :
+            case 'comment_count' :
+                $data = get_post_field( $the_field, $item_id, 'raw' );
+                break;
+            case 'post_password' :
+                $data = '';
+                break;
+            case 'id' :
+                $data = get_post_field( 'ID', $item_id, 'raw' );
+                break;
+            default :
+                $this->decodeValue = true;
+                $data = get_metadata( 'post', $item_id, $the_field, true );
                 break;
         }
 

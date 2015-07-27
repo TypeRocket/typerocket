@@ -1,121 +1,54 @@
 <?php
 namespace TypeRocket\Controllers;
 
+use TypeRocket\Models\PostsModel;
+
 class PostsController extends Controller
 {
 
-    /** @var \WP_Post */
-    public $post = null;
-
-    function hook( $post_id, $post )
+    protected function validate()
     {
-        $this->post  = $post;
-        $this->valid = true;
-        $this->save( $post_id );
-    }
+        $valid = $this->response->getValid();
+        $post = get_post($this->request->getResourceId());
 
-    function getValidate()
-    {
-        $this->valid = parent::getValidate();
-
-        if ( $this->post->post_author != $this->currentUser->ID && ! current_user_can( 'edit_posts') ) {
-            $this->valid = false;
-            $this->response['message'] = "Sorry, you don't have enough rights.";
+        if ( $post->post_author != $this->user->ID && ! current_user_can( 'edit_posts') ) {
+            $valid = false;
+            $this->response->setMessage("Sorry, you don't have enough rights.");
         }
 
-        $this->valid = apply_filters( 'tr_posts_controller_validate', $this->valid, $this );
+        $valid = apply_filters( 'tr_posts_controller_validate', $valid, $this );
 
-        return $this->valid;
-    }
-
-    function filter()
-    {
-        parent::filter();
-        $this->fields = apply_filters( 'tr_posts_controller_filter', $this->fields, $this );
-
-        return $this;
+        $this->response->setValid($valid);
     }
 
     /**
-     * @param $item_id
-     * @param string $action
+     * @param null $id
      *
-     * @return PostsController $this
+     * @return $this
      */
-    function save( $item_id, $action = 'update' )
+    public function update($id = null)
     {
+        $posts = new PostsModel();
+        $errors =  $posts->update($id, $this->request->getFields() )->getErrors();
 
-        if($this->post === null && ! empty($item_id) ) {
-            $this->post = get_post($item_id);
+        if( ! empty ( $errors ) ) {
+            $this->response->setMessage('Post not updated');
+            $this->response->setErrors($errors);
+            $this->response->setValid(false);
         }
 
-        $fillable = apply_filters( 'tr_posts_controller_fillable', $this->getFillable(), $this );
-        $this->setFillable($fillable);
-        parent::save( $item_id, $action );
-
-        return $this;
-    }
-
-    public function update()
-    {
-        if (is_array( $this->fieldsBuiltin )) {
-            remove_action( 'save_post', array( $this, 'hook' ), 1999909 );
-            $this->fieldsBuiltin['ID'] = $this->item_id;
-            wp_update_post( $this->fieldsBuiltin );
-            add_action( 'save_post', array( $this, 'hook' ), 1999909, 3 );
-        }
-
-        $this->savePostMeta();
-
-        do_action('tr_posts_controller_update', $this);
-
-        return $this;
     }
 
     public function create()
     {
-        remove_action( 'save_post', array( $this, 'hook' ) );
-        $post = wp_insert_post( $this->fieldsBuiltin );
-        add_action( 'save_post', array( $this, 'hook' ) );
+        $posts = new PostsModel();
+        $errors = $posts->create($this->request->getFields() )->getErrors();
 
-        if($post instanceof \WP_Error || $post === 0 ) {
-            $this->response['message'] = 'Post not created';
-            $default = 'post_name (slug), post_title, post_content, and post_excerpt are required';
-            $this->response['errors'] = ! empty($post->errors) ? $post->errors : array($default);
-            $this->valid = false;
-        } else {
-            $this->item_id = $post;
+        if( ! empty ( $errors ) ) {
+            $this->response->setMessage('Post not created');
+            $this->response->setErrors($errors);
+            $this->response->setValid(false);
         }
 
-        $this->savePostMeta();
-
-        do_action('tr_posts_controller_create', $this);
-
-        return $this;
-    }
-
-    function savePostMeta()
-    {
-
-        if (is_array( $this->fields ) && ! empty($this->item_id) ) :
-            if ($parent_id = wp_is_post_revision( $this->item_id )) {
-                $this->item_id = $parent_id;
-            }
-
-            foreach ($this->fields as $key => $value) :
-                if (is_string( $value )) {
-                    $value = trim( $value );
-                }
-
-                $current_value = get_post_meta( $this->item_id, $key, true );
-
-                if (( isset( $value ) && $value !== "" ) && $value !== $current_value) :
-                    update_post_meta( $this->item_id, $key, $value );
-                elseif ( ! isset( $value ) || $value === "" && ( isset( $current_value ) || $current_value === "" )) :
-                    delete_post_meta( $this->item_id, $key );
-                endif;
-
-            endforeach;
-        endif;
     }
 }

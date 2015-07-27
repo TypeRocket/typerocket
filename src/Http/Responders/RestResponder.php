@@ -1,37 +1,43 @@
 <?php
 namespace TypeRocket\Http\Responders;
 
-use \TypeRocket\Controllers\Controller,
+use \TypeRocket\Http\Kernel,
     \TypeRocket\Http\Request,
     \TypeRocket\Http\Response;
 
 class RestResponder
 {
 
-    /**
-     * @param $resource
-     * @param $id
-     */
-    public function __construct( $resource, $id )
+    private $resource = null;
+
+    public function respond( $id )
     {
-
-        $request = new Request($resource, $id, 'TypeRocketApi');
+        $request  = new Request( $this->resource, $id, 'RestResponder' );
         $response = new Response();
-        $resource = ucfirst($resource);
+        $method   = $request->getMethod();
+        $action   = null;
 
-        $class = "\\TypeRocket\\Controllers\\{$resource}Controller";
-
-        if ( class_exists( $class ) ) {
-            /** @var Controller $model */
-            $controller = new $class();
-
-            if ( $controller instanceof Controller ) {
-                $response = $controller->getResponseArrayFromRequest( $request, $response );
-            }
+        switch ($method) {
+            case 'PUT' :
+                $action = 'update';
+                break;
+            case 'POST' :
+                $action = 'create';
+                break;
         }
+
+        new Kernel( $action, $request, $response );
 
         status_header( $response->getStatus() );
         wp_send_json( $response->getResponseArray() );
+
+    }
+
+    public function setResource( $resource )
+    {
+        $this->resource = $resource;
+
+        return $this;
     }
 
 }

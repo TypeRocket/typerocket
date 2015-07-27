@@ -24,9 +24,9 @@ class Core
     {
         $this->initAdmin();
         $this->loadPlugins( new Plugin\PluginCollection() );
-        $posts = new Controllers\PostsController();
-        $comments = new Controllers\CommentsController();
-        $users = new Controllers\UsersController();
+        $posts = new Http\Responders\PostsResponder();
+        $comments = new Http\Responders\CommentsResponder();
+        $users = new Http\Responders\UsersResponder();
         $this->loadControllers($posts, $comments, $users );
     }
 
@@ -76,20 +76,22 @@ class Core
      * Add hook into WordPress to give the main functionality needed for
      * TypeRocket to work.
      *
-     * @param Controllers\PostsController $posts
-     * @param Controllers\CommentsController $comments
-     * @param Controllers\UsersController $users
+     * @param Http\Responders\PostsResponder $posts
+     * @param Controllers\CommentsController|Http\Responders\CommentsResponder $comments
+     * @param Controllers\UsersController|Http\Responders\UsersResponder $users
+     *
+     * @internal param Http\Responders\PostsResponder $postsResponder
      */
     public function loadControllers(
-        Controllers\PostsController $posts,
-        Controllers\CommentsController $comments,
-        Controllers\UsersController $users
+        Http\Responders\PostsResponder $posts,
+        Http\Responders\CommentsResponder $comments,
+        Http\Responders\UsersResponder $users
     ) {
-        add_action( 'save_post', array( $posts, 'hook' ), 1999909, 3 );
-        add_action( 'wp_insert_comment', array( $comments, 'hook' ), 'dghp278fndfluhn7', 3 );
-        add_action( 'edit_comment', array( $comments, 'hook' ), 'dghp278fndfluhn7' , 3 );
-        add_action( 'edit_user_profile_update', array( $users, 'hook' ), 1999909, 3 );
-        add_action( 'personal_options_update', array( $users, 'hook' ), 1999909, 3 );
+        add_action( 'save_post', array( $posts, 'respond' ), 'typerocket_responder_hook', 3 );
+        add_action( 'wp_insert_comment', array( $comments, 'respond' ), 'typerocket_responder_hook', 3 );
+        add_action( 'edit_comment', array( $comments, 'respond' ), 'typerocket_responder_hook' , 3 );
+        add_action( 'edit_user_profile_update', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
+        add_action( 'personal_options_update', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
     }
 
     /**

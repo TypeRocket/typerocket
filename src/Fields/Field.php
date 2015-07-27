@@ -25,7 +25,6 @@ abstract class Field
 
     private $label = false;
     private $settings = array();
-    private $builtin = false;
     private $populate = true;
 
     /**
@@ -225,32 +224,6 @@ abstract class Field
     function getPopulate()
     {
         return $this->populate;
-    }
-
-    /**
-     * Set if field is built in.
-     *
-     * @param $in
-     *
-     * @return $this
-     */
-    public function setBuiltin( $in = true )
-    {
-        $this->builtin = (bool) $in;
-
-        return $this;
-    }
-
-    /**
-     * Get builtin
-     *
-     * If the field is a built in value of a meta value
-     *
-     * @return bool
-     */
-    function getBuiltin()
-    {
-        return $this->builtin;
     }
 
     /**
@@ -560,12 +533,7 @@ abstract class Field
      */
     public function setPrefix( $prefix = 'tr' )
     {
-
         $this->prefix = (string) $prefix;
-
-        if ($this->builtin == true) {
-            $this->prefix = '_tr_builtin_data';
-        }
 
         return $this;
     }
@@ -637,10 +605,6 @@ abstract class Field
 
         $this->settings = $settings;
         $this->label    = $label;
-
-        if (isset( $settings['builtin'] ) && $settings['builtin'] == true) {
-            $this->builtin = true;
-        }
 
         if (array_key_exists( 'class', $attr )) {
             $attr['class'] .= ' ' . $this->attr['class'];
@@ -718,9 +682,6 @@ abstract class Field
      *
      * @return string
      */
-    public function getString()
-    {
-        return '';
-    }
+    abstract public function getString();
 
 }

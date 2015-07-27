@@ -9,7 +9,7 @@ if($tr_loaded) {
     $load = apply_filters('tr_matrix_api_load', $load);
 
     if($load) {
-        new TypeRocket\Http\Responders\MatrixResponder($matrix_group, $matrix_type, $_POST['form_group']);
+        new TypeRocket\Http\Matrix($matrix_group, $matrix_type, $_POST['form_group']);
     }
 }
 

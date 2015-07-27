@@ -10,7 +10,9 @@ if ($tr_loaded) {
     $tr_load = apply_filters( 'tr_rest_api_load', $tr_load );
 
     if ($tr_load) {
-        $type_rocket_api = new TypeRocket\Http\Responders\RestResponder($tr_resource, $tr_item_id);
+        $restResponder = new TypeRocket\Http\Responders\RestResponder();
+        $restResponder->setResource($tr_resource);
+        $restResponder->respond($tr_item_id);
     }
 }
 

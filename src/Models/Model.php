@@ -1,20 +1,110 @@
 <?php
 namespace TypeRocket\Models;
 
-abstract class Model {
+abstract class Model
+{
 
-    private $fillable = array();
+    protected $fillable = array();
+    protected $guard = array();
+    protected $errors = null;
+    protected $builtin = array();
 
-    public function setFillable( $fillable, $type = 'meta' )
+    public function __construct()
     {
-        $this->fillable[$type] = $fillable;
+        $suffix         = strtolower(substr( get_class( $this ), 0, - 5 ));
+        $this->fillable = apply_filters( 'tr_fillable_' . $suffix, $this->fillable, $this );
+        $this->guard    = apply_filters( 'tr_guard_' . $suffix, $this->guard, $this );
+        do_action( 'tr_model', $this );
+
+    }
+
+    public function setFillableFields( array $fillable )
+    {
+        $this->fillable = $fillable;
 
         return $this;
     }
 
-    function getFillable($type = 'meta')
+    public function setGuardFields( array $guard )
     {
-        return $this->fillable[$type];
+        $this->guard = $guard;
+
+        return $this;
     }
+
+    public function appendFillableField( $field_name )
+    {
+        if ( ! array_key_exists( $field_name, $this->fillable )) {
+            $this->fillable[] = $field_name;
+        }
+
+        return $this;
+    }
+
+    public function appendGuardField( $field_name )
+    {
+        if ( ! array_key_exists( $field_name, $this->fillable )) {
+            $this->guard[] = $field_name;
+        }
+
+        return $this;
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    protected function getFillableFields()
+    {
+        return $this->fillable;
+    }
+
+    protected function getBuiltin()
+    {
+        return $this->builtin;
+    }
+
+    protected function getMetaFields( array $fields )
+    {
+        $builtin = array_flip( $this->builtin );
+
+        return array_diff_key( $fields, $builtin );
+    }
+
+    protected function getBuiltinFields( array $fields )
+    {
+        $builtin = array_flip( $this->builtin );
+
+        return array_intersect_key( $fields, $builtin );
+    }
+
+    protected function secureFields( array $fields )
+    {
+        $fillable = array();
+        if ( ! empty( $this->fillable ) && is_array( $this->fillable )) {
+            foreach ($this->fillable as $field_name) {
+                if (isset( $fields[$field_name] )) {
+                    $fillable[$field_name] = $fields[$field_name];
+                }
+            }
+            $fields = $fillable;
+        }
+
+        if ( ! empty( $this->guard ) && is_array( $this->guard )) {
+            foreach ($this->guard as $field_name) {
+                if (isset( $fields[$field_name] )) {
+                    unset( $fields[$field_name] );
+                }
+            }
+        }
+
+        return $fields;
+
+    }
+
+    abstract function create( array $fields );
+
+    abstract function update( $itemId, array $fields );
 
 }

@@ -6,7 +6,7 @@ class Response {
     private $message = 'No Response';
     private $redirect = false;
     private $status = 200;
-    private $valid = false;
+    private $valid = true;
     private $errors = array();
     private $data = array();
 
