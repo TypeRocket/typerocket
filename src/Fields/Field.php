@@ -187,20 +187,6 @@ abstract class Field
     }
 
     /**
-     * Set Attributes
-     *
-     * @param array $attributes
-     *
-     * @return $this
-     */
-    public function setAttributes( array $attributes )
-    {
-        $this->attr = $attributes;
-
-        return $this;
-    }
-
-    /**
      * Set whether to populate Field from database. If set to false fields will
      * always be left empty and with their default values.
      *
@@ -250,6 +236,20 @@ abstract class Field
     function getLabelOption()
     {
         return $this->label;
+    }
+
+    /**
+     * Set Attributes
+     *
+     * @param array $attributes
+     *
+     * @return $this
+     */
+    public function setAttributes( array $attributes )
+    {
+        $this->attr = $attributes;
+
+        return $this;
     }
 
     /**
