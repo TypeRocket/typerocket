@@ -88,20 +88,34 @@ function add_meta_content_details() {
 
 ### Fillable Fields Example
 
-By default TypeRocket will save any and all fields. This is just fine in many cases and makes life easy.
+By default TypeRocket will save any and all fields. This is just fine in many cases and makes life easy. When you need to filter, validate or fill only specific fields we have you covered.
 
-When you need to filter, validate or fill only specific fields we have some simple hooks to help you out.
+Lets make the fields for the "Book" post type the only fillable fields to make things a little more secure. We use the extend feature and create two files:
 
-Lets make the fields for the "Book" post type the only fillable fields to make things a little more secure.
+`BooksModel.php` is hr main file we care about.
 
 ```php
-add_filter('tr_model_fillable', function($fillable, $model) {
-    if($model instanceof \TypeRocket\Models\PostsModel) {
-        $bookFields = array('book_cover', 'isbn_number');
-        $fillable = array_merge( $fillable, $bookFields);
-    }
-    return $fillable;
-}, 10, 2);
+<?php // /typerocket/extend/Models/BooksModel.php
+namespace TypeRocket\Models;
+
+class BooksModel extends PostTypesModel
+{
+    protected $fillable = array(
+        'book_cover',
+        'isbn_number'
+    );
+}
+```
+
+`BooksController.php` needs to be created to handle the actions. Blank works just fine.
+
+```php
+<?php // /typerocket/extend/Controllers/BooksController.php
+namespace TypeRocket\Controllers;
+
+class BooksController extends PostTypesController
+{
+}
 ```
 
 Now only "ISBN Number" and "Book Cover" will be saved.
@@ -115,7 +129,7 @@ If we want to filter the fields we can do this as well. Lets use the controller 
 
 ```php
 add_filter('tr_model_filter_fields', function($fields, $model) {
-    if($model instanceof \TypeRocket\Models\PostsModel) {
+    if($model instanceof \TypeRocket\Models\BooksModel) {
 
         if(isset($fields['isbn_number'])) {
             $isbn = strtoupper($fields['isbn_number']);

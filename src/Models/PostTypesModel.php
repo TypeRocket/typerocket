@@ -33,6 +33,9 @@ class PostTypesModel extends Model
         'post_password',
         'id'
     );
+    protected $guard = array(
+        'post_type'
+    );
 
     public function findById($id) {
         $this->id = $id;
