@@ -37,7 +37,10 @@ class SeoPlugin
     {
         if($model instanceof Models\PostsModel) {
             $fillable = $model->getFillableFields();
-            if(!empty($fillable)) {
+            /** @var \WP_Post $data */
+            $data = $model->getData();
+            $types = get_post_types(array('public' => true));
+            if(!empty($fillable) && !empty($types[$data->post_type]) ) {
                 $model->appendFillableField('seo');
             }
         }

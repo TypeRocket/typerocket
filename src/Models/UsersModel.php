@@ -5,7 +5,8 @@ use TypeRocket\Http\Responders\UsersResponder;
 
 class UsersModel extends Model
 {
-
+    /** @var \WP_User  */
+    protected $data = null;
     protected $builtin = array(
         'user_login',
         'user_nicename',

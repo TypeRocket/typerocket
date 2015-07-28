@@ -6,6 +6,8 @@ use \TypeRocket\Http\Responders\PostsResponder;
 class PostsModel extends Model
 {
 
+    /** @var \WP_Post  */
+    protected $data = null;
     protected $builtin = array(
         'post_author',
         'post_date',
