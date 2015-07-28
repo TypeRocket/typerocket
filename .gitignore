@@ -3,6 +3,7 @@
 /config.php
 .htaccess
 /matrix
+/extend
 
 # Compiled source #
 ###################

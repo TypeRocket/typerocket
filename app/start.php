@@ -25,33 +25,6 @@ define( 'TR_VERSION', '2.0.0' );
 
 /*
 |--------------------------------------------------------------------------
-| Require Core Classes
-|--------------------------------------------------------------------------
-|
-| Require the core classes of TypeRocket.
-|
-*/
-spl_autoload_register( function ( $class ) {
-
-    $prefix   = 'TypeRocket\\';
-    $base_dir = __DIR__ . '/../src/';
-
-    $len = strlen( $prefix );
-    if (strncmp( $prefix, $class, $len ) !== 0) {
-        return;
-    }
-
-    $relative_class = substr( $class, $len );
-
-    $file = $base_dir . str_replace( '\\', '/', $relative_class ) . '.php';
-
-    if (file_exists( $file )) {
-        require $file;
-    }
-} );
-
-/*
-|--------------------------------------------------------------------------
 | Configuration
 |--------------------------------------------------------------------------
 |
@@ -66,6 +39,36 @@ if(file_exists($tr_config_path)) {
 } else {
     die('Add a config.php file at ' . $tr_config_path);
 }
+
+/*
+|--------------------------------------------------------------------------
+| Require Core Classes
+|--------------------------------------------------------------------------
+|
+| Require the core classes of TypeRocket.
+|
+*/
+spl_autoload_register( function ( $class ) {
+
+    $prefix   = 'TypeRocket\\';
+    $base_dir = __DIR__ . '/../src/';
+    $extend = TR_EXTEND_FOLDER_PATH;
+
+    $len = strlen( $prefix );
+    if (strncmp( $prefix, $class, $len ) !== 0) {
+        return;
+    }
+
+    $relative_class = substr( $class, $len );
+
+    $file = str_replace( '\\', '/', $relative_class ) . '.php';
+
+    if (file_exists( $base_dir . $file )) {
+        require $file;
+    } elseif(file_exists( $extend . $file )) {
+        require $file;
+    }
+} );
 
 /*
 |--------------------------------------------------------------------------

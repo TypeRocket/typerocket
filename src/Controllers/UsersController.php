@@ -15,7 +15,7 @@ class UsersController extends Controller
             $this->response->setMessage("Sorry, you don't have enough rights.");
         }
 
-        $valid = apply_filters( 'tr_users_controller_authenticate', $valid, $this );
+        $valid = apply_filters( 'tr_controller_authenticate_users', $valid, $this );
         $this->response->setValid($valid);
 
     }

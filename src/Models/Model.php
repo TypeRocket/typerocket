@@ -7,9 +7,26 @@ abstract class Model
     protected $id = null;
     protected $fillable = array();
     protected $guard = array();
+    protected $static = array();
+    protected $default = array();
     protected $errors = null;
     protected $builtin = array();
     protected $data = null;
+
+    public function __construct() {
+
+        $reflect = new \ReflectionClass($this);
+        $type = substr($reflect->getShortName(),0, -5);
+        $suffix = '';
+
+        if(!empty($type)) {
+            $suffix = '_' . strtolower($type);
+        }
+
+        $this->fillable = apply_filters( 'tr_model_fillable' . $suffix, $this->fillable, $this );
+        $this->guard    = apply_filters( 'tr_model_guard' . $suffix, $this->guard, $this );
+        do_action( 'tr_model', $this );
+    }
 
     public function setFillableFields( array $fillable )
     {
@@ -83,9 +100,6 @@ abstract class Model
 
     protected function secureFields( array $fields )
     {
-        $this->fillable = apply_filters( 'tr_model_fillable', $this->fillable, $this );
-        $this->guard    = apply_filters( 'tr_model_guard', $this->guard, $this );
-        do_action( 'tr_model', $this );
 
         $fillable = array();
         if ( ! empty( $this->fillable ) && is_array( $this->fillable )) {

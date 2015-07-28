@@ -44,6 +44,18 @@ define('TR_MATRIX_FOLDER_PATH', __DIR__ . '/matrix');
 
 /*
 |--------------------------------------------------------------------------
+| TypeRocket Extend Folder
+|--------------------------------------------------------------------------
+|
+| The folder where you wish to locate your matrix groups. This should be set
+| to a location outside of TypeRocket. For example, directly in your
+| current theme.
+|
+*/
+define('TR_EXTEND_FOLDER_PATH', __DIR__ . '/extend');
+
+/*
+|--------------------------------------------------------------------------
 | TypeRocket Plugins Folder
 |--------------------------------------------------------------------------
 |

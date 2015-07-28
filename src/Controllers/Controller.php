@@ -22,15 +22,24 @@ abstract class Controller
     /** @var \WP_User $user */
     public $user = null;
 
-    function __construct(Request $request, Response $response, \WP_User $user ) {
+    function __construct( Request $request, Response $response, \WP_User $user )
+    {
         $this->response = $response;
-        $this->request = $request;
-        $this->user = $user;
+        $this->request  = $request;
+        $this->user     = $user;
+        $this->init();
         $this->authenticate();
     }
 
-    abstract function update($id);
+    protected function init()
+    {
+
+    }
+
+    abstract function update( $id );
+
     abstract function create();
+
     abstract protected function authenticate();
 
 }

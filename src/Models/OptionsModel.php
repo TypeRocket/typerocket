@@ -12,6 +12,7 @@ class OptionsModel extends Model
     function create( array $fields )
     {
         $fields = $this->secureFields( $fields );
+        $fields = array_merge($this->default, $fields, $this->static);
         $this->saveOptions( $fields );
 
         return $this;
@@ -20,6 +21,7 @@ class OptionsModel extends Model
     function update( array $fields )
     {
         $fields = $this->secureFields( $fields );
+        $fields = array_merge($fields, $this->static);
         $this->saveOptions( $fields );
 
         return $this;

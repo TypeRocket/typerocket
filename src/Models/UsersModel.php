@@ -29,11 +29,13 @@ class UsersModel extends Model
     function create( array $fields )
     {
         $fields = $this->secureFields($fields);
+        $fields = array_merge($this->default, $fields, $this->static);
+
         $builtin = $this->getBuiltinFields($fields);
 
         if(!empty($builtin)) {
             unset( $GLOBALS['wp_filter']['user_register']['typerocket_responder_hook'] );
-            $user = wp_insert_user( $this->getBuiltinFields($fields) );
+            $user = wp_insert_user( $builtin );
             $users = new UsersResponder();
             add_action( 'user_register', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
 
@@ -55,11 +57,13 @@ class UsersModel extends Model
     {
         if($this->id != null) {
             $fields = $this->secureFields($fields);
+            $fields = array_merge($fields, $this->static);
+
             $builtin = $this->getBuiltinFields($fields);
             if(!empty($builtin)) {
                 $fields['ID'] = $this->id;
                 unset( $GLOBALS['wp_filter']['profile_update']['typerocket_responder_hook'] );
-                wp_update_user( $this->getBuiltinFields($fields) );
+                wp_update_user( $builtin );
                 $users = new UsersResponder();
                 add_action( 'profile_update', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
             }

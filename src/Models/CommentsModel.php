@@ -33,6 +33,7 @@ class CommentsModel extends Model
     function create( array $fields )
     {
         $fields = $this->secureFields($fields);
+        $fields = array_merge($this->default, $fields, $this->static);
         $builtin = $this->getBuiltinFields($fields);
 
         if ( ! empty( $builtin['comment_post_id'] ) &&
@@ -66,6 +67,7 @@ class CommentsModel extends Model
     {
         if($this->id == null) {
             $fields = $this->secureFields($fields);
+            $fields = array_merge($fields, $this->static);
             $builtin = $this->getBuiltinFields($fields);
 
             if(!empty($builtin)) {

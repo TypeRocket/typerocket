@@ -15,7 +15,7 @@ class OptionsController extends Controller
             $this->response['message'] = "Sorry, you don't have enough rights.";
         }
 
-        $valid = apply_filters( 'tr_options_controller_authenticate', $valid, $this );
+        $valid = apply_filters( 'tr_controller_authenticate_options', $valid, $this );
 
         $this->response->setValid( $valid );
     }
