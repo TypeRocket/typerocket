@@ -118,4 +118,26 @@ class PostTypesModel extends Model
         endif;
 
     }
+
+    protected function getBaseFieldValue( $field_name )
+    {
+
+        if(in_array($field_name, $this->builtin)) {
+            switch ($field_name) {
+                case 'post_password' :
+                    $data = '';
+                    break;
+                case 'id' :
+                    $data = get_post_field( 'ID', $this->id, 'raw' );
+                    break;
+                default :
+                    $data = get_post_field( $field_name, $this->id, 'raw' );
+                    break;
+            }
+        } else {
+            $data = get_metadata( 'post', $this->id, $field_name, true );
+        }
+
+        return $this->getValueOrNull($data);
+    }
 }

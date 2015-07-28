@@ -5,7 +5,8 @@ use TypeRocket\Http\Responders\UsersResponder;
 
 class UsersModel extends Model
 {
-    /** @var \WP_User  */
+
+    /** @var \WP_User */
     protected $data = null;
     protected $builtin = array(
         'user_login',
@@ -20,29 +21,31 @@ class UsersModel extends Model
         'user_pass'
     );
 
-    public function findById($id) {
-        $this->id = $id;
+    public function findById( $id )
+    {
+        $this->id   = $id;
         $this->data = get_user_by( 'ID', $id );
+
         return $this;
     }
 
     function create( array $fields )
     {
-        $fields = $this->secureFields($fields);
-        $fields = array_merge($this->default, $fields, $this->static);
+        $fields = $this->secureFields( $fields );
+        $fields = array_merge( $this->default, $fields, $this->static );
 
-        $builtin = $this->getBuiltinFields($fields);
+        $builtin = $this->getBuiltinFields( $fields );
 
-        if(!empty($builtin)) {
+        if ( ! empty( $builtin )) {
             unset( $GLOBALS['wp_filter']['user_register']['typerocket_responder_hook'] );
-            $user = wp_insert_user( $builtin );
+            $user  = wp_insert_user( $builtin );
             $users = new UsersResponder();
             add_action( 'user_register', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
 
             if ($user instanceof \WP_Error || ! is_int( $user )) {
                 $this->errors = isset( $user->errors ) ? $user->errors : array();
             } else {
-                $this->id = $user;
+                $this->id   = $user;
                 $this->data = get_user_by( 'ID', $user );
             }
         }
@@ -55,12 +58,12 @@ class UsersModel extends Model
 
     function update( array $fields )
     {
-        if($this->id != null) {
-            $fields = $this->secureFields($fields);
-            $fields = array_merge($fields, $this->static);
+        if ($this->id != null) {
+            $fields = $this->secureFields( $fields );
+            $fields = array_merge( $fields, $this->static );
 
-            $builtin = $this->getBuiltinFields($fields);
-            if(!empty($builtin)) {
+            $builtin = $this->getBuiltinFields( $fields );
+            if ( ! empty( $builtin )) {
                 $fields['ID'] = $this->id;
                 unset( $GLOBALS['wp_filter']['profile_update']['typerocket_responder_hook'] );
                 wp_update_user( $builtin );
@@ -70,7 +73,7 @@ class UsersModel extends Model
 
             $this->saveMeta( $fields );
         } else {
-            $this->errors = array('No item to update');
+            $this->errors = array( 'No item to update' );
         }
 
         return $this;
@@ -78,8 +81,8 @@ class UsersModel extends Model
 
     private function saveMeta( array $fields )
     {
-        $fields = $this->getMetaFields($fields);
-        if ( ! empty($fields) && ! empty( $this->id )) :
+        $fields = $this->getMetaFields( $fields );
+        if ( ! empty( $fields ) && ! empty( $this->id )) :
             foreach ($fields as $key => $value) :
                 if (is_string( $value )) {
                     $value = trim( $value );
@@ -95,5 +98,30 @@ class UsersModel extends Model
 
             endforeach;
         endif;
+    }
+
+    protected function getBaseFieldValue( $field_name )
+    {
+
+        if (in_array( $field_name, $this->builtin )) {
+
+            $user = get_userdata( $field_name );
+
+            switch ($field_name) {
+                case 'id' :
+                    $data = $user->ID;
+                    break;
+                case 'user_pass' :
+                    $data = '';
+                    break;
+                default :
+                    $data = $user->$field_name;
+                    break;
+            }
+        } else {
+            $data = get_metadata( 'user', $this->id, $field_name, true );
+        }
+
+        return $this->getValueOrNull( $data );
     }
 }

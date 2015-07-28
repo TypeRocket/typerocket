@@ -48,4 +48,10 @@ class OptionsModel extends Model
         }
 
     }
+
+    protected function getBaseFieldValue( $field_name )
+    {
+        $data = get_option( $field_name );
+        return $this->getValueOrNull($data);
+    }
 }

@@ -44,15 +44,15 @@ function tr_buffer()
 /**
  * Instance the From
  *
- * @param string $controller posts, users, comments or options
+ * @param string $resource posts, users, comments, options your own
  * @param string $action update or create
  * @param null|int $item_id you can set this to null or an integer
  *
  * @return \TypeRocket\Form
  */
-function tr_form($controller = 'auto', $action = 'update', $item_id = null )
+function tr_form($resource = 'auto', $action = 'update', $item_id = null )
 {
-    return new \TypeRocket\Form($controller, $action, $item_id);
+    return new \TypeRocket\Form($resource, $action, $item_id);
 }
 
 function tr_posts_field( $name, $item_id = null )
@@ -63,9 +63,10 @@ function tr_posts_field( $name, $item_id = null )
         $item_id = $post->ID;
     }
 
-    $getter = new \TypeRocket\GetValue();
+    $model = new \TypeRocket\Models\PostTypesModel();
+    $model->findById($item_id);
 
-    return $getter->getFromBrackets( $name, $item_id, 'posts' );
+    return $model->getFieldValue( $name );
 }
 
 function tr_users_field( $name, $item_id = null )
@@ -80,16 +81,17 @@ function tr_users_field( $name, $item_id = null )
         $item_id = get_current_user_id();
     }
 
-    $getter = new \TypeRocket\GetValue();
+    $model = new \TypeRocket\Models\UsersModel();
+    $model->findById($item_id);
 
-    return $getter->getFromBrackets( $name, $item_id, 'users' );
+    return $model->getFieldValue( $name );
 }
 
 function tr_options_field( $name )
 {
-    $getter = new \TypeRocket\GetValue();
+    $model = new \TypeRocket\Models\OptionsModel();
 
-    return $getter->getFromBrackets( $name, null, 'options' );
+    return $model->getFieldValue( $name );
 }
 
 function tr_comments_field( $name, $item_id = null )
@@ -100,7 +102,8 @@ function tr_comments_field( $name, $item_id = null )
         $item_id = $comment->comment_ID;
     }
 
-    $getter = new \TypeRocket\GetValue();
+    $model = new \TypeRocket\Models\CommentsModel();
+    $model->findById($item_id);
 
-    return $getter->getFromBrackets( $name, $item_id, 'comments' );
+    return $model->getFieldValue( $name );
 }

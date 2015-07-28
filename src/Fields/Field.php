@@ -14,7 +14,7 @@ abstract class Field
     private $attr = array();
 
     private $item_id = null;
-    private $controller = null;
+    private $resource = null;
     /** @var Form */
     private $form = null;
 
@@ -97,7 +97,7 @@ abstract class Field
         $this->setGroup( $form->getGroup() );
         $this->setSub( $form->getSub() );
         $this->setItemId( $form->getItemId() );
-        $this->setController( $form->getController() );
+        $this->setResource( $form->getResource() );
         $this->setPopulate( $form->getPopulate() );
         $this->setForm( $form ); // do not pass by reference
 
@@ -380,29 +380,29 @@ abstract class Field
     }
 
     /**
-     * Set Controller
+     * Set Resource
      *
-     * @param $controller
+     * @param $resource
      *
      * @return $this
      */
-    public function setController( $controller )
+    public function setResource( $resource )
     {
-        if (isset( $controller )) {
-            $this->controller = $controller;
+        if (isset( $resource )) {
+            $this->resource = $resource;
         }
 
         return $this;
     }
 
     /**
-     * Get Controller
+     * Get Resource
      *
      * @return null
      */
-    public function getController()
+    public function getResource()
     {
-        return $this->controller;
+        return $this->resource;
     }
 
 
@@ -642,9 +642,7 @@ abstract class Field
             return null;
         }
 
-        $getter = new GetValue();
-
-        return $getter->getFromField( $this );
+        return $this->form->getModel()->getFieldValue($this);
     }
 
 

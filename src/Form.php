@@ -8,9 +8,12 @@ use TypeRocket\Html\Generator as Generator,
 class Form
 {
 
-    private $controller = null;
+    private $resource = null;
     private $action = null;
     private $item_id = null;
+
+    /** @var \TypeRocket\Models\Model $model */
+    private $model = null;
 
     /** @var \TypeRocket\Fields\Field $currentField */
     private $currentField = '';
@@ -31,20 +34,31 @@ class Form
     /**
      * Instance the From
      *
-     * @param string $controller posts, users, comments or options
+     * @param string $resource posts, users, comments or options
      * @param string $action update or create
      * @param null|int $item_id you can set this to null or an integer
      */
-    public function __construct( $controller = 'auto', $action = 'update', $item_id = null )
+    public function __construct( $resource = 'auto', $action = 'update', $item_id = null )
     {
         $paths = Config::getPaths();
         wp_enqueue_script( 'typerocket-http', $paths['urls']['assets'] . '/js/http.js', array( 'jquery' ), '1', true );
 
-        //TODO: change to resource instead of controller, maybe
-        $this->setController( $controller );
+        $this->setResource( $resource );
         $this->setAction( $action );
         $this->setItemId( $item_id );
         $this->autoConfig();
+
+        $model = ucfirst($this->resource);
+        $model = "\\TypeRocket\\Models\\{$model}Model";
+
+        if(class_exists($model)) {
+            $this->model = new $model();
+
+            if($this->item_id) {
+                $this->model->findById($this->item_id);
+            }
+
+        }
 
         do_action( 'tr_make_form', $this );
     }
@@ -52,25 +66,15 @@ class Form
     /**
      * Set controller
      *
-     * @param $controller
+     * @param $resource
      *
      * @return $this
      */
-    public function setController( $controller )
+    private function setResource( $resource )
     {
-        $this->controller = $controller;
+        $this->resource = $resource;
 
         return $this;
-    }
-
-    /**
-     * Get controller
-     *
-     * @return null
-     */
-    public function getController()
-    {
-        return $this->controller;
     }
 
     /**
@@ -80,7 +84,7 @@ class Form
      *
      * @return $this
      */
-    public function setAction( $action )
+    private function setAction( $action )
     {
         $this->action = $action;
 
@@ -94,7 +98,7 @@ class Form
      *
      * @return $this
      */
-    public function setItemId( $item_id )
+    private function setItemId( $item_id )
     {
         $this->item_id = null;
 
@@ -106,6 +110,26 @@ class Form
     }
 
     /**
+     * Get controller
+     *
+     * @return null
+     */
+    public function getResource()
+    {
+        return $this->resource;
+    }
+
+    /**
+     * Set Action
+     *
+     * @return null
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
      * Get Item ID
      *
      * @return null
@@ -113,6 +137,16 @@ class Form
     public function getItemId()
     {
         return $this->item_id;
+    }
+
+    /**
+     * Get Item ID
+     *
+     * @return \TypeRocket\Models\Model
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 
     /**
@@ -341,25 +375,25 @@ class Form
      */
     private function autoConfig()
     {
-        if ($this->controller === 'auto') {
+        if ($this->resource === 'auto') {
             global $post, $comment, $user_id;
 
             if (isset( $post->ID )) {
                 $item_id    = $post->ID;
-                $controller = 'posts';
+                $resource = 'posts';
             } elseif (isset( $comment->comment_ID )) {
                 $item_id    = $comment->comment_ID;
-                $controller = 'comments';
+                $resource = 'comments';
             } elseif (isset( $user_id )) {
                 $item_id    = $user_id;
-                $controller = 'users';
+                $resource = 'users';
             } else {
                 $item_id    = null;
-                $controller = 'options';
+                $resource = 'options';
             }
 
             $this->setItemId( $item_id );
-            $this->setController( $controller );
+            $this->setResource( $resource );
         }
 
         return $this;
@@ -400,7 +434,7 @@ class Form
         if ($use_rest == true) {
             $rest = array(
                 'class'    => 'typerocket-rest-form',
-                'data-api' => home_url() . '/typerocket_rest_api/v1/' . $this->controller . '/' . $this->item_id
+                'data-api' => home_url() . '/typerocket_rest_api/v1/' . $this->resource . '/' . $this->item_id
             );
         }
 
@@ -471,7 +505,7 @@ class Form
     {
 
         $brackets   = $field->getBrackets();
-        $controller = $field->getController();
+        $controller = $field->getResource();
         $function   = "tr_{$controller}_field('{$brackets}');";
 
         return $function;

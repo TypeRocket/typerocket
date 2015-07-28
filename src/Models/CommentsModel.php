@@ -24,38 +24,40 @@ class CommentsModel extends Model
         'comment_id'
     );
 
-    public function findById($id) {
-        $this->id = $id;
-        $this->data = get_comment($id);
+    public function findById( $id )
+    {
+        $this->id   = $id;
+        $this->data = get_comment( $id );
+
         return $this;
     }
 
     function create( array $fields )
     {
-        $fields = $this->secureFields($fields);
-        $fields = array_merge($this->default, $fields, $this->static);
-        $builtin = $this->getBuiltinFields($fields);
+        $fields  = $this->secureFields( $fields );
+        $fields  = array_merge( $this->default, $fields, $this->static );
+        $builtin = $this->getBuiltinFields( $fields );
 
         if ( ! empty( $builtin['comment_post_id'] ) &&
              ! empty( $builtin['comment_content'] )
         ) {
             unset( $GLOBALS['wp_filter']['wp_insert_comment']['typerocket_responder_hook'] );
-            $comment = wp_new_comment( $this->formatFields( $builtin ) );
+            $comment   = wp_new_comment( $this->formatFields( $builtin ) );
             $responder = new CommentsResponder();
             add_action( 'wp_insert_comment', array( $responder, 'respond' ), 'typerocket_responder_hook', 3 );
 
-            if (empty( $comment ) ) {
+            if (empty( $comment )) {
                 $message      = 'Comment not created.';
                 $this->errors = array( $message );
             } else {
-                $this->id = $comment;
-                $this->data = get_comment($comment);
+                $this->id   = $comment;
+                $this->data = get_comment( $comment );
             }
         } else {
             $this->errors = array(
                 'Missing post ID `comment_post_id`.',
                 'Missing comment content `comment_content`.'
-                );
+            );
         }
 
         $this->saveMeta( $fields );
@@ -65,12 +67,12 @@ class CommentsModel extends Model
 
     function update( array $fields )
     {
-        if($this->id == null) {
-            $fields = $this->secureFields($fields);
-            $fields = array_merge($fields, $this->static);
-            $builtin = $this->getBuiltinFields($fields);
+        if ($this->id == null) {
+            $fields  = $this->secureFields( $fields );
+            $fields  = array_merge( $fields, $this->static );
+            $builtin = $this->getBuiltinFields( $fields );
 
-            if(!empty($builtin)) {
+            if ( ! empty( $builtin )) {
                 unset( $GLOBALS['wp_filter']['edit_comment']['typerocket_responder_hook'] );
                 $fields['comment_id'] = $this->id;
                 wp_update_comment( $this->formatFields( $builtin ) );
@@ -80,7 +82,7 @@ class CommentsModel extends Model
 
             $this->saveMeta( $fields );
         } else {
-            $this->errors = array('No item to update');
+            $this->errors = array( 'No item to update' );
         }
 
         return $this;
@@ -88,8 +90,8 @@ class CommentsModel extends Model
 
     private function saveMeta( array $fields )
     {
-        $fields = $this->getMetaFields($fields);
-        if ( ! empty($fields) && ! empty( $this->id )) :
+        $fields = $this->getMetaFields( $fields );
+        if ( ! empty( $fields ) && ! empty( $this->id )) :
             foreach ($fields as $key => $value) :
                 if (is_string( $value )) {
                     $value = trim( $value );
@@ -128,4 +130,33 @@ class CommentsModel extends Model
         return $fields;
 
     }
+
+    protected function getBaseFieldValue( $field_name )
+    {
+        if (in_array( $field_name, $this->builtin )) {
+
+            $comment = $this->data;
+
+            switch ($field_name) {
+                case 'comment_author_ip' :
+                    $data = $comment->comment_author_IP;
+                    break;
+                case 'comment_post_id' :
+                    $data = $comment->comment_post_ID;
+                    break;
+                case 'comment_id' :
+                    $data = $comment->comment_ID;
+                    break;
+                default :
+                    $data = $comment->$field_name;
+                    break;
+            }
+
+        } else {
+            $data = get_metadata( 'comment', $this->id, $field_name, true );
+        }
+
+        return $this->getValueOrNull( $data );
+    }
+
 }

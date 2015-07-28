@@ -1,6 +1,8 @@
 <?php
 namespace TypeRocket\Models;
 
+use TypeRocket\Fields\Field;
+
 abstract class Model
 {
 
@@ -12,15 +14,17 @@ abstract class Model
     protected $errors = null;
     protected $builtin = array();
     protected $data = null;
+    protected $resource = null;
 
     public function __construct() {
 
         $reflect = new \ReflectionClass($this);
         $type = substr($reflect->getShortName(),0, -5);
+        $this->resource = strtolower($type);
         $suffix = '';
 
-        if(!empty($type)) {
-            $suffix = '_' . strtolower($type);
+        if(!empty($this->resource)) {
+            $suffix = '_' . $this->resource;
         }
 
         $this->fillable = apply_filters( 'tr_model_fillable' . $suffix, $this->fillable, $this );
@@ -123,9 +127,81 @@ abstract class Model
 
     }
 
+    /**
+     * Get value from database from typeRocket bracket syntax
+     *
+     * @param $field
+     *
+     * @return array|mixed|null|string
+     */
+    public function getFieldValue( $field )
+    {
+        if($field instanceof Field) {
+            $field = $field->getBrackets();
+        }
+
+        $keys = $this->geBracketKeys( $field );
+        $data = $this->getBaseFieldValue( $keys[0] );
+
+        return $this->parseValueData( $data, $keys );
+    }
+
+    /**
+     * Parse data by walking through keys
+     *
+     * @param $data
+     * @param $keys
+     *
+     * @return array|mixed|null|string
+     */
+    private function parseValueData( $data, $keys )
+    {
+        $mainKey = $keys[0];
+        if (isset( $mainKey ) && ! empty( $data )) {
+
+            if (is_serialized( $data )) {
+                $data = unserialize( $data );
+            }
+
+            // unset first key since $data is already set to it
+            unset( $keys[0] );
+
+            if ( ! empty( $keys ) && is_array( $keys )) {
+                foreach ($keys as $name) {
+                    $data = ( isset( $data[$name] ) && $data[$name] !== '' ) ? $data[$name] : null;
+                }
+            }
+
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get keys from TypeRocket brackets
+     *
+     * @param $str
+     * @param int $set
+     *
+     * @return mixed
+     */
+    private function geBracketKeys( $str, $set = 1 )
+    {
+        $regex = '/\[([^]]+)\]/i';
+        preg_match_all( $regex, $str, $matches, PREG_PATTERN_ORDER );
+
+        return $matches[$set];
+    }
+
+    protected function getValueOrNull($value) {
+        return $value !== '' ? $value : null;
+    }
+
     abstract function create( array $fields );
 
     abstract function findById( $id );
+
+    abstract protected function getBaseFieldValue( $field_name );
 
     abstract function update( array $fields );
 
