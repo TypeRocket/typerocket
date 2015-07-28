@@ -29,17 +29,22 @@ class UsersModel extends Model
     function create( array $fields )
     {
         $fields = $this->secureFields($fields);
-        unset( $GLOBALS['wp_filter']['user_register']['typerocket_responder_hook'] );
-        $user = wp_insert_user( $this->getBuiltinFields($fields) );
-        $users = new UsersResponder();
-        add_action( 'user_register', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
+        $builtin = $this->getBuiltinFields($fields);
 
-        if ($user instanceof \WP_Error || ! is_int( $user )) {
-            $this->errors = isset( $user->errors ) ? $user->errors : array();
-        } else {
-            $this->id = $user;
-            $this->data = get_user_by( 'ID', $user );
+        if(!empty($builtin)) {
+            unset( $GLOBALS['wp_filter']['user_register']['typerocket_responder_hook'] );
+            $user = wp_insert_user( $this->getBuiltinFields($fields) );
+            $users = new UsersResponder();
+            add_action( 'user_register', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
+
+            if ($user instanceof \WP_Error || ! is_int( $user )) {
+                $this->errors = isset( $user->errors ) ? $user->errors : array();
+            } else {
+                $this->id = $user;
+                $this->data = get_user_by( 'ID', $user );
+            }
         }
+
 
         $this->saveMeta( $fields );
 
@@ -50,11 +55,14 @@ class UsersModel extends Model
     {
         if($this->id != null) {
             $fields = $this->secureFields($fields);
-            $fields['ID'] = $this->id;
-            unset( $GLOBALS['wp_filter']['profile_update']['typerocket_responder_hook'] );
-            wp_update_user( $this->getBuiltinFields($fields) );
-            $users = new UsersResponder();
-            add_action( 'profile_update', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
+            $builtin = $this->getBuiltinFields($fields);
+            if(!empty($builtin)) {
+                $fields['ID'] = $this->id;
+                unset( $GLOBALS['wp_filter']['profile_update']['typerocket_responder_hook'] );
+                wp_update_user( $this->getBuiltinFields($fields) );
+                $users = new UsersResponder();
+                add_action( 'profile_update', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
+            }
 
             $this->saveMeta( $fields );
         } else {
