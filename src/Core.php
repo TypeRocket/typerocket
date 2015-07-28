@@ -29,7 +29,7 @@ class Core
         $posts = new Http\Responders\PostsResponder();
         $comments = new Http\Responders\CommentsResponder();
         $users = new Http\Responders\UsersResponder();
-        $this->loadControllers($posts, $comments, $users );
+        $this->loadResponders($posts, $comments, $users );
     }
 
     /**
@@ -73,18 +73,16 @@ class Core
     }
 
     /**
-     * Init Controllers
+     * Init Responders
      *
      * Add hook into WordPress to give the main functionality needed for
      * TypeRocket to work.
      *
      * @param Http\Responders\PostsResponder $posts
-     * @param Controllers\CommentsController|Http\Responders\CommentsResponder $comments
-     * @param Controllers\UsersController|Http\Responders\UsersResponder $users
-     *
-     * @internal param Http\Responders\PostsResponder $postsResponder
+     * @param Http\Responders\CommentsResponder $comments
+     * @param Http\Responders\UsersResponder $users
      */
-    public function loadControllers(
+    public function loadResponders(
         Http\Responders\PostsResponder $posts,
         Http\Responders\CommentsResponder $comments,
         Http\Responders\UsersResponder $users
