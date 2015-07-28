@@ -24,6 +24,8 @@ class Core
     {
         $this->initAdmin();
         $this->loadPlugins( new Plugin\PluginCollection() );
+
+        //TODO: covert to functions to boost speed
         $posts = new Http\Responders\PostsResponder();
         $comments = new Http\Responders\CommentsResponder();
         $users = new Http\Responders\UsersResponder();

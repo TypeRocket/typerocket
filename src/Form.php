@@ -40,6 +40,7 @@ class Form
         $paths = Config::getPaths();
         wp_enqueue_script( 'typerocket-http', $paths['urls']['assets'] . '/js/http.js', array( 'jquery' ), '1', true );
 
+        //TODO: change to resource instead of controller, maybe
         $this->setController( $controller );
         $this->setAction( $action );
         $this->setItemId( $item_id );
