@@ -33,13 +33,13 @@ class CommentsModel extends Model
     function create( array $fields )
     {
         $fields = $this->secureFields($fields);
-        $fields = $this->formatFields( $fields );
+        $builtin = $this->getBuiltinFields($fields);
 
-        if ( ! empty( $fields['comment_post_ID'] ) &&
-             ! empty( $fields['comment_content'] )
+        if ( ! empty( $builtin['comment_post_id'] ) &&
+             ! empty( $builtin['comment_content'] )
         ) {
             unset( $GLOBALS['wp_filter']['wp_insert_comment']['typerocket_responder_hook'] );
-            $comment = wp_new_comment( $this->getBuiltinFields($fields) );
+            $comment = wp_new_comment( $this->formatFields( $builtin ) );
             $responder = new CommentsResponder();
             add_action( 'wp_insert_comment', array( $responder, 'respond' ), 'typerocket_responder_hook', 3 );
 
@@ -52,7 +52,7 @@ class CommentsModel extends Model
             }
         } else {
             $this->errors = array(
-                'Missing post ID `comment_post_ID`.',
+                'Missing post ID `comment_post_id`.',
                 'Missing comment content `comment_content`.'
                 );
         }
@@ -66,12 +66,15 @@ class CommentsModel extends Model
     {
         if($this->id == null) {
             $fields = $this->secureFields($fields);
+            $builtin = $this->getBuiltinFields($fields);
 
-            unset( $GLOBALS['wp_filter']['edit_comment']['typerocket_responder_hook'] );
-            $fields['comment_id'] = $this->id;
-            wp_update_comment( $this->formatFields( $this->getBuiltinFields($fields) ) );
-            $responder = new CommentsResponder();
-            add_action( 'edit_comment', array( $responder, 'respond' ), 'typerocket_responder_hook', 3 );
+            if(!empty($builtin)) {
+                unset( $GLOBALS['wp_filter']['edit_comment']['typerocket_responder_hook'] );
+                $fields['comment_id'] = $this->id;
+                wp_update_comment( $this->formatFields( $builtin ) );
+                $responder = new CommentsResponder();
+                add_action( 'edit_comment', array( $responder, 'respond' ), 'typerocket_responder_hook', 3 );
+            }
 
             $this->saveMeta( $fields );
         } else {
