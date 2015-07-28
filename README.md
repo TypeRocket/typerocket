@@ -92,7 +92,7 @@ By default TypeRocket will save any and all fields. This is just fine in many ca
 
 Lets make the fields for the "Book" post type the only fillable fields to make things a little more secure. We use the extend feature and create two files:
 
-`BooksModel.php` is hr main file we care about.
+`BooksModel.php` is the main file we care about.
 
 ```php
 <?php // /typerocket/extend/Models/BooksModel.php
