@@ -7,7 +7,7 @@ use \TypeRocket\Http\Kernel,
 
 class UsersResponder {
 
-    public function respond( $user_id ) {
+    public function respond( $user_id, $context = null ) {
 
         $request = new Request('users', $user_id, 'UsersResponder');
         $response = new Response();

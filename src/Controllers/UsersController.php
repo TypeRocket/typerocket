@@ -23,7 +23,7 @@ class UsersController extends Controller
     function update($id = null)
     {
         $user = new UsersModel();
-        $errors = $user->update($id, $this->request->getFields())->getErrors();
+        $errors = $user->findById($id)->update( $this->request->getFields())->getErrors();
 
         if( ! empty ( $errors ) ) {
             $this->response->setMessage('User not updated');

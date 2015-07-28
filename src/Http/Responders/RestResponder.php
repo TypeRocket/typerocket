@@ -10,7 +10,7 @@ class RestResponder
 
     private $resource = null;
 
-    public function respond( $id )
+    public function respond( $id, $context = null  )
     {
         $request  = new Request( $this->resource, $id, 'RestResponder' );
         $response = new Response();

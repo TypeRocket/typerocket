@@ -6,7 +6,6 @@ use TypeRocket\Http\Responders\UsersResponder;
 class UsersModel extends Model
 {
 
-    private $id = null;
     protected $builtin = array(
         'user_login',
         'user_nicename',
@@ -20,6 +19,12 @@ class UsersModel extends Model
         'user_pass'
     );
 
+    public function findById($id) {
+        $this->id = $id;
+        $this->data = get_user_by( 'ID', $id );
+        return $this;
+    }
+
     function create( array $fields )
     {
         $fields = $this->secureFields($fields);
@@ -32,6 +37,7 @@ class UsersModel extends Model
             $this->errors = isset( $user->errors ) ? $user->errors : array();
         } else {
             $this->id = $user;
+            $this->data = get_user_by( 'ID', $user );
         }
 
         $this->saveMeta( $fields );
@@ -39,17 +45,20 @@ class UsersModel extends Model
         return $this;
     }
 
-    function update( $itemId, array $fields )
+    function update( array $fields )
     {
-        $fields = $this->secureFields($fields);
-        $this->id     = $itemId;
-        $fields['ID'] = $this->id;
-        unset( $GLOBALS['wp_filter']['profile_update']['typerocket_responder_hook'] );
-        wp_update_user( $this->getBuiltinFields($fields) );
-        $users = new UsersResponder();
-        add_action( 'profile_update', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
+        if($this->id != null) {
+            $fields = $this->secureFields($fields);
+            $fields['ID'] = $this->id;
+            unset( $GLOBALS['wp_filter']['profile_update']['typerocket_responder_hook'] );
+            wp_update_user( $this->getBuiltinFields($fields) );
+            $users = new UsersResponder();
+            add_action( 'profile_update', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
 
-        $this->saveMeta( $fields );
+            $this->saveMeta( $fields );
+        } else {
+            $this->errors = array('No item to update');
+        }
 
         return $this;
     }

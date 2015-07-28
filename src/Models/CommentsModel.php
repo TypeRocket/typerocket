@@ -6,7 +6,6 @@ use TypeRocket\Http\Responders\CommentsResponder;
 class CommentsModel extends Model
 {
 
-    private $id = null;
     protected $builtin = array(
         'comment_author',
         'comment_author_email',
@@ -24,6 +23,12 @@ class CommentsModel extends Model
         'comment_post_id',
         'comment_id'
     );
+
+    public function findById($id) {
+        $this->id = $id;
+        $this->data = get_comment($id);
+        return $this;
+    }
 
     function create( array $fields )
     {
@@ -43,6 +48,7 @@ class CommentsModel extends Model
                 $this->errors = array( $message );
             } else {
                 $this->id = $comment;
+                $this->data = get_comment($comment);
             }
         } else {
             $this->errors = array(
@@ -56,17 +62,21 @@ class CommentsModel extends Model
         return $this;
     }
 
-    function update( $itemId, array $fields )
+    function update( array $fields )
     {
-        $fields = $this->secureFields($fields);
+        if($this->id == null) {
+            $fields = $this->secureFields($fields);
 
-        unset( $GLOBALS['wp_filter']['edit_comment']['typerocket_responder_hook'] );
-        $fields['comment_id'] = $itemId;
-        wp_update_comment( $this->formatFields( $this->getBuiltinFields($fields) ) );
-        $responder = new CommentsResponder();
-        add_action( 'edit_comment', array( $responder, 'respond' ), 'typerocket_responder_hook', 3 );
+            unset( $GLOBALS['wp_filter']['edit_comment']['typerocket_responder_hook'] );
+            $fields['comment_id'] = $this->id;
+            wp_update_comment( $this->formatFields( $this->getBuiltinFields($fields) ) );
+            $responder = new CommentsResponder();
+            add_action( 'edit_comment', array( $responder, 'respond' ), 'typerocket_responder_hook', 3 );
 
-        $this->saveMeta( $fields );
+            $this->saveMeta( $fields );
+        } else {
+            $this->errors = array('No item to update');
+        }
 
         return $this;
     }

@@ -23,7 +23,7 @@ class CommentsController extends Controller
     public function update($id = null)
     {
         $comments = new CommentsModel();
-        $errors = $comments->update($id, $this->request->getFields())->getErrors();
+        $errors = $comments->findById($id)->update($this->request->getFields())->getErrors();
 
         if( ! empty ( $errors ) ) {
             $this->response->setMessage('Comment not updated');

@@ -29,7 +29,7 @@ class PostsController extends Controller
     public function update($id = null)
     {
         $posts = new PostsModel();
-        $errors =  $posts->update($id, $this->request->getFields() )->getErrors();
+        $errors =  $posts->findById($id)->update( $this->request->getFields() )->getErrors();
 
         if( ! empty ( $errors ) ) {
             $this->response->setMessage('Post not updated');

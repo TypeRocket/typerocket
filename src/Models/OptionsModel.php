@@ -4,6 +4,11 @@ namespace TypeRocket\Models;
 class OptionsModel extends Model
 {
 
+    public function findById($id) {
+
+        return $this;
+    }
+
     function create( array $fields )
     {
         $fields = $this->secureFields( $fields );
@@ -12,7 +17,7 @@ class OptionsModel extends Model
         return $this;
     }
 
-    function update( $itemId, array $fields )
+    function update( array $fields )
     {
         $fields = $this->secureFields( $fields );
         $this->saveOptions( $fields );

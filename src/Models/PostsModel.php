@@ -6,7 +6,6 @@ use \TypeRocket\Http\Responders\PostsResponder;
 class PostsModel extends Model
 {
 
-    private $id = null;
     protected $builtin = array(
         'post_author',
         'post_date',
@@ -33,6 +32,12 @@ class PostsModel extends Model
         'id'
     );
 
+    public function findById($id) {
+        $this->id = $id;
+        $this->data = get_post($id);
+        return $this;
+    }
+
     public function create( array $fields )
     {
         $fields = $this->secureFields($fields);
@@ -47,6 +52,7 @@ class PostsModel extends Model
                 $this->errors = ! empty( $post->errors ) ? $post->errors : array( $default );
             } else {
                 $this->id = $post;
+                $this->data = get_post($post);
             }
 
             $this->saveMeta( $fields );
@@ -55,20 +61,23 @@ class PostsModel extends Model
         return $this;
     }
 
-    public function update( $itemId, array $fields )
+    public function update( array $fields )
     {
-        $fields = $this->secureFields($fields);
+        if($this->id != null) {
+            $fields = $this->secureFields($fields);
 
-        if ( ! empty( $fields )) {
-            $this->id = (int) $itemId;
+            if ( ! empty( $fields )) {
+                unset( $GLOBALS['wp_filter']['save_post']['typerocket_responder_hook'] );
+                $fields['ID'] = $this->id;
+                wp_update_post( $this->getBuiltinFields($fields) );
+                $responder = new PostsResponder();
+                add_action( 'save_post', array( $responder, 'respond' ), 'typerocket_responder_hook', 3 );
 
-            unset( $GLOBALS['wp_filter']['save_post']['typerocket_responder_hook'] );
-            $fields['ID'] = $this->id;
-            wp_update_post( $this->getBuiltinFields($fields) );
-            $responder = new PostsResponder();
-            add_action( 'save_post', array( $responder, 'respond' ), 'typerocket_responder_hook', 3 );
+                $this->saveMeta( $fields );
+            }
 
-            $this->saveMeta( $fields );
+        } else {
+            $this->errors = array('No item to update');
         }
 
         return $this;
