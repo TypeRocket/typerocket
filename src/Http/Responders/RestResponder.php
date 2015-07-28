@@ -26,7 +26,8 @@ class RestResponder
                 break;
         }
 
-        if ( check_ajax_referer( 'form_' . TR_SEED, '_tr_nonce_form', false ) ) {
+        $token = check_ajax_referer( 'form_' . TR_SEED, '_tr_nonce_form', false );
+        if ( ! $token ) {
             $response->setValid(false);
             $response->setMessage( 'Invalid CSRF Token' );
         } else {
