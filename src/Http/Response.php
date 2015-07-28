@@ -89,7 +89,8 @@ class Response {
     }
 
     public function getResponseArray() {
-        return get_object_vars($this);
+        $vars = get_object_vars($this);
+        return $vars;
     }
 
 }

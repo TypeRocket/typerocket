@@ -4,6 +4,8 @@ namespace TypeRocket\Models;
 class OptionsModel extends Model
 {
 
+    protected $id = 1;
+
     public function findById($id) {
 
         return $this;

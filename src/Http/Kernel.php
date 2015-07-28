@@ -18,8 +18,14 @@ class Kernel
         $class    = "\\TypeRocket\\Controllers\\{$resource}Controller";
 
         if ($response->getValid() && class_exists( $class )) {
-            /** @var Controller $model */
-            $controller = new $class( $request, $response, wp_get_current_user() );
+
+            if(get_current_user_id()) {
+                $user = wp_get_current_user();
+            } else {
+                $user = null;
+            }
+
+            $controller = new $class( $request, $response,  $user);
             $id         = $request->getResourceId();
 
             if ($controller instanceof Controller && $response->getValid()) {

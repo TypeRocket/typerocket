@@ -67,15 +67,16 @@ class CommentsModel extends Model
 
     function update( array $fields )
     {
-        if ($this->id == null) {
+        if ($this->id != null) {
             $fields  = $this->secureFields( $fields );
             $fields  = array_merge( $fields, $this->static );
             $builtin = $this->getBuiltinFields( $fields );
 
             if ( ! empty( $builtin )) {
                 unset( $GLOBALS['wp_filter']['edit_comment']['typerocket_responder_hook'] );
-                $fields['comment_id'] = $this->id;
-                wp_update_comment( $this->formatFields( $builtin ) );
+                $builtin['comment_id'] = $this->id;
+                $builtin = $this->formatFields( $builtin );
+                wp_update_comment( $builtin );
                 $responder = new CommentsResponder();
                 add_action( 'edit_comment', array( $responder, 'respond' ), 'typerocket_responder_hook', 3 );
             }

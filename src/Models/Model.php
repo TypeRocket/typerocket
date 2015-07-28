@@ -142,7 +142,7 @@ abstract class Model
             $field = $field->getBrackets();
         }
 
-        if ($this->id == null && $this->resource !== 'options') {
+        if ($this->id == null) {
             return null;
         }
 
