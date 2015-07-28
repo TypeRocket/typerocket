@@ -24,7 +24,7 @@ class UsersModel extends Model
     public function findById( $id )
     {
         $this->id   = $id;
-        $this->data = get_user_by( 'ID', $id );
+        $this->data = get_userdata( $this->id );
 
         return $this;
     }
@@ -105,17 +105,15 @@ class UsersModel extends Model
 
         if (in_array( $field_name, $this->builtin )) {
 
-            $user = get_userdata( $field_name );
-
             switch ($field_name) {
                 case 'id' :
-                    $data = $user->ID;
+                    $data = $this->data->ID;
                     break;
                 case 'user_pass' :
                     $data = '';
                     break;
                 default :
-                    $data = $user->$field_name;
+                    $data = $this->data->$field_name;
                     break;
             }
         } else {

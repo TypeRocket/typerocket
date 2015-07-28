@@ -16,14 +16,15 @@ abstract class Model
     protected $data = null;
     protected $resource = null;
 
-    public function __construct() {
+    public function __construct()
+    {
 
-        $reflect = new \ReflectionClass($this);
-        $type = substr($reflect->getShortName(),0, -5);
-        $this->resource = strtolower($type);
-        $suffix = '';
+        $reflect        = new \ReflectionClass( $this );
+        $type           = substr( $reflect->getShortName(), 0, - 5 );
+        $this->resource = strtolower( $type );
+        $suffix         = '';
 
-        if(!empty($this->resource)) {
+        if ( ! empty( $this->resource )) {
             $suffix = '_' . $this->resource;
         }
 
@@ -79,7 +80,8 @@ abstract class Model
         return $this->guard;
     }
 
-    public function getData() {
+    public function getData()
+    {
         return $this->data;
     }
 
@@ -117,7 +119,7 @@ abstract class Model
 
         if ( ! empty( $this->guard ) && is_array( $this->guard )) {
             foreach ($this->guard as $field_name) {
-                if (isset( $fields[$field_name] ) && ! in_array($field_name, $this->fillable)) {
+                if (isset( $fields[$field_name] ) && ! in_array( $field_name, $this->fillable )) {
                     unset( $fields[$field_name] );
                 }
             }
@@ -136,8 +138,12 @@ abstract class Model
      */
     public function getFieldValue( $field )
     {
-        if($field instanceof Field) {
+        if ($field instanceof Field) {
             $field = $field->getBrackets();
+        }
+
+        if ($this->id == null && $this->resource !== 'options') {
+            return null;
         }
 
         $keys = $this->geBracketKeys( $field );
@@ -193,8 +199,9 @@ abstract class Model
         return $matches[$set];
     }
 
-    protected function getValueOrNull($value) {
-        return $value !== '' ? $value : null;
+    protected function getValueOrNull( $value )
+    {
+        return ( isset($value) && $value !== '' ) ? $value : null;
     }
 
     abstract function create( array $fields );
