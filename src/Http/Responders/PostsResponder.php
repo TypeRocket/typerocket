@@ -7,7 +7,7 @@ use \TypeRocket\Http\Kernel,
 
 class PostsResponder {
 
-    public function respond( $post_id, $context = null  ) {
+    public function respond( $post_id  ) {
 
         $request = new Request('posts', $post_id, 'PostsResponder');
         $response = new Response();

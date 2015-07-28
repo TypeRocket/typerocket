@@ -10,7 +10,7 @@ class RestResponder
 
     private $resource = null;
 
-    public function respond( $id, $context = null  )
+    public function respond( $id  )
     {
         $request  = new Request( $this->resource, $id, 'RestResponder' );
         $response = new Response();
@@ -26,7 +26,12 @@ class RestResponder
                 break;
         }
 
-        new Kernel( $action, $request, $response );
+        if ( check_ajax_referer( 'form_' . TR_SEED, '_tr_nonce_form', false ) ) {
+            $response->setValid(false);
+            $response->setMessage( 'Invalid CSRF Token' );
+        } else {
+            new Kernel( $action, $request, $response );
+        }
 
         status_header( $response->getStatus() );
         wp_send_json( $response->getResponseArray() );

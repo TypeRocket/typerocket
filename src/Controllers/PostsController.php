@@ -6,7 +6,7 @@ use TypeRocket\Models\PostsModel;
 class PostsController extends Controller
 {
 
-    protected function validate()
+    protected function authenticate()
     {
         $valid = $this->response->getValid();
         $post = get_post($this->request->getResourceId());
@@ -16,7 +16,7 @@ class PostsController extends Controller
             $this->response->setMessage("Sorry, you don't have enough rights.");
         }
 
-        $valid = apply_filters( 'tr_posts_controller_validate', $valid, $this );
+        $valid = apply_filters( 'tr_posts_controller_authenticate', $valid, $this );
 
         $this->response->setValid($valid);
     }

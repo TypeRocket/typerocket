@@ -6,7 +6,7 @@ use TypeRocket\Models\OptionsModel;
 class OptionsController extends Controller
 {
 
-    public function validate()
+    public function authenticate()
     {
         $valid = $this->response->getValid();
 
@@ -15,15 +15,7 @@ class OptionsController extends Controller
             $this->response['message'] = "Sorry, you don't have enough rights.";
         }
 
-        if (
-            $this->request->getType() != 'RestResponder' &&
-            ! check_ajax_referer( 'form_' . TR_SEED, '_tr_nonce_form', false )
-        ) {
-            $valid = false;
-            $this->response->setMessage( 'Invalid CSRF Token' );
-        }
-
-        $valid = apply_filters( 'tr_options_controller_validate', $valid, $this );
+        $valid = apply_filters( 'tr_options_controller_authenticate', $valid, $this );
 
         $this->response->setValid( $valid );
     }

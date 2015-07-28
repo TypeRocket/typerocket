@@ -5,7 +5,7 @@ use TypeRocket\Models\UsersModel;
 
 class UsersController extends Controller
 {
-    function validate()
+    function authenticate()
     {
         $user  = get_user_by( 'id', $this->request->getResourceId() );
         $valid = $this->response->getValid();
@@ -15,7 +15,7 @@ class UsersController extends Controller
             $this->response->setMessage("Sorry, you don't have enough rights.");
         }
 
-        $valid = apply_filters( 'tr_users_controller_validate', $valid, $this );
+        $valid = apply_filters( 'tr_users_controller_authenticate', $valid, $this );
         $this->response->setValid($valid);
 
     }

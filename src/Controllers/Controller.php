@@ -26,11 +26,11 @@ abstract class Controller
         $this->response = $response;
         $this->request = $request;
         $this->user = $user;
-        $this->validate();
+        $this->authenticate();
     }
 
     abstract function update($id);
     abstract function create();
-    abstract protected function validate();
+    abstract protected function authenticate();
 
 }

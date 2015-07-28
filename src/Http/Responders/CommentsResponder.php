@@ -7,9 +7,9 @@ use \TypeRocket\Http\Kernel,
 
 class CommentsResponder {
 
-    public function respond( $comment_id, $context = null ) {
+    public function respond( $comment_id ) {
 
-        $request = new Request('comments', $comment_id, 'UsersResponder');
+        $request = new Request('comments', $comment_id, 'CommentsResponder');
         $response = new Response();
 
         new Kernel('update', $request, $response);

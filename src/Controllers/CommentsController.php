@@ -6,7 +6,7 @@ use TypeRocket\Models\CommentsModel;
 class CommentsController extends Controller
 {
 
-    function validate()
+    function authenticate()
     {
         $valid = $this->response->getValid();
         $comment = get_comment($this->request->getResourceId());
@@ -16,7 +16,7 @@ class CommentsController extends Controller
             $this->response->setMessage("Sorry, you don't have enough rights.");
         }
 
-        $valid = apply_filters( 'tr_comments_controller_validate', $valid, $this );
+        $valid = apply_filters( 'tr_comments_controller_authenticate', $valid, $this );
         $this->response->setValid($valid);
     }
 

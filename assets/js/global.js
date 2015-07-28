@@ -7,3 +7,8 @@ if (typeof window.trHttpCallback === 'object') {
 } else {
     window.trHttpCallback = [];
 }
+
+var TypeRocket = {
+    httpCallbacks: [],
+    repeaterCallbacks: []
+};
