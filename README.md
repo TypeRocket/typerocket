@@ -95,10 +95,10 @@ When you need to filter, validate or fill only specific fields we have some simp
 Lets make the fields for the "Book" post type the only fillable fields to make things a little more secure.
 
 ```php
-add_filter('tr_posts_controller_fillable', function($fillable, $controller) {
-    if($controller->post->post_type == 'book') {
+add_filter('tr_model_fillable', function($fillable, $model) {
+    if($model instanceof \TypeRocket\Models\PostsModel) {
         $bookFields = array('book_cover', 'isbn_number');
-        $fillable = array_merge( (array) $fillable, $bookFields);
+        $fillable = array_merge( $fillable, $bookFields);
     }
     return $fillable;
 }, 10, 2);
@@ -114,14 +114,18 @@ If we want to filter the fields we can do this as well. Lets use the controller 
 - Cast the "Book Cover" to an integer since we reference it by the attachment ID.
 
 ```php
-add_filter('tr_posts_controller_filter', function($fields, $controller) {
-    if($controller->post->post_type == 'book') {
+add_filter('tr_model_filter_fields', function($fields, $model) {
+    if($model instanceof \TypeRocket\Models\PostsModel) {
 
-        $isbn = strtoupper($fields['isbn_number']);
-        $isbn = preg_replace('/((?![Xx0-9-]+).)*/i', '', $isbn);
+        if(isset($fields['isbn_number'])) {
+            $isbn = strtoupper($fields['isbn_number']);
+            $isbn = preg_replace('/((?![Xx0-9-]+).)*/i', '', $isbn);
+            $fields['isbn_number'] = $isbn;
+        }
 
-        $fields['book_cover'] = (int) $fields['book_cover'];
-        $fields['isbn_number'] = $isbn;
+        if(isset($fields['book_cover'])) {
+            $fields['book_cover'] = (int) $fields['book_cover'];
+        }
 
     }
     return $fields;

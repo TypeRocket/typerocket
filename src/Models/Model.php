@@ -11,8 +11,8 @@ abstract class Model
 
     public function __construct()
     {
-        $this->fillable = apply_filters( 'tr_fillable', $this->fillable, $this );
-        $this->guard    = apply_filters( 'tr_guard', $this->guard, $this );
+        $this->fillable = apply_filters( 'tr_model_fillable', $this->fillable, $this );
+        $this->guard    = apply_filters( 'tr_model_guard', $this->guard, $this );
         do_action( 'tr_model' , $this );
     }
 
@@ -102,7 +102,7 @@ abstract class Model
             }
         }
 
-        return $fields;
+        return apply_filters('tr_model_filter_fields', $fields, $this);
 
     }
 
