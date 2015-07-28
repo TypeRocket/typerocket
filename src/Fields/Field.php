@@ -212,33 +212,6 @@ abstract class Field
     }
 
     /**
-     * Set whether label should be displayed
-     *
-     * @param $label
-     *
-     * @return $this
-     */
-    public function setLabelOption( $label )
-    {
-        $this->label = (bool) $label;
-
-        return $this;
-    }
-
-    /**
-     * Get Label
-     *
-     * This is not the label text but the label setting. Whether it
-     * should be displayed.
-     *
-     * @return bool
-     */
-    function getLabelOption()
-    {
-        return $this->label;
-    }
-
-    /**
      * Set Attributes
      *
      * @param array $attributes
@@ -552,6 +525,14 @@ abstract class Field
         return $this;
     }
 
+    /**
+     * Get Label
+     *
+     * This is not the label text but the label setting. Whether it
+     * should be displayed.
+     *
+     * @return bool
+     */
     public function getLabel()
     {
         if ( ! array_key_exists( 'label', $this->settings )) {
@@ -559,6 +540,33 @@ abstract class Field
         }
 
         return $this->settings['label'];
+    }
+
+    /**
+     * Set whether label should be displayed
+     *
+     * @param $label
+     *
+     * @return $this
+     */
+    public function setLabelOption( $label )
+    {
+        $this->label = (bool) $label;
+
+        return $this;
+    }
+
+    /**
+     * Get Label Option
+     *
+     * This is not the label text but the label setting. Whether it
+     * should be displayed.
+     *
+     * @return bool
+     */
+    function getLabelOption()
+    {
+        return $this->label;
     }
 
     /**
