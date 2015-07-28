@@ -3,8 +3,7 @@ namespace TypeRocket\Fields;
 
 use \TypeRocket\Form as Form,
     \TypeRocket\Validate as Validate,
-    \TypeRocket\Sanitize as Sanitize,
-    \TypeRocket\GetValue as GetValue;
+    \TypeRocket\Sanitize as Sanitize;
 
 abstract class Field
 {
@@ -311,6 +310,45 @@ abstract class Field
     }
 
     /**
+     * Append a string to an attribute
+     *
+     * @param string $key the attribute if set
+     * @param string $text the string to append
+     * @param string $separator separate stings by this
+     *
+     * @return $this
+     */
+    public function appendStringToAttribute( $key, $text, $separator = ' ' )
+    {
+
+        if (array_key_exists( $key, $this->attr )) {
+            $text = $this->attr[$key] . $separator . (string) $text;
+        }
+
+        $this->attr[$key] = $text;
+
+        return $this;
+    }
+
+    /**
+     * Generate the string needed for the html name attribute. This
+     * does not set the name attribute.
+     *
+     * @return string
+     */
+    public function getNameAttributeString()
+    {
+
+        if (empty( $this->prefix )) {
+            $this->setPrefix();
+        }
+
+        $this->brackets = $this->getBrackets();
+
+        return $this->prefix . $this->brackets;
+    }
+
+    /**
      * Remove Setting by key
      *
      * @param $key
@@ -539,27 +577,6 @@ abstract class Field
     }
 
     /**
-     * Append a string to an attribute
-     *
-     * @param string $key the attribute if set
-     * @param string $text the string to append
-     * @param string $separator separate stings by this
-     *
-     * @return $this
-     */
-    public function appendStringToAttribute( $key, $text, $separator = ' ' )
-    {
-
-        if (array_key_exists( $key, $this->attr )) {
-            $text = $this->attr[$key] . $separator . (string) $text;
-        }
-
-        $this->attr[$key] = $text;
-
-        return $this;
-    }
-
-    /**
      * Get the prefix
      *
      * @return null
@@ -567,24 +584,6 @@ abstract class Field
     public function getPrefix()
     {
         return $this->prefix;
-    }
-
-    /**
-     * Generate the string needed for the html name attribute. This
-     * does not set the name attribute.
-     *
-     * @return string
-     */
-    public function getNameAttributeString()
-    {
-
-        if (empty( $this->prefix )) {
-            $this->setPrefix();
-        }
-
-        $this->setBrackets( $this->getBrackets() );
-
-        return $this->prefix . $this->brackets;
     }
 
     /**
@@ -645,7 +644,6 @@ abstract class Field
         return $this->form->getModel()->getFieldValue($this);
     }
 
-
     /**
      * Get bracket syntax used to name the input and get the
      * value from the database using the GetValue class.
@@ -656,24 +654,6 @@ abstract class Field
     {
         return "{$this->group}[{$this->name}]{$this->sub}";
     }
-
-
-    /**
-     * Set the brackets
-     *
-     * @param string $brackets format [group][name][sub]
-     *
-     * @return $this
-     */
-    public function setBrackets( $brackets )
-    {
-        if (Validate::bracket( $brackets )) {
-            $this->brackets = $brackets;
-        }
-
-        return $this;
-    }
-
 
     /**
      * Configure in all concrete Field classes
