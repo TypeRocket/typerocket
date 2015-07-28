@@ -43,22 +43,24 @@ class PostsModel extends Model
     public function create( array $fields )
     {
         $fields = $this->secureFields($fields);
-        if ( ! empty( $fields )) {
+        $builtin = $this->getBuiltinFields($fields);
+
+        if ( ! empty( $builtin )) {
             unset( $GLOBALS['wp_filter']['save_post']['typerocket_responder_hook'] );
-            $post      = wp_insert_post( $this->getBuiltinFields($fields) );
+            $post      = wp_insert_post( $builtin );
             $responder = new PostsResponder();
             add_action( 'save_post', array( $responder, 'respond' ), 'typerocket_responder_hook' );
 
-            if ($post instanceof \WP_Error || $post === 0) {
+            if ( $post instanceof \WP_Error || $post === 0 ) {
                 $default      = 'post_name (slug), post_title, post_content, and post_excerpt are required';
                 $this->errors = ! empty( $post->errors ) ? $post->errors : array( $default );
             } else {
-                $this->id = $post;
-                $this->data = get_post($post);
+                $this->id   = $post;
+                $this->data = get_post( $post );
             }
-
-            $this->saveMeta( $fields );
         }
+
+        $this->saveMeta( $fields );
 
         return $this;
     }
@@ -67,16 +69,17 @@ class PostsModel extends Model
     {
         if($this->id != null) {
             $fields = $this->secureFields($fields);
+            $builtin = $this->getBuiltinFields($fields);
 
-            if ( ! empty( $fields )) {
+            if ( ! empty( $builtin )) {
                 unset( $GLOBALS['wp_filter']['save_post']['typerocket_responder_hook'] );
                 $fields['ID'] = $this->id;
-                wp_update_post( $this->getBuiltinFields($fields) );
+                wp_update_post( $builtin );
                 $responder = new PostsResponder();
                 add_action( 'save_post', array( $responder, 'respond' ), 'typerocket_responder_hook', 3 );
-
-                $this->saveMeta( $fields );
             }
+
+            $this->saveMeta( $fields );
 
         } else {
             $this->errors = array('No item to update');
