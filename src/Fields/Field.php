@@ -47,7 +47,7 @@ abstract class Field
             }
         }
 
-        if ($this instanceof FieldScript) {
+        if ($this instanceof ScriptField) {
             $this->enqueueScripts();
         }
 
