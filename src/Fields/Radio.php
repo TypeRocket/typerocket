@@ -26,7 +26,7 @@ class Radio extends Field implements OptionField
         $field = '<ul class="data-full">';
 
         foreach ($this->options as $key => $value) {
-            if ($option == $value) {
+            if ($option === $value) {
                 $this->setAttribute('checked', 'checked');
             } else {
                 $this->removeAttribute('checked');
