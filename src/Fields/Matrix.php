@@ -112,9 +112,18 @@ class Matrix extends Field implements OptionField, ScriptField {
                 'class' => "matrix-select-{$name}",
                 'data-group' => $this->getForm()->getGroup()
             ) );
+            $default = $this->getSetting('default');
 
             foreach ($options as $name => $value) {
-                $generator->appendInside( 'option', array('value' => $value), $name );
+
+                $attr['value'] = $value;
+                if ($default == $value) {
+                    $attr['selected'] = 'selected';
+                } else {
+                    unset( $attr['selected'] );
+                }
+
+                $generator->appendInside( 'option', $attr, $name );
             }
 
             $select = $generator->getString();
