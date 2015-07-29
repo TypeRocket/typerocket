@@ -1,8 +1,6 @@
 <?php
 namespace TypeRocket\Models;
 
-use \TypeRocket\Http\Responders\PostsResponder;
-
 class PostTypesModel extends Model
 {
 

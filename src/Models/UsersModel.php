@@ -1,8 +1,6 @@
 <?php
 namespace TypeRocket\Models;
 
-use TypeRocket\Http\Responders\UsersResponder;
-
 class UsersModel extends Model
 {
 
