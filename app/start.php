@@ -51,6 +51,7 @@ spl_autoload_register( function ( $class ) {
 
     $prefix   = 'TypeRocket\\';
     $base_dir = __DIR__ . '/../src/';
+    $extend = defined('TR_EXTEND_FOLDER_PATH') ? TR_EXTEND_FOLDER_PATH . '/' : '/../extend/';
 
     $len = strlen( $prefix );
     if (strncmp( $prefix, $class, $len ) !== 0) {
@@ -63,7 +64,7 @@ spl_autoload_register( function ( $class ) {
 
     if (file_exists( $base_dir . $file )) {
         require $base_dir . $file;
-    } elseif(defined('TR_EXTEND_FOLDER_PATH') && file_exists( TR_EXTEND_FOLDER_PATH . '/' . $file )) {
+    } elseif( file_exists( $extend . $file )) {
         require TR_EXTEND_FOLDER_PATH . '/' . $file;
     }
 } );
