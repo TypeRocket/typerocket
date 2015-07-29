@@ -70,6 +70,19 @@ class MetaBox extends Registrable
     }
 
     /**
+     * Add meta box to a screen
+     *
+     * @param string|array $screen
+     *
+     * @return $this
+     */
+    public function addScreen($screen) {
+        $this->screens = array_merge($this->screens, (array) $screen);
+
+        return $this;
+    }
+
+    /**
      * Add content inside form hook and wrap with the TypeRocket container
      *
      * @param $object
