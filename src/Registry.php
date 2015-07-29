@@ -73,6 +73,7 @@ class Registry
                 }
 
             } elseif ($obj instanceof MetaBox) {
+                add_action( 'admin_init', array( $obj, 'register' ) );
                 add_action( 'add_meta_boxes', array( $obj, 'register' ) );
             }
         }

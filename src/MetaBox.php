@@ -5,18 +5,25 @@ class MetaBox extends Registrable
 {
 
     private $label = null;
-    private $postTypes = array();
+    private $screens = array();
 
     /**
      * Make Meta Box
      *
      * @param null $name
+     * @param null $screen
      * @param array $settings
      */
-    public function __construct( $name, $settings = array() )
+    public function __construct( $name, $screen = null, array $settings = array() )
     {
         $this->label = $this->id = $name;
         $this->id    = Sanitize::underscore( $this->id );
+
+        if( ! empty( $screen ) ) {
+            $screen = (array) $screen;
+            $this->screens = array_merge($this->screens, $screen);
+        }
+
         if (empty( $settings['callback'] )) {
             $settings['callback'] = array( $this, 'metaContent' );
         }
@@ -69,8 +76,8 @@ class MetaBox extends Registrable
             $s = (string) $s->getId();
         }
 
-        if ( ! in_array( $s, $this->postTypes )) {
-            $this->postTypes[] = $s;
+        if ( ! in_array( $s, $this->screens )) {
+            $this->screens[] = $s;
         }
 
     }
@@ -99,8 +106,8 @@ class MetaBox extends Registrable
             $this->postTypeRegistrationById( $type );
         }
 
-        foreach ($this->postTypes as $v) {
-            if ($type == $v || ( $v == 'comment' && isset( $comment ) )) {
+        foreach ($this->screens as $v) {
+            if ($type == $v || ( $v == 'comment' && isset( $comment ) ) || ( $v == 'dashboard' && !isset( $post ) ) ) {
                 add_meta_box(
                     $this->id,
                     $this->label,

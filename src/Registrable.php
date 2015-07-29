@@ -217,7 +217,7 @@ abstract class Registrable
     /**
      * Use other Registrable objects or string IDs
      *
-     * @param string|PostType|Taxonomy|MetaBox $use variadic
+     * @param string|MetaBox|PostType|Taxonomy $args variadic
      *
      * @return $this
      */

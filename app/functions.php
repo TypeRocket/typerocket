@@ -23,9 +23,10 @@ function tr_post_type(
 
 function tr_meta_box(
     $name = null,
+    $screen = null,
     $settings = array()
 ) {
-    $obj = new \TypeRocket\MetaBox($name, $settings);
+    $obj = new \TypeRocket\MetaBox($name, $screen, $settings);
     $obj->addToRegistry();
 
     return $obj;
