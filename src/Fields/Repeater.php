@@ -107,6 +107,13 @@ class Repeater extends Field implements ScriptField
         return $this;
     }
 
+    public function appendField( array $field )
+    {
+        $this->fields[] = $field;
+
+        return $this;
+    }
+
     public function getFields()
     {
         return $this->fields;
