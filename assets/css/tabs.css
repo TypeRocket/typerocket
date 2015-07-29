@@ -189,14 +189,14 @@
 }
 
 .tr-tabs li.active a {
-    background: #F1F1F1;
+    background: #F5F5F5;
     position: relative;
-    border-bottom-color: #F1F1F1;
+    border-bottom-color: #F5F5F5;
     color: #000;
 }
 
 .tr-tabs li.active:hover a {
-    background: #F1F1F1;
+    background: #F5F5F5;
 }
 
 .tr-tabs li:hover a {
