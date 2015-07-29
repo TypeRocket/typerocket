@@ -9,7 +9,6 @@ class MetaBox extends Registrable
     private $context = null;
     private $priority = null;
     private $screens = array();
-    private $args = array();
 
     /**
      * Make Meta Box
@@ -28,12 +27,10 @@ class MetaBox extends Registrable
             $this->screens = array_merge($this->screens, $screen);
         }
 
-        if (empty( $settings['callback'] )) {
-            $settings['callback'] = array( $this, 'metaContent' );
+        if ( ! empty( $settings['callback'] )) {
+            $this->callback = $settings['callback'];
         }
-        if (empty( $settings['label'] )) {
-            $settings['label'] = $this->label;
-        } else {
+        if ( ! empty( $settings['label'] )) {
             $this->label = $settings['label'];
         }
 
@@ -48,7 +45,6 @@ class MetaBox extends Registrable
         $settings = array_merge( $defaults, $settings );
 
         $this->context = $settings['context'];
-        $this->callback = $settings['callback'];
         $this->priority = $settings['priority'];
         $this->args = $settings['args'];
     }
@@ -91,17 +87,16 @@ class MetaBox extends Registrable
 
     /**
      * Add content inside form hook and wrap with the TypeRocket container
-     *
-     * @param $object
-     * @param $box
      */
-    public function metaContent( $object, $box )
+    public function metaContent()
     {
         $func = 'add_meta_content_' . $this->id;
 
         echo '<div class="typerocket-container">';
-        if (function_exists( $func )) :
-            $func( $object, $box );
+        if( is_callable($this->callback) ) :
+            call_user_func_array($this->callback, array( $this ) );
+        elseif (function_exists( $func )) :
+            $func( $this );
         elseif (TR_DEBUG == true) :
             echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by defining: <code>function {$func}() {}</code></div>";
         endif;
@@ -154,7 +149,7 @@ class MetaBox extends Registrable
                 add_meta_box(
                     $this->id,
                     $this->label,
-                    $this->callback,
+                    array( $this, 'metaContent' ),
                     $v,
                     $this->context,
                     $this->priority,
@@ -225,24 +220,5 @@ class MetaBox extends Registrable
         return $this->callback;
     }
 
-    /**
-     * @param array $args
-     *
-     * @return MetaBox
-     */
-    public function setArguments( array $args )
-    {
-        $this->args = $args;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getArguments()
-    {
-        return $this->args;
-    }
 
 }
