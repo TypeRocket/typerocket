@@ -72,7 +72,7 @@ class Registry
                     add_action( 'dbx_post_sidebar', array( $obj, 'dbxPostSidebar' ) );
                 }
 
-            } elseif ($obj instanceof Metabox) {
+            } elseif ($obj instanceof MetaBox) {
                 add_action( 'add_meta_boxes', array( $obj, 'register' ) );
             }
         }

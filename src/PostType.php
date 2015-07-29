@@ -106,7 +106,7 @@ class PostType extends Registrable
     /**
      * Set the from bottom hook
      *
-     * From hook to be added below the metaboxes
+     * From hook to be added below the meta boxes
      *
      * @param bool|true|callable $value
      *
@@ -287,13 +287,13 @@ class PostType extends Registrable
     }
 
     /**
-     * Add metabox to post type
+     * Add meta box to post type
      *
-     * @param string|Metabox $s
+     * @param string|MetaBox $s
      *
      * @return $this
      */
-    public function metaboxRegistrationById( $s )
+    public function metaBoxRegistrationById( $s )
     {
         if ( ! is_string( $s )) {
             $s = (string) $s->getId();
@@ -389,7 +389,7 @@ class PostType extends Registrable
     }
 
     /**
-     * Add bottom from content below all metaboxes
+     * Add bottom from content below all meta boxes
      *
      * @param $post
      */

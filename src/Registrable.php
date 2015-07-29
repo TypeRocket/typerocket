@@ -97,7 +97,7 @@ abstract class Registrable
     protected $registrableMethods = array(
         'TypeRocket\Taxonomy' => 'taxonomyRegistrationById',
         'TypeRocket\PostType' => 'postTypeRegistrationById',
-        'TypeRocket\Metabox'  => 'metaboxRegistrationById',
+        'TypeRocket\MetaBox'  => 'metaBoxRegistrationById',
     );
 
     public function __get( $property )
@@ -217,7 +217,7 @@ abstract class Registrable
     /**
      * Use other Registrable objects or string IDs
      *
-     * @param string|PostType|Taxonomy|Metabox $use variadic
+     * @param string|PostType|Taxonomy|MetaBox $use variadic
      *
      * @return $this
      */

@@ -1,7 +1,7 @@
 <?php
 namespace TypeRocket;
 
-class Metabox extends Registrable
+class MetaBox extends Registrable
 {
 
     private $label = null;
@@ -59,7 +59,7 @@ class Metabox extends Registrable
     }
 
     /**
-     * Add metabox to post type
+     * Add meta box to post type
      *
      * @param string|PostType $s
      */
@@ -86,7 +86,7 @@ class Metabox extends Registrable
     }
 
     /**
-     * Register metabox with WordPress
+     * Register meta box with WordPress
      *
      * @return $this
      */

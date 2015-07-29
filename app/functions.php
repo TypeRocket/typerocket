@@ -21,11 +21,11 @@ function tr_post_type(
     return $obj;
 }
 
-function tr_metabox(
+function tr_meta_box(
     $name = null,
     $settings = array()
 ) {
-    $obj = new \TypeRocket\Metabox($name, $settings);
+    $obj = new \TypeRocket\MetaBox($name, $settings);
     $obj->addToRegistry();
 
     return $obj;

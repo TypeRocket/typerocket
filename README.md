@@ -14,8 +14,8 @@ http://typerocket.com
 
 ### What can you do with TypeRocket?
 
-- You can make make post types, taxonomies and metaboxes with one line of code.
-- Add fields to post types, comments, metaboxes, option pages, user profiles and even on the front-end inside theme template files.
+- You can make make post types, taxonomies and meta boxes with one line of code.
+- Add fields to post types, comments, meta boxes, option pages, user profiles and even on the front-end inside theme template files.
 - You can access a number of pre-made TypeRocket plugins for features like SEO and Theme Options installed directly into your theme.
 
 ### Story
@@ -65,15 +65,15 @@ $bookAuthor = tr_taxonomy('Author')->setId('book_author');
 $book = tr_post_type('Book')->setIcon('book')->apply($bookAuthor);
 ```
 
-- Add a Metabox to "Book"
+- Add a MetaBox to "Book"
 - Set custom Title placeholder text
 
 ```php
-$bookDetails = tr_metabox('Details');
+$bookDetails = tr_meta_box('Details');
 $book->apply($bookDetails)->setTitlePlaceholder('Enter Book Title');
 ```
 
-- Use debug mode to get metabox content provider function
+- Use debug mode to get meta box content provider function
 - Add custom fields for ISBN and Book Cover
 
 ```php

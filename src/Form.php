@@ -763,7 +763,7 @@ class Form
      * WordPress Editor
      *
      * Use this only once per page. The WordPress Editor is very buggy. You cannot use
-     * this in Metaboxes and repeatable sections.
+     * this in Meta boxes and repeatable sections.
      *
      * @param $name
      * @param array $attr

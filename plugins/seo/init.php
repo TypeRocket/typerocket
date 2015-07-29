@@ -60,7 +60,7 @@ class SeoPlugin
             'priority' => 'low',
             'callback' => array( $this, 'meta' )
         );
-        $obj         = new Metabox( 'tr_seo', $args );
+        $obj         = new MetaBox( 'tr_seo', $args );
         $obj->apply( $publicTypes )->register();
     }
 
