@@ -3,7 +3,7 @@ namespace TypeRocket\Fields;
 
 use \TypeRocket\Html\Generator;
 
-class Select extends Field implements FieldOptions
+class Select extends Field implements OptionField
 {
 
     private $options = array();

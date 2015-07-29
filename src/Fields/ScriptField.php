@@ -2,7 +2,7 @@
 
 namespace TypeRocket\Fields;
 
-interface FieldScript
+interface ScriptField
 {
     public function enqueueScripts();
 }

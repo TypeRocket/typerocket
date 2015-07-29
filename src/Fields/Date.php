@@ -3,7 +3,7 @@ namespace TypeRocket\Fields;
 
 use \TypeRocket\Html\Generator;
 
-class Date extends Field implements FieldScript
+class Date extends Field implements ScriptField
 {
 
     public function init()

@@ -3,7 +3,7 @@ namespace TypeRocket\Fields;
 
 use \TypeRocket\Html;
 
-class Radio extends Field implements FieldOptions
+class Radio extends Field implements OptionField
 {
 
     private $options = array();

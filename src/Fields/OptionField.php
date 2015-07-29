@@ -2,7 +2,7 @@
 namespace TypeRocket\Fields;
 
 
-interface FieldOptions
+interface OptionField
 {
     public function setOption($key, $value);
     public function setOptions($options);

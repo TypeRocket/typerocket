@@ -3,7 +3,7 @@ namespace TypeRocket\Fields;
 
 use \TypeRocket\Sanitize;
 
-class WordPressEditor extends Field implements FieldScript
+class WordPressEditor extends Field implements ScriptField
 {
 
     public function init()

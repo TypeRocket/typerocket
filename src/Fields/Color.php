@@ -4,7 +4,7 @@ namespace TypeRocket\Fields;
 use \TypeRocket\Html\Generator,
     \TypeRocket\Sanitize;
 
-class Color extends Field implements FieldScript
+class Color extends Field implements ScriptField
 {
 
     public function init()

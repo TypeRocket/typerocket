@@ -4,7 +4,7 @@ namespace TypeRocket\Fields;
 use \TypeRocket\Html\Generator,
     \TypeRocket\Config;
 
-class Editor extends Textarea implements FieldScript
+class Editor extends Textarea implements ScriptField
 {
 
     public function init()

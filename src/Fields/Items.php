@@ -4,7 +4,7 @@ namespace TypeRocket\Fields;
 use \TypeRocket\Html\Generator,
     \TypeRocket\Config;
 
-class Items extends Field implements FieldScript
+class Items extends Field implements ScriptField
 {
 
     public function init()

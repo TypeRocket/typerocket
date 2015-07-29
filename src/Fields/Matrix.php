@@ -6,7 +6,7 @@ use TypeRocket\Html\Generator,
     TypeRocket\Buffer,
     \TypeRocket\Sanitize;
 
-class Matrix extends Field implements FieldOptions, FieldScript {
+class Matrix extends Field implements OptionField, ScriptField {
 
     private $mxid = null;
     private $options = null;
