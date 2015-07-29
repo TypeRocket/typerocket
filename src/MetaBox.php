@@ -5,7 +5,11 @@ class MetaBox extends Registrable
 {
 
     private $label = null;
+    private $callback = null;
+    private $context = null;
+    private $priority = null;
     private $screens = array();
+    private $args = array();
 
     /**
      * Make Meta Box
@@ -43,7 +47,10 @@ class MetaBox extends Registrable
 
         $settings = array_merge( $defaults, $settings );
 
-        $this->args = $settings;
+        $this->context = $settings['context'];
+        $this->callback = $settings['callback'];
+        $this->priority = $settings['priority'];
+        $this->args = $settings['args'];
     }
 
     /**
@@ -147,16 +154,95 @@ class MetaBox extends Registrable
                 add_meta_box(
                     $this->id,
                     $this->label,
-                    $this->args['callback'],
+                    $this->callback,
                     $v,
-                    $this->args['context'],
-                    $this->args['priority'],
-                    $this->args['args']
+                    $this->context,
+                    $this->priority,
+                    $this->args
                 );
             }
         }
 
         return $this;
+    }
+
+    /**
+     * @return null
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    /**
+     * @param null $priority
+     *
+     * @return MetaBox
+     */
+    public function setPriority( $priority )
+    {
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    /**
+     * @param null $context
+     *
+     * @return MetaBox
+     */
+    public function setContext( $context )
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
+    /**
+     * @return null
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    public function setCallback($callback) {
+
+        if(is_callable($callback)) {
+            $this->callback = $callback;
+        } else {
+            $this->callback = null;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return null
+     */
+    public function getCallback()
+    {
+        return $this->callback;
+    }
+
+    /**
+     * @param array $args
+     *
+     * @return MetaBox
+     */
+    public function setArguments( array $args )
+    {
+        $this->args = $args;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getArguments()
+    {
+        return $this->args;
     }
 
 }
