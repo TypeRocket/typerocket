@@ -4,9 +4,9 @@ namespace TypeRocket;
 class SeoPlugin
 {
 
-    public $item_id = null;
+    public $itemId = null;
 
-    function __construct()
+    public function __construct()
     {
         if ( ! function_exists( 'add_action' ) ) {
             echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
@@ -14,7 +14,7 @@ class SeoPlugin
         }
     }
 
-    function setup()
+    public function setup()
     {
         if ( ! defined( 'WPSEO_URL' ) && ! defined( 'AIOSEOP_VERSION' ) ) {
             define( 'TR_SEO', '1.0' );
@@ -33,28 +33,26 @@ class SeoPlugin
         }
     }
 
-    function fillable( $model )
+    public function fillable( $model )
     {
+        global $post;
+
         if($model instanceof Models\PostTypesModel) {
             $fillable = $model->getFillableFields();
-
-            $reflect = new \ReflectionClass($model);
-            $type = substr($reflect->getShortName(),0, -5);
-            $type = strtolower(Inflect::singularize($type));
-            $publicTypes = get_post_types(array('public' => true));
-
-            if(!empty($fillable) && !empty($publicTypes[$type]) ) {
+            /** @var \WP_Post $data */
+            $types = get_post_types(array('public' => true));
+            if(!empty($fillable) && !empty($types[$post->post_type]) ) {
                 $model->appendFillableField('seo');
             }
         }
     }
 
-    function loaded()
+    public function loaded()
     {
-        $this->item_id = get_queried_object_id();
+        $this->itemId = get_queried_object_id();
     }
 
-    function seo_meta()
+    public function seo_meta()
     {
         $publicTypes = get_post_types( array( 'public' => true ) );
         $args        = array(
@@ -67,9 +65,9 @@ class SeoPlugin
     }
 
     // Page Title
-    function title( $title, $sep = '', $other = '' )
+    public function title( $title, $sep = '', $other = '' )
     {
-        $newTitle = tr_posts_field( '[seo][meta][title]', $this->item_id );
+        $newTitle = tr_posts_field( '[seo][meta][title]', $this->itemId );
 
         if ( $newTitle != null ) {
             return $newTitle;
@@ -79,15 +77,15 @@ class SeoPlugin
 
     }
 
-    function title_tag()
+    public function title_tag()
     {
         echo '<title>' . $this->title( '|', false, 'right' ) . "</title>";
     }
 
     // head meta data
-    function head_data()
+    public function head_data()
     {
-        $object_id = $this->item_id;
+        $object_id = $this->itemId;
 
         // meta vars
         $desc             = esc_attr( tr_posts_field( '[seo][meta][description]', $object_id ) );
@@ -138,10 +136,10 @@ class SeoPlugin
     }
 
     // 301 Redirect
-    function redirect()
+    public function redirect()
     {
         if ( is_singular() ) {
-            $redirect = tr_posts_field( '[seo][meta][redirect]', $this->item_id );
+            $redirect = tr_posts_field( '[seo][meta][redirect]', $this->itemId );
             if ( ! empty( $redirect ) ) {
                 wp_redirect( $redirect, 301 );
                 exit;
@@ -150,7 +148,7 @@ class SeoPlugin
     }
 
     // CSS
-    function css()
+    public function css()
     {
         $paths = Config::getPaths();
         $path  = $paths['urls']['plugins'] . '/seo/';
@@ -158,7 +156,7 @@ class SeoPlugin
         wp_enqueue_script( 'tr-seo', $path . 'script.js', array( 'jquery' ), '1.0', true );
     }
 
-    function meta()
+    public function meta()
     {
         echo '<div class="typerocket-container">';
         $buffer = new Buffer();
@@ -267,7 +265,7 @@ class SeoPlugin
 
     }
 
-    function general()
+    public function general()
     {
         global $post; ?>
         <div id="tr-seo-preview" class="control-group">
@@ -330,6 +328,4 @@ class SeoPlugin
 
 }
 
-$tr_seo = new SeoPlugin();
-add_action( 'typerocket_loaded', array( $tr_seo, 'setup' ) );
-unset( $tr_seo );
+add_action( 'typerocket_loaded', array( new SeoPlugin(), 'setup' ) );

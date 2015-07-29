@@ -1,7 +1,7 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html\Generator as Generator;
+use \TypeRocket\Html\Generator;
 
 class Date extends Field implements FieldScript
 {

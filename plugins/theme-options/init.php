@@ -6,7 +6,7 @@ class ThemeOptionsPlugin
 
     private $name = 'tr_theme_options';
 
-    function __construct()
+    public function __construct()
     {
         if ( ! function_exists( 'add_action' )) {
             echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
@@ -19,7 +19,7 @@ class ThemeOptionsPlugin
         return $this->name;
     }
 
-    function setup()
+    public function setup()
     {
         $this->name = apply_filters( 'tr_theme_options_name', $this->name );
         add_action( 'admin_menu', array( $this, 'menu' ) );
@@ -54,7 +54,7 @@ class ThemeOptionsPlugin
         add_theme_page( 'Theme Options', 'Theme Options', 'manage_options', 'theme_options', array( $this, 'page' ) );
     }
 
-    function page()
+    public function page()
     {
         echo '<div id="wrap">';
         $file = apply_filters( 'tr_theme_options_page', __DIR__ . '/admin.php' );
@@ -66,7 +66,7 @@ class ThemeOptionsPlugin
         echo '</div>';
     }
 
-    function add_sub_menu( $name, $link, $root_menu, $id, $meta = false )
+    public function add_sub_menu( $name, $link, $root_menu, $id, $meta = false )
     {
         global $wp_admin_bar;
         if ( ! current_user_can( 'manage_options' ) || ! is_admin_bar_showing()) {
@@ -82,7 +82,7 @@ class ThemeOptionsPlugin
         ) );
     }
 
-    function admin_bar_menu()
+    public function admin_bar_menu()
     {
         $this->add_sub_menu( "Theme Options", admin_url() . 'themes.php?page=theme_options', "site-name",
             "tr-theme-options" );
@@ -131,6 +131,4 @@ class ThemeOptionsPlugin
 
 }
 
-$tr_theme_options = new ThemeOptionsPlugin();
-add_action( 'typerocket_loaded', array( $tr_theme_options, 'setup' ) );
-unset( $tr_theme_options );
+add_action( 'typerocket_loaded', array( new ThemeOptionsPlugin(), 'setup' ) );

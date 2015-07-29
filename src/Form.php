@@ -1,16 +1,16 @@
 <?php
 namespace TypeRocket;
 
-use TypeRocket\Html\Generator as Generator,
-    TypeRocket\Html\Tag as Tag,
-    TypeRocket\Fields\Field as Field;
+use TypeRocket\Html\Generator,
+    TypeRocket\Html\Tag,
+    TypeRocket\Fields\Field;
 
 class Form
 {
 
     private $resource = null;
     private $action = null;
-    private $item_id = null;
+    private $itemId = null;
 
     /** @var \TypeRocket\Models\Model $model */
     private $model = null;
@@ -36,16 +36,16 @@ class Form
      *
      * @param string $resource posts, users, comments or options
      * @param string $action update or create
-     * @param null|int $item_id you can set this to null or an integer
+     * @param null|int $itemId you can set this to null or an integer
      */
-    public function __construct( $resource = 'auto', $action = 'update', $item_id = null )
+    public function __construct( $resource = 'auto', $action = 'update', $itemId = null )
     {
         $paths = Config::getPaths();
         wp_enqueue_script( 'typerocket-http', $paths['urls']['assets'] . '/js/http.js', array( 'jquery' ), '1', true );
 
         $this->setResource( $resource );
         $this->setAction( $action );
-        $this->setItemId( $item_id );
+        $this->setItemId( $itemId );
         $this->autoConfig();
 
         $model = ucfirst($this->resource);
@@ -54,8 +54,8 @@ class Form
         if(class_exists($model)) {
             $this->model = new $model();
 
-            if($this->item_id) {
-                $this->model->findById($this->item_id);
+            if($this->itemId) {
+                $this->model->findById($this->itemId);
             }
 
         }
@@ -100,10 +100,10 @@ class Form
      */
     private function setItemId( $item_id )
     {
-        $this->item_id = null;
+        $this->itemId = null;
 
         if (isset( $item_id )) {
-            $this->item_id = (int) $item_id;
+            $this->itemId = (int) $item_id;
         }
 
         return $this;
@@ -136,7 +136,7 @@ class Form
      */
     public function getItemId()
     {
-        return $this->item_id;
+        return $this->itemId;
     }
 
     /**
@@ -434,7 +434,7 @@ class Form
         if ($use_rest == true) {
             $rest = array(
                 'class'    => 'typerocket-rest-form',
-                'data-api' => home_url() . '/typerocket_rest_api/v1/' . $this->resource . '/' . $this->item_id
+                'data-api' => home_url() . '/typerocket_rest_api/v1/' . $this->resource . '/' . $this->itemId
             );
         }
 

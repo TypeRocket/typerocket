@@ -5,7 +5,7 @@ class Metabox extends Registrable
 {
 
     private $label = null;
-    private $post_types = array();
+    private $postTypes = array();
 
     /**
      * Make Meta Box
@@ -69,8 +69,8 @@ class Metabox extends Registrable
             $s = (string) $s->getId();
         }
 
-        if ( ! in_array( $s, $this->post_types )) {
-            $this->post_types[] = $s;
+        if ( ! in_array( $s, $this->postTypes )) {
+            $this->postTypes[] = $s;
         }
 
     }
@@ -99,7 +99,7 @@ class Metabox extends Registrable
             $this->postTypeRegistrationById( $type );
         }
 
-        foreach ($this->post_types as $v) {
+        foreach ($this->postTypes as $v) {
             if ($type == $v || ( $v == 'comment' && isset( $comment ) )) {
                 add_meta_box(
                     $this->id,

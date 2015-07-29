@@ -6,7 +6,7 @@ use TypeRocket\Models\CommentsModel;
 class CommentsController extends Controller
 {
 
-    function authenticate()
+    public function authenticate()
     {
         $valid = $this->response->getValid();
         $comment = get_comment($this->request->getResourceId());

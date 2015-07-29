@@ -1,7 +1,7 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Sanitize as Sanitize;
+use \TypeRocket\Sanitize;
 
 class WordPressEditor extends Field implements FieldScript
 {

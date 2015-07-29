@@ -1,8 +1,8 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html as Html;
-use \TypeRocket\Config as Config;
+use \TypeRocket\Html,
+    \TypeRocket\Config;
 
 class File extends Field implements FieldScript
 {

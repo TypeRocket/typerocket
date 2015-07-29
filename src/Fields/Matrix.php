@@ -1,10 +1,10 @@
 <?php
 namespace TypeRocket\Fields;
 
-use TypeRocket\Html\Generator as Generator,
-    TypeRocket\Config as Config,
-    TypeRocket\Buffer as Buffer,
-    \TypeRocket\Sanitize as Sanitize;
+use TypeRocket\Html\Generator,
+    TypeRocket\Config,
+    TypeRocket\Buffer,
+    \TypeRocket\Sanitize;
 
 class Matrix extends Field implements FieldOptions, FieldScript {
 

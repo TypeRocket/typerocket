@@ -19,13 +19,8 @@ class Kernel
 
         if ($response->getValid() && class_exists( $class )) {
 
-            if(get_current_user_id()) {
-                $user = wp_get_current_user();
-            } else {
-                $user = null;
-            }
-
-            $controller = new $class( $request, $response,  $user);
+            $user = wp_get_current_user();
+            $controller = new $class( $request, $response, $user);
             $id         = $request->getResourceId();
 
             if ($controller instanceof Controller && $response->getValid()) {

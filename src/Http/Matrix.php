@@ -6,7 +6,7 @@ use TypeRocket\Validate;
 
 class Matrix {
 
-    function __construct($group, $type, $form_group, $load = true) {
+    public function __construct($group, $type, $formGroup, $load = true) {
 
         if( $load ) {
             $tr_matrix_id = time(); // id for repeater
@@ -14,13 +14,13 @@ class Matrix {
             $form->setPopulate(false);
             $form->setDebugStatus(false);
 
-            if( ! Validate::bracket($form_group)) {
-                $form_group = '';
+            if( ! Validate::bracket($formGroup)) {
+                $formGroup = '';
             }
 
             $paths = Config::getPaths();
 
-            $form->setGroup($form_group . "[{$group}][{$tr_matrix_id}][{$type}]");
+            $form->setGroup($formGroup . "[{$group}][{$tr_matrix_id}][{$type}]");
             $file = $paths['matrix'] . "/{$group}/{$type}.php";
         } else {
             http_response_code(404);

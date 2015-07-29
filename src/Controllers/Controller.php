@@ -22,7 +22,7 @@ abstract class Controller
     /** @var \WP_User $user */
     public $user = null;
 
-    function __construct( Request $request, Response $response, \WP_User $user )
+    public function __construct( Request $request, Response $response, \WP_User $user )
     {
         $this->response = $response;
         $this->request  = $request;
@@ -33,7 +33,7 @@ abstract class Controller
 
     protected function init()
     {
-
+        return $this;
     }
 
     abstract function update( $id );

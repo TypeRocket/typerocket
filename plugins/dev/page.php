@@ -38,8 +38,8 @@ function tr_dev_stats()
     <div>
         <div id="tr-dev-content" class="typerocket-container">
             <?php
-            $screen = new \TypeRocket\Tabs();
-            $screen->addTab( array(
+            $tabs = tr_tabs();
+            $tabs->addTab( array(
                 'id'       => 'stats',
                 'title'    => 'Stats',
                 'content'  => '',

@@ -4,8 +4,8 @@ namespace TypeRocket;
 class Tabs
 {
 
-    private $_tabs = array();
-    private $_sidebar = null;
+    private $tabs = array();
+    private $sidebar = null;
 
     /**
      * Gets the help tabs registered for the screen.
@@ -16,7 +16,7 @@ class Tabs
      */
     public function getTabs()
     {
-        return $this->_tabs;
+        return $this->tabs;
     }
 
     /**
@@ -30,11 +30,11 @@ class Tabs
      */
     public function getTab( $id )
     {
-        if ( ! isset( $this->_tabs[$id] )) {
+        if ( ! isset( $this->tabs[$id] )) {
             return null;
         }
 
-        return $this->_tabs[$id];
+        return $this->tabs[$id];
     }
 
     /**
@@ -94,7 +94,7 @@ class Tabs
         }
 
         // Allows for overriding an existing tab with that ID.
-        $this->_tabs[$settings['id']] = $settings;
+        $this->tabs[$settings['id']] = $settings;
 
         return $this;
     }
@@ -110,7 +110,7 @@ class Tabs
      */
     public function removeTab( $id )
     {
-        unset( $this->_tabs[$id] );
+        unset( $this->tabs[$id] );
 
         return $this;
     }
@@ -122,7 +122,7 @@ class Tabs
      */
     public function removeTabs()
     {
-        $this->_tabs = array();
+        $this->tabs = array();
 
         return $this;
     }
@@ -136,7 +136,7 @@ class Tabs
      */
     public function getSidebar()
     {
-        return $this->_sidebar;
+        return $this->sidebar;
     }
 
     /**
@@ -152,7 +152,7 @@ class Tabs
      */
     public function setSidebar( $content )
     {
-        $this->_sidebar = $content;
+        $this->sidebar = $content;
 
         return $this;
     }

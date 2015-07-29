@@ -50,10 +50,9 @@ class PostTypesModel extends Model
         $builtin = $this->getBuiltinFields($fields);
 
         if ( ! empty( $builtin )) {
-            unset( $GLOBALS['wp_filter']['save_post']['typerocket_responder_hook'] );
+            remove_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
             $post      = wp_insert_post( $builtin );
-            $responder = new PostsResponder();
-            add_action( 'save_post', array( $responder, 'respond' ), 'typerocket_responder_hook' );
+            add_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
 
             if ( $post instanceof \WP_Error || $post === 0 ) {
                 $default      = 'post_name (slug), post_title, post_content, and post_excerpt are required';
@@ -76,12 +75,11 @@ class PostTypesModel extends Model
             $fields = array_merge($fields, $this->static);
             $builtin = $this->getBuiltinFields($fields);
 
-            if ( ! empty( $builtin )) {
-                unset( $GLOBALS['wp_filter']['save_post']['typerocket_responder_hook'] );
+            if ( ! empty( $builtin ) && ! wp_is_post_revision( $this->id ) ) {
+                remove_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
                 $fields['ID'] = $this->id;
                 wp_update_post( $builtin );
-                $responder = new PostsResponder();
-                add_action( 'save_post', array( $responder, 'respond' ), 'typerocket_responder_hook', 3 );
+                add_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
             }
 
             $this->saveMeta( $fields );

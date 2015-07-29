@@ -1,9 +1,8 @@
 <?php
 namespace TypeRocket\Fields;
 
-use TypeRocket\Config as Config,
-    TypeRocket\Buffer as Buffer,
-    TypeRocket\Html\Generator as Generator;
+use TypeRocket\Config,
+    TypeRocket\Html\Generator;
 
 class Repeater extends Field implements FieldScript
 {
@@ -15,7 +14,8 @@ class Repeater extends Field implements FieldScript
         $this->setType( 'repeater' );
     }
 
-    public function enqueueScripts() {
+    public function enqueueScripts()
+    {
         $paths = Config::getPaths();
         wp_enqueue_script( 'typerocket-booyah', $paths['urls']['assets'] . '/js/booyah.js', array( 'jquery' ), '1.0',
             true );
@@ -24,7 +24,7 @@ class Repeater extends Field implements FieldScript
 
     public function getString()
     {
-        $this->setAttribute('name', $this->getNameAttributeString());
+        $this->setAttribute( 'name', $this->getNameAttributeString() );
         $form = $this->getForm();
         $form->setDebugStatus( false );
         $settings = $this->getSettings();
@@ -48,7 +48,7 @@ class Repeater extends Field implements FieldScript
         }
 
         // template for repeater groups
-        $href = '#remove';
+        $href          = '#remove';
         $openContainer = '<div class="repeater-controls"><div class="collapse"></div><div class="move"></div><a href="' . $href . '" class="remove" title="remove"></a></div><div class="repeater-inputs">';
         $endContainer  = '</div>';
 
@@ -62,12 +62,12 @@ class Repeater extends Field implements FieldScript
         $form->setGroup( $this->getBrackets() . "[{{ {$name} }}]" );
 
         // add controls (add, flip, clear all)
-        $generator = new Generator();
-        $default_null = $generator->newInput('hidden', $this->getAttribute('name'), null)->getString();
+        $generator    = new Generator();
+        $default_null = $generator->newInput( 'hidden', $this->getAttribute( 'name' ), null )->getString();
 
         $html .= "<div class=\"controls\"><div class=\"tr-repeater-button-add\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /></div><div class=\"button-group\"><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Contract\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}<div>{$default_null}</div></div>";
 
-        $templateFields = str_replace(' name="', ' data-name="', $this->getTemplateFields());
+        $templateFields = str_replace( ' name="', ' data-name="', $this->getTemplateFields() );
 
         // render js template data
         $html .= "<div class=\"tr-repeater-group-template\" data-id=\"{$name}\">";

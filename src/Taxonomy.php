@@ -9,7 +9,7 @@ namespace TypeRocket;
 class Taxonomy extends Registrable
 {
 
-    private $post_types = array();
+    private $postTypes = array();
 
     /**
      * Set the url slug used for rewrite rules
@@ -128,7 +128,7 @@ class Taxonomy extends Registrable
         $this->dieIfReserved();
 
         do_action( 'tr_register_taxonomy_' . $this->id, $this );
-        register_taxonomy( $this->id, $this->post_types, $this->args );
+        register_taxonomy( $this->id, $this->postTypes, $this->args );
 
         return $this;
     }
@@ -145,8 +145,8 @@ class Taxonomy extends Registrable
             $s = (string) $s->getId();
         }
 
-        if ( ! in_array( $s, $this->post_types )) {
-            $this->post_types[] = $s;
+        if ( ! in_array( $s, $this->postTypes )) {
+            $this->postTypes[] = $s;
         }
 
     }

@@ -5,7 +5,7 @@ use TypeRocket\Models\UsersModel;
 
 class UsersController extends Controller
 {
-    function authenticate()
+    public function authenticate()
     {
         $user  = get_user_by( 'id', $this->request->getResourceId() );
         $valid = $this->response->getValid();
@@ -20,7 +20,7 @@ class UsersController extends Controller
 
     }
 
-    function update($id = null)
+    public function update($id = null)
     {
         $user = new UsersModel();
         $errors = $user->findById($id)->update( $this->request->getFields())->getErrors();
@@ -34,7 +34,7 @@ class UsersController extends Controller
         }
     }
 
-    function create()
+    public function create()
     {
         $user = new UsersModel();
         $errors = $user->create($this->request->getFields())->getErrors();

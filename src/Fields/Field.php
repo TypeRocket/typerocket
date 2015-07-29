@@ -1,9 +1,9 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Form as Form,
-    \TypeRocket\Validate as Validate,
-    \TypeRocket\Sanitize as Sanitize;
+use \TypeRocket\Form,
+    \TypeRocket\Validate,
+    \TypeRocket\Sanitize;
 
 abstract class Field
 {
@@ -12,7 +12,7 @@ abstract class Field
     private $type = null;
     private $attr = array();
 
-    private $item_id = null;
+    private $itemId = null;
     private $resource = null;
     /** @var Form */
     private $form = null;
@@ -34,7 +34,7 @@ abstract class Field
      * @param array $settings the settings of the field
      * @param bool|true $label show the label
      */
-    function __construct( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function __construct( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $args = func_get_args();
         $this->init();
@@ -79,7 +79,7 @@ abstract class Field
         return $string;
     }
 
-    public function init()
+    protected function init()
     {
         return $this;
     }
@@ -341,14 +341,14 @@ abstract class Field
     /**
      * Set the Item Id
      *
-     * @param int $item_id
+     * @param int $itemId
      *
      * @return $this
      */
-    public function setItemId( $item_id )
+    public function setItemId( $itemId )
     {
-        if (isset( $item_id )) {
-            $this->item_id = (int) $item_id;
+        if (isset( $itemId )) {
+            $this->itemId = (int) $itemId;
         }
 
         return $this;
@@ -361,7 +361,7 @@ abstract class Field
      */
     public function getItemId()
     {
-        return $this->item_id;
+        return $this->itemId;
     }
 
     /**

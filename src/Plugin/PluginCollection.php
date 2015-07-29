@@ -1,7 +1,7 @@
 <?php
 namespace TypeRocket\Plugin;
 
-use \TypeRocket\Collection as Collection;
+use \TypeRocket\Collection;
 
 class PluginCollection extends Collection
 {

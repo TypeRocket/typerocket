@@ -37,10 +37,9 @@ class UsersModel extends Model
         $builtin = $this->getBuiltinFields( $fields );
 
         if ( ! empty( $builtin )) {
-            unset( $GLOBALS['wp_filter']['user_register']['typerocket_responder_hook'] );
+            remove_action( 'user_register', 'TypeRocket\Http\Responders\Hook::users' );
             $user  = wp_insert_user( $builtin );
-            $users = new UsersResponder();
-            add_action( 'user_register', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
+            add_action( 'user_register', 'TypeRocket\Http\Responders\Hook::users' );
 
             if ($user instanceof \WP_Error || ! is_int( $user )) {
                 $this->errors = isset( $user->errors ) ? $user->errors : array();
@@ -65,10 +64,9 @@ class UsersModel extends Model
             $builtin = $this->getBuiltinFields( $fields );
             if ( ! empty( $builtin )) {
                 $fields['ID'] = $this->id;
-                unset( $GLOBALS['wp_filter']['profile_update']['typerocket_responder_hook'] );
+                remove_action( 'profile_update', 'TypeRocket\Http\Responders\Hook::users' );
                 wp_update_user( $builtin );
-                $users = new UsersResponder();
-                add_action( 'profile_update', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
+                add_action( 'profile_update', 'TypeRocket\Http\Responders\Hook::users' );
             }
 
             $this->saveMeta( $fields );

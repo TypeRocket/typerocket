@@ -1,8 +1,8 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html\Generator as Generator,
-    \TypeRocket\Config as Config;
+use \TypeRocket\Html\Generator,
+    \TypeRocket\Config;
 
 class Editor extends Textarea implements FieldScript
 {

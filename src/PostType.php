@@ -204,7 +204,7 @@ class PostType extends Registrable
      * @param string $plural plural name
      * @param array $settings args override and extend
      */
-    function __construct( $singular, $plural = null, $settings = array() )
+    public function __construct( $singular, $plural = null, $settings = array() )
     {
 
         if(is_null($plural)) {
@@ -276,7 +276,7 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    function register()
+    public function register()
     {
         $this->dieIfReserved();
 

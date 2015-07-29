@@ -28,9 +28,15 @@ abstract class Model
             $suffix = '_' . $this->resource;
         }
 
+        $this->init();
+
         $this->fillable = apply_filters( 'tr_model_fillable' . $suffix, $this->fillable, $this );
         $this->guard    = apply_filters( 'tr_model_guard' . $suffix, $this->guard, $this );
         do_action( 'tr_model', $this );
+    }
+
+    protected function init() {
+        return $this;
     }
 
     public function setFillableFields( array $fillable )
@@ -206,10 +212,10 @@ abstract class Model
 
     abstract function create( array $fields );
 
+    abstract function update( array $fields );
+
     abstract function findById( $id );
 
     abstract protected function getBaseFieldValue( $field_name );
-
-    abstract function update( array $fields );
 
 }

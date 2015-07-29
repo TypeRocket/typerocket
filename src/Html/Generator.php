@@ -20,14 +20,14 @@ class Generator
         return $this->getString();
     }
 
-    function newElement( $tag, array $attributes = array(), $text = '' )
+    public function newElement( $tag, array $attributes = array(), $text = '' )
     {
         $this->tag = new Tag( $tag, $attributes, $text );
 
         return $this;
     }
 
-    function newLink( $text = '', $url = '#', array $attributes = array() )
+    public function newLink( $text = '', $url = '#', array $attributes = array() )
     {
 
         $attributes = array_merge( array( 'href' => $url ), $attributes );
@@ -37,7 +37,7 @@ class Generator
         return $this;
     }
 
-    function newImage( $src = '', array $attributes = array() )
+    public function newImage( $src = '', array $attributes = array() )
     {
 
         $attributes = array_merge( array( 'src' => $src ), $attributes );
@@ -47,17 +47,17 @@ class Generator
         return $this;
     }
 
-    function newInput( $type, $name, $value, array $attributes = array() )
+    public function newInput( $type, $name, $value, array $attributes = array() )
     {
 
         $defaults = array( 'type' => $type, 'name' => $name, 'value' => $value );
 
-        if(is_null($name)) {
-            unset($defaults['name']);
+        if (is_null( $name )) {
+            unset( $defaults['name'] );
         }
 
-        if(is_null($value)) {
-            unset($defaults['value']);
+        if (is_null( $value )) {
+            unset( $defaults['value'] );
         }
 
         $attributes = array_merge( $defaults, $attributes );
@@ -67,19 +67,19 @@ class Generator
         return $this;
     }
 
-    function getTag()
+    public function getTag()
     {
         return $this->tag;
     }
 
-    function setTag( Tag $tag )
+    public function setTag( Tag $tag )
     {
         $this->tag = $tag;
 
         return $this;
     }
 
-    function getString()
+    public function getString()
     {
         return $this->tag->getString();
     }
@@ -91,7 +91,7 @@ class Generator
      *
      * @return $this
      */
-    function appendInside( $tag, array $attributes = array(), $text = '' )
+    public function appendInside( $tag, array $attributes = array(), $text = '' )
     {
 
         if ($tag instanceof Generator) {
@@ -113,7 +113,7 @@ class Generator
      *
      * @return $this
      */
-    function prependInside( $tag, array $attributes = array(), $text = '' )
+    public function prependInside( $tag, array $attributes = array(), $text = '' )
     {
 
         if ($tag instanceof Generator) {

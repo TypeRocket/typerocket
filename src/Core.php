@@ -11,7 +11,7 @@ class Core
      *
      * @param bool|true $init initialize core
      */
-    function __construct($init = false) {
+    public function __construct($init = false) {
         if($init) {
             $this->initCore();
         }
@@ -25,11 +25,9 @@ class Core
         $this->initAdmin();
         $this->loadPlugins( new Plugin\PluginCollection() );
 
-        //TODO: covert to functions to boost speed
-        $posts = new Http\Responders\PostsResponder();
         $comments = new Http\Responders\CommentsResponder();
         $users = new Http\Responders\UsersResponder();
-        $this->loadResponders($posts, $comments, $users );
+        $this->loadResponders( $comments, $users );
     }
 
     /**
@@ -77,21 +75,13 @@ class Core
      *
      * Add hook into WordPress to give the main functionality needed for
      * TypeRocket to work.
-     *
-     * @param Http\Responders\PostsResponder $posts
-     * @param Http\Responders\CommentsResponder $comments
-     * @param Http\Responders\UsersResponder $users
      */
-    public function loadResponders(
-        Http\Responders\PostsResponder $posts,
-        Http\Responders\CommentsResponder $comments,
-        Http\Responders\UsersResponder $users
-    ) {
-        add_action( 'save_post', array( $posts, 'respond' ), 'typerocket_responder_hook', 3 );
-        add_action( 'wp_insert_comment', array( $comments, 'respond' ), 'typerocket_responder_hook', 3 );
-        add_action( 'edit_comment', array( $comments, 'respond' ), 'typerocket_responder_hook' , 3 );
-        add_action( 'profile_update', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
-        add_action( 'user_register', array( $users, 'respond' ), 'typerocket_responder_hook', 3 );
+    public function loadResponders() {
+        add_action( 'save_post', 'TypeRocket\Http\Responders\Hook::posts' );
+        add_action( 'wp_insert_comment', 'TypeRocket\Http\Responders\Hook::comments' );
+        add_action( 'edit_comment', 'TypeRocket\Http\Responders\Hook::comments' );
+        add_action( 'profile_update', 'TypeRocket\Http\Responders\Hook::users' );
+        add_action( 'user_register', 'TypeRocket\Http\Responders\Hook::users' );
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html\Generator as Generator,
-    \TypeRocket\Sanitize as Sanitize;
+use \TypeRocket\Html\Generator,
+    \TypeRocket\Sanitize;
 
 class Color extends Field implements FieldScript
 {

@@ -32,7 +32,7 @@ class CommentsModel extends Model
         return $this;
     }
 
-    function create( array $fields )
+    public function create( array $fields )
     {
         $fields  = $this->secureFields( $fields );
         $fields  = array_merge( $this->default, $fields, $this->static );
@@ -41,10 +41,9 @@ class CommentsModel extends Model
         if ( ! empty( $builtin['comment_post_id'] ) &&
              ! empty( $builtin['comment_content'] )
         ) {
-            unset( $GLOBALS['wp_filter']['wp_insert_comment']['typerocket_responder_hook'] );
+            remove_action( 'wp_insert_comment', 'TypeRocket\Http\Responders\Hook::comments' );
             $comment   = wp_new_comment( $this->formatFields( $builtin ) );
-            $responder = new CommentsResponder();
-            add_action( 'wp_insert_comment', array( $responder, 'respond' ), 'typerocket_responder_hook', 3 );
+            add_action( 'wp_insert_comment', 'TypeRocket\Http\Responders\Hook::comments' );
 
             if (empty( $comment )) {
                 $message      = 'Comment not created.';
@@ -65,7 +64,7 @@ class CommentsModel extends Model
         return $this;
     }
 
-    function update( array $fields )
+    public function update( array $fields )
     {
         if ($this->id != null) {
             $fields  = $this->secureFields( $fields );
@@ -73,12 +72,11 @@ class CommentsModel extends Model
             $builtin = $this->getBuiltinFields( $fields );
 
             if ( ! empty( $builtin )) {
-                unset( $GLOBALS['wp_filter']['edit_comment']['typerocket_responder_hook'] );
+                remove_action( 'edit_comment', 'TypeRocket\Http\Responders\Hook::comments' );
                 $builtin['comment_id'] = $this->id;
                 $builtin = $this->formatFields( $builtin );
                 wp_update_comment( $builtin );
-                $responder = new CommentsResponder();
-                add_action( 'edit_comment', array( $responder, 'respond' ), 'typerocket_responder_hook', 3 );
+                add_action( 'edit_comment', 'TypeRocket\Http\Responders\Hook::comments' );
             }
 
             $this->saveMeta( $fields );

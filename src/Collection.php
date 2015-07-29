@@ -1,12 +1,6 @@
 <?php
 namespace TypeRocket;
 
-/**
- * Basic collection class
- *
- * Class Collection
- * @package TypeRocket
- */
 class Collection extends \ArrayObject
 {
     public function prepend($value) {
