@@ -63,8 +63,8 @@ class UsersModel extends Model
 
             $builtin = $this->getBuiltinFields( $fields );
             if ( ! empty( $builtin )) {
-                $fields['ID'] = $this->id;
                 remove_action( 'profile_update', 'TypeRocket\Http\Responders\Hook::users' );
+                $builtin['ID'] = $this->id;
                 wp_update_user( $builtin );
                 add_action( 'profile_update', 'TypeRocket\Http\Responders\Hook::users' );
             }

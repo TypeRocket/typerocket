@@ -70,14 +70,14 @@ class PostTypesModel extends Model
 
     public function update( array $fields )
     {
-        if($this->id != null) {
+        if($this->id != null && ! wp_is_post_revision( $this->id ) ) {
             $fields = $this->secureFields($fields);
             $fields = array_merge($fields, $this->static);
             $builtin = $this->getBuiltinFields($fields);
 
-            if ( ! empty( $builtin ) && ! wp_is_post_revision( $this->id ) ) {
+            if ( ! empty( $builtin ) ) {
                 remove_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
-                $fields['ID'] = $this->id;
+                $builtin['ID'] = $this->id;
                 wp_update_post( $builtin );
                 add_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
             }
