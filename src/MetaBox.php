@@ -61,6 +61,15 @@ class MetaBox extends Registrable
     }
 
     /**
+     * Set the meta box label
+     *
+     * @return $this->label
+     */
+    public function getLabel() {
+        return $this->label;
+    }
+
+    /**
      * Add content inside form hook and wrap with the TypeRocket container
      *
      * @param $object
