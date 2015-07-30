@@ -17,6 +17,10 @@ class UsersModel extends Model
         'user_pass'
     );
 
+    protected $guard = array(
+        'id'
+    );
+
     public function findById( $id )
     {
         $this->id   = $id;

@@ -22,6 +22,10 @@ class CommentsModel extends Model
         'comment_id'
     );
 
+    protected $guard = array(
+        'comment_id'
+    );
+
     public function findById( $id )
     {
         $this->id   = $id;

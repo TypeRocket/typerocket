@@ -30,7 +30,8 @@ class PostTypesModel extends Model
         'id'
     );
     protected $guard = array(
-        'post_type'
+        'post_type',
+        'id'
     );
 
     protected $postType = null;
