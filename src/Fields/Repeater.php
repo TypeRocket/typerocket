@@ -8,7 +8,7 @@ use TypeRocket\Form;
 class Repeater extends Field implements ScriptField
 {
 
-    private $fields;
+    private $fields = array();
 
     public function init()
     {
@@ -28,7 +28,6 @@ class Repeater extends Field implements ScriptField
         $this->setAttribute( 'name', $this->getNameAttributeString() );
         $form = $this->getForm();
         $settings = $this->getSettings();
-        $fields   = $this->fields;
         $name     = $this->getName();
         $form->setDebugStatus( false );
         $html     = '';
@@ -69,7 +68,7 @@ class Repeater extends Field implements ScriptField
         $html .= "<div class=\"controls\"><div class=\"tr-repeater-button-add\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /></div><div class=\"button-group\"><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Contract\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}<div>{$default_null}</div></div>";
 
         // replace name attr with data-name so fields are not saved
-        $templateFields = str_replace( ' name="', ' data-name="', $this->getTemplateFields($form) );
+        $templateFields = str_replace( ' name="', ' data-name="', $this->getTemplateFields() );
 
         // render js template data
         $html .= "<div class=\"tr-repeater-group-template\" data-id=\"{$name}\">";
@@ -84,7 +83,7 @@ class Repeater extends Field implements ScriptField
                 $html .= '<div class="tr-repeater-group">';
                 $html .= $openContainer;
                 $form->setGroup( $root_group . "[{$k}]" );
-                $html .= $form->getFromFieldsString( $fields );
+                $html .= $form->getFromFieldsString( $this->fields );
                 $html .= $endContainer;
                 $html .= '</div>';
             }
@@ -97,21 +96,23 @@ class Repeater extends Field implements ScriptField
         return $html;
     }
 
-    private function getTemplateFields( Form $form)
+    private function getTemplateFields()
     {
-        return $form->setDebugStatus(false)->getFromFieldsString( $this->fields );
+        return $this->getForm()->setDebugStatus(false)->getFromFieldsString( $this->fields );
     }
 
-    public function setFields( $fields )
+    public function setFields( array $fields )
     {
         $this->fields = $fields;
 
         return $this;
     }
 
-    public function appendField( array $field )
+    public function appendField( $field )
     {
-        $this->fields[] = $field;
+        if(is_array($field) || $field instanceof Field) {
+            $this->fields[] = $field;
+        }
 
         return $this;
     }

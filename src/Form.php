@@ -615,13 +615,17 @@ class Form
     {
         $html = '';
 
-        foreach ($fields as $functionSetup) {
+        foreach ($fields as $field) {
 
-            $function   = array_shift( $functionSetup );
-            $parameters = array_pop( $functionSetup );
+            if($field instanceof Field) {
+                $html .= (string) $field->configureToForm($this);
+            } elseif(is_array($field) && count($field) > 1) {
+                $function   = array_shift( $field );
+                $parameters = array_pop( $field );
 
-            if (method_exists( $this, $function ) && is_array( $parameters )) {
-                $html .= (string) call_user_func_array( array( $this, $function ), $parameters );
+                if (method_exists( $this, $function ) && is_array( $parameters )) {
+                    $html .= (string) call_user_func_array( array( $this, $function ), $parameters );
+                }
             }
 
         }
