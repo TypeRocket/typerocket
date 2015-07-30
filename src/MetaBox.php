@@ -22,15 +22,15 @@ class MetaBox extends Registrable
         $this->label = $this->id = $name;
         $this->id    = Sanitize::underscore( $this->id );
 
-        if( ! empty( $screen ) ) {
-            $screen = (array) $screen;
-            $this->screens = array_merge($this->screens, $screen);
+        if ( ! empty( $screen ) ) {
+            $screen        = (array) $screen;
+            $this->screens = array_merge( $this->screens, $screen );
         }
 
-        if ( ! empty( $settings['callback'] )) {
+        if ( ! empty( $settings['callback'] ) ) {
             $this->callback = $settings['callback'];
         }
-        if ( ! empty( $settings['label'] )) {
+        if ( ! empty( $settings['label'] ) ) {
             $this->label = $settings['label'];
         }
 
@@ -44,9 +44,9 @@ class MetaBox extends Registrable
 
         $settings = array_merge( $defaults, $settings );
 
-        $this->context = $settings['context'];
+        $this->context  = $settings['context'];
         $this->priority = $settings['priority'];
-        $this->args = $settings['args'];
+        $this->args     = $settings['args'];
     }
 
     /**
@@ -56,7 +56,8 @@ class MetaBox extends Registrable
      *
      * @return $this
      */
-    public function setLabel($label) {
+    public function setLabel( $label )
+    {
 
         $this->label = (string) $label;
 
@@ -68,7 +69,8 @@ class MetaBox extends Registrable
      *
      * @return $this->label
      */
-    public function getLabel() {
+    public function getLabel()
+    {
         return $this->label;
     }
 
@@ -79,8 +81,9 @@ class MetaBox extends Registrable
      *
      * @return $this
      */
-    public function addScreen($screen) {
-        $this->screens = array_merge($this->screens, (array) $screen);
+    public function addScreen( $screen )
+    {
+        $this->screens = array_merge( $this->screens, (array) $screen );
 
         return $this;
     }
@@ -94,15 +97,15 @@ class MetaBox extends Registrable
      */
     public function addPostType( $s )
     {
-        if (  $s instanceof PostType) {
+        if ( $s instanceof PostType ) {
             $s = $s->getId();
-        }elseif( is_array($s) ) {
-            foreach($s as $n) {
-                $this->addPostType($n);
+        } elseif ( is_array( $s ) ) {
+            foreach ( $s as $n ) {
+                $this->addPostType( $n );
             }
         }
 
-        if ( ! in_array( $s, $this->screens )) {
+        if ( ! in_array( $s, $this->screens ) ) {
             $this->screens[] = $s;
         }
 
@@ -119,35 +122,37 @@ class MetaBox extends Registrable
     {
 
         global $post, $comment;
-        $type = get_post_type( $post->ID );
-        if (post_type_supports( $type, $this->id )) {
-            $this->addPostType( $type );
+        $postType = get_post_type( $post->ID );
+        if ( post_type_supports( $postType, $this->id ) ) {
+            $this->addPostType( $postType );
         }
 
-        foreach ($this->screens as $v) {
-            if ($type == $v || ( $v == 'comment' && isset( $comment ) ) || ( $v == 'dashboard' && !isset( $post ) ) ) {
+        foreach ( $this->screens as $screen ) {
+            if ( ( $postType == $screen && isset( $post ) ) ||
+                 ( $screen == 'comment' && isset( $comment ) ) ||
+                 ( $screen == 'dashboard' && ! isset( $post ) )
+            ) {
                 $obj = $this;
                 add_meta_box(
                     $this->id,
                     $this->label,
-                    function() use ($obj) {
-                        $func = 'add_meta_content_' . $obj->getId();
+                    function () use ( $obj ) {
+                        $func     = 'add_meta_content_' . $obj->getId();
                         $callback = $this->getCallback();
 
                         echo '<div class="typerocket-container">';
-                        if( is_callable($callback) ) :
-                            call_user_func_array($callback, array( $obj ) );
-                        elseif (function_exists( $func )) :
+                        if ( is_callable( $callback ) ) :
+                            call_user_func_array( $callback, array( $obj ) );
+                        elseif ( function_exists( $func ) ) :
                             $func( $obj );
-                        elseif (TR_DEBUG == true) :
+                        elseif ( TR_DEBUG == true ) :
                             echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by defining: <code>function {$func}() {}</code></div>";
                         endif;
                         echo '</div>';
                     },
-                    $v,
+                    $screen,
                     $this->context,
-                    $this->priority,
-                    $this->args
+                    $this->priority
                 );
             }
         }
@@ -195,9 +200,10 @@ class MetaBox extends Registrable
         return $this->context;
     }
 
-    public function setCallback($callback) {
+    public function setCallback( $callback )
+    {
 
-        if(is_callable($callback)) {
+        if ( is_callable( $callback ) ) {
             $this->callback = $callback;
         } else {
             $this->callback = null;
