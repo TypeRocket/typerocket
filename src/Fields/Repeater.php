@@ -3,6 +3,7 @@ namespace TypeRocket\Fields;
 
 use TypeRocket\Config,
     TypeRocket\Html\Generator;
+use TypeRocket\Form;
 
 class Repeater extends Field implements ScriptField
 {
@@ -25,8 +26,7 @@ class Repeater extends Field implements ScriptField
     public function getString()
     {
         $this->setAttribute( 'name', $this->getNameAttributeString() );
-        $form = clone $this->getForm();
-        $form->setDebugStatus( false );
+        $form = $this->getForm();
         $settings = $this->getSettings();
         $fields   = $this->fields;
         $name     = $this->getName();
@@ -60,6 +60,7 @@ class Repeater extends Field implements ScriptField
 
         $root_group = $this->getBrackets();
         $form->setGroup( $this->getBrackets() . "[{{ {$name} }}]" );
+        $form = $form->setDebugStatus( false );
 
         // add controls (add, flip, clear all)
         $generator    = new Generator();
@@ -68,7 +69,7 @@ class Repeater extends Field implements ScriptField
         $html .= "<div class=\"controls\"><div class=\"tr-repeater-button-add\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /></div><div class=\"button-group\"><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Contract\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}<div>{$default_null}</div></div>";
 
         // replace name attr with data-name so fields are not saved
-        $templateFields = str_replace( ' name="', ' data-name="', $this->getTemplateFields() );
+        $templateFields = str_replace( ' name="', ' data-name="', $this->getTemplateFields($form) );
 
         // render js template data
         $html .= "<div class=\"tr-repeater-group-template\" data-id=\"{$name}\">";
@@ -96,9 +97,8 @@ class Repeater extends Field implements ScriptField
         return $html;
     }
 
-    public function getTemplateFields()
+    private function getTemplateFields( Form $form)
     {
-        $form = clone $this->getForm();
         return $form->setDebugStatus(false)->getFromFieldsString( $this->fields );
     }
 

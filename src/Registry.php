@@ -4,14 +4,23 @@ namespace TypeRocket;
 class Registry
 {
 
-    public static $collection = array();
+    private static $collection = array();
+    private static $postTypes = array( 'post' => 'posts', 'page' => 'pages' );
+
+    public static function addPostTypeResource($id, $resource) {
+        self::$postTypes[$id] = $resource;
+    }
+
+    public static function getPostTypeResource($id) {
+        return ! empty(self::$postTypes[$id]) ? self::$postTypes[$id] : null;
+    }
 
     /**
      * Add Registrable objects to collection
      *
      * @param null|Registrable|string $obj
      */
-    public static function add( $obj = null )
+    public static function addRegistrable( $obj = null )
     {
         if ( $obj instanceof Registrable) {
             self::$collection[] = $obj;

@@ -65,6 +65,45 @@ class Form
     }
 
     /**
+     * Auto config form is no Controller etc. is set
+     *
+     * @return $this
+     */
+    private function autoConfig()
+    {
+        if ($this->resource === 'auto') {
+            global $post, $comment, $user_id;
+
+            if (isset( $post->ID )) {
+                $item_id    = $post->ID;
+                $resource = Registry::getPostTypeResource($post->post_type);
+
+                $Resource = ucfirst($resource);
+                $model = "\\TypeRocket\\Models\\{$Resource}Model";
+                $controller = "\\TypeRocket\\Controllers\\{$Resource}Controller";
+
+                if( empty($resource) || ! class_exists($model) || ! class_exists($controller) ) {
+                    $resource = 'posts';
+                }
+            } elseif (isset( $comment->comment_ID )) {
+                $item_id    = $comment->comment_ID;
+                $resource = 'comments';
+            } elseif (isset( $user_id )) {
+                $item_id    = $user_id;
+                $resource = 'users';
+            } else {
+                $item_id    = null;
+                $resource = 'options';
+            }
+
+            $this->setItemId( $item_id );
+            $this->setResource( $resource );
+        }
+
+        return $this;
+    }
+
+    /**
      * Set controller
      *
      * @param $resource
@@ -364,37 +403,6 @@ class Form
 
         if ($field instanceof Field) {
             $this->currentField = $field;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Auto config form is no Controller etc. is set
-     *
-     * @return $this
-     */
-    private function autoConfig()
-    {
-        if ($this->resource === 'auto') {
-            global $post, $comment, $user_id;
-
-            if (isset( $post->ID )) {
-                $item_id    = $post->ID;
-                $resource = 'posts';
-            } elseif (isset( $comment->comment_ID )) {
-                $item_id    = $comment->comment_ID;
-                $resource = 'comments';
-            } elseif (isset( $user_id )) {
-                $item_id    = $user_id;
-                $resource = 'users';
-            } else {
-                $item_id    = null;
-                $resource = 'options';
-            }
-
-            $this->setItemId( $item_id );
-            $this->setResource( $resource );
         }
 
         return $this;

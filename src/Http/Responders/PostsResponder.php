@@ -4,7 +4,7 @@ namespace TypeRocket\Http\Responders;
 use \TypeRocket\Http\Kernel,
     \TypeRocket\Http\Request,
     \TypeRocket\Http\Response,
-    \TypeRocket\Inflect;
+    TypeRocket\Registry;
 
 class PostsResponder
 {
@@ -16,12 +16,12 @@ class PostsResponder
         }
 
         $type       = get_post_type( $id );
-        $type       = Inflect::pluralize( $type );
+        $type       = Registry::getPostTypeResource( $type );
         $prefix     = ucfirst( $type );
         $controller = "\\TypeRocket\\Controllers\\{$prefix}Controller";
-        $model      = "\\TypeRocket\\Controllers\\{$prefix}Model";
+        $model      = "\\TypeRocket\\Models\\{$prefix}Model";
 
-        if ( ! class_exists( $controller ) && ! class_exists( $model )) {
+        if ( empty($prefix) || ! class_exists( $controller ) || ! class_exists( $model )) {
             $type = 'posts';
         }
 

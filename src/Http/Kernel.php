@@ -17,19 +17,20 @@ class Kernel
     {
 
         $resource = ucfirst( $request->getResource() );
-        $class    = "\\TypeRocket\\Controllers\\{$resource}Controller";
+        $controller    = "\\TypeRocket\\Controllers\\{$resource}Controller";
+        $model    = "\\TypeRocket\\Models\\{$resource}Model";
 
-        if ($response->getValid() && class_exists( $class )) {
+        if ($response->getValid() && class_exists( $controller ) && class_exists( $model ) ) {
 
             $user = wp_get_current_user();
-            $controller = new $class( $request, $response, $user);
+            $controller = new $controller( $request, $response, $user);
             $id         = $request->getResourceId();
 
             if ($controller instanceof Controller && $response->getValid()) {
                 if (method_exists( $controller, $action )) {
                     $controller->$action( $id );
                 } else {
-                    $response->setError( 'action', 'There is no action.' );
+                    $response->setError( 'action', 'There is no action: ' . $action );
                     $response->setValid( false );
                 }
             }

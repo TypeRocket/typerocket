@@ -233,7 +233,7 @@ abstract class Registrable
      */
     public function addToRegistry()
     {
-        Registry::add( $this );
+        Registry::addRegistrable( $this );
 
         return $this;
     }

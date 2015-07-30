@@ -8,6 +8,7 @@ class PostType extends Registrable
     private $form = null;
     private $taxonomies = array();
     private $icon = null;
+    private $plural = null;
 
     /**
      * Set the post type menu icon
@@ -241,6 +242,7 @@ class PostType extends Registrable
         // setup object for later use
         $plural   = Sanitize::underscore( $plural );
         $singular = Sanitize::underscore( $singular );
+        $this->plural = $plural;
         $this->id       = ! $this->id ? $singular : $this->id;
 
         if (array_key_exists( 'capabilities', $settings ) && $settings['capabilities'] === true) :
@@ -288,7 +290,7 @@ class PostType extends Registrable
 
         do_action( 'tr_register_post_type_' . $this->id, $this );
         register_post_type( $this->id, $this->args );
-
+        Registry::addPostTypeResource($this->id, $this->plural);
         return $this;
     }
 

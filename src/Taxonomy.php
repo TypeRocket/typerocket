@@ -10,6 +10,7 @@ class Taxonomy extends Registrable
 {
 
     private $postTypes = array();
+    private $plural = null;
 
     /**
      * Set the url slug used for rewrite rules
@@ -96,6 +97,7 @@ class Taxonomy extends Registrable
         // setup object for later use
         $plural   = Sanitize::underscore( $plural );
         $singular = Sanitize::underscore( $singular );
+        $this->plural = $plural;
         $this->id = ! $this->id ? $singular : $this->id;
 
         if (array_key_exists( 'capabilities', $settings ) && $settings['capabilities'] === true) :
