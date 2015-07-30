@@ -349,7 +349,7 @@ class PostType extends Registrable
      * @param $post
      * @param $type
      */
-    public function addFormContent( $post, $type )
+    public function outputFormContent( $post, $type )
     {
         if ($post->post_type == $this->id) :
 

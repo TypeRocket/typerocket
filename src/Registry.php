@@ -63,28 +63,28 @@ class Registry
                 // edit_form_top
                 if ($obj->getForm( 'top' )) {
                     add_action( 'edit_form_top', function($post) use ($obj) {
-                        $obj->addFormContent( $post, 'top' );
+                        $obj->outputFormContent( $post, 'top' );
                     } );
                 }
 
                 // edit_form_after_title
                 if ($obj->getForm( 'title' )) {
                     add_action( 'edit_form_after_title', function($post) use ($obj) {
-                        $obj->addFormContent( $post, 'title' );
+                        $obj->outputFormContent( $post, 'title' );
                     } );
                 }
 
                 // edit_form_after_editor
                 if ($obj->getForm( 'editor' )) {
                     add_action( 'edit_form_after_editor', function($post) use ($obj) {
-                        $obj->addFormContent( $post, 'editor' );
+                        $obj->outputFormContent( $post, 'editor' );
                     } );
                 }
 
                 // dbx_post_sidebar
                 if ($obj->getForm( 'bottom' )) {
                     add_action( 'dbx_post_sidebar', function($post) use ($obj) {
-                        $obj->addFormContent( $post, 'bottom' );
+                        $obj->outputFormContent( $post, 'bottom' );
                     } );
                 }
 
