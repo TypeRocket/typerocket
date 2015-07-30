@@ -54,8 +54,8 @@ class Matrix extends Field implements OptionField, ScriptField {
         // setup select list of files
         $select = $this->getSelectHtml();
         $name = $this->getName();
-        $blocks = $this->getMatrixBlocks();
         $settings = $this->getSettings();
+        $blocks = $this->getMatrixBlocks();
 
         // add controls
         if (isset( $settings['help'] )) {
@@ -168,7 +168,7 @@ class Matrix extends Field implements OptionField, ScriptField {
         $val = $this->getValue();
         $utility = new Buffer();
         $blocks = '';
-        $form = $this->getForm();
+        $form = clone $this->getForm();
         $paths = Config::getPaths();
 
         if (is_array( $val )) {

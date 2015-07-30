@@ -98,7 +98,7 @@ abstract class Field
         $this->setItemId( $form->getItemId() );
         $this->setResource( $form->getResource() );
         $this->setPopulate( $form->getPopulate() );
-        $this->setForm( $form ); // do not pass by reference
+        $this->setForm( $form );
 
         return $this;
     }

@@ -25,7 +25,7 @@ class Repeater extends Field implements ScriptField
     public function getString()
     {
         $this->setAttribute( 'name', $this->getNameAttributeString() );
-        $form = $this->getForm();
+        $form = clone $this->getForm();
         $form->setDebugStatus( false );
         $settings = $this->getSettings();
         $fields   = $this->fields;
@@ -67,6 +67,7 @@ class Repeater extends Field implements ScriptField
 
         $html .= "<div class=\"controls\"><div class=\"tr-repeater-button-add\"><input type=\"button\" value=\"{$add_button_value}\" class=\"button add\" /></div><div class=\"button-group\"><input type=\"button\" value=\"Flip\" class=\"flip button\" /><input type=\"button\" value=\"Contract\" class=\"tr_action_collapse button\"><input type=\"button\" value=\"Clear All\" class=\"clear button\" /></div>{$help}<div>{$default_null}</div></div>";
 
+        // replace name attr with data-name so fields are not saved
         $templateFields = str_replace( ' name="', ' data-name="', $this->getTemplateFields() );
 
         // render js template data
@@ -97,7 +98,8 @@ class Repeater extends Field implements ScriptField
 
     public function getTemplateFields()
     {
-        return $this->getForm()->getFromFieldsString( $this->fields );
+        $form = clone $this->getForm();
+        return $form->setDebugStatus(false)->getFromFieldsString( $this->fields );
     }
 
     public function setFields( $fields )

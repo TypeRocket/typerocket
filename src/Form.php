@@ -4,6 +4,7 @@ namespace TypeRocket;
 use TypeRocket\Html\Generator,
     TypeRocket\Html\Tag,
     TypeRocket\Fields\Field;
+use TypeRocket\Models\PostTypesModel;
 
 class Form
 {
@@ -506,6 +507,11 @@ class Form
 
         $brackets   = $field->getBrackets();
         $controller = $field->getResource();
+
+        if($this->model instanceof PostTypesModel) {
+            $controller = 'posts';
+        }
+
         $function   = "tr_{$controller}_field('{$brackets}');";
 
         return $function;
