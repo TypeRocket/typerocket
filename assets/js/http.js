@@ -63,25 +63,27 @@ jQuery.typerocketHttp = {
         },
         checkData: function (data) {
 
-            var type = '';
-
-            if (data.valid == true) {
-                type = 'node-success';
-            } else {
-                type = 'node-error';
-            }
-
             // callback group
-            for (var ri = 0; window.trHttpCallback.length > ri; ri++) {
-                if (typeof window.trHttpCallback[ri] === "function") {
+            for (var ri = 0; TypeRocket.httpCallbacks.length > ri; ri++) {
+                if (typeof TypeRocket.httpCallbacks[ri] === "function") {
                     // Call it, since we have confirmed it is callable​
-                    window.trHttpCallback[ri](data);
+                    TypeRocket.httpCallbacks[ri](data);
                 }
             }
 
-            jQuery('body').prepend(jQuery('<div class="typerocket-rest-alert ' + type + ' ">' + data.message + '</div>').delay(1500).fadeOut(100, function () {
-                jQuery(this).remove();
-            }));
+            var type = '';
+
+            if (data.valid == true) {
+                type = 'success';
+            } else {
+                type = 'error';
+            }
+
+            if(data.flash == true) {
+                jQuery('body').prepend(jQuery('<div class="typerocket-rest-alert node-' + type + ' ">' + data.message + '</div>').delay(1500).fadeOut(100, function () {
+                    jQuery(this).remove();
+                }));
+            }
 
         }
     }

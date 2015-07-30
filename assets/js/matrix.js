@@ -9,7 +9,7 @@ jQuery(document).ready(function ($) {
             var $fields = $('#' + mxid), $select = $('select[data-mxid="' + mxid + '"]');
             var button_txt = $that.val();
             var type = $select.val();
-            var callbacks = window.trRepeaterCallback;
+            var callbacks = TypeRocket.repeaterCallbacks;
 
             $that.attr("disabled", "disabled").val('Adding...');
 

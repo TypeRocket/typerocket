@@ -31,6 +31,7 @@ class CommentsController extends Controller
             $this->response->setValid(false);
         } else {
             $this->response->setMessage('Comment updated');
+            $this->response->setData('comment', $comments->getData('comment'));
         }
 
     }
@@ -46,6 +47,7 @@ class CommentsController extends Controller
             $this->response->setValid(false);
         } else {
             $this->response->setMessage('Comment created');
+            $this->response->setData('comment', $comments->getData('comment'));
         }
 
     }

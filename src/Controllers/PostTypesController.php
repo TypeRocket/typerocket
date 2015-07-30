@@ -48,6 +48,7 @@ class PostTypesController extends Controller
             $this->response->setValid(false);
         } else {
             $this->response->setMessage( $this->type.' updated');
+            $this->response->setData('post', $this->model->getData('post'));
         }
 
     }
@@ -62,6 +63,7 @@ class PostTypesController extends Controller
             $this->response->setValid(false);
         } else {
             $this->response->setMessage($this->type.' created');
+            $this->response->setData('post', $this->model->getData('post'));
         }
 
     }

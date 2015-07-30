@@ -25,7 +25,7 @@ class CommentsModel extends Model
     public function findById( $id )
     {
         $this->id   = $id;
-        $this->data = get_comment( $id );
+        $this->setData('comment', get_comment( $this->id ) );
 
         return $this;
     }
@@ -48,7 +48,7 @@ class CommentsModel extends Model
                 $this->errors = array( $message );
             } else {
                 $this->id   = $comment;
-                $this->data = get_comment( $comment );
+                $this->setData('comment', get_comment( $this->id ) );
             }
         } else {
             $this->errors = array(
@@ -75,6 +75,7 @@ class CommentsModel extends Model
                 $builtin = $this->formatFields( $builtin );
                 wp_update_comment( $builtin );
                 add_action( 'edit_comment', 'TypeRocket\Http\Responders\Hook::comments' );
+                $this->setData('comment', get_comment( $this->id ) );
             }
 
             $this->saveMeta( $fields );

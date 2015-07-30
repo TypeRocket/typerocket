@@ -8,7 +8,9 @@ class Kernel
 
     public function __construct( $action, Request $request, Response $response )
     {
+        do_action('tr_kernel_before', $response, $request, $action);
         $this->handle( $action, $request, $response);
+        do_action('tr_kernel_after', $response, $request, $action);
     }
 
     public function handle( $action, Request $request, Response $response )

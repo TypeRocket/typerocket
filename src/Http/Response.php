@@ -7,6 +7,7 @@ class Response {
     private $redirect = false;
     private $status = 200;
     private $valid = true;
+    private $flash = true;
     private $errors = array();
     private $data = array();
 
@@ -37,6 +38,13 @@ class Response {
         return $this;
     }
 
+    public function setFlash( $flash = true )
+    {
+        $this->flash = (bool) $flash;
+
+        return $this;
+    }
+
     public function setErrors( array $errors )
     {
         $this->errors = $errors;
@@ -60,8 +68,8 @@ class Response {
 
     }
 
-    public function setData( array $data ) {
-        $this->data = $data;
+    public function setData( $key, $data ) {
+        $this->data[$key] = $data;
     }
 
     public function getStatus() {
@@ -86,6 +94,10 @@ class Response {
 
     public function getValid() {
         return $this->valid;
+    }
+
+    public function getFlash() {
+        return $this->flash;
     }
 
     public function getResponseArray() {

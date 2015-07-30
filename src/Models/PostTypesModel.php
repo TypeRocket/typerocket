@@ -35,9 +35,11 @@ class PostTypesModel extends Model
         'post_type'
     );
 
+    protected $postType = null;
+
     public function findById($id) {
         $this->id = $id;
-        $this->data = get_post($id);
+        $this->setData('post', get_post( $this->id ));
         return $this;
     }
 
@@ -49,6 +51,11 @@ class PostTypesModel extends Model
 
         if ( ! empty( $builtin )) {
             remove_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
+
+            if(!empty($this->postType)) {
+                $builtin['post_type'] = $this->postType;
+            }
+
             $post      = wp_insert_post( $builtin );
             add_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
 
@@ -57,7 +64,7 @@ class PostTypesModel extends Model
                 $this->errors = ! empty( $post->errors ) ? $post->errors : array( $default );
             } else {
                 $this->id   = $post;
-                $this->data = get_post( $post );
+                $this->setData('post', get_post( $this->id ));
             }
         }
 
@@ -76,8 +83,10 @@ class PostTypesModel extends Model
             if ( ! empty( $builtin ) ) {
                 remove_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
                 $builtin['ID'] = $this->id;
+                $builtin['post_type'] = $this->getData('post')->post_type;
                 wp_update_post( $builtin );
                 add_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
+                $this->setData('post', get_post( $this->id ));
             }
 
             $this->saveMeta( $fields );

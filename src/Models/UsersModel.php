@@ -22,7 +22,7 @@ class UsersModel extends Model
     public function findById( $id )
     {
         $this->id   = $id;
-        $this->data = get_userdata( $this->id );
+        $this->setData('user', get_userdata( $this->id ));
 
         return $this;
     }
@@ -43,7 +43,7 @@ class UsersModel extends Model
                 $this->errors = isset( $user->errors ) ? $user->errors : array();
             } else {
                 $this->id   = $user;
-                $this->data = get_user_by( 'ID', $user );
+                $this->setData('user', get_userdata( $this->id ));
             }
         }
 
@@ -65,6 +65,7 @@ class UsersModel extends Model
                 $builtin['ID'] = $this->id;
                 wp_update_user( $builtin );
                 add_action( 'profile_update', 'TypeRocket\Http\Responders\Hook::users' );
+                $this->setData('user', get_userdata( $this->id ));
             }
 
             $this->saveMeta( $fields );

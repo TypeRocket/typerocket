@@ -13,7 +13,7 @@ abstract class Model
     protected $default = array();
     protected $errors = null;
     protected $builtin = array();
-    protected $data = null;
+    private $data = null;
     protected $resource = null;
 
     public function __construct()
@@ -86,9 +86,20 @@ abstract class Model
         return $this->guard;
     }
 
-    public function getData()
+    public function getData($key)
     {
-        return $this->data;
+        $data = null;
+
+        if(array_key_exists($key, $this->data)) {
+            $data = $this->data[$key];
+        }
+
+        return $data;
+    }
+
+    protected function setData($key, $value) {
+        $this->data[$key] = $value;
+        return $this;
     }
 
     protected function getBuiltin()
