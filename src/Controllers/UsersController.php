@@ -31,7 +31,7 @@ class UsersController extends Controller
             $this->response->setValid(false);
         } else {
             $this->response->setMessage('User updated');
-            $this->response->setData('user', $user->getData('user'));
+            // $this->response->setData('user', $user->getData('user'));
         }
     }
 
@@ -46,7 +46,7 @@ class UsersController extends Controller
             $this->response->setValid(false);
         } else {
             $this->response->setMessage('User created');
-            $this->response->setData('user', $user->getData('user'));
+            // $this->response->setData('user', $user->getData('user'));
         }
     }
 
