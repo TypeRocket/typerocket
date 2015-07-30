@@ -1,6 +1,9 @@
 <?php
 namespace TypeRocket\Fields;
 
+use TypeRocket\Config,
+    TypeRocket\Html\Generator;
+
 class Repeater extends Field implements ScriptField
 {
 
