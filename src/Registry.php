@@ -26,6 +26,10 @@ class Registry
         $collection = array();
         $later = array();
 
+        if(empty(self::$collection)) {
+            return;
+        }
+
         foreach(self::$collection as $obj) {
             if ( $obj instanceof Registrable) {
                 $collection[] = $obj;
