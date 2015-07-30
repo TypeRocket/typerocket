@@ -49,27 +49,43 @@ class Registry
                 add_action( 'init', array( $obj, 'register' ) );
 
                 if (is_string( $obj->getTitlePlaceholder() )) {
-                    add_filter( 'enter_title_here', array( $obj, 'enterTitleHere' ) );
+                    add_filter( 'enter_title_here', function($title) use ($obj) {
+                        global $post;
+
+                        if ($post->post_type == $obj->getId()) :
+                            return $obj->getTitlePlaceholder();
+                        else :
+                            return $title;
+                        endif;
+                    } );
                 }
 
                 // edit_form_top
                 if ($obj->getForm( 'top' )) {
-                    add_action( 'edit_form_top', array( $obj, 'editFormTop' ) );
+                    add_action( 'edit_form_top', function($post) use ($obj) {
+                        $obj->addFormContent( $post, 'top' );
+                    } );
                 }
 
                 // edit_form_after_title
                 if ($obj->getForm( 'title' )) {
-                    add_action( 'edit_form_after_title', array( $obj, 'editFormAfterTitle' ) );
+                    add_action( 'edit_form_after_title', function($post) use ($obj) {
+                        $obj->addFormContent( $post, 'title' );
+                    } );
                 }
 
                 // edit_form_after_editor
                 if ($obj->getForm( 'editor' )) {
-                    add_action( 'edit_form_after_editor', array( $obj, 'editFormAfterEditor' ) );
+                    add_action( 'edit_form_after_editor', function($post) use ($obj) {
+                        $obj->addFormContent( $post, 'editor' );
+                    } );
                 }
 
                 // dbx_post_sidebar
                 if ($obj->getForm( 'bottom' )) {
-                    add_action( 'dbx_post_sidebar', array( $obj, 'dbxPostSidebar' ) );
+                    add_action( 'dbx_post_sidebar', function($post) use ($obj) {
+                        $obj->addFormContent( $post, 'bottom' );
+                    } );
                 }
 
             } elseif ($obj instanceof MetaBox) {

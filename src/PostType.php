@@ -359,64 +359,6 @@ class PostType extends Registrable
     }
 
     /**
-     * Add top from content before the title input
-     *
-     * @param $post
-     */
-    public function editFormTop( $post )
-    {
-        $this->addFormContent( $post, 'top' );
-    }
-
-    /**
-     * Add after title from content
-     *
-     * @param $post
-     */
-    public function editFormAfterTitle( $post )
-    {
-        $this->addFormContent( $post, 'title' );
-    }
-
-    /**
-     * Add after editor from content
-     *
-     * @param $post
-     */
-    public function editFormAfterEditor( $post )
-    {
-        $this->addFormContent( $post, 'editor' );
-    }
-
-    /**
-     * Add bottom from content below all meta boxes
-     *
-     * @param $post
-     */
-    public function dbxPostSidebar( $post )
-    {
-        $this->addFormContent( $post, 'bottom' );
-    }
-
-    /**
-     * Hook the custom placeholder text for the title element
-     *
-     * @param $title
-     *
-     * @return null
-     */
-    public function enterTitleHere( $title )
-    {
-        global $post;
-
-        if ($post->post_type == $this->id) :
-            return $this->title;
-        else :
-            return $title;
-        endif;
-    }
-
-    /**
      * Apply post type to a taxonomy by string
      *
      * @param $taxonomyId
