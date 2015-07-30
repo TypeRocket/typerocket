@@ -83,7 +83,8 @@ class PostTypesModel extends Model
             if ( ! empty( $builtin ) ) {
                 remove_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
                 $builtin['ID'] = $this->id;
-                $builtin['post_type'] = $this->getData('post')->post_type;
+                $post = $this->getData('post');
+                $builtin['post_type'] = $post->post_type;
                 wp_update_post( $builtin );
                 add_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
                 $this->setData('post', get_post( $this->id ));
