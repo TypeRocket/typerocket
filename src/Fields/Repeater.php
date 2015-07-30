@@ -30,6 +30,7 @@ class Repeater extends Field implements ScriptField
         $settings = $this->getSettings();
         $fields   = $this->fields;
         $name     = $this->getName();
+        $form->setDebugStatus( false );
         $html     = '';
 
         // add controls
@@ -60,7 +61,6 @@ class Repeater extends Field implements ScriptField
 
         $root_group = $this->getBrackets();
         $form->setGroup( $this->getBrackets() . "[{{ {$name} }}]" );
-        $form = $form->setDebugStatus( false );
 
         // add controls (add, flip, clear all)
         $generator    = new Generator();

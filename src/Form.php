@@ -581,8 +581,8 @@ class Form
     public function getFromFieldString( Field $field )
     {
         $this->setCurrentField( $field );
-        $field     = $field->getString();
         $label     = $this->getLabel();
+        $field     = $field->getString();
         $id        = $this->getCurrentField()->getSetting( 'id' );
         $help      = $this->getCurrentField()->getSetting( 'help' );
         $fieldHtml = $this->getCurrentField()->getSetting( 'render' );

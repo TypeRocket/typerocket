@@ -168,7 +168,7 @@ class Matrix extends Field implements OptionField, ScriptField {
         $val = $this->getValue();
         $utility = new Buffer();
         $blocks = '';
-        $form = clone $this->getForm();
+        $form = $this->getForm();
         $paths = Config::getPaths();
 
         if (is_array( $val )) {
