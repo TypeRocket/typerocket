@@ -12,18 +12,41 @@ class PostType extends Registrable
     /**
      * Set the post type menu icon
      *
+     * Add the CSS needed to create the icon for the menu
+     *
      * @param $name
      *
      * @return $this
      */
-    function setIcon( $name )
+    public function setIcon( $name )
     {
         $name       = strtolower( $name );
         $icons      = new Icons();
         $this->icon = $icons[$name];
-        add_action( 'admin_head', array( $this, 'style' ) );
+        $obj = $this;
+        add_action( 'admin_head', function() use ($obj) {
+            ?>
+            <style type="text/css">
+                #adminmenu #menu-posts-<?php echo $obj->getId(); ?> .wp-menu-image:before {
+                    font: 400 15px/1 'typerocket-icons' !important;
+                    content: '<?php echo $obj->getIcon(); ?>';
+                    speak: none;
+                    -webkit-font-smoothing: antialiased;
+                }
+            </style>
+            <?php
+        } );
 
         return $this;
+    }
+
+    /**
+     * Get the post type icon
+     *
+     * @return null
+     */
+    public function getIcon() {
+        return $this->icon;
     }
 
     /**
@@ -181,23 +204,6 @@ class PostType extends Registrable
     }
 
     /**
-     * Add the CSS needed to create the icon for the menu
-     */
-    public function style()
-    { ?>
-
-        <style type="text/css">
-            #adminmenu #menu-posts-<?php echo $this->id; ?> .wp-menu-image:before {
-                font: 400 15px/1 'typerocket-icons' !important;
-                content: '<?php echo $this->icon; ?>';
-                speak: none;
-                -webkit-font-smoothing: antialiased;
-            }
-        </style>
-
-    <?php }
-
-    /**
      * Make Post Type. Do not use before init hook.
      *
      * @param string $singular singular name is required
@@ -293,10 +299,14 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    public function metaBoxRegistrationById( $s )
+    public function addMetaBox( $s )
     {
-        if ( ! is_string( $s )) {
+        if ( $s instanceof MetaBox ) {
             $s = (string) $s->getId();
+        }elseif( is_array($s) ) {
+            foreach($s as $n) {
+                $this->addMetaBox($n);
+            }
         }
 
         if ( ! in_array( $s, $this->args['supports'] )) {
@@ -313,11 +323,15 @@ class PostType extends Registrable
      *
      * @return $this
      */
-    public function taxonomyRegistrationById( $s )
+    public function addTaxonomy( $s )
     {
 
-        if ( ! is_string( $s )) {
+        if ( $s instanceof Taxonomy) {
             $s = (string) $s->getId();
+        } elseif( is_array($s) ) {
+            foreach($s as $n) {
+                $this->addTaxonomy($n);
+            }
         }
 
         if ( ! in_array( $s, $this->taxonomies )) {
@@ -356,16 +370,6 @@ class PostType extends Registrable
 
 
         endif;
-    }
-
-    /**
-     * Apply post type to a taxonomy by string
-     *
-     * @param $taxonomyId
-     */
-    public function stringRegistration( $taxonomyId )
-    {
-        $this->taxonomyRegistrationById( $taxonomyId );
     }
 
 }

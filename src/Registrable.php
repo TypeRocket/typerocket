@@ -89,17 +89,6 @@ abstract class Registrable
         'year'                        => true
     );
 
-    /**
-     * Functions to call on Registrable objects per class
-     *
-     * @var array
-     */
-    protected $registrableMethods = array(
-        'TypeRocket\Taxonomy' => 'taxonomyRegistrationById',
-        'TypeRocket\PostType' => 'postTypeRegistrationById',
-        'TypeRocket\MetaBox'  => 'metaBoxRegistrationById',
-    );
-
     public function __get( $property )
     {
     }
@@ -132,7 +121,7 @@ abstract class Registrable
      *
      * @return string
      */
-    function getId()
+    public function getId()
     {
         return $this->id;
     }
@@ -266,19 +255,17 @@ abstract class Registrable
      */
     protected function uses()
     {
-        $current_class = get_class( $this );
+
         foreach ($this->use as $obj) {
             if ($obj instanceof Registrable) {
                 $class  = get_class( $obj );
-                $method = $this->registrableMethods[$class];
+                $class = substr($class,11);
+                $method = 'add' . $class;
                 if (method_exists( $this, $method )) {
                     $this->$method( $obj );
                 } else {
+                    $current_class = get_class( $this );
                     die( 'TypeRocket: You are passing the unsupported object ' . $class . ' into ' . $current_class . '.' );
-                }
-            } elseif (is_string( $obj )) {
-                if (method_exists( $this, 'stringRegistration' )) {
-                    $this->stringRegistration( $obj );
                 }
             }
         }
@@ -289,7 +276,7 @@ abstract class Registrable
      *
      * @return array
      */
-    function getApplied()
+    public function getApplied()
     {
         return $this->use;
     }

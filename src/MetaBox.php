@@ -106,28 +106,26 @@ class MetaBox extends Registrable
     /**
      * Add meta box to post type
      *
-     * @param string|PostType $s
+     * @param string|array|PostType $s
+     *
+     * @return $this
      */
-    public function postTypeRegistrationById( $s )
+    public function addPostType( $s )
     {
-        if ( ! is_string( $s )) {
-            $s = (string) $s->getId();
+        if (  $s instanceof PostType) {
+            $s = $s->getId();
+        }elseif( is_array($s) ) {
+            foreach($s as $n) {
+                $this->addPostType($n);
+            }
         }
 
         if ( ! in_array( $s, $this->screens )) {
             $this->screens[] = $s;
         }
 
-    }
+        return $this;
 
-    /**
-     * Apply taxonomy to a post type by string
-     *
-     * @param $postTypeId
-     */
-    public function stringRegistration( $postTypeId )
-    {
-        $this->postTypeRegistrationById( $postTypeId );
     }
 
     /**
@@ -141,15 +139,29 @@ class MetaBox extends Registrable
         global $post, $comment;
         $type = get_post_type( $post->ID );
         if (post_type_supports( $type, $this->id )) {
-            $this->postTypeRegistrationById( $type );
+            $this->addPostType( $type );
         }
 
         foreach ($this->screens as $v) {
             if ($type == $v || ( $v == 'comment' && isset( $comment ) ) || ( $v == 'dashboard' && !isset( $post ) ) ) {
+                $obj = $this;
                 add_meta_box(
                     $this->id,
                     $this->label,
-                    array( $this, 'metaContent' ),
+                    function() use ($obj) {
+                        $func = 'add_meta_content_' . $obj->getId();
+                        $callback = $this->getCallback();
+
+                        echo '<div class="typerocket-container">';
+                        if( is_callable($callback) ) :
+                            call_user_func_array($callback, array( $obj ) );
+                        elseif (function_exists( $func )) :
+                            $func( $this );
+                        elseif (TR_DEBUG == true) :
+                            echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by defining: <code>function {$func}() {}</code></div>";
+                        endif;
+                        echo '</div>';
+                    },
                     $v,
                     $this->context,
                     $this->priority,

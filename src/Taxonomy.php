@@ -137,28 +137,26 @@ class Taxonomy extends Registrable
      * Apply post types
      *
      * @param string|PostType $s
+     *
+     * @return $this
      */
-    function postTypeRegistrationById( $s )
+    function addPostType( $s )
     {
 
-        if ( ! is_string( $s )) {
-            $s = (string) $s->getId();
+        if ( $s instanceof PostType ) {
+            $s = $s->getId();
+        }elseif( is_array($s) ) {
+            foreach($s as $n) {
+                $this->addPostType($n);
+            }
         }
 
         if ( ! in_array( $s, $this->postTypes )) {
             $this->postTypes[] = $s;
         }
 
-    }
+        return $this;
 
-    /**
-     * Apply taxonomy to a post type by string
-     *
-     * @param $postTypeId
-     */
-    function stringRegistration( $postTypeId )
-    {
-        $this->postTypeRegistrationById( $postTypeId );
     }
 
 }

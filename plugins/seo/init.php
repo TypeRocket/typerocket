@@ -61,7 +61,7 @@ class SeoPlugin
             'callback' => array( $this, 'meta' )
         );
         $obj         = new MetaBox( 'tr_seo', null, $args );
-        $obj->apply( $publicTypes )->register();
+        $obj->addPostType( $publicTypes )->register();
     }
 
     // Page Title
