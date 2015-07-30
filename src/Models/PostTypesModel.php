@@ -4,8 +4,6 @@ namespace TypeRocket\Models;
 class PostTypesModel extends Model
 {
 
-    /** @var \WP_Post  */
-    protected $data = null;
     protected $builtin = array(
         'post_author',
         'post_date',
@@ -47,7 +45,7 @@ class PostTypesModel extends Model
     {
         $fields = $this->secureFields($fields);
         $fields = array_merge($this->default, $fields, $this->static);
-        $builtin = $this->getBuiltinFields($fields);
+        $builtin = $this->getFilteredBuiltinFields($fields);
 
         if ( ! empty( $builtin )) {
             remove_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
@@ -78,7 +76,7 @@ class PostTypesModel extends Model
         if($this->id != null && ! wp_is_post_revision( $this->id ) ) {
             $fields = $this->secureFields($fields);
             $fields = array_merge($fields, $this->static);
-            $builtin = $this->getBuiltinFields($fields);
+            $builtin = $this->getFilteredBuiltinFields($fields);
 
             if ( ! empty( $builtin ) ) {
                 remove_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
@@ -101,7 +99,7 @@ class PostTypesModel extends Model
 
     private function saveMeta( array $fields )
     {
-        $fields = $this->getMetaFields($fields);
+        $fields = $this->getFilteredMetaFields($fields);
         if ( ! empty($fields) && ! empty( $this->id )) :
             if ($parent_id = wp_is_post_revision( $this->id )) {
                 $this->id = $parent_id;

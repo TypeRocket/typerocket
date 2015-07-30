@@ -4,8 +4,6 @@ namespace TypeRocket\Models;
 class UsersModel extends Model
 {
 
-    /** @var \WP_User */
-    protected $data = null;
     protected $builtin = array(
         'user_login',
         'user_nicename',
@@ -32,7 +30,7 @@ class UsersModel extends Model
         $fields = $this->secureFields( $fields );
         $fields = array_merge( $this->default, $fields, $this->static );
 
-        $builtin = $this->getBuiltinFields( $fields );
+        $builtin = $this->getFilteredBuiltinFields( $fields );
 
         if ( ! empty( $builtin )) {
             remove_action( 'user_register', 'TypeRocket\Http\Responders\Hook::users' );
@@ -59,7 +57,7 @@ class UsersModel extends Model
             $fields = $this->secureFields( $fields );
             $fields = array_merge( $fields, $this->static );
 
-            $builtin = $this->getBuiltinFields( $fields );
+            $builtin = $this->getFilteredBuiltinFields( $fields );
             if ( ! empty( $builtin )) {
                 remove_action( 'profile_update', 'TypeRocket\Http\Responders\Hook::users' );
                 $builtin['ID'] = $this->id;
@@ -78,7 +76,7 @@ class UsersModel extends Model
 
     private function saveMeta( array $fields )
     {
-        $fields = $this->getMetaFields( $fields );
+        $fields = $this->getFilteredMetaFields( $fields );
         if ( ! empty( $fields ) && ! empty( $this->id )) :
             foreach ($fields as $key => $value) :
                 if (is_string( $value )) {
@@ -102,15 +100,18 @@ class UsersModel extends Model
 
         if (in_array( $field_name, $this->builtin )) {
 
+            /** @var \WP_User $user */
+            $user = $this->getData('user');
+
             switch ($field_name) {
                 case 'id' :
-                    $data = $this->data->ID;
+                    $data = $user->ID;
                     break;
                 case 'user_pass' :
                     $data = '';
                     break;
                 default :
-                    $data = $this->data->$field_name;
+                    $data = $user->$field_name;
                     break;
             }
         } else {

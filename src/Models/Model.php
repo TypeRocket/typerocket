@@ -86,6 +86,11 @@ abstract class Model
         return $this->guard;
     }
 
+    public function getBuiltinFields()
+    {
+        return $this->builtin;
+    }
+
     public function getData($key)
     {
         $data = null;
@@ -102,19 +107,14 @@ abstract class Model
         return $this;
     }
 
-    protected function getBuiltin()
-    {
-        return $this->builtin;
-    }
-
-    protected function getMetaFields( array $fields )
+    protected function getFilteredMetaFields( array $fields )
     {
         $builtin = array_flip( $this->builtin );
 
         return array_diff_key( $fields, $builtin );
     }
 
-    protected function getBuiltinFields( array $fields )
+    protected function getFilteredBuiltinFields( array $fields )
     {
         $builtin = array_flip( $this->builtin );
 

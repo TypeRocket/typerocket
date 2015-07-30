@@ -536,8 +536,23 @@ class Form
         $html      = '';
         if ($this->getDebugStatus() === true) {
             $dev_html = $this->getFieldHelpFunction( $this->currentField );
+            $fillable = $this->model->getFillableFields();
+            $guard = $this->model->getGuardFields();
+            $builtin = $this->model->getBuiltinFields();
 
-            $generator->newElement( 'div', array( 'class' => 'dev' ), '<i class="tr-icon-bug"></i>' );
+            $icon = '<i class="tr-icon-bug"></i>';
+
+            if(in_array($this->currentField->getName(), $builtin)) {
+                $icon = '<i class="tr-icon-table"></i> ' . $icon;
+            }
+
+            if(in_array($this->currentField->getName(), $fillable )) {
+                $icon = '<i class="tr-icon-pencil"></i> ' . $icon;
+            } elseif(in_array($this->currentField->getName(), $guard )) {
+                $icon = '<i class="tr-icon-shield"></i> ' . $icon;
+            }
+
+            $generator->newElement( 'div', array( 'class' => 'dev' ), $icon );
             $navTag       = new Tag( 'span', array( 'class' => 'nav' ) );
             $fieldCopyTag = new Tag( 'span', array( 'class' => 'field' ), $dev_html );
             $navTag->appendInnerTag( $fieldCopyTag );

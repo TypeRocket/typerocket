@@ -34,7 +34,7 @@ class CommentsModel extends Model
     {
         $fields  = $this->secureFields( $fields );
         $fields  = array_merge( $this->default, $fields, $this->static );
-        $builtin = $this->getBuiltinFields( $fields );
+        $builtin = $this->getFilteredBuiltinFields( $fields );
 
         if ( ! empty( $builtin['comment_post_id'] ) &&
              ! empty( $builtin['comment_content'] )
@@ -67,7 +67,7 @@ class CommentsModel extends Model
         if ($this->id != null) {
             $fields  = $this->secureFields( $fields );
             $fields  = array_merge( $fields, $this->static );
-            $builtin = $this->getBuiltinFields( $fields );
+            $builtin = $this->getFilteredBuiltinFields( $fields );
 
             if ( ! empty( $builtin )) {
                 remove_action( 'edit_comment', 'TypeRocket\Http\Responders\Hook::comments' );
@@ -88,7 +88,7 @@ class CommentsModel extends Model
 
     private function saveMeta( array $fields )
     {
-        $fields = $this->getMetaFields( $fields );
+        $fields = $this->getFilteredMetaFields( $fields );
         if ( ! empty( $fields ) && ! empty( $this->id )) :
             foreach ($fields as $key => $value) :
                 if (is_string( $value )) {
@@ -133,7 +133,7 @@ class CommentsModel extends Model
     {
         if (in_array( $field_name, $this->builtin )) {
 
-            $comment = $this->data;
+            $comment = $this->getData('comment');
 
             switch ($field_name) {
                 case 'comment_author_ip' :

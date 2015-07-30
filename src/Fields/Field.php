@@ -39,7 +39,19 @@ abstract class Field
         $args = func_get_args();
         $this->init();
         $setup = new \ReflectionMethod( $this, 'setup' );
+        $setup->setAccessible(true);
 
+        $args = $this->assignArgs($args);
+
+        if ($this instanceof ScriptField) {
+            $this->enqueueScripts();
+        }
+
+        $setup->invokeArgs( $this, $args );
+        $setup->setAccessible(false);
+    }
+
+    private function assignArgs($args) {
         foreach ($args as $key => $arg) {
             if ($arg instanceof Form) {
                 $this->configureToForm( $arg );
@@ -47,11 +59,7 @@ abstract class Field
             }
         }
 
-        if ($this instanceof ScriptField) {
-            $this->enqueueScripts();
-        }
-
-        $setup->invokeArgs( $this, $args );
+        return $args;
     }
 
     public function __get( $property )
@@ -605,7 +613,7 @@ abstract class Field
      *
      * @return $this
      */
-    public function setup( $name, array $attr = array(), array $settings = array(), $label = true )
+    private function setup( $name, array $attr = array(), array $settings = array(), $label = true )
     {
 
         do_action( 'tr_setup_field_start', $this, $name, $attr, $settings, $label );
@@ -649,7 +657,9 @@ abstract class Field
             return null;
         }
 
-        return $this->form->getModel()->getFieldValue($this);
+        $value = $this->form->getModel()->getFieldValue($this);
+
+        return $value;
     }
 
     /**
