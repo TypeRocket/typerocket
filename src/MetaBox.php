@@ -86,24 +86,6 @@ class MetaBox extends Registrable
     }
 
     /**
-     * Add content inside form hook and wrap with the TypeRocket container
-     */
-    public function metaContent()
-    {
-        $func = 'add_meta_content_' . $this->id;
-
-        echo '<div class="typerocket-container">';
-        if( is_callable($this->callback) ) :
-            call_user_func_array($this->callback, array( $this ) );
-        elseif (function_exists( $func )) :
-            $func( $this );
-        elseif (TR_DEBUG == true) :
-            echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by defining: <code>function {$func}() {}</code></div>";
-        endif;
-        echo '</div>';
-    }
-
-    /**
      * Add meta box to post type
      *
      * @param string|array|PostType $s
@@ -156,7 +138,7 @@ class MetaBox extends Registrable
                         if( is_callable($callback) ) :
                             call_user_func_array($callback, array( $obj ) );
                         elseif (function_exists( $func )) :
-                            $func( $this );
+                            $func( $obj );
                         elseif (TR_DEBUG == true) :
                             echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by defining: <code>function {$func}() {}</code></div>";
                         endif;
