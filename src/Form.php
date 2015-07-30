@@ -3,8 +3,8 @@ namespace TypeRocket;
 
 use TypeRocket\Html\Generator,
     TypeRocket\Html\Tag,
-    TypeRocket\Fields\Field;
-use TypeRocket\Models\PostTypesModel;
+    TypeRocket\Fields\Field,
+    TypeRocket\Models\PostTypesModel;
 
 class Form
 {
