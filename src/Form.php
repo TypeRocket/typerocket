@@ -44,9 +44,9 @@ class Form
         $paths = Config::getPaths();
         wp_enqueue_script( 'typerocket-http', $paths['urls']['assets'] . '/js/http.js', array( 'jquery' ), '1', true );
 
-        $this->setResource( $resource );
-        $this->setAction( $action );
-        $this->setItemId( $itemId );
+        $this->resource = $resource;
+        $this->action = $action;
+        $this->itemId = $itemId;
         $this->autoConfig();
 
         $model = ucfirst($this->resource);
@@ -60,8 +60,6 @@ class Form
             }
 
         }
-
-        do_action( 'tr_make_form', $this );
     }
 
     /**
@@ -96,54 +94,8 @@ class Form
                 $resource = 'options';
             }
 
-            $this->setItemId( $item_id );
-            $this->setResource( $resource );
-        }
-
-        return $this;
-    }
-
-    /**
-     * Set controller
-     *
-     * @param $resource
-     *
-     * @return $this
-     */
-    private function setResource( $resource )
-    {
-        $this->resource = $resource;
-
-        return $this;
-    }
-
-    /**
-     * Set Action
-     *
-     * @param $action
-     *
-     * @return $this
-     */
-    private function setAction( $action )
-    {
-        $this->action = $action;
-
-        return $this;
-    }
-
-    /**
-     * Set Item ID
-     *
-     * @param $item_id
-     *
-     * @return $this
-     */
-    private function setItemId( $item_id )
-    {
-        $this->itemId = null;
-
-        if (isset( $item_id )) {
-            $this->itemId = (int) $item_id;
+            $this->itemId = $item_id;
+            $this->resource = $resource;
         }
 
         return $this;
@@ -152,7 +104,7 @@ class Form
     /**
      * Get controller
      *
-     * @return null
+     * @return null|string
      */
     public function getResource()
     {
@@ -162,7 +114,7 @@ class Form
     /**
      * Set Action
      *
-     * @return null
+     * @return null|string
      */
     public function getAction()
     {
@@ -172,7 +124,7 @@ class Form
     /**
      * Get Item ID
      *
-     * @return null
+     * @return null|string
      */
     public function getItemId()
     {
@@ -212,7 +164,7 @@ class Form
     /**
      * Get Group
      *
-     * @return null
+     * @return null|string
      */
     public function getGroup()
     {
@@ -374,7 +326,7 @@ class Form
      *
      * @return bool
      */
-    function getPopulate()
+    public function getPopulate()
     {
         return $this->populate;
     }
@@ -384,7 +336,7 @@ class Form
      *
      * @return Field
      */
-    function getCurrentField()
+    public function getCurrentField()
     {
         return $this->currentField;
     }
@@ -651,7 +603,7 @@ class Form
     /**
      * Text Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -666,7 +618,7 @@ class Form
     /**
      * Password Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -684,7 +636,7 @@ class Form
     /**
      * Hidden Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|false $label
@@ -702,7 +654,7 @@ class Form
     /**
      * Submit Button
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|false $label
@@ -720,7 +672,7 @@ class Form
     /**
      * Textarea Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -735,7 +687,7 @@ class Form
     /**
      * Editor Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -750,7 +702,7 @@ class Form
     /**
      * Radio Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -765,7 +717,7 @@ class Form
     /**
      * Checkbox Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -780,7 +732,7 @@ class Form
     /**
      * Select Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -798,7 +750,7 @@ class Form
      * Use this only once per page. The WordPress Editor is very buggy. You cannot use
      * this in Meta boxes and repeatable sections.
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -813,7 +765,7 @@ class Form
     /**
      * Color Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -828,7 +780,7 @@ class Form
     /**
      * Date Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -843,7 +795,7 @@ class Form
     /**
      * Image Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -858,7 +810,7 @@ class Form
     /**
      * File Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -873,7 +825,7 @@ class Form
     /**
      * Gallery Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -888,7 +840,7 @@ class Form
     /**
      * Items Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -903,7 +855,7 @@ class Form
     /**
      * Matrix Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label
@@ -922,7 +874,7 @@ class Form
     /**
      * Repeater Input
      *
-     * @param $name
+     * @param string $name
      * @param array $attr
      * @param array $settings
      * @param bool|true $label

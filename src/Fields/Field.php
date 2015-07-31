@@ -62,6 +62,31 @@ abstract class Field
         return $args;
     }
 
+    /**
+     * Invoked by Reflection in constructor
+     *
+     * @param string $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return $this
+     */
+    private function setup( $name, array $attr = array(), array $settings = array(), $label = true )
+    {
+        $this->settings = $settings;
+        $this->label    = $label;
+        $this->attr     = $attr;
+        $this->setName( $name );
+
+        if (empty( $settings['label'] )) {
+            $this->settings['label'] = $name;
+        }
+
+        return $this;
+
+    }
+
     public function __get( $property )
     {
     }
@@ -103,24 +128,9 @@ abstract class Field
     {
         $this->setGroup( $form->getGroup() );
         $this->setSub( $form->getSub() );
-        $this->setItemId( $form->getItemId() );
-        $this->setResource( $form->getResource() );
+        $this->itemId = $form->getItemId();
+        $this->resource = $form->getResource();
         $this->setPopulate( $form->getPopulate() );
-        $this->setForm( $form );
-
-        return $this;
-    }
-
-    /**
-     * Set the From for the field not as a reference. From is
-     * cloned to help eliminate errors.
-     *
-     * @param Form $form
-     *
-     * @return $this
-     */
-    public function setForm( Form $form )
-    {
         $this->form = clone $form;
 
         return $this;
@@ -329,38 +339,6 @@ abstract class Field
         return $this->prefix . $this->brackets;
     }
 
-    /**
-     * Remove Setting by key
-     *
-     * @param $key
-     *
-     * @return $this
-     */
-    public function removeSetting( $key )
-    {
-
-        if (array_key_exists( $key, $this->settings )) {
-            unset( $this->settings[$key] );
-        }
-
-        return $this;
-    }
-
-    /**
-     * Set the Item Id
-     *
-     * @param int $itemId
-     *
-     * @return $this
-     */
-    public function setItemId( $itemId )
-    {
-        if (isset( $itemId )) {
-            $this->itemId = (int) $itemId;
-        }
-
-        return $this;
-    }
 
     /**
      * Get Item ID
@@ -398,21 +376,6 @@ abstract class Field
         return $this->type;
     }
 
-    /**
-     * Set Resource
-     *
-     * @param $resource
-     *
-     * @return $this
-     */
-    public function setResource( $resource )
-    {
-        if (isset( $resource )) {
-            $this->resource = $resource;
-        }
-
-        return $this;
-    }
 
     /**
      * Get Resource
@@ -449,6 +412,28 @@ abstract class Field
         return $this->name;
     }
 
+    /**
+     * Set Settings
+     *
+     * @param array $settings
+     *
+     * @return $this
+     */
+    public function setSettings( $settings )
+    {
+        $this->settings = $settings;
+
+        return $this;
+    }
+
+    /**
+     * Set Setting
+     *
+     * @param string $key
+     * @param string $value
+     *
+     * @return $this
+     */
     public function setSetting( $key, $value )
     {
         $this->settings[$key] = $value;
@@ -482,6 +467,23 @@ abstract class Field
         }
 
         return $this->settings[$key];
+    }
+
+    /**
+     * Remove Setting by key
+     *
+     * @param $key
+     *
+     * @return $this
+     */
+    public function removeSetting( $key )
+    {
+
+        if (array_key_exists( $key, $this->settings )) {
+            unset( $this->settings[$key] );
+        }
+
+        return $this;
     }
 
     /**
@@ -600,48 +602,6 @@ abstract class Field
     public function getPrefix()
     {
         return $this->prefix;
-    }
-
-    /**
-     * Setup the field
-     *
-     * @param string $name the name of the field
-     * @param array $attr attributes of the html element
-     * @param array $settings settings for the field
-     *
-     * @param bool $label show the label
-     *
-     * @return $this
-     */
-    private function setup( $name, array $attr = array(), array $settings = array(), $label = true )
-    {
-
-        do_action( 'tr_setup_field_start', $this, $name, $attr, $settings, $label );
-
-        $this->settings = $settings;
-        $this->label    = $label;
-
-        if (array_key_exists( 'class', $attr )) {
-            $attr['class'] .= ' ' . $this->attr['class'];
-        }
-
-        $this->attr['class'] = apply_filters( 'tr_setup_field_class_attribute', $this->attr['class'], $this );
-
-        if ( ! $this->attr['class']) {
-            unset( $this->attr['class'] );
-        }
-
-        $this->attr = array_merge( $this->attr, $attr );
-        $this->setName( $name );
-
-        if (empty( $settings['label'] )) {
-            $this->settings['label'] = $name;
-        }
-
-        do_action( 'tr_setup_field_end', $this, $name, $attr, $settings, $label );
-
-        return $this;
-
     }
 
 

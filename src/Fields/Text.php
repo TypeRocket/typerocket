@@ -17,7 +17,7 @@ class Text extends Field
         $input = new Generator();
         $name = $this->getNameAttributeString();
         $value = $this->getValue();
-        $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'attribute');
+        $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'raw');
 
         if ( is_callable($sanitize)) {
             $value = esc_attr( call_user_func($sanitize, $value ) );
