@@ -17,7 +17,6 @@ abstract class Model
 
     public function __construct()
     {
-
         $reflect = new \ReflectionClass( $this );
         $type    = substr( $reflect->getShortName(), 0, - 5 );
         $suffix  = '';
@@ -123,7 +122,6 @@ abstract class Model
 
     protected function secureFields( array $fields )
     {
-
         $fillable = array();
         if ( ! empty( $this->fillable ) && is_array( $this->fillable )) {
             foreach ($this->fillable as $field_name) {
@@ -143,7 +141,6 @@ abstract class Model
         }
 
         return apply_filters( 'tr_model_secure_fields', $fields, $this );
-
     }
 
     /**
