@@ -49,6 +49,10 @@ class Request {
         $this->fields = $fields;
     }
 
+    public function setMethod($method) {
+        $this->method = strtoupper( $method );
+    }
+
     public function getMethod() {
         return $this->method;
     }

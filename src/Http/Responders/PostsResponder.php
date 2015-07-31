@@ -1,12 +1,13 @@
 <?php
 namespace TypeRocket\Http\Responders;
 
-use \TypeRocket\Http\Kernel,
+use \TypeRocket\Http\Middleware\Client,
+    \TypeRocket\Http\Middleware\Controller,
     \TypeRocket\Http\Request,
     \TypeRocket\Http\Response,
     TypeRocket\Registry;
 
-class PostsResponder
+class PostsResponder implements Responder
 {
 
     public function respond( $postId )
@@ -26,9 +27,10 @@ class PostsResponder
         }
 
         $request  = new Request( $type, $postId, 'PostsResponder' );
+        $request->setMethod('PUT');
         $response = new Response();
 
-        new Kernel( 'update', $request, $response );
+        new Controller($request, $response, new Client($request, $response) );
 
     }
 
