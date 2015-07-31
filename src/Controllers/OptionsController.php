@@ -20,17 +20,17 @@ class OptionsController extends Controller
         $this->response->setValid( $valid );
     }
 
-    public function update($id)
+    public function update( $id )
     {
         $options = new OptionsModel();
-        $errors = $options->create( $this->request->getFields() )->getErrors();
+        $errors  = $options->create( $this->request->getFields() )->getErrors();
 
-        if( ! empty ( $errors ) ) {
-            $this->response->setMessage('Options not updated');
-            $this->response->setErrors($errors);
-            $this->response->setValid(false);
+        if ( ! empty ( $errors )) {
+            $this->response->setMessage( 'Options not updated' );
+            $this->response->setErrors( $errors );
+            $this->response->setValid( false );
         } else {
-            $this->response->setMessage('Updated');
+            $this->response->setMessage( 'Updated' );
         }
 
     }
@@ -38,14 +38,14 @@ class OptionsController extends Controller
     public function create()
     {
         $options = new OptionsModel();
-        $errors = $options->create($this->request->getFields())->getErrors();
+        $errors  = $options->create( $this->request->getFields() )->getErrors();
 
-        if( ! empty ( $errors ) ) {
-            $this->response->setMessage('Options not created');
-            $this->response->setErrors($errors);
-            $this->response->setValid(false);
+        if ( ! empty ( $errors )) {
+            $this->response->setMessage( 'Options not created' );
+            $this->response->setErrors( $errors );
+            $this->response->setValid( false );
         } else {
-            $this->response->setMessage('Options updated');
+            $this->response->setMessage( 'Options updated' );
         }
 
     }
