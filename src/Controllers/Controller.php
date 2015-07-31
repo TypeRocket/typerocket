@@ -16,11 +16,11 @@ abstract class Controller
 {
 
     /** @var \TypeRocket\Http\Response */
-    public $response = null;
+    protected $response = null;
     /** @var \TypeRocket\Http\Request */
-    public $request = null;
+    protected $request = null;
     /** @var \WP_User $user */
-    public $user = null;
+    protected $user = null;
 
     public function __construct( Request $request, Response $response, \WP_User $user )
     {
