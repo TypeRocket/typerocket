@@ -1,4 +1,5 @@
 var TypeRocket = {
-    httpCallbacks: [],
-    repeaterCallbacks: []
+  httpCallbacks: [],
+  repeaterCallbacks: [],
+  lastSubmittedForm: false
 };

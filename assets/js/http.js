@@ -93,6 +93,7 @@ jQuery.typerocketHttp = {
 jQuery(document).ready(function ($) {
     $("form.typerocket-rest-form").on("submit", function (e) {
         e.preventDefault();
+        TypeRocket.lastSubmittedForm = $(this);
         $.typerocketHttp.send($(this).data('method'), $(this).data('api'), $(this).serialize());
     });
 });
