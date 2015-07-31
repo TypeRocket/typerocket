@@ -22,22 +22,25 @@ class Core
      */
     public function initCore()
     {
-        $this->initAdmin();
+        $this->initHooks();
         $this->loadPlugins( new Plugin\PluginCollection() );
-
-        $comments = new Http\Responders\CommentsResponder();
-        $users = new Http\Responders\UsersResponder();
-        $this->loadResponders( $comments, $users );
+        $this->loadResponders();
     }
 
     /**
      * Admin Init
      */
-    public function initAdmin()
+    private function initHooks()
     {
+        $useContent = function($user) {
+            echo '<div class="typerocket-container typerocket-wp-style-guide">';
+            do_action( 'tr_user_profile', $user );
+            echo '</div>';
+        };
+
         add_action( 'post_updated_messages', array( $this, 'setMessages' ) );
-        add_action( 'edit_user_profile', array( $this, 'userContent' ) );
-        add_action( 'show_user_profile', array( $this, 'userContent' ) );
+        add_action( 'edit_user_profile', $useContent );
+        add_action( 'show_user_profile', $useContent );
         add_action( 'admin_init', array( $this, 'addCss' ) );
         add_action( 'admin_init', array( $this, 'addJs' ) );
         add_action( 'admin_footer', array( $this, 'addBottomJs' ) );
@@ -54,6 +57,8 @@ class Core
     }
 
     /**
+     * Load plugins
+     *
      * @param Plugin\PluginCollection $collection
      */
     public function loadPlugins( Plugin\PluginCollection $collection )
@@ -76,7 +81,7 @@ class Core
      * Add hook into WordPress to give the main functionality needed for
      * TypeRocket to work.
      */
-    public function loadResponders() {
+    private function loadResponders() {
         add_action( 'save_post', 'TypeRocket\Http\Responders\Hook::posts' );
         add_action( 'wp_insert_comment', 'TypeRocket\Http\Responders\Hook::comments' );
         add_action( 'edit_comment', 'TypeRocket\Http\Responders\Hook::comments' );
@@ -137,13 +142,15 @@ class Core
     public function addCss()
     {
         $paths = Config::getPaths();
-        wp_enqueue_style( 'typerocket-icons', $paths['urls']['assets'] . '/css/icons.css' );
-        wp_enqueue_style( 'typerocket-styles', $paths['urls']['assets'] . '/css/typerocket.css' );
-        wp_enqueue_style( 'typerocket-date-picker', $paths['urls']['assets'] . '/css/date-picker.css' );
-        wp_enqueue_style( 'typerocket-editor', $paths['urls']['assets'] . '/css/redactor.css' );
+        $assets = $paths['urls']['assets'];
+
+        wp_enqueue_style( 'typerocket-icons', $assets . '/css/icons.css' );
+        wp_enqueue_style( 'typerocket-styles', $assets . '/css/typerocket.css' );
+        wp_enqueue_style( 'typerocket-date-picker', $assets . '/css/date-picker.css' );
+        wp_enqueue_style( 'typerocket-editor', $assets . '/css/redactor.css' );
 
         if (is_admin()) {
-            wp_enqueue_style( 'typerocket-tabs', $paths['urls']['assets'] . '/css/tabs.css' );
+            wp_enqueue_style( 'typerocket-tabs', $assets . '/css/tabs.css' );
         }
     }
 
@@ -152,11 +159,10 @@ class Core
      */
     public function addJs()
     {
-
         $paths = Config::getPaths();
+        $assets = $paths['urls']['assets'];
 
-        wp_enqueue_script( 'typerocket-scripts-global', $paths['urls']['assets'] . '/js/global.js', array(),
-            '1.0' );
+        wp_enqueue_script( 'typerocket-scripts-global', $assets . '/js/global.js', array(), '1.0' );
     }
 
     /**
@@ -164,28 +170,13 @@ class Core
      */
     public function addBottomJs()
     {
-
         $paths = Config::getPaths();
+        $assets = $paths['urls']['assets'];
 
-        if (TR_DEBUG === true) {
-            wp_enqueue_script( 'typerocket-dev', $paths['urls']['assets'] . '/js/dev.js', array( 'jquery' ), '1.0',
-                true );
+        if (Config::getDebugStatus() === true) {
+            wp_enqueue_script( 'typerocket-dev', $assets . '/js/dev.js', array( 'jquery' ), '1.0', true );
         }
-        wp_enqueue_script( 'typerocket-scripts', $paths['urls']['assets'] . '/js/typerocket.js', array( 'jquery' ),
-            '1.0', true );
-
-    }
-
-    /**
-     * Hook for both user edit and add pages
-     *
-     * @param $user_obj
-     */
-    public function userContent( $user_obj )
-    {
-        echo '<div class="typerocket-container typerocket-wp-style-guide">';
-        do_action( 'tr_user_profile', $user_obj );
-        echo '</div>';
+        wp_enqueue_script( 'typerocket-scripts', $assets . '/js/typerocket.js', array( 'jquery' ), '1.0', true );
     }
 
 }

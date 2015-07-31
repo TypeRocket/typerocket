@@ -11,7 +11,7 @@ class Sanitize
      *
      * @return string
      */
-    static function textarea( $input )
+    public static function textarea( $input )
     {
         global $allowedposttags;
         $output = wp_kses( $input, $allowedposttags );
@@ -26,7 +26,7 @@ class Sanitize
      *
      * @return string
      */
-    static function raw( $input )
+    public static function raw( $input )
     {
         return $input;
     }
@@ -38,7 +38,7 @@ class Sanitize
      *
      * @return string
      */
-    static function attribute( $input )
+    public static function attribute( $input )
     {
         return esc_attr($input);
     }
@@ -50,7 +50,7 @@ class Sanitize
      *
      * @return string
      */
-    static function url( $input )
+    public static function url( $input )
     {
         return esc_url($input);
     }
@@ -62,7 +62,7 @@ class Sanitize
      *
      * @return string
      */
-    static function sql( $input )
+    public static function sql( $input )
     {
         return esc_sql($input);
     }
@@ -74,7 +74,7 @@ class Sanitize
      *
      * @return string
      */
-    static function plaintext( $input )
+    public static function plaintext( $input )
     {
         $output = wp_kses( $input, array() );
 
@@ -89,7 +89,7 @@ class Sanitize
      *
      * @return string
      */
-    static function editor( $input )
+    public static function editor( $input )
     {
         if (current_user_can( 'unfiltered_html' )) {
             $output = $input;
@@ -111,7 +111,7 @@ class Sanitize
      *
      * @return string
      */
-    static function hex( $hex, $default = '#000000' )
+    public static function hex( $hex, $default = '#000000' )
     {
         if (Validate::hex( $hex )) {
             return $hex;
@@ -129,7 +129,7 @@ class Sanitize
      *
      * @return mixed|string
      */
-    static function underscore( $name )
+    public static function underscore( $name )
     {
         if (is_string( $name )) {
             $name    = trim( sanitize_title( $name, '' ) );
@@ -149,7 +149,7 @@ class Sanitize
      *
      * @return mixed|string
      */
-    static function dash( $name )
+    public static function dash( $name )
     {
         if (is_string( $name )) {
             $name    = trim( sanitize_title( $name, '' ) );

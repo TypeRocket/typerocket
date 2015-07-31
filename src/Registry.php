@@ -7,10 +7,23 @@ class Registry
     private static $collection = array();
     private static $postTypes = array( 'post' => 'posts', 'page' => 'pages' );
 
+    /**
+     * Add a post type resource
+     *
+     * @param string $id post type id
+     * @param string $resource resource name ex. posts, pages, books
+     */
     public static function addPostTypeResource($id, $resource) {
         self::$postTypes[$id] = $resource;
     }
 
+    /**
+     * Get the post type resource
+     *
+     * @param $id
+     *
+     * @return null
+     */
     public static function getPostTypeResource($id) {
         return ! empty(self::$postTypes[$id]) ? self::$postTypes[$id] : null;
     }
@@ -30,7 +43,7 @@ class Registry
     /**
      * Loop through each Registrable and add hooks automatically
      */
-    public static function run()
+    public static function initHooks()
     {
         $collection = array();
         $later = array();
@@ -73,38 +86,76 @@ class Registry
                     } );
                 }
 
-                // edit_form_top
-                if ($obj->getForm( 'top' )) {
-                    add_action( 'edit_form_top', function($post) use ($obj) {
-                        $obj->outputFormContent( $post, 'top' );
-                    } );
-                }
-
-                // edit_form_after_title
-                if ($obj->getForm( 'title' )) {
-                    add_action( 'edit_form_after_title', function($post) use ($obj) {
-                        $obj->outputFormContent( $post, 'title' );
-                    } );
-                }
-
-                // edit_form_after_editor
-                if ($obj->getForm( 'editor' )) {
-                    add_action( 'edit_form_after_editor', function($post) use ($obj) {
-                        $obj->outputFormContent( $post, 'editor' );
-                    } );
-                }
-
-                // dbx_post_sidebar
-                if ($obj->getForm( 'bottom' )) {
-                    add_action( 'dbx_post_sidebar', function($post) use ($obj) {
-                        $obj->outputFormContent( $post, 'bottom' );
-                    } );
-                }
+                self::postTypeFormContent($obj);
 
             } elseif ($obj instanceof MetaBox) {
                 add_action( 'admin_init', array( $obj, 'register' ) );
                 add_action( 'add_meta_boxes', array( $obj, 'register' ) );
             }
         }
+    }
+
+    /**
+     * Add post type form hooks
+     *
+     * @param PostType $obj
+     */
+    private static function postTypeFormContent( PostType $obj) {
+
+        /**
+         * @param \WP_Post$post
+         * @param string $type
+         * @param PostType $obj
+         */
+        $callback = function( $post, $type, $obj )
+        {
+            if ($post->post_type == $obj->getId()) {
+                $func = 'add_form_content_' . $obj->getId() . '_' . $type;
+                echo '<div class="typerocket-container">';
+
+                $form = $obj->getForm( $type );
+                if (is_callable( $form )) {
+                    call_user_func( $form );
+                } elseif (function_exists( $func )) {
+                    call_user_func( $func, $post );
+                } elseif (TR_DEBUG == true) {
+                    echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by defining: <code>function {$func}() {}</code></div>";
+                }
+                echo '</div>';
+            }
+        };
+
+        // edit_form_top
+        if ($obj->getForm( 'top' )) {
+            add_action( 'edit_form_top', function($post) use ($obj, $callback) {
+                $type = 'top';
+                call_user_func_array($callback, array($post, $type, $obj));
+            } );
+        }
+
+        // edit_form_after_title
+        if ($obj->getForm( 'title' )) {
+            add_action( 'edit_form_after_title', function($post) use ($obj, $callback) {
+                $type = 'title';
+                call_user_func_array($callback, array($post, $type, $obj));
+            } );
+        }
+
+        // edit_form_after_editor
+        if ($obj->getForm( 'editor' )) {
+            add_action( 'edit_form_after_editor', function($post) use ($obj, $callback) {
+                $type = 'editor';
+                call_user_func_array($callback, array($post, $type, $obj));
+            } );
+        }
+
+        // dbx_post_sidebar
+        if ($obj->getForm( 'bottom' )) {
+            add_action( 'dbx_post_sidebar', function($post) use ($obj, $callback) {
+                $type = 'bottom';
+                call_user_func_array($callback, array($post, $type, $obj));
+            } );
+        }
+
     }
 }

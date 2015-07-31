@@ -10,45 +10,6 @@ class Taxonomy extends Registrable
 {
 
     private $postTypes = array();
-    private $plural = null;
-
-    /**
-     * Set the url slug used for rewrite rules
-     *
-     * @param $slug
-     *
-     * @return $this
-     */
-    public function setSlug( $slug )
-    {
-        $this->args['rewrite'] = array( 'slug' => Sanitize::dash( $slug ) );
-
-        return $this;
-    }
-
-    /**
-     * Set Hierarchical
-     *
-     * @param bool $bool
-     *
-     * @return $this
-     */
-    public function setHierarchical( $bool = true)
-    {
-        $this->args['hierarchical'] = (bool) $bool;
-
-        return $this;
-    }
-
-    /**
-     * Get the slug
-     *
-     * @return mixed
-     */
-    public function getSlug()
-    {
-        return $this->args['rewrite']['slug'];
-    }
 
     /**
      * Make Taxonomy. Do not use before init.
@@ -57,11 +18,11 @@ class Taxonomy extends Registrable
      * @param string $plural plural name
      * @param array $settings args override and extend
      */
-    function __construct( $singular, $plural = null, $settings = array() )
+    public function __construct( $singular, $plural = null, $settings = array() )
     {
 
-        if(is_null($plural)) {
-            $plural = Inflect::pluralize($singular);
+        if (is_null( $plural )) {
+            $plural = Inflect::pluralize( $singular );
         }
 
         $upperPlural   = ucwords( $plural );
@@ -95,10 +56,9 @@ class Taxonomy extends Registrable
         endif;
 
         // setup object for later use
-        $plural   = Sanitize::underscore( $plural );
-        $singular = Sanitize::underscore( $singular );
-        $this->plural = $plural;
-        $this->id = ! $this->id ? $singular : $this->id;
+        $plural       = Sanitize::underscore( $plural );
+        $singular     = Sanitize::underscore( $singular );
+        $this->id     = ! $this->id ? $singular : $this->id;
 
         if (array_key_exists( 'capabilities', $settings ) && $settings['capabilities'] === true) :
             $settings['capabilities'] = array(
@@ -121,11 +81,49 @@ class Taxonomy extends Registrable
     }
 
     /**
+     * Set the url slug used for rewrite rules
+     *
+     * @param $slug
+     *
+     * @return $this
+     */
+    public function setSlug( $slug )
+    {
+        $this->args['rewrite'] = array( 'slug' => Sanitize::dash( $slug ) );
+
+        return $this;
+    }
+
+    /**
+     * Set Hierarchical
+     *
+     * @param bool $bool
+     *
+     * @return $this
+     */
+    public function setHierarchical( $bool = true )
+    {
+        $this->args['hierarchical'] = (bool) $bool;
+
+        return $this;
+    }
+
+    /**
+     * Get the slug
+     *
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->args['rewrite']['slug'];
+    }
+
+    /**
      * Register the taxonomy with WordPress
      *
      * @return $this
      */
-    function register()
+    public function register()
     {
         $this->dieIfReserved();
 
@@ -142,14 +140,14 @@ class Taxonomy extends Registrable
      *
      * @return $this
      */
-    function addPostType( $s )
+    public function addPostType( $s )
     {
 
-        if ( $s instanceof PostType ) {
+        if ($s instanceof PostType) {
             $s = $s->getId();
-        }elseif( is_array($s) ) {
-            foreach($s as $n) {
-                $this->addPostType($n);
+        } elseif (is_array( $s )) {
+            foreach ($s as $n) {
+                $this->addPostType( $n );
             }
         }
 

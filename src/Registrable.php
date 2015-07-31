@@ -245,10 +245,7 @@ abstract class Registrable
      *
      * @return $this
      */
-    public function register()
-    {
-        return $this;
-    }
+    abstract public function register();
 
     /**
      * Used with the apply method to connect Registrable objects together.

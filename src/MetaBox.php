@@ -13,8 +13,8 @@ class MetaBox extends Registrable
     /**
      * Make Meta Box
      *
-     * @param null $name
-     * @param null $screen
+     * @param string $name
+     * @param null|string|array $screen
      * @param array $settings
      */
     public function __construct( $name, $screen = null, array $settings = array() )
@@ -138,7 +138,7 @@ class MetaBox extends Registrable
                     $this->label,
                     function () use ( $obj ) {
                         $func     = 'add_meta_content_' . $obj->getId();
-                        $callback = $this->getCallback();
+                        $callback = $obj->getCallback();
 
                         echo '<div class="typerocket-container">';
                         if ( is_callable( $callback ) ) :

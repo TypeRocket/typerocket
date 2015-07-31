@@ -11,6 +11,9 @@ namespace TypeRocket;
 class Icons extends Collection
 {
 
+    /**
+     * Load icons and they font encoding
+     */
     public function __construct() {
         $icons = array(
             'home'                => '\e600',

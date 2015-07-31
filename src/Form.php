@@ -18,19 +18,12 @@ class Form
 
     /** @var \TypeRocket\Fields\Field $currentField */
     private $currentField = '';
+
     private $populate = true;
     private $group = null;
     private $sub = null;
     private $debugStatus = null;
     private $settings = array();
-
-    public function __get( $property )
-    {
-    }
-
-    public function __set( $property, $value )
-    {
-    }
 
     /**
      * Instance the From
@@ -60,6 +53,14 @@ class Form
             }
 
         }
+    }
+
+    public function __get( $property )
+    {
+    }
+
+    public function __set( $property, $value )
+    {
     }
 
     /**
@@ -226,6 +227,21 @@ class Form
     }
 
     /**
+     * Set Form setting by key
+     *
+     * @param $key
+     * @param $value
+     *
+     * @return $this
+     */
+    public function setSetting( $key, $value )
+    {
+        $this->settings[$key] = $value;
+
+        return $this;
+    }
+
+    /**
      * Get From setting by key
      *
      * @param $key
@@ -239,23 +255,6 @@ class Form
         }
 
         return $this->settings[$key];
-    }
-
-
-    /**
-     * Set Form setting by key
-     *
-     * @param $key
-     * @param $value
-     *
-     * @return $this
-     */
-    public function setSetting( $key, $value )
-    {
-
-        $this->settings[$key] = $value;
-
-        return $this;
     }
 
     /**
@@ -300,7 +299,6 @@ class Form
      */
     public function setRenderSetting( $value )
     {
-
         $this->settings['render'] = $value;
 
         return $this;
@@ -332,25 +330,14 @@ class Form
     }
 
     /**
-     * Get the current Field the From is processing
-     *
-     * @return Field
-     */
-    public function getCurrentField()
-    {
-        return $this->currentField;
-    }
-
-    /**
      * Set the current Field to process
      *
      * @param Field $field
      *
      * @return $this
      */
-    function setCurrentField( Field $field )
+    public function setCurrentField( Field $field )
     {
-
         $this->currentField = null;
 
         if ($field instanceof Field) {
@@ -358,6 +345,16 @@ class Form
         }
 
         return $this;
+    }
+
+    /**
+     * Get the current Field the From is processing
+     *
+     * @return Field
+     */
+    public function getCurrentField()
+    {
+        return $this->currentField;
     }
 
     /**
@@ -372,7 +369,6 @@ class Form
      */
     public function open( $attr = array(), $use_rest = true )
     {
-
         switch ($this->action) {
             case 'update' :
                 $method = 'PUT';
@@ -515,16 +511,6 @@ class Form
     }
 
     /**
-     * Get the From debug status
-     *
-     * @return bool|null
-     */
-    function getDebugStatus()
-    {
-        return ( $this->debugStatus === false ) ? $this->debugStatus : Config::getDebugStatus();
-    }
-
-    /**
      * Set the form debug status
      *
      * @param bool $status
@@ -536,6 +522,16 @@ class Form
         $this->debugStatus = (bool) $status;
 
         return $this;
+    }
+
+    /**
+     * Get the From debug status
+     *
+     * @return bool|null
+     */
+    public function getDebugStatus()
+    {
+        return ( $this->debugStatus === false ) ? $this->debugStatus : Config::getDebugStatus();
     }
 
     /**

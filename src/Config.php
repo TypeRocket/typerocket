@@ -10,6 +10,9 @@ class Config
     static private $seed = null;
     static private $plugins = null;
 
+    /**
+     * Set initial values
+     */
     public function __construct()
     {
         if (self::$paths === null) {

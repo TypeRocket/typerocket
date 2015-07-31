@@ -24,7 +24,7 @@ new \TypeRocket\Core(true);
 do_action( 'typerocket_loaded' );
 
 add_action( 'after_setup_theme', function () {
-	\TypeRocket\Registry::run();
+	\TypeRocket\Registry::initHooks();
 } );
 
 /*
