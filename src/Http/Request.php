@@ -1,7 +1,8 @@
 <?php
 namespace TypeRocket\Http;
 
-class Request {
+class Request
+{
 
     private $resource = null;
     private $method = null;
@@ -14,47 +15,71 @@ class Request {
     private $get = null;
     private $files = null;
 
-    public function __construct($resource, $id, $type) {
+    public function __construct( $resource, $id, $type )
+    {
 
         // set method
         $method = isset( $_SERVER['REQUEST_METHOD'] ) ? $_SERVER['REQUEST_METHOD'] : 'GET';
         $method = ( isset( $_SERVER['REQUEST_METHOD'] ) && isset( $_POST['_method'] ) ) ? $_POST['_method'] : $method;
 
-        $this->resource = ucfirst( $resource );
-        $this->method = strtoupper( $method );
-        $this->id = $id;
-        $this->uri = $_SERVER['REQUEST_URI'];
-        $this->host = $_SERVER['HTTP_HOST'];
-        $this->type = $type;
-        $this->fields = !empty ($_POST['tr']) ? $_POST['tr'] : array();
-        $this->post = !empty ($_POST) ? $_POST : null;
-        $this->get = !empty ($_GET) ? $_GET : null;
-        $this->files = !empty ($_FILES) ? $_FILES : null;
+        $this->setResource( $resource );
+        $this->setMethod( $method );
+        $this->setResourceId( $id );
+        $this->uri    = $_SERVER['REQUEST_URI'];
+        $this->host   = $_SERVER['HTTP_HOST'];
+        $this->type   = $type;
+        $this->fields = ! empty ( $_POST['tr'] ) ? $_POST['tr'] : array();
+        $this->post   = ! empty ( $_POST ) ? $_POST : null;
+        $this->get    = ! empty ( $_GET ) ? $_GET : null;
+        $this->files  = ! empty ( $_FILES ) ? $_FILES : null;
 
     }
 
-    public function setDataPost(array $post) {
+    public function setDataPost( array $post )
+    {
         $this->post = $post;
+
+        return $this;
     }
 
-    public function setDataGet(array $get) {
+    public function setDataGet( array $get )
+    {
         $this->get = $get;
+
+        return $this;
     }
 
-    public function setDataFiles(array $files) {
+    public function setDataFiles( array $files )
+    {
         $this->files = $files;
+
+        return $this;
     }
 
-    public function setFields(array $fields) {
+    public function setFields( array $fields )
+    {
         $this->fields = $fields;
+
+        return $this;
     }
 
-    public function setMethod($method) {
+    public function setMethod( $method )
+    {
         $this->method = strtoupper( $method );
+
+        return $this;
     }
 
-    public function getMethod() {
+    public function getMethod()
+    {
         return $this->method;
+    }
+
+    public function setResource( $resource )
+    {
+        $this->resource = ucfirst( $resource );
+
+        return $this;
     }
 
     public function getResource()
@@ -62,12 +87,20 @@ class Request {
         return $this->resource;
     }
 
+    public function setResourceId( $id )
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getResourceId()
     {
         return $this->id;
     }
 
-    public function getUri() {
+    public function getUri()
+    {
         return $this->uri;
     }
 

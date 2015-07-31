@@ -8,9 +8,5 @@ class Client
 {
     public function handle( Request $request, Response $response )
     {
-        if($request->getType() == 'RestResponder') {
-            status_header( $response->getStatus() );
-            wp_send_json( $response->getResponseArray() );
-        }
     }
 }

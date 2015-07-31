@@ -19,6 +19,9 @@ class RestResponder implements Responder
         $client = new Client($request, $response);
         $controller = new Controller($request, $response, $client);
         new Csrf($request, $response, $controller);
+
+        status_header( $response->getStatus() );
+        wp_send_json( $response->getResponseArray() );
     }
 
     public function setResource( $resource )
