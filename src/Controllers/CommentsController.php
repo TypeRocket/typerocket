@@ -13,6 +13,7 @@ class CommentsController extends Controller
 
         if ($comment->user_id != $this->user->ID && ! current_user_can( 'edit_comment' )) {
             $valid = false;
+            $this->response->setError( 'auth', false );
             $this->response->setMessage( "Sorry, you don't have enough rights." );
         }
 
@@ -27,11 +28,10 @@ class CommentsController extends Controller
 
         if ( ! empty ( $errors )) {
             $this->response->setMessage( 'Comment not updated' );
-            $this->response->setErrors( $errors );
+            $this->response->setError( 'model', $errors );
             $this->response->setValid( false );
         } else {
             $this->response->setMessage( 'Comment updated' );
-            // $this->response->setData('comment', $comments->getData('comment'));
         }
 
     }
@@ -43,11 +43,10 @@ class CommentsController extends Controller
 
         if ( ! empty ( $errors )) {
             $this->response->setMessage( 'Comment not created' );
-            $this->response->setErrors( $errors );
+            $this->response->setError( 'model', $errors );
             $this->response->setValid( false );
         } else {
             $this->response->setMessage( 'Comment created' );
-            // $this->response->setData('comment', $comments->getData('comment'));
         }
 
     }

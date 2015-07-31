@@ -27,6 +27,7 @@ class PostTypesController extends Controller
 
         if ($post->post_author != $this->user->ID && ! current_user_can( 'edit_posts' )) {
             $valid = false;
+            $this->response->setError( 'auth', false );
             $this->response->setMessage( "Sorry, you don't have enough rights." );
         }
 
@@ -46,11 +47,10 @@ class PostTypesController extends Controller
 
         if ( ! empty ( $errors )) {
             $this->response->setMessage( "{$this->type} not updated" );
-            $this->response->setErrors( $errors );
+            $this->response->setError( 'model', $errors );
             $this->response->setValid( false );
         } else {
             $this->response->setMessage( $this->type . ' updated' );
-            // $this->response->setData('post', $this->model->getData('post'));
         }
 
     }
@@ -61,11 +61,10 @@ class PostTypesController extends Controller
 
         if ( ! empty ( $errors )) {
             $this->response->setMessage( $this->type . ' not created' );
-            $this->response->setErrors( $errors );
+            $this->response->setError( 'model', $errors );
             $this->response->setValid( false );
         } else {
             $this->response->setMessage( $this->type . ' created' );
-            // $this->response->setData('post', $this->model->getData('post'));
         }
 
     }

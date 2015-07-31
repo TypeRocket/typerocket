@@ -24,7 +24,7 @@ class Matrix {
             $file = $paths['matrix'] . "/{$group}/{$type}.php";
         } else {
             http_response_code(404);
-            exit();
+            die();
         }
 
         ?>
@@ -47,7 +47,7 @@ class Matrix {
         </div>
         <?php
 
-        exit();
+        die();
     }
 
 }

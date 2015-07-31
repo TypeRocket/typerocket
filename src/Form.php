@@ -402,7 +402,7 @@ class Form
 
         $r = $form->getStringOpenTag();
         $r .= $generator->newInput( 'hidden', '_method', $method )->getString();
-        $r .= wp_nonce_field( 'form_' . TR_SEED, '_tr_nonce_form', false, false );
+        $r .= wp_nonce_field( 'form_' .  Config::getSeed() , '_tr_nonce_form', false, false );
 
         return $r;
     }

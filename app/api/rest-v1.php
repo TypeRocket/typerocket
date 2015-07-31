@@ -6,9 +6,7 @@ if ($tr_loaded) {
     $tr_item_id  = get_query_var( 'typerocket_rest_item', null );
 
     // load
-    $tr_load = current_user_can( 'read' );
-    $tr_load = apply_filters( 'tr_rest_api_load', $tr_load );
-
+    $tr_load = apply_filters( 'tr_rest_api_load', true, $tr_resource, $tr_item_id );
     if ($tr_load) {
         $restResponder = new TypeRocket\Http\Responders\RestResponder();
         $restResponder->setResource($tr_resource);
@@ -17,4 +15,4 @@ if ($tr_loaded) {
 }
 
 status_header(404);
-exit();
+die();

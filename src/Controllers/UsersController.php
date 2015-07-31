@@ -13,6 +13,7 @@ class UsersController extends Controller
 
         if ($user->ID != $this->user->ID && ! current_user_can( 'edit_users' )) {
             $valid = false;
+            $this->response->setError( 'auth', false );
             $this->response->setMessage( "Sorry, you don't have enough rights." );
         }
 
@@ -28,11 +29,10 @@ class UsersController extends Controller
 
         if ( ! empty ( $errors )) {
             $this->response->setMessage( 'User not updated' );
-            $this->response->setErrors( $errors );
+            $this->response->setError( 'model', $errors );
             $this->response->setValid( false );
         } else {
             $this->response->setMessage( 'User updated' );
-            // $this->response->setData('user', $user->getData('user'));
         }
     }
 
@@ -43,11 +43,10 @@ class UsersController extends Controller
 
         if ( ! empty ( $errors )) {
             $this->response->setMessage( 'User not created' );
-            $this->response->setErrors( $errors );
+            $this->response->setError( 'model', $errors );
             $this->response->setValid( false );
         } else {
             $this->response->setMessage( 'User created' );
-            // $this->response->setData('user', $user->getData('user'));
         }
     }
 

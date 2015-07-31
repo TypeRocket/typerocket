@@ -30,7 +30,7 @@ class Kernel
                 if (method_exists( $controller, $action )) {
                     $controller->$action( $id );
                 } else {
-                    $response->setError( 'action', 'There is no action: ' . $action );
+                    $response->setError( 'controller', 'There is no action: ' . $action );
                     $response->setValid( false );
                 }
             }
