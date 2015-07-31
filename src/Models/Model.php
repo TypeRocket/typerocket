@@ -14,28 +14,26 @@ abstract class Model
     protected $errors = null;
     protected $builtin = array();
     private $data = null;
-    protected $resource = null;
 
     public function __construct()
     {
 
-        $reflect        = new \ReflectionClass( $this );
-        $type           = substr( $reflect->getShortName(), 0, - 5 );
-        $this->resource = strtolower( $type );
-        $suffix         = '';
+        $reflect = new \ReflectionClass( $this );
+        $type    = substr( $reflect->getShortName(), 0, - 5 );
+        $suffix  = '';
 
-        if ( ! empty( $this->resource )) {
-            $suffix = '_' . $this->resource;
+        if ( ! empty( $type )) {
+            $suffix = '_' . $type;
         }
 
         $this->init();
-
         $this->fillable = apply_filters( 'tr_model_fillable' . $suffix, $this->fillable, $this );
         $this->guard    = apply_filters( 'tr_model_guard' . $suffix, $this->guard, $this );
         do_action( 'tr_model', $this );
     }
 
-    protected function init() {
+    protected function init()
+    {
         return $this;
     }
 
@@ -91,19 +89,21 @@ abstract class Model
         return $this->builtin;
     }
 
-    public function getData($key)
+    public function getData( $key )
     {
         $data = null;
 
-        if(array_key_exists($key, $this->data)) {
+        if (array_key_exists( $key, $this->data )) {
             $data = $this->data[$key];
         }
 
         return $data;
     }
 
-    protected function setData($key, $value) {
+    protected function setData( $key, $value )
+    {
         $this->data[$key] = $value;
+
         return $this;
     }
 
@@ -142,7 +142,7 @@ abstract class Model
             }
         }
 
-        return apply_filters( 'tr_model_filter_fields', $fields, $this );
+        return apply_filters( 'tr_model_secure_fields', $fields, $this );
 
     }
 
@@ -218,7 +218,7 @@ abstract class Model
 
     protected function getValueOrNull( $value )
     {
-        return ( isset($value) && $value !== '' ) ? $value : null;
+        return ( isset( $value ) && $value !== '' ) ? $value : null;
     }
 
     abstract function create( array $fields );

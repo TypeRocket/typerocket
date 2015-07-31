@@ -128,7 +128,7 @@ If we want to filter the fields we can do this as well. Lets use the controller 
 - Cast the "Book Cover" to an integer since we reference it by the attachment ID.
 
 ```php
-add_filter('tr_model_filter_fields', function($fields, $model) {
+add_filter('tr_model_secure_fields', function($fields, $model) {
     if($model instanceof \TypeRocket\Models\BooksModel) {
 
         if(isset($fields['isbn_number'])) {
