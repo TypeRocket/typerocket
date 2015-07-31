@@ -6,11 +6,17 @@ use \TypeRocket\Html\Generator;
 class Textarea extends Field
 {
 
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'textarea' );
     }
 
+    /**
+     * Covert Textarea to HTML string
+     */
     public function getString()
     {
         $max = '';

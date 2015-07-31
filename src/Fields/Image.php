@@ -6,7 +6,9 @@ use \TypeRocket\Html\Generator,
 
 class Image extends Field implements ScriptField
 {
-
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'image' );
@@ -19,6 +21,9 @@ class Image extends Field implements ScriptField
             true );
     }
 
+    /**
+     * Covert Image to HTML string
+     */
     public function getString()
     {
         $name = $this->getNameAttributeString();

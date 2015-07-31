@@ -6,7 +6,9 @@ use \TypeRocket\Html\Generator,
 
 class Gallery extends Field implements ScriptField
 {
-
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'gallery' );
@@ -19,6 +21,9 @@ class Gallery extends Field implements ScriptField
             true );
     }
 
+    /**
+     * Covert Gallery to HTML string
+     */
     public function getString()
     {
         $name                = $this->getNameAttributeString();

@@ -6,11 +6,17 @@ use \TypeRocket\Html\Generator;
 class Checkbox extends Field
 {
 
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'checkbox' );
     }
 
+    /**
+     * Covert Checkbox to HTML string
+     */
     public function getString()
     {
         $name   = $this->getNameAttributeString();

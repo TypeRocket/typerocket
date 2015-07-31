@@ -11,6 +11,9 @@ class Matrix extends Field implements OptionField, ScriptField {
     private $mxid = null;
     private $options = null;
 
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->mxid = md5( microtime( true ) ); // set id for matrix random
@@ -47,6 +50,9 @@ class Matrix extends Field implements OptionField, ScriptField {
         wp_enqueue_script( 'tr-matrix-core', $paths['urls']['assets'] . '/js/matrix.js', array( 'jquery' ), '1.0', true );
     }
 
+    /**
+     * Covert Matrix to HTML string
+     */
     public function getString()
     {
         $this->setAttribute('name', $this->getNameAttributeString());

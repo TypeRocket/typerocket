@@ -6,11 +6,17 @@ use \TypeRocket\Html\Generator;
 class Text extends Field
 {
 
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'text' );
     }
 
+    /**
+     * Covert Test to HTML string
+     */
     public function getString()
     {
         $max = '';

@@ -8,11 +8,17 @@ class Select extends Field implements OptionField
 
     private $options = array();
 
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'select' );
     }
 
+    /**
+     * Covert Select to HTML string
+     */
     public function getString()
     {
         $default = $this->getSetting('default');

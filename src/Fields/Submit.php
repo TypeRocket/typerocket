@@ -6,11 +6,17 @@ use \TypeRocket\Html;
 class Submit extends Field
 {
 
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'submit' );
     }
 
+    /**
+     * Covert Submit to HTML string
+     */
     public function getString()
     {
         $name = '_tr_submit_form';

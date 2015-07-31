@@ -5,7 +5,9 @@ use \TypeRocket\Html\Generator;
 
 class Date extends Field implements ScriptField
 {
-
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'date' );
@@ -15,6 +17,9 @@ class Date extends Field implements ScriptField
         wp_enqueue_script( 'jquery-ui-datepicker', array( 'jquery' ), '1.0', true );
     }
 
+    /**
+     * Covert Date to HTML string
+     */
     public function getString()
     {
         $name  = $this->getNameAttributeString();

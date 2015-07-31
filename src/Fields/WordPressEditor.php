@@ -6,6 +6,9 @@ use \TypeRocket\Sanitize;
 class WordPressEditor extends Field implements ScriptField
 {
 
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'wp_editor' );
@@ -15,6 +18,9 @@ class WordPressEditor extends Field implements ScriptField
         wp_enqueue_media();
     }
 
+    /**
+     * Covert WordPress Editor to HTML string
+     */
     public function getString()
     {
         $this->setAttribute('name', $this->getNameAttributeString());

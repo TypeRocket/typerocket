@@ -6,7 +6,9 @@ use \TypeRocket\Html\Generator,
 
 class Color extends Field implements ScriptField
 {
-
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'color' );
@@ -17,6 +19,9 @@ class Color extends Field implements ScriptField
         wp_enqueue_script( 'wp-color-picker' );
     }
 
+    /**
+     * Covert Color to HTML string
+     */
     public function getString()
     {
         $name  = $this->getNameAttributeString();

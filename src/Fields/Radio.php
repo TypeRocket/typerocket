@@ -8,11 +8,17 @@ class Radio extends Field implements OptionField
 
     private $options = array();
 
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'radio' );
     }
 
+    /**
+     * Covert Radio to HTML string
+     */
     public function getString()
     {
         $name       = $this->getNameAttributeString();

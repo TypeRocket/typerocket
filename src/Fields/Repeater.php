@@ -9,6 +9,9 @@ class Repeater extends Field implements ScriptField
 
     private $fields = array();
 
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'repeater' );
@@ -22,6 +25,9 @@ class Repeater extends Field implements ScriptField
         wp_enqueue_script( 'jquery-ui-sortable', array( 'jquery' ), '1.0', true );
     }
 
+    /**
+     * Covert Repeater to HTML string
+     */
     public function getString()
     {
         $this->setAttribute( 'name', $this->getNameAttributeString() );

@@ -6,7 +6,9 @@ use \TypeRocket\Html\Generator,
 
 class Items extends Field implements ScriptField
 {
-
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'items' );
@@ -18,6 +20,9 @@ class Items extends Field implements ScriptField
             '1.0', true );
     }
 
+    /**
+     * Covert Items to HTML string
+     */
     public function getString()
     {
         $name = $this->getNameAttributeString();

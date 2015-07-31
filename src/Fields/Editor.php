@@ -6,7 +6,9 @@ use \TypeRocket\Html\Generator,
 
 class Editor extends Textarea implements ScriptField
 {
-
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'editor' );
@@ -19,6 +21,9 @@ class Editor extends Textarea implements ScriptField
             true );
     }
 
+    /**
+     * Covert Editor to HTML string
+     */
     public function getString()
     {
         $max = '';

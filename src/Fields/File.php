@@ -6,7 +6,9 @@ use \TypeRocket\Html,
 
 class File extends Field implements ScriptField
 {
-
+    /**
+     * Run on construction
+     */
     protected function init()
     {
         $this->setType( 'file' );
@@ -19,6 +21,9 @@ class File extends Field implements ScriptField
             true );
     }
 
+    /**
+     * Covert File to HTML string
+     */
     function getString()
     {
         // $this->attr['class'] = 'file-picker';
