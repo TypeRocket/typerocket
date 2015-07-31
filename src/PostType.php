@@ -282,13 +282,15 @@ class PostType extends Registrable
     /**
      * Register post type with WordPress
      *
+     * Use the registered_post_type hook if you need to update
+     * the post type.
+     *
      * @return $this
      */
     public function register()
     {
         $this->dieIfReserved();
 
-        do_action( 'tr_register_post_type_' . $this->id, $this );
         register_post_type( $this->id, $this->args );
         Registry::addPostTypeResource($this->id, $this->plural);
         return $this;
