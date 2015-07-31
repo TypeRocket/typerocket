@@ -29,12 +29,12 @@ abstract class Field
     /**
      * When instancing a Field use reflection to connect the Form
      *
-     * A Form must be passed for the field to work
-     *
      * @param string $name the name of the field
      * @param array $attr the html attributes
      * @param array $settings the settings of the field
      * @param bool|true $label show the label
+     *
+     * @internal A Form must be passed for the field to work
      */
     public function __construct( $name, array $attr = array(), array $settings = array(), $label = true )
     {
@@ -115,10 +115,13 @@ abstract class Field
         return $string;
     }
 
-    protected function init()
-    {
-        return $this;
-    }
+    /**
+     * Init is normally used to setup initial configuration like a
+     * constructor does.
+     *
+     * @return mixed
+     */
+    abstract protected function init();
 
     /**
      * Setup to use with a Form.
