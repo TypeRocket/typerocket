@@ -70,7 +70,7 @@ add_filter( 'template_include', function($template) {
 
     if($load_template) {
         require __DIR__ . '/api/rest-v1.php';
-        exit();
+        die();
     }
 
     return $template;
@@ -86,7 +86,7 @@ add_filter( 'template_include', function($template) {
 
     if($load_template) {
         require __DIR__ . '/api/matrix-v1.php';
-        exit();
+        die();
     }
 
     return $template;

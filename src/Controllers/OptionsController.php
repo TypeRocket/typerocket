@@ -11,14 +11,13 @@ class OptionsController extends Controller
         $valid = $this->response->getValid();
 
         if ( ! current_user_can( 'manage_options' )) {
-            $valid = false;
+            $$this->response->setValid( false );
             $this->response->setError( 'auth', false );
-            $this->response['message'] = "Sorry, you don't have enough rights.";
+            $this->response->setStatus(401);
+            $this->response->setMessage( "Sorry, you don't have enough rights." );
         }
 
-        $valid = apply_filters( 'tr_controller_authenticate_options', $valid, $this );
-
-        $this->response->setValid( $valid );
+        
     }
 
     public function update( $id )

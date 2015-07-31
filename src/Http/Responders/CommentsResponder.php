@@ -10,11 +10,12 @@ class CommentsResponder implements Responder {
 
     public function respond( $commentId ) {
 
-        $request = new Request('comments', $commentId, 'CommentsResponder');
+        $request = new Request('comments', $commentId);
         $request->setMethod('PUT');
         $response = new Response();
 
-        new Controller($request, $response, new Client($request, $response) );
+        $middleware = new Controller($request, $response, new Client($request, $response) );
+        $middleware->handle();
 
     }
 

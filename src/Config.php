@@ -85,7 +85,7 @@ class Config
             'assets'  => __DIR__ . '/../assets',
             'plugins' => defined( 'TR_PLUGINS_FOLDER_PATH' ) ? TR_PLUGINS_FOLDER_PATH : __DIR__ . '/../plugins',
             'matrix'  => defined( 'TR_MATRIX_FOLDER_PATH' ) ? TR_MATRIX_FOLDER_PATH : __DIR__ . '/../matrix',
-            'extend'  => defined( 'TR_EXTEND_FOLDER_PATH' ) ? TR_EXTEND_FOLDER_PATH : __DIR__ . '/../extend',
+            'extend'  => defined( 'TR_APP_FOLDER_PATH' ) ? TR_APP_FOLDER_PATH : __DIR__ . '/../app',
             'urls'    => array(
                 'theme'   => get_stylesheet_directory_uri(),
                 'assets'  => get_stylesheet_directory_uri() . '/' . self::$folder . '/assets',

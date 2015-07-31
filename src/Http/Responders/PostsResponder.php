@@ -26,11 +26,12 @@ class PostsResponder implements Responder
             $type = 'posts';
         }
 
-        $request  = new Request( $type, $postId, 'PostsResponder' );
+        $request  = new Request( $type, $postId );
         $request->setMethod('PUT');
         $response = new Response();
 
-        new Controller($request, $response, new Client($request, $response) );
+        $middleware = new Controller($request, $response, new Client($request, $response) );
+        $middleware->handle();
 
     }
 

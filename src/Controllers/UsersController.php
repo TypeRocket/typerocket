@@ -9,16 +9,13 @@ class UsersController extends Controller
     public function authenticate()
     {
         $user  = get_user_by( 'id', $this->request->getResourceId() );
-        $valid = $this->response->getValid();
 
         if ($user->ID != $this->user->ID && ! current_user_can( 'edit_users' )) {
-            $valid = false;
+            $this->response->setValid( false );
             $this->response->setError( 'auth', false );
+            $this->response->setStatus(401);
             $this->response->setMessage( "Sorry, you don't have enough rights." );
         }
-
-        $valid = apply_filters( 'tr_controller_authenticate_users', $valid, $this );
-        $this->response->setValid( $valid );
 
     }
 
@@ -47,6 +44,7 @@ class UsersController extends Controller
             $this->response->setValid( false );
         } else {
             $this->response->setMessage( 'User created' );
+            $this->response->setStatus(201);
         }
     }
 

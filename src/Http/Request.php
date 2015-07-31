@@ -9,13 +9,12 @@ class Request
     private $id = null;
     private $uri = null;
     private $host = null;
-    private $type = null;
     private $fields = null;
     private $post = null;
     private $get = null;
     private $files = null;
 
-    public function __construct( $resource, $id, $type )
+    public function __construct( $resource, $id )
     {
 
         // set method
@@ -27,7 +26,6 @@ class Request
         $this->setResourceId( $id );
         $this->uri    = $_SERVER['REQUEST_URI'];
         $this->host   = $_SERVER['HTTP_HOST'];
-        $this->type   = $type;
         $this->fields = ! empty ( $_POST['tr'] ) ? $_POST['tr'] : array();
         $this->post   = ! empty ( $_POST ) ? $_POST : null;
         $this->get    = ! empty ( $_GET ) ? $_GET : null;
@@ -107,11 +105,6 @@ class Request
     public function getHost()
     {
         return $this->host;
-    }
-
-    public function getType()
-    {
-        return $this->type;
     }
 
     public function getDataPost()

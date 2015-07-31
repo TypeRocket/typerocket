@@ -22,18 +22,14 @@ class PostTypesController extends Controller
 
     protected function authenticate()
     {
-        $valid = $this->response->getValid();
         $post  = get_post( $this->request->getResourceId() );
 
         if ($post->post_author != $this->user->ID && ! current_user_can( 'edit_posts' )) {
-            $valid = false;
+            $this->response->setValid( false );
             $this->response->setError( 'auth', false );
+            $this->response->setStatus(401);
             $this->response->setMessage( "Sorry, you don't have enough rights." );
         }
-
-        $valid = apply_filters( 'tr_controller_authenticate_posts', $valid, $this );
-
-        $this->response->setValid( $valid );
     }
 
     /**
@@ -65,6 +61,7 @@ class PostTypesController extends Controller
             $this->response->setValid( false );
         } else {
             $this->response->setMessage( $this->type . ' created' );
+            $this->response->setStatus(201);
         }
 
     }

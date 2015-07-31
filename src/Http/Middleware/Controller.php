@@ -1,15 +1,12 @@
 <?php
 namespace TypeRocket\Http\Middleware;
 
-use \TypeRocket\Http\Response,
-    \TypeRocket\Http\Request;
-
 class Controller extends Middleware
 {
 
-    public function handle(Request $request, Response $response)
+    public function handle()
     {
-        $method = $request->getMethod();
+        $method = $this->request->getMethod();
         $action = null;
         switch ($method) {
             case 'PUT' :
@@ -26,27 +23,27 @@ class Controller extends Middleware
                 break;
         }
 
-        $resource = ucfirst( $request->getResource() );
+        $resource = ucfirst( $this->request->getResource() );
         $controller    = "\\TypeRocket\\Controllers\\{$resource}Controller";
         $model    = "\\TypeRocket\\Models\\{$resource}Model";
 
-        if ($response->getValid() && class_exists( $controller ) && class_exists( $model ) ) {
+        if ($this->response->getValid() && class_exists( $controller ) && class_exists( $model ) ) {
             $user = wp_get_current_user();
-            $controller = new $controller( $request, $response, $user);
-            $id         = $request->getResourceId();
+            $controller = new $controller( $this->request, $this->response, $user);
+            $id         = $this->request->getResourceId();
 
-            if ($controller instanceof \TypeRocket\Controllers\Controller && $response->getValid()) {
+            if ($controller instanceof \TypeRocket\Controllers\Controller && $this->response->getValid()) {
                 if (method_exists( $controller, $action )) {
                     $controller->$action( $id );
                 } else {
-                    $response->setError( 'controller', 'There is no action: ' . $action );
-                    $response->setValid( false );
+                    $this->response->setError( 'controller', 'There is no action: ' . $action );
+                    $this->response->setValid( false );
                 }
             }
 
         }
 
-        $this->next->handle($request, $response);
+        $this->next->handle();
     }
 
 }

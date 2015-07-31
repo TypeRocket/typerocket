@@ -10,12 +10,12 @@ class UsersResponder implements Responder {
 
     public function respond( $userId ) {
 
-        $request = new Request('users', $userId, 'UsersResponder');
+        $request = new Request('users', $userId);
         $request->setMethod('PUT');
         $response = new Response();
 
-        new Controller($request, $response, new Client($request, $response) );
-
+        $middleware = new Controller($request, $response, new Client($request, $response) );
+        $middleware->handle();
     }
 
 }

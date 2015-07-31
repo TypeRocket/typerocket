@@ -1,12 +1,9 @@
 <?php
 namespace TypeRocket\Http\Middleware;
 
-use \TypeRocket\Http\Response,
-    \TypeRocket\Http\Request;
-
-class Client
+class Client extends Middleware
 {
-    public function handle( Request $request, Response $response )
+    public function handle()
     {
     }
 }

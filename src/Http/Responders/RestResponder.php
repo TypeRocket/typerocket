@@ -5,7 +5,7 @@ use \TypeRocket\Http\Middleware\Client,
     \TypeRocket\Http\Middleware\Controller,
     \TypeRocket\Http\Request,
     \TypeRocket\Http\Response,
-    \TypeRocket\Http\Middleware\Csrf;
+    \TypeRocket\Http\Middleware\ValidateCsrf;
 
 class RestResponder implements Responder
 {
@@ -14,11 +14,12 @@ class RestResponder implements Responder
 
     public function respond( $id )
     {
-        $request  = new Request( $this->resource, $id, 'RestResponder' );
+        $request  = new Request( $this->resource, $id );
         $response = new Response();
         $client = new Client($request, $response);
         $controller = new Controller($request, $response, $client);
-        new Csrf($request, $response, $controller);
+        $middleware = new ValidateCsrf($request, $response, $controller);
+        $middleware->handle();
 
         status_header( $response->getStatus() );
         wp_send_json( $response->getResponseArray() );

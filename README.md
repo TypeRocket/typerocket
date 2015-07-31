@@ -90,12 +90,12 @@ function add_meta_content_details() {
 
 By default TypeRocket will save any and all fields. This is just fine in many cases and makes life easy. When you need to filter, validate or fill only specific fields we have you covered.
 
-Lets make the fields for the "Book" post type the only fillable fields to make things a little more secure. We use the extend feature and create two files:
+Set the fields for the "Book" post type the only fillable fields to make things a little more secure. You can do this by creating a book controller and model inside a folder called app you can create.
 
 `BooksModel.php` is the main file we care about.
 
 ```php
-<?php // /typerocket/extend/Models/BooksModel.php
+<?php // /typerocket/app/Models/BooksModel.php
 namespace TypeRocket\Models;
 
 class BooksModel extends PostTypesModel
@@ -110,7 +110,7 @@ class BooksModel extends PostTypesModel
 `BooksController.php` needs to be created to handle the actions. Blank works just fine.
 
 ```php
-<?php // /typerocket/extend/Controllers/BooksController.php
+<?php // /typerocket/app/Controllers/BooksController.php
 namespace TypeRocket\Controllers;
 
 class BooksController extends PostTypesController

@@ -8,17 +8,15 @@ class CommentsController extends Controller
 
     public function authenticate()
     {
-        $valid   = $this->response->getValid();
         $comment = get_comment( $this->request->getResourceId() );
 
         if ($comment->user_id != $this->user->ID && ! current_user_can( 'edit_comment' )) {
-            $valid = false;
+            $this->response->setValid( false );
             $this->response->setError( 'auth', false );
+            $this->response->setStatus(401);
             $this->response->setMessage( "Sorry, you don't have enough rights." );
         }
-
-        $valid = apply_filters( 'tr_controller_authenticate_comments', $valid, $this );
-        $this->response->setValid( $valid );
+        
     }
 
     public function update( $id = null )
@@ -47,6 +45,7 @@ class CommentsController extends Controller
             $this->response->setValid( false );
         } else {
             $this->response->setMessage( 'Comment created' );
+            $this->response->setStatus(201);
         }
 
     }

@@ -44,15 +44,15 @@ define('TR_MATRIX_FOLDER_PATH', __DIR__ . '/matrix');
 
 /*
 |--------------------------------------------------------------------------
-| TypeRocket Extend Folder
+| TypeRocket Application Folder
 |--------------------------------------------------------------------------
 |
-| The folder where you wish to locate your matrix groups. This should be set
-| to a location outside of TypeRocket. For example, directly in your
-| current theme.
+| The folder where you wish to locate your application code. This could 
+| be set to a location outside of TypeRocket. For example, directly in 
+| your current theme.
 |
 */
-define('TR_EXTEND_FOLDER_PATH', __DIR__ . '/extend');
+define('TR_APP_FOLDER_PATH', __DIR__ . '/app');
 
 /*
 |--------------------------------------------------------------------------
