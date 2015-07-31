@@ -3,13 +3,26 @@ namespace TypeRocket;
 
 class Collection extends \ArrayObject
 {
-    public function prepend($value) {
+
+    /**
+     * Add item to top of collection
+     *
+     * @param $value
+     */
+    public function prepend( $value )
+    {
         $array = $this->getArrayCopy();
-        array_unshift($array, $value);
-        $this->exchangeArray($array);
+        array_unshift( $array, $value );
+        $this->exchangeArray( $array );
     }
 
-    public function append($value) {
+    /**
+     * Add item to end of collection
+     *
+     * @param mixed $value
+     */
+    public function append( $value )
+    {
         $this[] = $value;
     }
 }

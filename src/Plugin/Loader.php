@@ -14,15 +14,28 @@ class Loader
 {
     public $plugins = null;
 
+    /**
+     * Set Plugins on construction
+     *
+     * @param PluginCollection $plugins
+     */
     public function __construct(PluginCollection $plugins)
     {
         $this->setCollection($plugins);
     }
 
-    public function setCollection(PluginCollection $collection) {
+    /**
+     * Set the collection of plugins
+     *
+     * @param PluginCollection $collection
+     */
+    private function setCollection(PluginCollection $collection) {
         $this->plugins = apply_filters('tr_plugins_collection', $collection);
     }
 
+    /**
+     * Load Plugins
+     */
     public function load()
     {
         $plugins_list = $this->plugins;

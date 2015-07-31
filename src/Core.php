@@ -17,6 +17,14 @@ class Core
         }
     }
 
+    public function __get( $property )
+    {
+    }
+
+    public function __set( $property, $value )
+    {
+    }
+
     /**
      * Core Init
      */

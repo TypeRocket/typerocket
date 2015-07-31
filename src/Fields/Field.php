@@ -53,6 +53,38 @@ abstract class Field
         $setup->setAccessible(false);
     }
 
+    public function __get( $property )
+    {
+    }
+
+    public function __set( $property, $value )
+    {
+    }
+
+    /**
+     * Get Field object as string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $form = $this->getForm();
+        if($form instanceof Form) {
+            $string = $this->getForm()->getFromFieldString($this);
+        } else {
+            $string = $this->getString();
+        }
+
+        return $string;
+    }
+
+    /**
+     * Require Form
+     *
+     * @param $args
+     *
+     * @return mixed
+     */
     private function assignAutoArgs($args) {
         foreach ($args as $key => $arg) {
             if ($arg instanceof Form) {
@@ -88,31 +120,6 @@ abstract class Field
 
         return $this;
 
-    }
-
-    public function __get( $property )
-    {
-    }
-
-    public function __set( $property, $value )
-    {
-    }
-
-    /**
-     * Get Field object as string
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        $form = $this->getForm();
-        if($form instanceof Form) {
-            $string = $this->getForm()->getFromFieldString($this);
-        } else {
-            $string = $this->getString();
-        }
-
-        return $string;
     }
 
     /**
@@ -230,7 +237,7 @@ abstract class Field
      *
      * @return bool
      */
-    function getPopulate()
+    public function getPopulate()
     {
         return $this->populate;
     }
@@ -260,21 +267,6 @@ abstract class Field
     }
 
     /**
-     * @param string $key
-     * @param null $default
-     *
-     * @return null
-     */
-    public function getAttribute( $key, $default = null )
-    {
-        if ( ! array_key_exists( $key, $this->attr )) {
-            return $default;
-        }
-
-        return $this->attr[$key];
-    }
-
-    /**
      * Set Attribute by key
      *
      * @param $key
@@ -287,6 +279,21 @@ abstract class Field
         $this->attr[(string) $key] = $value;
 
         return $this;
+    }
+
+    /**
+     * @param string $key
+     * @param null $default
+     *
+     * @return null
+     */
+    public function getAttribute( $key, $default = null )
+    {
+        if ( ! array_key_exists( $key, $this->attr )) {
+            return $default;
+        }
+
+        return $this->attr[$key];
     }
 
     /**
@@ -345,6 +352,15 @@ abstract class Field
         return $this->prefix . $this->brackets;
     }
 
+    /**
+     * Get Resource
+     *
+     * @return null
+     */
+    public function getResource()
+    {
+        return $this->resource;
+    }
 
     /**
      * Get Item ID
@@ -366,7 +382,6 @@ abstract class Field
      */
     public function setType( $type )
     {
-
         $this->type = (string) $type;
 
         return $this;
@@ -381,18 +396,6 @@ abstract class Field
     {
         return $this->type;
     }
-
-
-    /**
-     * Get Resource
-     *
-     * @return null
-     */
-    public function getResource()
-    {
-        return $this->resource;
-    }
-
 
     /**
      * Set name of field. Not the same as the html name attribute.
@@ -433,6 +436,16 @@ abstract class Field
     }
 
     /**
+     * Get Settings
+     *
+     * @return array
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+    }
+
+    /**
      * Set Setting
      *
      * @param string $key
@@ -445,16 +458,6 @@ abstract class Field
         $this->settings[$key] = $value;
 
         return $this;
-    }
-
-    /**
-     * Get Settings
-     *
-     * @return array
-     */
-    public function getSettings()
-    {
-        return $this->settings;
     }
 
     /**
@@ -493,20 +496,6 @@ abstract class Field
     }
 
     /**
-     * Get render mode
-     *
-     * @return null
-     */
-    public function getRenderSetting()
-    {
-        if ( ! array_key_exists( 'render', $this->settings )) {
-            return null;
-        }
-
-        return $this->settings['render'];
-    }
-
-    /**
      * Render Setting
      *
      * By setting render to 'raw' the form will not add any special html wrappers.
@@ -522,6 +511,20 @@ abstract class Field
         $this->settings['render'] = $value;
 
         return $this;
+    }
+
+    /**
+     * Get render mode
+     *
+     * @return null
+     */
+    public function getRenderSetting()
+    {
+        if ( ! array_key_exists( 'render', $this->settings )) {
+            return null;
+        }
+
+        return $this->settings['render'];
     }
 
     /**
