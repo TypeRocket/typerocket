@@ -29,6 +29,8 @@ abstract class Field
     /**
      * When instancing a Field use reflection to connect the Form
      *
+     * A Form must be passed for the field to work
+     *
      * @param string $name the name of the field
      * @param array $attr the html attributes
      * @param array $settings the settings of the field
@@ -41,7 +43,7 @@ abstract class Field
         $setup = new \ReflectionMethod( $this, 'setup' );
         $setup->setAccessible(true);
 
-        $args = $this->assignArgs($args);
+        $args = $this->assignAutoArgs($args);
 
         if ($this instanceof ScriptField) {
             $this->enqueueScripts();
@@ -51,15 +53,16 @@ abstract class Field
         $setup->setAccessible(false);
     }
 
-    private function assignArgs($args) {
+    private function assignAutoArgs($args) {
         foreach ($args as $key => $arg) {
             if ($arg instanceof Form) {
                 $this->configureToForm( $arg );
                 unset( $args[$key] );
+                return $args;
             }
         }
 
-        return $args;
+        die('TypeRocket: A field does not have a From connected to it.');
     }
 
     /**
@@ -124,7 +127,7 @@ abstract class Field
      *
      * @return $this
      */
-    public function configureToForm( Form $form )
+    private function configureToForm( Form $form )
     {
         $this->setGroup( $form->getGroup() );
         $this->setSub( $form->getSub() );

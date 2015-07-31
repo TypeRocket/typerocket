@@ -585,7 +585,7 @@ class Form
         foreach ($fields as $field) {
 
             if($field instanceof Field) {
-                $html .= (string) $field->configureToForm($this);
+                $html .= (string) $field;
             } elseif(is_array($field) && count($field) > 1) {
                 $function   = array_shift( $field );
                 $parameters = array_pop( $field );
