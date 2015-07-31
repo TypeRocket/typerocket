@@ -7,7 +7,7 @@ use \TypeRocket\Html\Generator,
 class Gallery extends Field implements ScriptField
 {
 
-    public function init()
+    protected function init()
     {
         $this->setType( 'gallery' );
     }

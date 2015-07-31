@@ -6,7 +6,7 @@ use \TypeRocket\Html;
 class Submit extends Field
 {
 
-    public function init()
+    protected function init()
     {
         $this->setType( 'submit' );
     }

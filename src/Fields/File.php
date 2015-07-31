@@ -7,7 +7,7 @@ use \TypeRocket\Html,
 class File extends Field implements ScriptField
 {
 
-    public function init()
+    protected function init()
     {
         $this->setType( 'file' );
     }

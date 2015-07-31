@@ -6,7 +6,7 @@ use \TypeRocket\Sanitize;
 class WordPressEditor extends Field implements ScriptField
 {
 
-    public function init()
+    protected function init()
     {
         $this->setType( 'wp_editor' );
     }

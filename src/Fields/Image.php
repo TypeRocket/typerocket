@@ -7,7 +7,7 @@ use \TypeRocket\Html\Generator,
 class Image extends Field implements ScriptField
 {
 
-    public function init()
+    protected function init()
     {
         $this->setType( 'image' );
     }

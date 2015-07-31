@@ -6,7 +6,7 @@ use \TypeRocket\Html\Generator;
 class Textarea extends Field
 {
 
-    public function init()
+    protected function init()
     {
         $this->setType( 'textarea' );
     }

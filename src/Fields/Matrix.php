@@ -11,7 +11,7 @@ class Matrix extends Field implements OptionField, ScriptField {
     private $mxid = null;
     private $options = null;
 
-    public function init()
+    protected function init()
     {
         $this->mxid = md5( microtime( true ) ); // set id for matrix random
         $this->setType( 'matrix' );

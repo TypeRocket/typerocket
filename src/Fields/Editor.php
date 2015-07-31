@@ -7,7 +7,7 @@ use \TypeRocket\Html\Generator,
 class Editor extends Textarea implements ScriptField
 {
 
-    public function init()
+    protected function init()
     {
         $this->setType( 'editor' );
     }

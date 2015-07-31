@@ -9,7 +9,7 @@ class Repeater extends Field implements ScriptField
 
     private $fields = array();
 
-    public function init()
+    protected function init()
     {
         $this->setType( 'repeater' );
     }

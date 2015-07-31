@@ -8,7 +8,7 @@ class Radio extends Field implements OptionField
 
     private $options = array();
 
-    public function init()
+    protected function init()
     {
         $this->setType( 'radio' );
     }

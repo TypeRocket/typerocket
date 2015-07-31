@@ -6,7 +6,7 @@ use \TypeRocket\Html\Generator;
 class Date extends Field implements ScriptField
 {
 
-    public function init()
+    protected function init()
     {
         $this->setType( 'date' );
     }
