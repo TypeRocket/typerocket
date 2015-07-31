@@ -17,15 +17,15 @@ $form->setGroup( $this->getName() );
 
     // about
     $contact = array(
-        array( 'text', array( 'Company Name' ) ),
-        array( 'text', array( 'Phone' ) ),
-        array( 'text', array( 'Email' ) ),
+        $form->text('Company Name'),
+        $form->text('Company Email'),
+        $form->text('Company Phone')
     );
     $about = $form->getFromFieldsString( $contact );
 
     // api
     $help = '<a target="blank" href="https://developers.google.com/maps/documentation/embed/guide#api_key">Get Your Google Maps API</a> to activate maps in the theme.';
-    $api = $form->password( 'Google Maps API Key')->setSetting('help', $help);
+    $api = $form->password( 'Google Maps API Key')->setSetting('help', $help)->setAttribute('autocomplete', 'new-password');
 
     // save
     $form->setDebugStatus( false );

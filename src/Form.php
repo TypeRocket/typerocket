@@ -624,7 +624,7 @@ class Form
     public function password( $name, array $attr = array(), array $settings = array(), $label = true )
     {
         $field = new Fields\Text( $name, $attr, $settings, $label, $this );
-        $field->setType( 'password' )->setAttribute( 'autocomplete', 'off' );
+        $field->setType( 'password' );
 
         return $field;
     }
