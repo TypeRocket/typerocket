@@ -1,14 +1,87 @@
 <?php
-if ( !function_exists( 'add_action' ) ) { exit; }
+if ( ! function_exists( 'add_action' )) {
+    exit;
+}
 
 /*
 |--------------------------------------------------------------------------
-| Core TypeRocket
+| Time Stamp App
 |--------------------------------------------------------------------------
 |
-| Enhance WordPress by starting TypeRocket.
+| Set the app boot time to the current time in seconds since the Unix epoch
 |
 */
+define( 'TR_START', microtime( true ) );
+
+/*
+|--------------------------------------------------------------------------
+| Version
+|--------------------------------------------------------------------------
+|
+| Set the version for TypeRocket using the style major.minor.patch
+|
+*/
+define( 'TR_VERSION', '2.0.0' );
+
+/*
+|--------------------------------------------------------------------------
+| Configuration
+|--------------------------------------------------------------------------
+|
+| Load configuration file.
+|
+*/
+$tr_config_path = __DIR__ . '/../config.php';
+if(file_exists($tr_config_path)) {
+    /** @noinspection PhpIncludeInspection */
+    require $tr_config_path;
+    unset($tr_config_path);
+} else {
+    die('Add a config.php file at ' . $tr_config_path);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Require Core Classes
+|--------------------------------------------------------------------------
+|
+| Require the core classes of TypeRocket.
+|
+*/
+spl_autoload_register( function ( $class ) {
+
+    $prefix   = 'TypeRocket\\';
+    $base_dir = __DIR__ . '/../src/';
+    $app = defined('TR_APP_FOLDER_PATH') ? TR_APP_FOLDER_PATH . '/' : __DIR__ . '/../app/';
+
+    $len = strlen( $prefix );
+    if (strncmp( $prefix, $class, $len ) !== 0) {
+        return;
+    }
+
+    $relative_class = substr( $class, $len );
+
+    $file = str_replace( '\\', '/', $relative_class ) . '.php';
+    $app =  $app . $file;
+    if (file_exists( $base_dir . $file )) {
+        /** @noinspection PhpIncludeInspection */
+        require $base_dir . $file;
+    } elseif( file_exists( $app )) {
+        /** @noinspection PhpIncludeInspection */
+        require $app;
+    }
+} );
+
+/*
+|--------------------------------------------------------------------------
+| Loader
+|--------------------------------------------------------------------------
+|
+| Load TypeRocket
+|
+*/
+new \TypeRocket\Config();
+require __DIR__ . '/functions.php';
 new \TypeRocket\Core(true);
 
 /*
@@ -24,7 +97,7 @@ new \TypeRocket\Core(true);
 do_action( 'typerocket_loaded' );
 
 add_action( 'after_setup_theme', function () {
-	\TypeRocket\Registry::initHooks();
+    \TypeRocket\Registry::initHooks();
 } );
 
 /*
