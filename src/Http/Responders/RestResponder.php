@@ -1,8 +1,7 @@
 <?php
 namespace TypeRocket\Http\Responders;
 
-use \TypeRocket\Http\Middleware\Client,
-    \TypeRocket\Http\Middleware\ValidateCsrf,
+use TypeRocket\Http\RestKernel,
     \TypeRocket\Http\Controller,
     \TypeRocket\Http\Request,
     \TypeRocket\Http\Response;
@@ -17,9 +16,7 @@ class RestResponder implements Responder
         $request  = new Request( $this->resource, $id );
         $response = new Response();
 
-        $client = new Client($request, $response);
-        $middleware = new ValidateCsrf($request, $response, $client);
-        $middleware->handle();
+        new RestKernel($request, $response);
         new Controller($request, $response);
 
         status_header( $response->getStatus() );
