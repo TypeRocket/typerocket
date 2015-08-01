@@ -1,12 +1,12 @@
 <?php
-namespace TypeRocket\Http\Middleware;
+namespace TypeRocket\Http;
 
-class Controller extends Middleware
+class Controller
 {
 
-    public function handle()
+    public function __construct(Request $request, Response $response)
     {
-        $method = $this->request->getMethod();
+        $method = $request->getMethod();
         $action = null;
         switch ($method) {
             case 'PUT' :
@@ -23,27 +23,26 @@ class Controller extends Middleware
                 break;
         }
 
-        $resource = ucfirst( $this->request->getResource() );
+        $resource = ucfirst( $request->getResource() );
         $controller    = "\\TypeRocket\\Controllers\\{$resource}Controller";
         $model    = "\\TypeRocket\\Models\\{$resource}Model";
 
-        if ($this->response->getValid() && class_exists( $controller ) && class_exists( $model ) ) {
+        if ($response->getValid() && class_exists( $controller ) && class_exists( $model ) ) {
             $user = wp_get_current_user();
-            $controller = new $controller( $this->request, $this->response, $user);
-            $id         = $this->request->getResourceId();
+            $controller = new $controller( $request, $response, $user);
+            $id         = $request->getResourceId();
 
-            if ($controller instanceof \TypeRocket\Controllers\Controller && $this->response->getValid()) {
+            if ($controller instanceof \TypeRocket\Controllers\Controller && $response->getValid()) {
                 if (method_exists( $controller, $action )) {
                     $controller->$action( $id );
                 } else {
-                    $this->response->setError( 'controller', 'There is no action: ' . $action );
-                    $this->response->setValid( false );
+                    $response->setError( 'controller', 'There is no action: ' . $action );
+                    $response->setValid( false );
                 }
             }
 
         }
 
-        $this->next->handle();
     }
 
 }

@@ -2,7 +2,7 @@
 namespace TypeRocket\Http\Responders;
 
 use \TypeRocket\Http\Middleware\Client,
-    \TypeRocket\Http\Middleware\Controller,
+    \TypeRocket\Http\Controller,
     \TypeRocket\Http\Request,
     \TypeRocket\Http\Response,
     TypeRocket\Registry;
@@ -30,8 +30,7 @@ class PostsResponder implements Responder
         $request->setMethod('PUT');
         $response = new Response();
 
-        $middleware = new Controller($request, $response, new Client($request, $response) );
-        $middleware->handle();
+        new Controller($request, $response);
 
     }
 

@@ -1,8 +1,7 @@
 <?php
 namespace TypeRocket\Http\Responders;
 
-use \TypeRocket\Http\Middleware\Client,
-    \TypeRocket\Http\Middleware\Controller,
+use \TypeRocket\Http\Controller,
     \TypeRocket\Http\Request,
     \TypeRocket\Http\Response;
 
@@ -14,8 +13,7 @@ class UsersResponder implements Responder {
         $request->setMethod('PUT');
         $response = new Response();
 
-        $middleware = new Controller($request, $response, new Client($request, $response) );
-        $middleware->handle();
+        new Controller($request, $response);
     }
 
 }
