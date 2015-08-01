@@ -11,13 +11,13 @@ define('TR_FOLDER', 'typerocket');
 
 /*
 |--------------------------------------------------------------------------
-| TypeRocket Seed
+| Debug
 |--------------------------------------------------------------------------
 |
-| A 'random' string of text to help with security from time to time.
+| Turn on Debugging for TypeRocket. Set to false to disable.
 |
 */
-define('TR_SEED', 'asdfa65739asfl0');
+define('TR_DEBUG', true);
 
 /*
 |--------------------------------------------------------------------------
@@ -69,10 +69,10 @@ define('TR_URL_PLUGINS_FOLDER', get_stylesheet_directory_uri() . '/' .TR_FOLDER 
 
 /*
 |--------------------------------------------------------------------------
-| Debug
+| TypeRocket Seed
 |--------------------------------------------------------------------------
 |
-| Turn on Debugging for TypeRocket. Set to false to disable.
+| A 'random' string of text to help with security from time to time.
 |
 */
-define('TR_DEBUG', true);
+define('TR_SEED', 'asdfa65739asfl0');
