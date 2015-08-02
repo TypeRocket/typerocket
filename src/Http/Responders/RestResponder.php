@@ -1,11 +1,10 @@
 <?php
 namespace TypeRocket\Http\Responders;
 
-use TypeRocket\Http\RestKernel,
-    \TypeRocket\Http\Request,
+use \TypeRocket\Http\Request,
     \TypeRocket\Http\Response;
 
-class RestResponder implements Responder
+class RestResponder extends Responder
 {
 
     private $resource = null;
@@ -19,7 +18,7 @@ class RestResponder implements Responder
         $request  = new Request( $this->resource, $method, $id );
         $response = new Response();
 
-        new RestKernel($request, $response);
+        $this->runKernel($request, $response, 'restGlobal');
 
         status_header( $response->getStatus() );
         wp_send_json( $response->getResponseArray() );

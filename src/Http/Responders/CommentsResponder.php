@@ -1,18 +1,17 @@
 <?php
 namespace TypeRocket\Http\Responders;
 
-use \TypeRocket\Http\Kernel,
-    \TypeRocket\Http\Request,
+use \TypeRocket\Http\Request,
     \TypeRocket\Http\Response;
 
-class CommentsResponder implements Responder {
+class CommentsResponder extends Responder {
 
     public function respond( $commentId ) {
 
         $request = new Request('comments', 'PUT', $commentId);
         $response = new Response();
 
-        new Kernel($request, $response);
+        $this->runKernel($request, $response);
 
     }
 

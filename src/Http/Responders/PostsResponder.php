@@ -1,12 +1,11 @@
 <?php
 namespace TypeRocket\Http\Responders;
 
-use \TypeRocket\Http\Kernel,
-    \TypeRocket\Http\Request,
+use \TypeRocket\Http\Request,
     \TypeRocket\Http\Response,
-    TypeRocket\Registry;
+    \TypeRocket\Registry;
 
-class PostsResponder implements Responder
+class PostsResponder extends Responder
 {
 
     public function respond( $postId )
@@ -28,7 +27,7 @@ class PostsResponder implements Responder
         $request  = new Request( $resource, 'PUT', $postId );
         $response = new Response();
 
-        new Kernel($request, $response);
+        $this->runKernel($request, $response);
 
     }
 
