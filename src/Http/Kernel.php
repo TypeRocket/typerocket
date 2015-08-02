@@ -14,6 +14,9 @@ class Kernel
                 'AuthRead',
                 'ValidateCsrf'
             ),
+        'noResource' => array(
+            array('AuthAdmin')
+        ),
         'users' =>
             array('IsUserOrCanEditUsers'),
         'posts' =>
@@ -29,10 +32,11 @@ class Kernel
     public function __construct(Request $request, Response $response, $type = 'hookGlobal') {
 
         $resource = strtolower( $request->getResource() );
-        $resourceMiddleware = array();
 
         if(array_key_exists($resource, $this->middleware)) {
             $resourceMiddleware = $this->middleware[$resource];
+        } else {
+            $resourceMiddleware = $this->middleware['noResource'];
         }
 
         $client = new Controller($request, $response);

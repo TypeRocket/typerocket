@@ -16,7 +16,7 @@ class PostsResponder extends Responder
 
         $type       = get_post_type( $id );
         $resource       = Registry::getPostTypeResource( $type );
-        $prefix     = ucfirst( $type );
+        $prefix     = ucfirst( $resource );
         $controller = "\\TypeRocket\\Controllers\\{$prefix}Controller";
         $model      = "\\TypeRocket\\Models\\{$prefix}Model";
 
