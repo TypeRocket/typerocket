@@ -17,6 +17,7 @@ class UsersController extends Controller
             $this->response->setInvalid();
         } else {
             $this->response->setMessage( 'User updated' );
+            $this->response->setData('resourceId', $user->getId());
         }
     }
 
@@ -32,6 +33,7 @@ class UsersController extends Controller
         } else {
             $this->response->setMessage( 'User created' );
             $this->response->setStatus(201);
+            $this->response->setData('resourceId', $user->getId());
         }
     }
 

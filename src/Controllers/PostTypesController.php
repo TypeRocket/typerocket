@@ -35,6 +35,7 @@ class PostTypesController extends Controller
             $this->response->setInvalid();
         } else {
             $this->response->setMessage( $this->type . ' updated' );
+            $this->response->setData('resourceId', $this->model->getId());
         }
 
     }
@@ -50,6 +51,7 @@ class PostTypesController extends Controller
         } else {
             $this->response->setMessage( $this->type . ' created' );
             $this->response->setStatus(201);
+            $this->response->setData('resourceId', $this->model->getId());
         }
 
     }

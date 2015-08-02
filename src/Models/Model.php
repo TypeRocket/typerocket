@@ -68,6 +68,10 @@ abstract class Model
         return $this;
     }
 
+    public function getId() {
+        return $this->id;
+    }
+
     public function getErrors()
     {
         return $this->errors;

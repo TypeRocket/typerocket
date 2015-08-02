@@ -17,6 +17,7 @@ class CommentsController extends Controller
             $this->response->setInvalid();
         } else {
             $this->response->setMessage( 'Comment updated' );
+            $this->response->setData('resourceId', $comments->getId());
         }
 
     }
@@ -33,6 +34,7 @@ class CommentsController extends Controller
         } else {
             $this->response->setMessage( 'Comment created' );
             $this->response->setStatus(201);
+            $this->response->setData('resourceId', $comments->getId());
         }
 
     }

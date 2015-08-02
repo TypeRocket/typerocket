@@ -17,6 +17,7 @@ class OptionsController extends Controller
             $this->response->setInvalid();
         } else {
             $this->response->setMessage( 'Updated' );
+            $this->response->setData('resourceId', $options->getId());
         }
 
     }
@@ -31,6 +32,7 @@ class OptionsController extends Controller
             $this->response->setError( 'model', $errors );
             $this->response->setInvalid();
             $this->response->setMessage( 'Options updated' );
+            $this->response->setData('resourceId', $options->getId());
         }
 
     }
