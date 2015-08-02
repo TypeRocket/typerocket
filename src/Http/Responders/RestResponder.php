@@ -2,7 +2,6 @@
 namespace TypeRocket\Http\Responders;
 
 use TypeRocket\Http\RestKernel,
-    \TypeRocket\Http\Controller,
     \TypeRocket\Http\Request,
     \TypeRocket\Http\Response;
 
@@ -13,11 +12,14 @@ class RestResponder implements Responder
 
     public function respond( $id )
     {
-        $request  = new Request( $this->resource, $id );
+        // set method
+        $method = isset( $_SERVER['REQUEST_METHOD'] ) ? $_SERVER['REQUEST_METHOD'] : 'GET';
+        $method = ( isset( $_SERVER['REQUEST_METHOD'] ) && isset( $_POST['_method'] ) ) ? $_POST['_method'] : $method;
+
+        $request  = new Request( $this->resource, $method, $id );
         $response = new Response();
 
         new RestKernel($request, $response);
-        new Controller($request, $response);
 
         status_header( $response->getStatus() );
         wp_send_json( $response->getResponseArray() );

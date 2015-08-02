@@ -31,9 +31,9 @@ class Response {
         return $this;
     }
 
-    public function setValid( $valid = true )
+    public function setInvalid()
     {
-        $this->valid = (bool) $valid;
+        $this->valid = false;
 
         return $this;
     }

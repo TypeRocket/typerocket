@@ -1,8 +1,7 @@
 <?php
 namespace TypeRocket\Http\Responders;
 
-use \TypeRocket\Http\Middleware\Client,
-    \TypeRocket\Http\Controller,
+use \TypeRocket\Http\Kernel,
     \TypeRocket\Http\Request,
     \TypeRocket\Http\Response,
     TypeRocket\Registry;
@@ -17,20 +16,19 @@ class PostsResponder implements Responder
         }
 
         $type       = get_post_type( $id );
-        $type       = Registry::getPostTypeResource( $type );
+        $resource       = Registry::getPostTypeResource( $type );
         $prefix     = ucfirst( $type );
         $controller = "\\TypeRocket\\Controllers\\{$prefix}Controller";
         $model      = "\\TypeRocket\\Models\\{$prefix}Model";
 
         if ( empty($prefix) || ! class_exists( $controller ) || ! class_exists( $model )) {
-            $type = 'posts';
+            $resource = 'posts';
         }
 
-        $request  = new Request( $type, $postId );
-        $request->setMethod('PUT');
+        $request  = new Request( $resource, 'PUT', $postId );
         $response = new Response();
 
-        new Controller($request, $response);
+        new Kernel($request, $response);
 
     }
 

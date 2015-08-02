@@ -14,13 +14,8 @@ class Request
     private $get = null;
     private $files = null;
 
-    public function __construct( $resource, $id )
+    public function __construct( $resource, $method, $id )
     {
-
-        // set method
-        $method = isset( $_SERVER['REQUEST_METHOD'] ) ? $_SERVER['REQUEST_METHOD'] : 'GET';
-        $method = ( isset( $_SERVER['REQUEST_METHOD'] ) && isset( $_POST['_method'] ) ) ? $_POST['_method'] : $method;
-
         $this->setResource( $resource );
         $this->setMethod( $method );
         $this->setResourceId( $id );
@@ -33,35 +28,7 @@ class Request
 
     }
 
-    public function setDataPost( array $post )
-    {
-        $this->post = $post;
-
-        return $this;
-    }
-
-    public function setDataGet( array $get )
-    {
-        $this->get = $get;
-
-        return $this;
-    }
-
-    public function setDataFiles( array $files )
-    {
-        $this->files = $files;
-
-        return $this;
-    }
-
-    public function setFields( array $fields )
-    {
-        $this->fields = $fields;
-
-        return $this;
-    }
-
-    public function setMethod( $method )
+    private function setMethod( $method )
     {
         $this->method = strtoupper( $method );
 
@@ -73,7 +40,7 @@ class Request
         return $this->method;
     }
 
-    public function setResource( $resource )
+    private function setResource( $resource )
     {
         $this->resource = ucfirst( $resource );
 
@@ -85,7 +52,7 @@ class Request
         return $this->resource;
     }
 
-    public function setResourceId( $id )
+    private function setResourceId( $id )
     {
         $this->id = $id;
 

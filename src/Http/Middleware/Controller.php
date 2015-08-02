@@ -1,11 +1,14 @@
 <?php
-namespace TypeRocket\Http;
+namespace TypeRocket\Http\Middleware;
 
-class Controller
+class Controller extends Middleware
 {
 
-    public function __construct(Request $request, Response $response)
+    public function handle()
     {
+        $request = $this->request;
+        $response = $this->response;
+
         $method = $request->getMethod();
         $action = null;
         switch ($method) {
@@ -37,7 +40,7 @@ class Controller
                     $controller->$action( $id );
                 } else {
                     $response->setError( 'controller', 'There is no action: ' . $action );
-                    $response->setValid( false );
+                    $this->response->setInvalid();
                 }
             }
 

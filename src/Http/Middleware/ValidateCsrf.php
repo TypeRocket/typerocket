@@ -9,7 +9,7 @@ class ValidateCsrf extends Middleware  {
 
         $token = check_ajax_referer( 'form_' . Config::getSeed(), '_tr_nonce_form', false );
         if ( ! $token) {
-            $this->response->setValid( false );
+            $this->response->setInvalid();
             $this->response->setError( 'csrf', true );
             $this->response->setMessage( 'Invalid CSRF Token' );
         }

@@ -1,11 +1,13 @@
 <?php
 namespace TypeRocket\Http\Middleware;
 
-class AuthRead extends Middleware  {
+
+class AuthAdmin extends Middleware
+{
 
     public function handle() {
 
-        if ( ! current_user_can('read')) {
+        if ( ! current_user_can('administrator')) {
             $this->response->setInvalid();
             $this->response->setError( 'auth', false );
             $this->response->setStatus(401);
@@ -14,4 +16,5 @@ class AuthRead extends Middleware  {
 
         $this->next->handle();
     }
+
 }

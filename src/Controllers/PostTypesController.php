@@ -25,7 +25,7 @@ class PostTypesController extends Controller
         $post  = get_post( $this->request->getResourceId() );
 
         if ($post->post_author != $this->user->ID && ! current_user_can( 'edit_posts' )) {
-            $this->response->setValid( false );
+            $this->response->setInvalid();
             $this->response->setError( 'auth', false );
             $this->response->setStatus(401);
             $this->response->setMessage( "Sorry, you don't have enough rights." );
@@ -44,7 +44,7 @@ class PostTypesController extends Controller
         if ( ! empty ( $errors )) {
             $this->response->setMessage( "{$this->type} not updated" );
             $this->response->setError( 'model', $errors );
-            $this->response->setValid( false );
+            $this->response->setInvalid();
         } else {
             $this->response->setMessage( $this->type . ' updated' );
         }
@@ -58,7 +58,7 @@ class PostTypesController extends Controller
         if ( ! empty ( $errors )) {
             $this->response->setMessage( $this->type . ' not created' );
             $this->response->setError( 'model', $errors );
-            $this->response->setValid( false );
+            $this->response->setInvalid();
         } else {
             $this->response->setMessage( $this->type . ' created' );
             $this->response->setStatus(201);

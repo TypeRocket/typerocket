@@ -8,10 +8,9 @@ class OptionsController extends Controller
 
     public function authenticate()
     {
-        $valid = $this->response->getValid();
 
         if ( ! current_user_can( 'manage_options' )) {
-            $$this->response->setValid( false );
+            $this->response->setInvalid();
             $this->response->setError( 'auth', false );
             $this->response->setStatus(401);
             $this->response->setMessage( "Sorry, you don't have enough rights." );
@@ -28,7 +27,7 @@ class OptionsController extends Controller
         if ( ! empty ( $errors )) {
             $this->response->setMessage( 'Options not updated' );
             $this->response->setError( 'model', $errors );
-            $this->response->setValid( false );
+            $this->response->setInvalid();
         } else {
             $this->response->setMessage( 'Updated' );
         }
@@ -43,8 +42,7 @@ class OptionsController extends Controller
         if ( ! empty ( $errors )) {
             $this->response->setMessage( 'Options not created' );
             $this->response->setError( 'model', $errors );
-            $this->response->setValid( false );
-        } else {
+            $this->response->setInvalid();
             $this->response->setMessage( 'Options updated' );
         }
 
