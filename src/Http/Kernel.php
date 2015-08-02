@@ -7,7 +7,7 @@ class Kernel
 {
 
     protected $middleware = array(
-        '\\TypeRocket\\Http\\Middleware\\AuthAdmin'
+        '\\TypeRocket\\Http\\Middleware\\AuthRead'
     );
 
     public function __construct(Request $request, Response $response) {
