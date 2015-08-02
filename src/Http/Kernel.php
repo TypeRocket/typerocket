@@ -8,12 +8,22 @@ class Kernel
 
     protected $middleware = array(
         'hookGlobal' =>
-            array('\\TypeRocket\\Http\\Middleware\\AuthRead'),
+            array('AuthRead'),
         'restGlobal' =>
             array(
-                '\\TypeRocket\\Http\\Middleware\\AuthRead',
-                '\\TypeRocket\\Http\\Middleware\\ValidateCsrf'
-            )
+                'AuthRead',
+                'ValidateCsrf'
+            ),
+        'users' =>
+            array('IsUserOrCanEditUsers'),
+        'posts' =>
+            array('OwnsPostOrCanEditPosts'),
+        'pages' =>
+            array('OwnsPostOrCanEditPosts'),
+        'comments' =>
+            array('OwnsCommentOrCanEditComments'),
+        'options' =>
+            array('CanManageOptions')
     );
 
     public function __construct(Request $request, Response $response, $type = 'hookGlobal') {
@@ -31,6 +41,7 @@ class Kernel
         $middleware = array_reverse($middleware);
 
         foreach($middleware as $class) {
+            $class = '\\TypeRocket\\Http\\Middleware\\' . $class;
             $client = new $class($request, $response, $client);
         }
 

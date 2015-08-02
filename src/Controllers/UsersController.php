@@ -6,19 +6,6 @@ use TypeRocket\Models\UsersModel;
 class UsersController extends Controller
 {
 
-    public function authenticate()
-    {
-        $user  = get_user_by( 'id', $this->request->getResourceId() );
-
-        if ($user->ID != $this->user->ID && ! current_user_can( 'edit_users' )) {
-            $this->response->setInvalid();
-            $this->response->setError( 'auth', false );
-            $this->response->setStatus(401);
-            $this->response->setMessage( "Sorry, you don't have enough rights." );
-        }
-
-    }
-
     public function update( $id = null )
     {
         $user   = new UsersModel();

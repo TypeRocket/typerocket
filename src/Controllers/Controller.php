@@ -19,16 +19,12 @@ abstract class Controller
     protected $response = null;
     /** @var \TypeRocket\Http\Request */
     protected $request = null;
-    /** @var \WP_User $user */
-    protected $user = null;
 
-    public function __construct( Request $request, Response $response, \WP_User $user )
+    public function __construct( Request $request, Response $response )
     {
         $this->response = $response;
         $this->request  = $request;
-        $this->user     = $user;
         $this->init();
-        $this->authenticate();
     }
 
     protected function init()
@@ -39,7 +35,5 @@ abstract class Controller
     abstract function update( $id );
 
     abstract function create();
-
-    abstract protected function authenticate();
 
 }

@@ -31,8 +31,7 @@ class Controller extends Middleware
         $model    = "\\TypeRocket\\Models\\{$resource}Model";
 
         if ($response->getValid() && class_exists( $controller ) && class_exists( $model ) ) {
-            $user = wp_get_current_user();
-            $controller = new $controller( $request, $response, $user);
+            $controller = new $controller( $request, $response);
             $id         = $request->getResourceId();
 
             if ($controller instanceof \TypeRocket\Controllers\Controller && $response->getValid()) {

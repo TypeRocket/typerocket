@@ -6,19 +6,6 @@ use TypeRocket\Models\OptionsModel;
 class OptionsController extends Controller
 {
 
-    public function authenticate()
-    {
-
-        if ( ! current_user_can( 'manage_options' )) {
-            $this->response->setInvalid();
-            $this->response->setError( 'auth', false );
-            $this->response->setStatus(401);
-            $this->response->setMessage( "Sorry, you don't have enough rights." );
-        }
-
-        
-    }
-
     public function update( $id )
     {
         $options = new OptionsModel();

@@ -20,18 +20,6 @@ class PostTypesController extends Controller
         $this->model = new $class();
     }
 
-    protected function authenticate()
-    {
-        $post  = get_post( $this->request->getResourceId() );
-
-        if ($post->post_author != $this->user->ID && ! current_user_can( 'edit_posts' )) {
-            $this->response->setInvalid();
-            $this->response->setError( 'auth', false );
-            $this->response->setStatus(401);
-            $this->response->setMessage( "Sorry, you don't have enough rights." );
-        }
-    }
-
     /**
      * @param null $id
      *

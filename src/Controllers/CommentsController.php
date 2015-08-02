@@ -6,19 +6,6 @@ use TypeRocket\Models\CommentsModel;
 class CommentsController extends Controller
 {
 
-    public function authenticate()
-    {
-        $comment = get_comment( $this->request->getResourceId() );
-
-        if ($comment->user_id != $this->user->ID && ! current_user_can( 'edit_comment' )) {
-            $this->response->setInvalid();
-            $this->response->setError( 'auth', false );
-            $this->response->setStatus(401);
-            $this->response->setMessage( "Sorry, you don't have enough rights." );
-        }
-        
-    }
-
     public function update( $id = null )
     {
         $comments = new CommentsModel();
