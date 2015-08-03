@@ -8,7 +8,8 @@ use \TypeRocket\Http\Request,
  * Class Controller
  *
  * Be sure to validate by https://codex.wordpress.org/Roles_and_Capabilities
- * when building your own controllers.
+ * when building your own controllers. You can do this with Middleware and
+ * XKernel.
  *
  * @package TypeRocket\Controllers
  */

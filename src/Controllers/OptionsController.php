@@ -6,6 +6,11 @@ use TypeRocket\Models\OptionsModel;
 class OptionsController extends Controller
 {
 
+    /**
+     * Update option
+     *
+     * @param $id
+     */
     public function update( $id )
     {
         $options = new OptionsModel();
@@ -22,6 +27,9 @@ class OptionsController extends Controller
 
     }
 
+    /**
+     * Create option
+     */
     public function create()
     {
         $options = new OptionsModel();

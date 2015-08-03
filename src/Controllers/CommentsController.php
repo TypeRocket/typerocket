@@ -6,6 +6,11 @@ use TypeRocket\Models\CommentsModel;
 class CommentsController extends Controller
 {
 
+    /**
+     * Update comment based on ID
+     *
+     * @param null $id
+     */
     public function update( $id = null )
     {
         $comments = new CommentsModel();
@@ -22,6 +27,9 @@ class CommentsController extends Controller
 
     }
 
+    /**
+     * Create Comment
+     */
     public function create()
     {
         $comments = new CommentsModel();

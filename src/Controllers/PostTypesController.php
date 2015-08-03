@@ -10,6 +10,9 @@ class PostTypesController extends Controller
     protected $model = null;
     protected $type = null;
 
+    /**
+     * Dynamically load proper Model based on post type
+     */
     protected function init()
     {
         $reflect    = new \ReflectionClass( $this );
@@ -21,9 +24,9 @@ class PostTypesController extends Controller
     }
 
     /**
-     * @param null $id
+     * Update Post by ID
      *
-     * @return $this
+     * @param null $id
      */
     public function update( $id = null )
     {
@@ -40,6 +43,9 @@ class PostTypesController extends Controller
 
     }
 
+    /**
+     * Create Post
+     */
     public function create()
     {
         $errors = $this->model->create( $this->request->getFields() )->getErrors();

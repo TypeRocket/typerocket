@@ -6,6 +6,11 @@ use TypeRocket\Models\UsersModel;
 class UsersController extends Controller
 {
 
+    /**
+     * Update user by ID
+     *
+     * @param null $id
+     */
     public function update( $id = null )
     {
         $user   = new UsersModel();
@@ -21,6 +26,9 @@ class UsersController extends Controller
         }
     }
 
+    /**
+     * Create user
+     */
     public function create()
     {
         $user   = new UsersModel();
