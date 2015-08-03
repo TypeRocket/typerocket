@@ -14,9 +14,8 @@ class Kernel
                 'AuthRead',
                 'ValidateCsrf'
             ),
-        'noResource' => array(
-            array('AuthAdmin')
-        ),
+        'noResource' =>
+            array('AuthAdmin'),
         'users' =>
             array('IsUserOrCanEditUsers'),
         'posts' =>

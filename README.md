@@ -118,7 +118,44 @@ class BooksController extends PostTypesController
 }
 ```
 
-Now only "ISBN Number" and "Book Cover" will be saved.
+Now only "ISBN Number" and "Book Cover" will be saved. However, because the resource controller/model has been specified, "books", only an administrator can manage the new fields.
+
+You will need to create a new Kernel class called XKernel to specify the middleware you want to use.
+
+```php
+<?php // /typerocket/app/Http/XKernel.php
+namespace TypeRocket\Http;
+
+class XKernel extends Kernel
+{
+
+    protected $middleware = array(
+        'hookGlobal' =>
+            array('AuthRead'),
+        'restGlobal' =>
+            array(
+                'AuthRead',
+                'ValidateCsrf'
+            ),
+        'noResource' => array(
+            'AuthAdmin'
+        ),
+        'books' => // new resource middleware
+            array('IsUserOrCanEditUsers'),
+        'users' =>
+            array('IsUserOrCanEditUsers'),
+        'posts' =>
+            array('OwnsPostOrCanEditPosts'),
+        'pages' =>
+            array('OwnsPostOrCanEditPosts'),
+        'comments' =>
+            array('OwnsCommentOrCanEditComments'),
+        'options' =>
+            array('CanManageOptions')
+    );
+}
+
+```
 
 ### Filter Fields Example
 
