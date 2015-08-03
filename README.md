@@ -120,6 +120,8 @@ class BooksController extends PostTypesController
 
 Now only "ISBN Number" and "Book Cover" will be saved. However, because the resource controller/model has been specified, "books", only an administrator can manage the new fields.
 
+### XKernel
+
 You will need to create a new Kernel class called XKernel to specify the middleware you want to use.
 
 `XKernel.php` manage middleware by resource and request type.
