@@ -36,12 +36,30 @@ class PostTypesModel extends Model
 
     protected $postType = null;
 
+    /**
+     * Find post by ID
+     *
+     * @param $id
+     *
+     * @return $this
+     */
     public function findById($id) {
         $this->id = $id;
         $this->setData('post', get_post( $this->id ));
         return $this;
     }
 
+    /**
+     * Create post from TypeRocket fields
+     *
+     * Set the post type property on extended model so they
+     * are saved to the correct type. See the PagesModel
+     * as example.
+     *
+     * @param array $fields
+     *
+     * @return $this
+     */
     public function create( array $fields )
     {
         $fields = $this->secureFields($fields);
@@ -72,6 +90,13 @@ class PostTypesModel extends Model
         return $this;
     }
 
+    /**
+     * Update post from TypeRocket fields
+     *
+     * @param array $fields
+     *
+     * @return $this
+     */
     public function update( array $fields )
     {
         if($this->id != null && ! wp_is_post_revision( $this->id ) ) {
@@ -98,6 +123,11 @@ class PostTypesModel extends Model
         return $this;
     }
 
+    /**
+     * Save post meta fields from TypeRocket fields
+     *
+     * @param array $fields
+     */
     private function saveMeta( array $fields )
     {
         $fields = $this->getFilteredMetaFields($fields);
@@ -124,6 +154,17 @@ class PostTypesModel extends Model
 
     }
 
+    /**
+     * Get base field value
+     *
+     * Some fields need to be saved as serialized arrays. Getting
+     * the field by the base value is used by Fields to populate
+     * their values.
+     *
+     * @param $field_name
+     *
+     * @return null
+     */
     protected function getBaseFieldValue( $field_name )
     {
 

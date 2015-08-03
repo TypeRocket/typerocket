@@ -78,6 +78,11 @@ class UsersModel extends Model
         return $this;
     }
 
+    /**
+     * Save user meta fields from TypeRocket fields
+     *
+     * @param array $fields
+     */
     private function saveMeta( array $fields )
     {
         $fields = $this->getFilteredMetaFields( $fields );
@@ -99,6 +104,17 @@ class UsersModel extends Model
         endif;
     }
 
+    /**
+     * Get base field value
+     *
+     * Some fields need to be saved as serialized arrays. Getting
+     * the field by the base value is used by Fields to populate
+     * their values.
+     *
+     * @param $field_name
+     *
+     * @return null
+     */
     protected function getBaseFieldValue( $field_name )
     {
 

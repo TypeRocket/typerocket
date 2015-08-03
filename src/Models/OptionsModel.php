@@ -6,11 +6,25 @@ class OptionsModel extends Model
 
     protected $id = 1;
 
+    /**
+     * Do nothing since options are not true resources
+     *
+     * @param $id
+     *
+     * @return $this
+     */
     public function findById($id) {
 
         return $this;
     }
 
+    /**
+     * Create options from TypeRocket fields
+     *
+     * @param array $fields
+     *
+     * @return $this
+     */
     function create( array $fields )
     {
         $fields = $this->secureFields( $fields );
@@ -20,6 +34,13 @@ class OptionsModel extends Model
         return $this;
     }
 
+    /**
+     * Update options from TypeRocket fields
+     *
+     * @param array $fields
+     *
+     * @return $this
+     */
     function update( array $fields )
     {
         $fields = $this->secureFields( $fields );
@@ -29,6 +50,11 @@ class OptionsModel extends Model
         return $this;
     }
 
+    /**
+     * Save options' fields from TypeRocket fields
+     *
+     * @param array $fields
+     */
     private function saveOptions( array $fields )
     {
         if ( ! empty( $fields )) {
@@ -51,6 +77,17 @@ class OptionsModel extends Model
 
     }
 
+    /**
+     * Get base field value
+     *
+     * Some fields need to be saved as serialized arrays. Getting
+     * the field by the base value is used by Fields to populate
+     * their values.
+     *
+     * @param $field_name
+     *
+     * @return null
+     */
     protected function getBaseFieldValue( $field_name )
     {
         $data = get_option( $field_name );

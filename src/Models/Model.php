@@ -342,12 +342,50 @@ abstract class Model
         return ( isset( $value ) && $value !== '' ) ? $value : null;
     }
 
+    /**
+     * Create resource by TypeRocket fields
+     *
+     * When a resource is created the Model ID should be set to the
+     * resource's ID.
+     *
+     * @param array $fields
+     *
+     * @return mixed
+     */
     abstract function create( array $fields );
 
+    /**
+     * Update resource by TypeRocket fields
+     *
+     * @param array $fields
+     *
+     * @return mixed
+     */
     abstract function update( array $fields );
 
+    /**
+     * Find resource by ID
+     *
+     * @param $id
+     *
+     * @return mixed
+     */
     abstract function findById( $id );
 
+    /**
+     * Get base field value
+     *
+     * Some fields need to be saved as serialized arrays. Getting
+     * the field by the base value is used by Fields to populate
+     * their values.
+     *
+     * This method must be implemented to return the base value
+     * of a field if it is saved as a bracket group.
+     *
+     * @param $field_name
+     *
+     * @return null
+     */
     abstract protected function getBaseFieldValue( $field_name );
 
 }

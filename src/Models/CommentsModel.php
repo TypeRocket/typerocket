@@ -26,6 +26,13 @@ class CommentsModel extends Model
         'comment_id'
     );
 
+    /**
+     * Get comment by ID
+     *
+     * @param $id
+     *
+     * @return $this
+     */
     public function findById( $id )
     {
         $this->id   = $id;
@@ -34,6 +41,13 @@ class CommentsModel extends Model
         return $this;
     }
 
+    /**
+     * Create comment from TypeRocket fields
+     *
+     * @param array $fields
+     *
+     * @return $this
+     */
     public function create( array $fields )
     {
         $fields  = $this->secureFields( $fields );
@@ -66,6 +80,13 @@ class CommentsModel extends Model
         return $this;
     }
 
+    /**
+     * Update comment from TypeRocket fields
+     *
+     * @param array $fields
+     *
+     * @return $this
+     */
     public function update( array $fields )
     {
         if ($this->id != null) {
@@ -90,6 +111,11 @@ class CommentsModel extends Model
         return $this;
     }
 
+    /**
+     * Save comment meta fields from TypeRocket fields
+     *
+     * @param array $fields
+     */
     private function saveMeta( array $fields )
     {
         $fields = $this->getFilteredMetaFields( $fields );
@@ -111,6 +137,13 @@ class CommentsModel extends Model
         endif;
     }
 
+    /**
+     * Format irregular fields
+     *
+     * @param array $fields
+     *
+     * @return array
+     */
     private function formatFields( array $fields )
     {
 
@@ -133,6 +166,17 @@ class CommentsModel extends Model
 
     }
 
+    /**
+     * Get base field value
+     *
+     * Some fields need to be saved as serialized arrays. Getting
+     * the field by the base value is used by Fields to populate
+     * their values.
+     *
+     * @param $field_name
+     *
+     * @return null
+     */
     protected function getBaseFieldValue( $field_name )
     {
         if (in_array( $field_name, $this->builtin )) {
