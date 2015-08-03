@@ -1,7 +1,14 @@
 <?php
 namespace TypeRocket\Http\Middleware;
 
-
+/**
+ * Class OwnsCommentOrCanEditComments
+ *
+ * Validate that user owns comment or can edit comments
+ * and if the user is not invalidate the response.
+ *
+ * @package TypeRocket\Http\Middleware
+ */
 class OwnsCommentOrCanEditComments extends Middleware
 {
 

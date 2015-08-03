@@ -1,7 +1,14 @@
 <?php
 namespace TypeRocket\Http\Middleware;
 
-
+/**
+ * Class IsUserOrCanEditUsers
+ *
+ * Validate that is user or can edit users and if the user is not
+ * invalidate the response.
+ *
+ * @package TypeRocket\Http\Middleware
+ */
 class IsUserOrCanEditUsers extends Middleware
 {
 

@@ -1,6 +1,13 @@
 <?php
 namespace TypeRocket\Http\Middleware;
 
+/**
+ * Class Controller
+ *
+ * Run proper controller based on request.
+ *
+ * @package TypeRocket\Http\Middleware
+ */
 class Controller extends Middleware
 {
 

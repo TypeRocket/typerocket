@@ -3,6 +3,13 @@ namespace TypeRocket\Http\Middleware;
 
 use \TypeRocket\Config;
 
+/**
+ * Class ValidateCsrf
+ *
+ * Validate WP Nonce / CSRF Token
+ *
+ * @package TypeRocket\Http\Middleware
+ */
 class ValidateCsrf extends Middleware  {
 
     public function handle() {
