@@ -1,6 +1,13 @@
 <?php
 namespace TypeRocket\Http\Responders;
 
+/**
+ * Class Hook
+ *
+ * Used by core to hook into WordPress API
+ *
+ * @package TypeRocket\Http\Responders
+ */
 class Hook {
 
     static public function posts($id) {

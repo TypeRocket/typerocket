@@ -6,6 +6,13 @@ use \TypeRocket\Http\Request,
 
 class UsersResponder extends Responder {
 
+    /**
+     * Respond to user hook
+     *
+     * Create proper request and run through Kernel
+     *
+     * @param $userId
+     */
     public function respond( $userId ) {
 
         $request = new Request('users', 'PUT', $userId);

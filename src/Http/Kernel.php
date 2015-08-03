@@ -29,6 +29,17 @@ class Kernel
             array('CanManageOptions')
     );
 
+    /**
+     * Handle Middleware
+     *
+     * Run through middleware based on global and resource. You can create
+     * a class XKernel to override this Kernel but it should extend this
+     * Kernel.
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $type
+     */
     public function __construct(Request $request, Response $response, $type = 'hookGlobal') {
 
         $resource = strtolower( $request->getResource() );

@@ -6,6 +6,13 @@ use \TypeRocket\Http\Request,
 
 class CommentsResponder extends Responder {
 
+    /**
+     * Respond to comments hook
+     *
+     * Create proper request and run through Kernel
+     *
+     * @param $commentId
+     */
     public function respond( $commentId ) {
 
         $request = new Request('comments', 'PUT', $commentId);

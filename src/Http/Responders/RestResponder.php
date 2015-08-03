@@ -9,9 +9,15 @@ class RestResponder extends Responder
 
     private $resource = null;
 
+    /**
+     * Respond to REST requests
+     *
+     * Create proper request and run through Kernel
+     *
+     * @param $id
+     */
     public function respond( $id )
     {
-        // set method
         $method = isset( $_SERVER['REQUEST_METHOD'] ) ? $_SERVER['REQUEST_METHOD'] : 'GET';
         $method = ( isset( $_SERVER['REQUEST_METHOD'] ) && isset( $_POST['_method'] ) ) ? $_POST['_method'] : $method;
 
@@ -24,6 +30,13 @@ class RestResponder extends Responder
         wp_send_json( $response->getResponseArray() );
     }
 
+    /**
+     * Set the resource use to construct the Request
+     *
+     * @param $resource
+     *
+     * @return $this
+     */
     public function setResource( $resource )
     {
         $this->resource = $resource;
