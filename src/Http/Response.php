@@ -177,7 +177,7 @@ class Response {
      * Set the data to return for front-end developers. This should
      * be data used to describe what was updated or created for
      * example.
-     * 
+     *
      * @param $key
      * @param $data
      */
@@ -185,30 +185,77 @@ class Response {
         $this->data[$key] = $data;
     }
 
+    /**
+     * Get HTTP status
+     *
+     * @return int
+     */
     public function getStatus() {
         return $this->status;
     }
 
+    /**
+     * Get message
+     *
+     * Get the message used in the flash alert on front-end
+     *
+     * @return string
+     */
     public function getMessage() {
         return $this->message;
     }
 
+    /**
+     * Get Data
+     *
+     * @return array
+     */
     public function getData() {
         return $this->data;
     }
 
+    /**
+     * Get Redirect
+     *
+     * Get redirect URL used by the AJAX REST API
+     *
+     * @return bool
+     */
     public function getRedirect() {
         return $this->redirect;
     }
 
+    /**
+     * Get Valid
+     *
+     * Get the valid property to see if the response is
+     * valid.
+     *
+     * @return bool
+     */
     public function getValid() {
         return $this->valid;
     }
 
+    /**
+     * Get Flash
+     *
+     * Get the flash property to see if the front-end should
+     * flash the message.
+     *
+     * @return bool
+     */
     public function getFlash() {
         return $this->flash;
     }
 
+    /**
+     * Get Response Properties
+     *
+     * Return the private properties that make up the response
+     *
+     * @return array
+     */
     public function getResponseArray() {
         $vars = get_object_vars($this);
         return $vars;
