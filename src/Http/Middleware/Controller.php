@@ -45,7 +45,8 @@ class Controller extends Middleware
                 if (method_exists( $controller, $action )) {
                     $controller->$action( $id );
                 } else {
-                    $response->setError( 'controller', 'There is no action: ' . $action );
+                    $response->setError( 'controller', 'The method specified is not allowed for the resource.');
+                    $this->response->setStatus(405);
                     $this->response->setInvalid();
                 }
             }
