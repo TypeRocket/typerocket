@@ -43,6 +43,7 @@ class Kernel
 
         $middleware = array_merge($resourceMiddleware, $this->middleware[$type]);
         $middleware = array_reverse($middleware);
+        $middleware = apply_filters('tr_kernel_middleware', $middleware, $request, $type);
 
         foreach($middleware as $class) {
             $class = '\\TypeRocket\\Http\\Middleware\\' . $class;

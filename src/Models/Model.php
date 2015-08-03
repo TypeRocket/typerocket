@@ -15,6 +15,9 @@ abstract class Model
     protected $builtin = array();
     private $data = null;
 
+    /**
+     * Construct Model based on resource
+     */
     public function __construct()
     {
         $reflect = new \ReflectionClass( $this );
@@ -31,6 +34,13 @@ abstract class Model
         do_action( 'tr_model', $this );
     }
 
+    /**
+     * Basic initialization
+     *
+     * Used on construction in concrete classes
+     *
+     * @return $this
+     */
     protected function init()
     {
         return $this;
@@ -43,6 +53,15 @@ abstract class Model
         return $this;
     }
 
+    /**
+     * Set Guard
+     *
+     * Fields that are write protected by default unless fillable
+     *
+     * @param array $guard
+     *
+     * @return $this
+     */
     public function setGuardFields( array $guard )
     {
         $this->guard = $guard;
@@ -50,6 +69,15 @@ abstract class Model
         return $this;
     }
 
+    /**
+     * Append Fillable
+     *
+     * Add a fillable field.
+     *
+     * @param $field_name
+     *
+     * @return $this
+     */
     public function appendFillableField( $field_name )
     {
         if ( ! array_key_exists( $field_name, $this->fillable )) {
@@ -59,6 +87,15 @@ abstract class Model
         return $this;
     }
 
+    /**
+     * Append Guard
+     *
+     * Add a field to guard.
+     *
+     * @param $field_name
+     *
+     * @return $this
+     */
     public function appendGuardField( $field_name )
     {
         if ( ! array_key_exists( $field_name, $this->fillable )) {
@@ -68,30 +105,72 @@ abstract class Model
         return $this;
     }
 
+    /**
+     * Resource ID
+     *
+     * The ID of the resource being used.
+     *
+     * @return null
+     */
     public function getId() {
         return $this->id;
     }
 
+    /**
+     * Get Errors
+     *
+     * Get any errors that have been logged
+     *
+     * @return null
+     */
     public function getErrors()
     {
         return $this->errors;
     }
 
+    /**
+     * Get Fillable Fields
+     *
+     * Get all the fields that can be filled
+     *
+     * @return array|mixed|void
+     */
     public function getFillableFields()
     {
         return $this->fillable;
     }
 
+    /**
+     * Get Guard Fields
+     *
+     * Get all the fields that have been write protected
+     *
+     * @return array|mixed|void
+     */
     public function getGuardFields()
     {
         return $this->guard;
     }
 
+    /**
+     * Get Builtin Fields
+     *
+     * Get all the fields that are not saved as meta fields
+     *
+     * @return array
+     */
     public function getBuiltinFields()
     {
         return $this->builtin;
     }
 
+    /**
+     * Get Data by key
+     *
+     * @param $key
+     *
+     * @return null
+     */
     public function getData( $key )
     {
         $data = null;
@@ -103,6 +182,14 @@ abstract class Model
         return $data;
     }
 
+    /**
+     * Set Data by key
+     *
+     * @param $key
+     * @param $value
+     *
+     * @return $this
+     */
     protected function setData( $key, $value )
     {
         $this->data[$key] = $value;
@@ -110,6 +197,14 @@ abstract class Model
         return $this;
     }
 
+    /**
+     * Get only the fields that are considered to
+     * be meta fields.
+     *
+     * @param array $fields
+     *
+     * @return array
+     */
     protected function getFilteredMetaFields( array $fields )
     {
         $builtin = array_flip( $this->builtin );
@@ -117,6 +212,14 @@ abstract class Model
         return array_diff_key( $fields, $builtin );
     }
 
+    /**
+     * Get only the fields that are considered to
+     * be builtin fields.
+     *
+     * @param array $fields
+     *
+     * @return array
+     */
     protected function getFilteredBuiltinFields( array $fields )
     {
         $builtin = array_flip( $this->builtin );
@@ -124,6 +227,14 @@ abstract class Model
         return array_intersect_key( $fields, $builtin );
     }
 
+    /**
+     * Get fields that have been checked against fillable and guard.
+     * Fillable fields override guarded fields.
+     *
+     * @param array $fields
+     *
+     * @return mixed|void
+     */
     protected function secureFields( array $fields )
     {
         $fillable = array();
@@ -217,6 +328,15 @@ abstract class Model
         return $matches[$set];
     }
 
+    /**
+     * Get the value of a field if it is not an empty string or null.
+     * If the field is null, undefined or and empty string it will
+     * return null.
+     *
+     * @param $value
+     *
+     * @return null
+     */
     protected function getValueOrNull( $value )
     {
         return ( isset( $value ) && $value !== '' ) ? $value : null;
