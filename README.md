@@ -122,7 +122,7 @@ Now only "ISBN Number" and "Book Cover" will be saved. However, because the reso
 
 ### XKernel
 
-You will need to create a new Kernel class called XKernel to specify the middleware you want to use.
+You will need to create a new Kernel class called XKernel to specify the middleware you want to use. Middleware can be used for all kinds of fun things. In this case we want "books" to authenticate like posts.
 
 `XKernel.php` manages the middleware for the resource and request types.
 
