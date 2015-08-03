@@ -201,7 +201,7 @@ We made Typerocket with design in mind first. Inside and out. Writing your code 
 
 ### Documentation
 
-https://typerocket.com/documentation/
+https://typerocket.com/docs/
 
 ### Icons
 
