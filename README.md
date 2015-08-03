@@ -124,7 +124,7 @@ Now only "ISBN Number" and "Book Cover" will be saved. However, because the reso
 
 You will need to create a new Kernel class called XKernel to specify the middleware you want to use.
 
-`XKernel.php` manage middleware by resource and request type.
+`XKernel.php` manages the middleware for the resource and request types.
 
 ```php
 <?php // /typerocket/app/Http/XKernel.php
