@@ -137,7 +137,7 @@ abstract class Field
      *
      * @return $this
      */
-    private function configureToForm( Form $form )
+    public function configureToForm( Form $form )
     {
         $this->setGroup( $form->getGroup() );
         $this->setSub( $form->getSub() );
