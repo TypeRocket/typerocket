@@ -1,4 +1,4 @@
-## TypeRocket 2.0.0
+## TypeRocket 2
 Coding advanced WordPress themes became a blast. Be good looking and do cool stuff with less code.
 
 http://typerocket.com
@@ -189,7 +189,7 @@ add_filter('tr_model_secure_fields', function($fields, $model) {
 
 ### Designers
 
-We made Typerocket with design in mind first. Inside and out. Writing your code to replace plugins is super simple. We give you a development mode so building your custom feature is as simple as copy and paste. Don't let that fool you though. TypeRocket uses all the best available programing patterns that are compatible with WordPress.
+We made TypeRocket with design in mind first. Inside and out. Writing your code to replace plugins is super simple. We give you a development mode so building your custom feature is as simple as copy and paste. Don't let that fool you though. TypeRocket uses all the best available programing patterns that are compatible with WordPress.
 
 ### Developers
 
