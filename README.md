@@ -80,6 +80,8 @@ class BooksModel extends PostTypesModel
         'book_cover',
         'isbn_number'
     );
+
+    protected $postType = 'book';
 }
 ```
 
