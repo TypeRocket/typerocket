@@ -18,33 +18,9 @@ http://typerocket.com
 - Add fields to post types, comments, meta boxes, option pages, user profiles and even on the front-end inside theme template files.
 - You can access a number of pre-made TypeRocket plugins for features like SEO and Theme Options installed directly into your theme.
 
-### Story
+### Documentation
 
-We want you to be good looking and do cool stuff with less code; Whether you're a designer, developer or somewhere in between. This is why TypeRocket exists.
-
-We want to enable everyone so they can build themes that are beautiful, inside and out.
-
-Every small detail matters to us. The elegance of the framework, the simplicity and power of each line of code, the design and emotion behind every element. It all matters.
-
-We really hope you love TypeRocket and as a result love WordPress even more.
-
-Thank you,
-
-Kevin
-
-### Core Values
-
-The TypeRocket project operates by the belief that:
-
-1. Software development should be friendly for designers.
-2. You should be in total control of how content is managed, experienced and displayed.
-3. Managing content should be fun, easy and powerful.
-4. Beauty should never be forgotten.
-5. Content and design shouldn't be dependant on third-party Plugins.
-6. Consistency leads to happiness.
-7. We should give and go further.
-
-Visit TypeRocket http://typerocket.com to get access to the tutorials and documentation.
+https://typerocket.com/docs/
 
 ### Book Post Type Example
 
@@ -201,9 +177,33 @@ We made TypeRocket with design in mind first. Inside and out. Writing your code 
 - TypeRocket is fast! We use autoload (PSR-4) against the TypeRocket namespace so there are no conflicts.
 - Rich commenting and doc blocks to enhance IDE and coding experience.
 
-### Documentation
+### Story
 
-https://typerocket.com/docs/
+We want you to be good looking and do cool stuff with less code; Whether you're a designer, developer or somewhere in between. This is why TypeRocket exists.
+
+We want to enable everyone so they can build themes that are beautiful, inside and out.
+
+Every small detail matters to us. The elegance of the framework, the simplicity and power of each line of code, the design and emotion behind every element. It all matters.
+
+We really hope you love TypeRocket and as a result love WordPress even more.
+
+Thank you,
+
+Kevin
+
+### Core Values
+
+The TypeRocket project operates by the belief that:
+
+1. Software development should be friendly for designers.
+2. You should be in total control of how content is managed, experienced and displayed.
+3. Managing content should be fun, easy and powerful.
+4. Beauty should never be forgotten.
+5. Content and design shouldn't be dependant on third-party Plugins.
+6. Consistency leads to happiness.
+7. We should give and go further.
+
+Visit TypeRocket http://typerocket.com to get access to the tutorials and documentation.
 
 ### Icons
 

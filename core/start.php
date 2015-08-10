@@ -21,7 +21,7 @@ define( 'TR_START', microtime( true ) );
 | Set the version for TypeRocket using the style major.minor.patch
 |
 */
-define( 'TR_VERSION', '2.0.1' );
+define( 'TR_VERSION', '2.0.2' );
 
 /*
 |--------------------------------------------------------------------------
