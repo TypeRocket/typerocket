@@ -62,6 +62,8 @@ function add_meta_content_details() {
 
 ![GitHub Logo](http://typerocket.com/github/typerocket-book-example.png)
 
+*Note: Flush the WordPress permalinks when you register a post type.*
+
 ### Fillable Fields Example
 
 By default TypeRocket will save any and all fields. This is just fine in many cases and makes life easy. When you need to filter, validate or fill only specific fields we have you covered.
