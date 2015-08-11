@@ -27,7 +27,11 @@ class ThemeOptionsPlugin
         add_filter( 'tr_model', array( $this, 'fillable' ), 9999999999 );
 
         // process import and export
-        if (count( $_POST ) < 1 && $_GET['theme-options'] == 'export') {
+        if (
+            empty( $_POST ) &&
+            ! empty($_GET['theme-options']) &&
+            $_GET['theme-options'] == 'export'
+        ) {
             $this->json_export();
         } elseif ( ! empty( $_POST['tr_theme_options_import'] )) {
             $files = $_FILES;
