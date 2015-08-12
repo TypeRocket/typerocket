@@ -384,8 +384,7 @@ class Form
         $rest     = array();
         $defaults = array(
             'action'      => $_SERVER['REQUEST_URI'],
-            'method'      => 'POST',
-            'data-method' => $method
+            'method'      => 'POST'
         );
 
         if ($use_rest == true) {
