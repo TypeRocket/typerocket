@@ -389,9 +389,12 @@ class Form
         );
 
         if ($use_rest == true) {
+
+            $scheme = is_ssl() ? 'https' : 'http';
+
             $rest = array(
                 'class'    => 'typerocket-rest-form',
-                'data-api' => home_url() . '/typerocket_rest_api/v1/' . $this->resource . '/' . $this->itemId
+                'data-api' => home_url('/', $scheme ) . 'typerocket_rest_api/v1/' . $this->resource . '/' . $this->itemId
             );
         }
 
