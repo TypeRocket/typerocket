@@ -60,6 +60,7 @@ class ThemeOptionsPlugin
 
     public function page()
     {
+        do_action('tr_theme_options_page', $this);
         echo '<div id="wrap">';
         $file = apply_filters( 'tr_theme_options_page', __DIR__ . '/admin.php' );
         if (file_exists( $file )) {
