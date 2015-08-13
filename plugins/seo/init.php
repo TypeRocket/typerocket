@@ -126,7 +126,8 @@ class SeoPlugin
             echo "<meta property=\"og:description\" content=\"{$og_desc}\" />";
         }
         if ( ! empty( $img ) ) {
-            echo "<meta property=\"og:image\" content=\"{$img}\" />";
+            $src = wp_get_attachment_image_src($img, 'full');
+            echo "<meta property=\"og:image\" content=\"{$src[0]}\" />";
         }
 
         // Basic
