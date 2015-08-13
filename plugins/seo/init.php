@@ -127,7 +127,15 @@ class SeoPlugin
         }
         if ( ! empty( $img ) ) {
             $src = wp_get_attachment_image_src($img, 'full');
-            echo "<meta property=\"og:image\" content=\"{$src[0]}\" />";
+            $src = $src[0];
+            $prefix = 'https';
+
+            if (substr($src, 0, strlen($prefix)) == $prefix) {
+                $src = substr($src, strlen($prefix));
+                $src = 'http' . $src;
+            }
+
+            echo "<meta property=\"og:image\" content=\"{$src}\" />";
         }
 
         // Basic
