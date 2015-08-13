@@ -25,7 +25,7 @@ jQuery.typerocketHttp = {
         this.tools.ajax({
             method: method,
             data: data,
-            url: this.tools.stripTrailingSlash(url)
+            url: this.tools.addTrailingSlash(url)
         });
 
     },
@@ -33,6 +33,12 @@ jQuery.typerocketHttp = {
         stripTrailingSlash: function (str) {
             if (str.substr(-1) === '/') {
                 return str.substr(0, str.length - 1);
+            }
+            return str;
+        },
+        addTrailingSlash: function (str) {
+            if (str.substr(-1) !== '/') {
+                str = str + '/';
             }
             return str;
         },
