@@ -19,7 +19,7 @@ class RestResponder extends Responder
     public function respond( $id )
     {
         $method = isset( $_SERVER['REQUEST_METHOD'] ) ? $_SERVER['REQUEST_METHOD'] : 'GET';
-        $method = ( isset( $_SERVER['REQUEST_METHOD'] ) && isset( $_POST['_method'] ) ) ? $_POST['_method'] : $method;
+        $method = ( isset( $_POST['_method'] ) ) ? $_POST['_method'] : $method;
 
         $request  = new Request( $this->resource, $method, $id );
         $response = new Response();
