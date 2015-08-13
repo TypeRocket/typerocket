@@ -85,9 +85,10 @@ class SeoPlugin
     // head meta data
     public function head_data()
     {
-        $object_id = $this->itemId;
+        $object_id = (int) $this->itemId;
 
         // meta vars
+        $url              = get_the_permalink($object_id);
         $desc             = esc_attr( tr_posts_field( '[seo][meta][description]', $object_id ) );
         $og_title         = esc_attr( tr_posts_field( '[seo][meta][og_title]', $object_id ) );
         $og_desc          = esc_attr( tr_posts_field( '[seo][meta][og_desc]', $object_id ) );
@@ -136,6 +137,9 @@ class SeoPlugin
             }
 
             echo "<meta property=\"og:image\" content=\"{$src}\" />";
+        }
+        if( ! empty($url) ) {
+            echo "<meta property=\"og:url\" content=\"{$url}\" />";
         }
 
         // Basic
@@ -191,7 +195,7 @@ class SeoPlugin
 
         $img = array(
             'label' => 'Image',
-            'help'  => 'The image is shown when sharing socially using the open graph protocol. Will be used by FB, Google+ and Pinterest.'
+            'help'  => "The image is shown when sharing socially using the open graph protocol. Will be used by FB, Google+ and Pinterest. Need help? Try the Facebook <a href=\"https://developers.facebook.com/tools/debug/og/object/\" target=\"_blank\">open graph object debugger</a> and <a href=\"https://developers.facebook.com/docs/sharing/best-practices\" target=\"_blank\">best practices</a>."
         );
 
         $canon = array(
