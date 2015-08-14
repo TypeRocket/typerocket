@@ -89,13 +89,19 @@ class SeoPlugin
 
         // meta vars
         $url              = get_the_permalink($object_id);
-        $desc             = esc_attr( tr_posts_field( '[seo][meta][description]', $object_id ) );
-        $og_title         = esc_attr( tr_posts_field( '[seo][meta][og_title]', $object_id ) );
-        $og_desc          = esc_attr( tr_posts_field( '[seo][meta][og_desc]', $object_id ) );
-        $img              = esc_attr( tr_posts_field( '[seo][meta][meta_img]', $object_id ) );
-        $canon            = esc_attr( tr_posts_field( '[seo][meta][canonical]', $object_id ) );
-        $robots['index']  = esc_attr( tr_posts_field( '[seo][meta][index]', $object_id ) );
-        $robots['follow'] = esc_attr( tr_posts_field( '[seo][meta][follow]', $object_id ) );
+        $seo              = tr_posts_field('[seo][meta]', $object_id);
+        $desc             = esc_attr( $seo['description'] );
+        $og_title         = esc_attr( $seo['og_title'] );
+        $og_desc          = esc_attr( $seo['og_desc'] );
+        $img              = esc_attr( $seo['meta_img'] );
+        $canon            = esc_attr( $seo['canonical'] );
+        $robots['index']  = esc_attr( $seo['index'] );
+        $robots['follow'] = esc_attr( $seo['follow'] );
+        $tw['card']       = esc_attr( $seo['tw_card'] );
+        $tw['site']       = esc_attr( $seo['tw_site'] );
+        $tw['image']      = esc_attr( $seo['tw_img'] );
+        $tw['title']      = esc_attr( $seo['tw_title'] );
+        $tw['desc']      = esc_attr( $seo['tw_desc'] );
 
         // Extra
         if ( ! empty( $canon ) ) {
@@ -142,9 +148,29 @@ class SeoPlugin
             echo "<meta property=\"og:url\" content=\"{$url}\" />";
         }
 
+        // Twitter
+        if( ! empty($tw['card']) ) {
+            echo "<meta name=\"twitter:card\" content=\"{$tw['card']}\" />";
+        }
+        if( ! empty($tw['site']) ) {
+            echo "<meta name=\"twitter:site\" content=\"{$tw['site']}\" />";
+        }
+        if( ! empty($tw['image']) ) {
+            $src = wp_get_attachment_image_src($tw['image'], 'full');
+            $src = $src[0];
+
+            echo "<meta name=\"twitter:image\" content=\"{$src}\" />";
+        }
+        if( ! empty($tw['title']) ) {
+            echo "<meta name=\"twitter:title\" content=\"{$tw['title']}\" />";
+        }
+        if( ! empty($tw['desc']) ) {
+            echo "<meta name=\"twitter:desciption\" content=\"{$tw['desc']}\" />";
+        }
+
         // Basic
         if ( ! empty( $desc ) ) {
-            echo "<meta name=\"Description\" content=\"{$desc}\" />";
+            echo "<meta name=\"description\" content=\"{$desc}\" />";
         }
     }
 
@@ -198,6 +224,11 @@ class SeoPlugin
             'help'  => "The image is shown when sharing socially using the open graph protocol. Will be used by FB, Google+ and Pinterest. Need help? Try the Facebook <a href=\"https://developers.facebook.com/tools/debug/og/object/\" target=\"_blank\">open graph object debugger</a> and <a href=\"https://developers.facebook.com/docs/sharing/best-practices\" target=\"_blank\">best practices</a>."
         );
 
+        $tw_img = array(
+            'label' => 'Image',
+            'help'  => "Images for a 'summary_large_image' card should be at least 280px in width, and at least 150px in height. Image must be less than 1MB in size. Do not use a generic image such as your website logo, author photo, or other image that spans multiple pages."
+        );
+
         $canon = array(
             'label' => 'Canonical URL',
             'help'  => 'The canonical URL that this page should point to, leave empty to default to permalink.'
@@ -221,6 +252,8 @@ class SeoPlugin
             'help'  => 'This instructs search engines not to show this page in its web search results.'
         );
 
+        $tw_help = "Need help? Try the Twitter <a href=\"https://cards-dev.twitter.com/validator/\" target=\"_blank\">card validator</a> and <a href=\"https://dev.twitter.com/cards/getting-started\" target=\"_blank\">getting started guide</a>.";
+
         // select options
         $follow_opts = array(
             'Not Set'      => 'none',
@@ -232,6 +265,16 @@ class SeoPlugin
             'Not Set'     => 'none',
             'Index'       => 'index',
             "Don't Index" => 'noindex'
+        );
+
+        $card_opts = array(
+            'Summary'             => 'summary',
+            'Summary large image' => 'summary_large_image',
+            "Photo"               => 'photo',
+            "Gallery"             => 'gallery',
+            "Product"             => 'product',
+            "App"                 => 'app',
+            "Player"              => 'player'
         );
 
         // build form
@@ -248,6 +291,13 @@ class SeoPlugin
         echo $form->textarea( 'og_desc', array(), $og_desc );
         echo $form->image( 'meta_img', array(), $img );
         $buffer->indexBuffer( 'social' ); // index buffer
+        $buffer->startBuffer();
+        echo $form->text( 'tw_site')->setLabel('Twitter account')->setAttribute('placeholder', '@username');
+        echo $form->select( 'tw_card')->setOptions($card_opts)->setLabel('Card Type')->setSetting('help', $tw_help);
+        echo $form->image( 'tw_img', array(), $tw_img );
+        echo $form->text( 'tw_title')->setLabel('Title')->setAttribute('maxlength', 70 );
+        echo $form->textarea( 'tw_desc')->setLabel('Description')->setAttribute('maxlength', 200 );
+        $buffer->indexBuffer( 'twitter' ); // index buffer
         $buffer->startBuffer();
         echo $form->text( 'canonical', array(), $canon );
         echo $form->text( 'redirect', array( 'readonly' => 'readonly', 'id' => 'tr_redirect' ), $redirect );
@@ -267,6 +317,11 @@ class SeoPlugin
                  'title'   => "Social",
                  'content' => $buffer->getBuffer( 'social' )
              ) )
+            ->addTab( array(
+                'id'      => 'seo-twitter',
+                'title'   => "Twitter Cards",
+                'content' => $buffer->getBuffer( 'twitter' )
+            ) )
              ->addTab( array(
                  'id'      => 'seo-advanced',
                  'title'   => "Advanced",
