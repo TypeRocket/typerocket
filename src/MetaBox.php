@@ -121,8 +121,14 @@ class MetaBox extends Registrable
     public function register()
     {
         global $post, $comment;
-        $postType = get_post_type( $post->ID );
-        if (post_type_supports( $postType, $this->id )) {
+
+        $postType = null;
+
+        if(!empty($post)) {
+            $postType = get_post_type( $post->ID );
+        }
+
+        if (isset($post->ID) && post_type_supports( $postType, $this->id )) {
             $this->addPostType( $postType );
         }
 
