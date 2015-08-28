@@ -21,7 +21,7 @@ define( 'TR_START', microtime( true ) );
 | Set the version for TypeRocket using the style major.minor.patch
 |
 */
-define( 'TR_VERSION', '2.0.11' );
+define( 'TR_VERSION', '2.0.12' );
 
 /*
 |--------------------------------------------------------------------------
@@ -94,9 +94,8 @@ new \TypeRocket\Core(true);
 | the typerocket_loaded hook to access TypeRocket from your WP plugins.
 |
 */
-do_action( 'typerocket_loaded' );
-
 add_action( 'after_setup_theme', function () {
+    do_action( 'typerocket_loaded' );
     \TypeRocket\Registry::initHooks();
 } );
 

@@ -88,7 +88,7 @@ class Config
             'extend'  => defined( 'TR_APP_FOLDER_PATH' ) ? TR_APP_FOLDER_PATH : __DIR__ . '/../app',
             'urls'    => array(
                 'theme'   => get_stylesheet_directory_uri(),
-                'assets'  => get_stylesheet_directory_uri() . '/' . self::$folder . '/assets',
+                'assets'  => defined( 'TR_ASSETS_URL' ) ? TR_ASSETS_URL : get_stylesheet_directory_uri() . '/' . self::$folder . '/assets',
                 'plugins' => defined( 'TR_PLUGINS_URL' ) ? TR_PLUGINS_URL : get_stylesheet_directory_uri() . '/' . self::$folder . '/plugins'
             )
         );

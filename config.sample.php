@@ -65,7 +65,7 @@ define('TR_APP_FOLDER_PATH', __DIR__ . '/app');
 |
 */
 define('TR_PLUGINS_FOLDER_PATH', __DIR__ . '/plugins');
-define('TR_URL_PLUGINS_FOLDER', get_stylesheet_directory_uri() . '/' .TR_FOLDER . '/plugins');
+define('TR_PLUGINS_URL', get_stylesheet_directory_uri() . '/' .TR_FOLDER . '/plugins');
 
 /*
 |--------------------------------------------------------------------------
