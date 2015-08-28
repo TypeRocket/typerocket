@@ -5,7 +5,7 @@ class PostType extends Registrable
 {
 
     private $title = null;
-    private $form = null;
+    private $form = array();
     private $taxonomies = array();
     private $metaBoxes = array();
     private $icon = null;
@@ -160,7 +160,12 @@ class PostType extends Registrable
      */
     public function getForm( $key )
     {
-        return $this->form[$key];
+        $form = null;
+        if(array_key_exists($key, $this->form)) {
+            $form = $this->form[$key];
+        }
+
+        return $form;
     }
 
     /**

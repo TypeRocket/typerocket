@@ -30,6 +30,7 @@ class ThemeOptionsPlugin
         if (
             empty( $_POST ) &&
             ! empty($_GET['theme-options']) &&
+            ! empty($_GET) &&
             $_GET['theme-options'] == 'export'
         ) {
             $this->json_export();

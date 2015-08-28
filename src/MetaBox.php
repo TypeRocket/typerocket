@@ -128,7 +128,7 @@ class MetaBox extends Registrable
             $postType = get_post_type( $post->ID );
         }
 
-        if (isset($post->ID) && post_type_supports( $postType, $this->id )) {
+        if (!empty($post) && post_type_supports( $postType, $this->id )) {
             $this->addPostType( $postType );
         }
 

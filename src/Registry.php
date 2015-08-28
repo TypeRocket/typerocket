@@ -78,11 +78,14 @@ class Registry
                     add_filter( 'enter_title_here', function($title) use ($obj) {
                         global $post;
 
-                        if ($post->post_type == $obj->getId()) :
-                            return $obj->getTitlePlaceholder();
-                        else :
-                            return $title;
-                        endif;
+                        if(!empty($post)) {
+                            if ( $post->post_type == $obj->getId() ) {
+                                return $obj->getTitlePlaceholder();
+                            }
+                        }
+
+                        return $title;
+
                     } );
                 }
 
