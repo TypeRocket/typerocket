@@ -42,7 +42,11 @@ jQuery(document).ready(function ($) {
         add_date_picker = function (obj) {
             if ($.isFunction($.fn.datepicker)) {
                 $(obj).find('.date-picker[name]').each(function () {
-                    $(this).datepicker();
+                    $(this).datepicker({
+                        beforeShow: function(input, inst) {
+                            $('#ui-datepicker-div').addClass('typerocket-datepicker');
+                        }
+                    });
                 });
             }
         },

@@ -21,7 +21,7 @@ define('TR_DEBUG', true);
 
 /*
 |--------------------------------------------------------------------------
-| TypeRocket Enabled Plugins
+| Enabled Plugins
 |--------------------------------------------------------------------------
 |
 | The folder names of the TypeRocket plugins you wish to enable separated
@@ -32,7 +32,7 @@ define('TR_PLUGINS', 'seo|dev|theme-options');
 
 /*
 |--------------------------------------------------------------------------
-| TypeRocket Matrix Folder
+| Matrix Folder
 |--------------------------------------------------------------------------
 |
 | The folder where you wish to locate your matrix groups. This should be set
@@ -44,7 +44,7 @@ define('TR_MATRIX_FOLDER_PATH', __DIR__ . '/matrix');
 
 /*
 |--------------------------------------------------------------------------
-| TypeRocket Application Folder
+| Application Folder
 |--------------------------------------------------------------------------
 |
 | The folder where you wish to locate your application code. This could 
@@ -56,7 +56,7 @@ define('TR_APP_FOLDER_PATH', __DIR__ . '/app');
 
 /*
 |--------------------------------------------------------------------------
-| TypeRocket Plugins Folder
+| Plugins Folder
 |--------------------------------------------------------------------------
 |
 | The folder where you wish to locate your plugins. This should be set
@@ -69,10 +69,20 @@ define('TR_PLUGINS_URL', get_stylesheet_directory_uri() . '/' .TR_FOLDER . '/plu
 
 /*
 |--------------------------------------------------------------------------
-| TypeRocket Seed
+| Seed
 |--------------------------------------------------------------------------
 |
 | A 'random' string of text to help with security from time to time.
 |
 */
 define('TR_SEED', 'asdfa65739asfl0');
+
+/*
+|--------------------------------------------------------------------------
+| Assets
+|--------------------------------------------------------------------------
+|
+| The folder where you wish to locate typerocket core assets.
+|
+*/
+define('TR_ASSETS_URL', get_stylesheet_directory_uri() . '/' . TR_FOLDER . '/assets');

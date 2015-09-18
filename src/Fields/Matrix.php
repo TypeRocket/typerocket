@@ -28,11 +28,9 @@ class Matrix extends Field implements OptionField, ScriptField {
         wp_enqueue_script( 'jquery-ui-sortable', array( 'jquery' ), '1.0', true );
 
         // date
-        wp_enqueue_style( 'tr-date-picker', $paths['urls']['assets'] . '/css/date-picker.css' );
         wp_enqueue_script( 'jquery-ui-datepicker', array( 'jquery' ), '1.0', true );
 
         // color
-        wp_enqueue_style( 'wp-color-picker' );
         wp_enqueue_script( 'wp-color-picker' );
 
         // images and gallery

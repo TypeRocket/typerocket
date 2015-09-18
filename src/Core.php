@@ -152,13 +152,10 @@ class Core
         $paths = Config::getPaths();
         $assets = $paths['urls']['assets'];
 
-        wp_enqueue_style( 'typerocket-icons', $assets . '/css/icons.css' );
         wp_enqueue_style( 'typerocket-styles', $assets . '/css/typerocket.css' );
-        wp_enqueue_style( 'typerocket-date-picker', $assets . '/css/date-picker.css' );
-        wp_enqueue_style( 'typerocket-editor', $assets . '/css/redactor.css' );
 
         if (is_admin()) {
-            wp_enqueue_style( 'typerocket-tabs', $assets . '/css/tabs.css' );
+            wp_enqueue_style( 'wp-color-picker' );
         }
     }
 
