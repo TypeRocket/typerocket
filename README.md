@@ -205,7 +205,7 @@ The TypeRocket project operates by the belief that:
 4. Beauty should never be forgotten.
 5. Content and design shouldn't be dependant on third-party Plugins.
 6. Consistency leads to happiness.
-7. We should give and go further.
+7. Give and go further.
 
 Visit TypeRocket http://typerocket.com to get access to the tutorials and documentation.
 
