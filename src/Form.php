@@ -88,7 +88,16 @@ class Form
                 $resource = 'users';
             } elseif ( isset( $taxonomy ) && isset($tag_ID) ) {
                 $item_id  = $tag_ID;
-                $resource = $taxonomy;
+                $resource = Registry::getTaxonomyResource($taxonomy);
+
+                $Resource = ucfirst($resource);
+                $model = "\\TypeRocket\\Models\\{$Resource}Model";
+                $controller = "\\TypeRocket\\Controllers\\{$Resource}Controller";
+
+                if( empty($resource) || ! class_exists($model) || ! class_exists($controller) ) {
+                    $resource = 'category';
+                }
+
             } else {
                 $item_id    = null;
                 $resource = 'options';
