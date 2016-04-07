@@ -1,10 +1,10 @@
 <?php
 namespace TypeRocket\Models;
 
-class TaxonomyModel extends Model
+class TaxonomiesModel extends Model
 {
 
-    public $taxonomy = null;
+    protected $taxonomy = null;
 
     protected $builtin = array(
         'description',
