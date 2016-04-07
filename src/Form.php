@@ -34,9 +34,6 @@ class Form
      */
     public function __construct( $resource = 'auto', $action = 'update', $itemId = null )
     {
-        $paths = Config::getPaths();
-        wp_enqueue_script( 'typerocket-http', $paths['urls']['assets'] . '/js/http.js', array( 'jquery' ), '1', true );
-
         $this->resource = $resource;
         $this->action = $action;
         $this->itemId = $itemId;
@@ -48,10 +45,9 @@ class Form
         if(class_exists($model)) {
             $this->model = new $model();
 
-            if($this->itemId) {
+            if( !empty($this->itemId) ) {
                 $this->model->findById($this->itemId);
             }
-
         }
     }
 
@@ -71,7 +67,7 @@ class Form
     private function autoConfig()
     {
         if ($this->resource === 'auto') {
-            global $post, $comment, $user_id;
+            global $post, $comment, $user_id, $taxonomy, $tag_ID;
 
             if (isset( $post->ID )) {
                 $item_id    = $post->ID;
@@ -85,11 +81,14 @@ class Form
                     $resource = 'posts';
                 }
             } elseif (isset( $comment->comment_ID )) {
-                $item_id    = $comment->comment_ID;
+                $item_id  = $comment->comment_ID;
                 $resource = 'comments';
             } elseif (isset( $user_id )) {
-                $item_id    = $user_id;
+                $item_id  = $user_id;
                 $resource = 'users';
+            } elseif ( isset( $taxonomy ) && isset($tag_ID) ) {
+                $item_id  = $tag_ID;
+                $resource = $taxonomy;
             } else {
                 $item_id    = null;
                 $resource = 'options';

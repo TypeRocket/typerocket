@@ -10,6 +10,8 @@ class Taxonomy extends Registrable
 {
 
     private $postTypes = array();
+    private $form = array();
+    private $resource = null;
 
     /**
      * Make Taxonomy. Do not use before init.
@@ -58,6 +60,7 @@ class Taxonomy extends Registrable
         // setup object for later use
         $plural       = Sanitize::underscore( $plural );
         $singular     = Sanitize::underscore( $singular );
+        $this->resource = $plural;
         $this->id     = ! $this->id ? $singular : $this->id;
 
         if (array_key_exists( 'capabilities', $settings ) && $settings['capabilities'] === true) :
@@ -90,6 +93,43 @@ class Taxonomy extends Registrable
     public function setSlug( $slug )
     {
         $this->args['rewrite'] = array( 'slug' => Sanitize::dash( $slug ) );
+
+        return $this;
+    }
+
+    /**
+     * Get the form hook value by key
+     *
+     * @param $key
+     *
+     * @return mixed
+     */
+    public function getForm( $key )
+    {
+        $form = null;
+        if(array_key_exists($key, $this->form)) {
+            $form = $this->form[$key];
+        }
+
+        return $form;
+    }
+
+    /**
+     * Set the form bottom hook
+     *
+     * From hook to be added just above the title field
+     *
+     * @param bool|true|callable $value
+     *
+     * @return $this
+     */
+    public function setBottomForm( $value = true )
+    {
+        if (is_callable( $value )) {
+            $this->form['bottom'] = $value;
+        } else {
+            $this->form['bottom'] = true;
+        }
 
         return $this;
     }
@@ -129,6 +169,7 @@ class Taxonomy extends Registrable
 
         do_action( 'tr_register_taxonomy_' . $this->id, $this );
         register_taxonomy( $this->id, $this->postTypes, $this->args );
+        Registry::addTaxonomyResource($this->id, $this->resource);
 
         return $this;
     }

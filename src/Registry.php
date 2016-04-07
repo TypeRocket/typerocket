@@ -6,6 +6,7 @@ class Registry
 
     private static $collection = array();
     private static $postTypes = array( 'post' => 'posts', 'page' => 'pages' );
+    private static $taxonomies = array( 'category' => 'categories', 'post_tag' => 'tags' );
 
     /**
      * Add a post type resource
@@ -26,6 +27,27 @@ class Registry
      */
     public static function getPostTypeResource($id) {
         return ! empty(self::$postTypes[$id]) ? self::$postTypes[$id] : null;
+    }
+
+    /**
+     * Get the taxonomy resource
+     *
+     * @param $id
+     *
+     * @return null
+     */
+    public static function getTaxonomyResource($id) {
+        return ! empty(self::$taxonomies[$id]) ? self::$taxonomies[$id] : null;
+    }
+
+    /**
+     * Add a taxonomy resource
+     *
+     * @param string $id post type id
+     * @param string $resource resource name ex. posts, pages, books
+     */
+    public static function addTaxonomyResource($id, $resource) {
+        self::$taxonomies[$id] = $resource;
     }
 
     /**
@@ -70,6 +92,9 @@ class Registry
         foreach ($collection as $obj) {
             if ($obj instanceof Taxonomy) {
                 add_action( 'init', array( $obj, 'register' ) );
+
+                self::taxonomyFormContent($obj);
+
             } elseif ($obj instanceof PostType) {
                 /** @var PostType $obj */
                 add_action( 'init', array( $obj, 'register' ) );
@@ -95,6 +120,34 @@ class Registry
                 add_action( 'admin_init', array( $obj, 'register' ) );
                 add_action( 'add_meta_boxes', array( $obj, 'register' ) );
             }
+        }
+    }
+
+    private static function taxonomyFormContent( Taxonomy $obj ) {
+
+        $callback = function( $term, $type, $obj )
+        {
+            if ( $term->taxonomy == $obj->getId() ) {
+                $func = 'add_form_content_' . $obj->getId() . '_' . $type;
+                echo '<div class="typerocket-container">';
+
+                $form = $obj->getForm( $type );
+                if (is_callable( $form )) {
+                    call_user_func( $form, $term );
+                } elseif (function_exists( $func )) {
+                    call_user_func( $func, $term );
+                } elseif (TR_DEBUG == true) {
+                    echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by defining: <code>function {$func}() {}</code></div>";
+                }
+                echo '</div>';
+            }
+        };
+
+        if ($obj->getForm( 'bottom' )) {
+            add_action( $obj->getId() . '_edit_form', function($term) use ($obj, $callback) {
+                $type = 'bottom';
+                call_user_func_array($callback, array($term, $type, $obj));
+            }, 10, 2 );
         }
     }
 

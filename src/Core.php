@@ -59,9 +59,9 @@ class Core
      */
     public function initFrontEnd()
     {
-        add_action( 'wp_enqueue_scripts', array( $this, 'addCss' ) );
-        add_action( 'wp_enqueue_scripts', array( $this, 'addJs' ) );
-        add_action( 'wp_footer', array( $this, 'addBottomJs' ) );
+        add_action( 'wp_enqueue_scripts', [ $this, 'addCss' ] );
+        add_action( 'wp_enqueue_scripts', [ $this, 'addJs' ] );
+        add_action( 'wp_footer', [ $this, 'addBottomJs' ] );
     }
 
     /**
@@ -167,7 +167,7 @@ class Core
         $paths = Config::getPaths();
         $assets = $paths['urls']['assets'];
 
-        wp_enqueue_script( 'typerocket-scripts-global', $assets . '/js/global.js', array(), '1.0' );
+        wp_enqueue_script( 'typerocket-scripts-global', $assets . '/js/global.js', [], '1.0' );
     }
 
     /**
@@ -178,7 +178,7 @@ class Core
         $paths = Config::getPaths();
         $assets = $paths['urls']['assets'];
 
-        wp_enqueue_script( 'typerocket-scripts', $assets . '/js/typerocket.js', array( 'jquery' ), '1.0', true );
+        wp_enqueue_script( 'typerocket-scripts', $assets . '/js/typerocket.js', [ 'jquery' ], '1.0', true );
     }
 
 }
