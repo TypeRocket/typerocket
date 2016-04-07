@@ -1,8 +1,7 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html,
-    \TypeRocket\Config;
+use \TypeRocket\Html;
 
 class File extends Field implements ScriptField
 {
@@ -15,10 +14,7 @@ class File extends Field implements ScriptField
     }
 
     public function enqueueScripts() {
-        $paths = Config::getPaths();
         wp_enqueue_media();
-        wp_enqueue_script( 'typerocket-media', $paths['urls']['assets'] . '/js/media.js', array( 'jquery' ), '1.0',
-            true );
     }
 
     /**

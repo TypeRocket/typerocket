@@ -178,9 +178,6 @@ class Core
         $paths = Config::getPaths();
         $assets = $paths['urls']['assets'];
 
-        if (Config::getDebugStatus() === true) {
-            wp_enqueue_script( 'typerocket-dev', $assets . '/js/dev.js', array( 'jquery' ), '1.0', true );
-        }
         wp_enqueue_script( 'typerocket-scripts', $assets . '/js/typerocket.js', array( 'jquery' ), '1.0', true );
     }
 

@@ -1,10 +1,9 @@
 <?php
 namespace TypeRocket\Fields;
 
-use \TypeRocket\Html\Generator,
-    \TypeRocket\Config;
+use \TypeRocket\Html\Generator;
 
-class Items extends Field implements ScriptField
+class Items extends Field
 {
     /**
      * Run on construction
@@ -12,12 +11,6 @@ class Items extends Field implements ScriptField
     protected function init()
     {
         $this->setType( 'items' );
-    }
-
-    public function enqueueScripts() {
-        $paths = Config::getPaths();
-        wp_enqueue_script( 'typerocket-items', $paths['urls']['assets'] . '/js/items.js', array( 'jquery' ),
-            '1.0', true );
     }
 
     /**

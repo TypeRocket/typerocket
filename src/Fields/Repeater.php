@@ -1,8 +1,7 @@
 <?php
 namespace TypeRocket\Fields;
 
-use TypeRocket\Config,
-    TypeRocket\Html\Generator;
+use TypeRocket\Html\Generator;
 
 class Repeater extends Field implements ScriptField
 {
@@ -19,9 +18,6 @@ class Repeater extends Field implements ScriptField
 
     public function enqueueScripts()
     {
-        $paths = Config::getPaths();
-        wp_enqueue_script( 'typerocket-booyah', $paths['urls']['assets'] . '/js/booyah.js', array( 'jquery' ), '1.0',
-            true );
         wp_enqueue_script( 'jquery-ui-sortable', array( 'jquery' ), '1.0', true );
     }
 

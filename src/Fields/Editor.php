@@ -16,9 +16,9 @@ class Editor extends Textarea implements ScriptField
 
     public function enqueueScripts() {
         $paths = Config::getPaths();
+        $assets = $paths['urls']['assets'];
         wp_enqueue_media();
-        wp_enqueue_script( 'typerocket-editor', $paths['urls']['assets'] . '/js/redactor.min.js', array( 'jquery' ), '1.0',
-            true );
+        wp_enqueue_script( 'typerocket-editor', $assets . '/js/redactor.min.js', array( 'jquery' ), '1.0', true );
     }
 
     /**
@@ -42,7 +42,7 @@ class Editor extends Textarea implements ScriptField
         if ( $maxLength != null && $maxLength > 0) {
             $left = (int) $maxLength - strlen( utf8_decode( $value ) );
             $max = new Generator();
-            $max->newElement('p', array('class' => 'tr-maxlength'), 'Characters left: ')->appendInside('span', array(), $left);
+            $max->newElement('p', ['class' => 'tr-maxlength'], 'Characters left: ')->appendInside('span', [], $left);
             $max = $max->getString();
         }
 

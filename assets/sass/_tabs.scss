@@ -6,26 +6,27 @@
     background-color: #fff;
     -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.025);
     box-shadow: 0 1px 0 rgba(0,0,0,.025);
-}
 
-.tr-tabbed-box .tr-contextual-help-back,
-.tr-tabbed-box .contextual-help-tabs .active,
-.tr-tabbed-box .contextual-help-tabs .active a,
-.tr-tabbed-box .contextual-help-tabs .active a:hover {
-    background: #fefefe;
-    outline: none;
-    box-shadow: none;
-}
+    .tr-contextual-help-back,
+    .contextual-help-tabs .active,
+    .contextual-help-tabs .active a,
+    .contextual-help-tabs .active a:hover {
+        background: #fefefe;
+        outline: none;
+        box-shadow: none;
+    }
 
-.tr-tabbed-box .tr-contextual-help-back {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 150px;
-    right: 170px;
-    border: 1px solid #e1e1e1;
-    border-top: none;
-    border-bottom: none;
+    .tr-contextual-help-back {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 150px;
+        right: 170px;
+        border: 1px solid #e1e1e1;
+        border-top: none;
+        border-bottom: none;
+    }
+
 }
 
 .tr-contextual-help-columns {

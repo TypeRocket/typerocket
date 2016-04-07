@@ -15,7 +15,7 @@ class Color extends Field implements ScriptField
     }
 
     public function enqueueScripts() {
-        wp_enqueue_script( 'wp-color-picker' );
+        wp_enqueue_script( 'wp-color-picker'  );
     }
 
     /**
