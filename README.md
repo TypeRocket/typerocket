@@ -1,12 +1,12 @@
-## TypeRocket 2
+## TypeRocket 3
 Coding advanced WordPress themes became a blast. Be good looking and do cool stuff with less code.
 
 http://typerocket.com
 
 ### Requirements
 
-- WordPress 4.0+
-- PHP 5.3+
+- WordPress 4.5+
+- PHP 5.4+
 
 ### Language
 
