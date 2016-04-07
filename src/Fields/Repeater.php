@@ -7,7 +7,7 @@ use TypeRocket\Config,
 class Repeater extends Field implements ScriptField
 {
 
-    private $fields = array();
+    private $fields = [];
 
     /**
      * Run on construction
