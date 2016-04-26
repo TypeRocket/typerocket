@@ -99,31 +99,38 @@
  */
 
 (function() {
-  var booyah;
+  this.booyah = (function() {
+    function booyah() {}
 
-  booyah = {
-    templateTagKeys: [],
-    templateTagValues: [],
-    templateArray: [],
-    templateString: '',
-    ready: function() {
+    booyah.prototype.templateTagKeys = [];
+
+    booyah.prototype.templateTagValues = [];
+
+    booyah.prototype.templateArray = [];
+
+    booyah.prototype.templateString = '';
+
+    booyah.prototype.ready = function() {
       this.templateString = this.templateArray.join('');
       this.replaceTags(this.templateString);
       this.templateTagKeys = [];
       this.templateTagValues = [];
       this.templateArray = [];
       return this.templateString;
-    },
-    addTag: function(key, value) {
+    };
+
+    booyah.prototype.addTag = function(key, value) {
       this.templateTagKeys.push(key);
       this.templateTagValues.push(value);
       return this;
-    },
-    addTemplate: function(string) {
+    };
+
+    booyah.prototype.addTemplate = function(string) {
       this.templateArray.push(string);
       return this;
-    },
-    replaceTags: function(string) {
+    };
+
+    booyah.prototype.replaceTags = function(string) {
       var i, replaceTag, tagCount, withThisValue;
       tagCount = this.templateTagKeys.length;
       i = 0;
@@ -133,8 +140,11 @@
         this.templateString = this.templateString.replace(new RegExp(replaceTag), withThisValue);
         i++;
       }
-    }
-  };
+    };
+
+    return booyah;
+
+  })();
 
 }).call(this);
 
@@ -331,7 +341,7 @@
       nameParse: function(string, hash, id) {
         var liveTemplate, temp;
         liveTemplate = string;
-        temp = booyah;
+        temp = new booyah;
         liveTemplate = temp.addTemplate(liveTemplate).addTag('{{ ' + id + ' }}', hash).ready();
         return liveTemplate;
       }

@@ -8,7 +8,7 @@
 # Time: 10:37 AM
 ###
 
-booyah =
+class @booyah
   templateTagKeys: []
   templateTagValues: []
   templateArray: []

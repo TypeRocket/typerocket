@@ -166,13 +166,7 @@ abstract class Field
      */
     public function setGroup( $group )
     {
-        $this->group = null;
-
-        if (Validate::bracket( $group )) {
-            $this->group = $group;
-        } elseif (is_string( $group )) {
-            $this->group = "[{$group}]";
-        }
+        $this->group = $group;
 
         return $this;
     }
@@ -196,13 +190,7 @@ abstract class Field
      */
     public function setSub( $sub )
     {
-        $this->sub = null;
-
-        if (Validate::bracket( $sub )) {
-            $this->sub = $sub;
-        } elseif (is_string( $sub )) {
-            $this->sub = "[{$sub}]";
-        }
+        $this->sub = $sub;
 
         return $this;
     }

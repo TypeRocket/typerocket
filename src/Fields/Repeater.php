@@ -59,8 +59,8 @@ class Repeater extends Field implements ScriptField
         $cache_group = $form->getGroup();
         $cache_sub   = $form->getSub();
 
-        $root_group = $this->getBrackets();
-        $form->setGroup( $this->getBrackets() . "[{{ {$name} }}]" );
+        $root_group = $this->getDots();
+        $form->setGroup( $this->getDots() . ".{{ {$name} }}" );
 
         // add controls (add, flip, clear all)
         $generator    = new Generator();
@@ -83,7 +83,7 @@ class Repeater extends Field implements ScriptField
             foreach ($repeats as $k => $array) {
                 $html .= '<div class="tr-repeater-group">';
                 $html .= $openContainer;
-                $form->setGroup( $root_group . "[{$k}]" );
+                $form->setGroup( $root_group . ".{$k}" );
                 $html .= $form->getFromFieldsString( $this->fields );
                 $html .= $endContainer;
                 $html .= '</div>';
