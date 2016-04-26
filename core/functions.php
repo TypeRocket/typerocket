@@ -1,4 +1,18 @@
 <?php
+
+function tr_get_model($resource) {
+
+    $Resource = ucfirst($resource);
+    $model = "\\TypeRocket\\Models\\{$Resource}Model";
+    $object = null;
+
+    if( class_exists($model) ) {
+        $object = new $model;
+    }
+
+    return $object;
+}
+
 function tr_taxonomy(
     $singular,
     $plural = null,
@@ -104,6 +118,15 @@ function tr_comments_field( $name, $item_id = null )
     }
 
     $model = new \TypeRocket\Models\CommentsModel();
+    $model->findById($item_id);
+
+    return $model->getFieldValue( $name );
+}
+
+function tr_taxonomies_field( $name, $taxonomy, $item_id = null )
+{
+    /** @var \TypeRocket\Models\TaxonomiesModel $model */
+    $model = tr_get_model($taxonomy);
     $model->findById($item_id);
 
     return $model->getFieldValue( $name );

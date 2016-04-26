@@ -25,7 +25,7 @@ class Select extends Field
         $default = $this->getSetting('default');
         $this->setAttribute('name', $this->getNameAttributeString());
         $option = $this->getValue();
-        $option     = ! is_null($option) ? $this->getValue() : $default;
+        $option = ! is_null($option) ? $this->getValue() : $default;
 
         $generator  = new Generator();
         $generator->newElement( 'select', $this->getAttributes() );
