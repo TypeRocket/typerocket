@@ -483,7 +483,7 @@ class Form
 
         if($this->model instanceof TaxonomiesModel) {
             $controller = 'taxonomies';
-            $param = ', "'.$resource.'"';
+            $param = ', \''.$resource.'\'';
             $param .= ', '.$field->getItemId();
         }
 
