@@ -167,6 +167,19 @@ add_filter('tr_model_secure_fields', function($fields, $model) {
 }, 10, 2);
 ```
 
+### Custom Taxonomy Fields
+
+You can also use the same design and principles to work with taxonomies.
+
+```php
+$publisher = tr_taxonomy('Publisher', 'Publishers');
+$publisher->addPostType('post');
+$publisher->setBottomForm(function() {
+	$form = tr_form();
+	echo $form->text('Company');
+});
+```
+
 ### Designers
 
 We made TypeRocket with design in mind first. Inside and out. Writing your code to replace plugins is super simple. We give you a development mode so building your custom feature is as simple as copy and paste. Don't let that fool you though. TypeRocket uses all the best available programing patterns that are compatible with WordPress.
