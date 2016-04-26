@@ -99,38 +99,35 @@
  */
 
 (function() {
-  this.booyah = (function() {
-    function booyah() {}
+  this.Booyah = (function() {
+    Booyah.prototype.templateTagKeys = [];
 
-    booyah.prototype.templateTagKeys = [];
+    Booyah.prototype.templateTagValues = [];
 
-    booyah.prototype.templateTagValues = [];
+    Booyah.prototype.templateArray = [];
 
-    booyah.prototype.templateArray = [];
+    Booyah.prototype.templateString = '';
 
-    booyah.prototype.templateString = '';
+    function Booyah() {}
 
-    booyah.prototype.ready = function() {
+    Booyah.prototype.ready = function() {
       this.templateString = this.templateArray.join('');
-      this.replaceTags(this.templateString);
-      this.templateTagKeys = [];
-      this.templateTagValues = [];
-      this.templateArray = [];
+      this.replaceTags;
       return this.templateString;
     };
 
-    booyah.prototype.addTag = function(key, value) {
+    Booyah.prototype.addTag = function(key, value) {
       this.templateTagKeys.push(key);
       this.templateTagValues.push(value);
       return this;
     };
 
-    booyah.prototype.addTemplate = function(string) {
+    Booyah.prototype.addTemplate = function(string) {
       this.templateArray.push(string);
       return this;
     };
 
-    booyah.prototype.replaceTags = function(string) {
+    Booyah.prototype.replaceTags = function() {
       var i, replaceTag, tagCount, withThisValue;
       tagCount = this.templateTagKeys.length;
       i = 0;
@@ -142,7 +139,7 @@
       }
     };
 
-    return booyah;
+    return Booyah;
 
   })();
 
@@ -341,7 +338,7 @@
       nameParse: function(string, hash, id) {
         var liveTemplate, temp;
         liveTemplate = string;
-        temp = new booyah;
+        temp = new Booyah;
         liveTemplate = temp.addTemplate(liveTemplate).addTag('{{ ' + id + ' }}', hash).ready();
         return liveTemplate;
       }

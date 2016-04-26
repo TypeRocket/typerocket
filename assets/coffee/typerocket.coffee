@@ -174,7 +174,7 @@ jQuery(document).ready ($) ->
       return
     nameParse: (string, hash, id) ->
       liveTemplate = string
-      temp = new booyah
+      temp = new Booyah
       liveTemplate = temp.addTemplate(liveTemplate).addTag('{{ ' + id + ' }}', hash).ready()
       liveTemplate
   repeaterClone.init()

@@ -8,17 +8,16 @@
 # Time: 10:37 AM
 ###
 
-class @booyah
+class @Booyah
   templateTagKeys: []
   templateTagValues: []
   templateArray: []
   templateString: ''
+
+  constructor: ->
   ready: ->
     @templateString = @templateArray.join('')
-    @replaceTags @templateString
-    @templateTagKeys = []
-    @templateTagValues = []
-    @templateArray = []
+    @replaceTags
     @templateString
   addTag: (key, value) ->
     @templateTagKeys.push key
@@ -27,7 +26,7 @@ class @booyah
   addTemplate: (string) ->
     @templateArray.push string
     this
-  replaceTags: (string) ->
+  replaceTags: () ->
     tagCount = @templateTagKeys.length
     i = 0
     while tagCount > i

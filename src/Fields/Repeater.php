@@ -79,7 +79,7 @@ class Repeater extends Field implements ScriptField
         // render saved data
         $html .= '<div class="tr-repeater-fields">'; // start tr-repeater-fields
         $repeats = $this->getValue();
-        if (is_array( $repeats )) {
+        if ( is_array( $repeats ) ) {
             foreach ($repeats as $k => $array) {
                 $html .= '<div class="tr-repeater-group">';
                 $html .= $openContainer;
