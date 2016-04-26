@@ -27,7 +27,9 @@ class Kernel
         'options' =>
             array('CanManageOptions'),
         'categories' =>
-            array('AuthAdmin')
+            array('CanManageCategories'),
+        'tags' =>
+            array('CanManageCategories')
     );
 
     /**
