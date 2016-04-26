@@ -95,7 +95,7 @@ class Form
                 $controller = "\\TypeRocket\\Controllers\\{$Resource}Controller";
 
                 if( empty($resource) || ! class_exists($model) || ! class_exists($controller) ) {
-                    $resource = 'category';
+                    $resource = 'categories';
                 }
 
             } else {

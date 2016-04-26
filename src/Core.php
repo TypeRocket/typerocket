@@ -93,6 +93,7 @@ class Core
         add_action( 'save_post', 'TypeRocket\Http\Responders\Hook::posts' );
         add_action( 'wp_insert_comment', 'TypeRocket\Http\Responders\Hook::comments' );
         add_action( 'edit_comment', 'TypeRocket\Http\Responders\Hook::comments' );
+        add_action( 'edit_term', 'TypeRocket\Http\Responders\Hook::taxonomies', 10, 4 );
         add_action( 'profile_update', 'TypeRocket\Http\Responders\Hook::users' );
         add_action( 'user_register', 'TypeRocket\Http\Responders\Hook::users' );
     }

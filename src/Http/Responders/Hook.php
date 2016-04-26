@@ -25,4 +25,10 @@ class Hook {
         $responder->respond($id);
     }
 
+    static public function taxonomies($term_id, $term_taxonomy_id, $taxonomy) {
+        $responder = new TaxonomiesResponder();
+        $responder->taxonomy = $taxonomy;
+        $responder->respond($term_id);
+    }
+
 }

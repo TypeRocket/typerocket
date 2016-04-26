@@ -25,7 +25,9 @@ class Kernel
         'comments' =>
             array('OwnsCommentOrCanEditComments'),
         'options' =>
-            array('CanManageOptions')
+            array('CanManageOptions'),
+        'categories' =>
+            array('AuthAdmin')
     );
 
     /**
