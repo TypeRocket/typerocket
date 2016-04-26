@@ -22,7 +22,7 @@
 */
 global $wp_version;
 
-if(empty($wp_version) || $wp_version < '4.4'  ) :
+if(empty($wp_version) || $wp_version < '4.5'  ) :
   die("You need version 4.5+ of WordPress. Using " . $wp_version);
 elseif(PHP_VERSION < '5.4') :
   die("You need version 5.4+ of PHP. Using " . PHP_VERSION);
