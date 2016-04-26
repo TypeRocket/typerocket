@@ -127,7 +127,7 @@ class Registry
 
         $callback = function( $term, $type, $obj )
         {
-            if ( $term->taxonomy == $obj->getId() ) {
+            if ( $term->taxonomy == $obj->getId() || $term == $obj->getId() ) {
                 $func = 'add_form_content_' . $obj->getId() . '_' . $type;
                 echo '<div class="typerocket-container">';
 
@@ -143,9 +143,14 @@ class Registry
             }
         };
 
-        if ($obj->getForm( 'bottom' )) {
+        if ($obj->getForm( 'main' )) {
             add_action( $obj->getId() . '_edit_form', function($term) use ($obj, $callback) {
-                $type = 'bottom';
+                $type = 'main';
+                call_user_func_array($callback, array($term, $type, $obj));
+            }, 10, 2 );
+
+            add_action( $obj->getId() . '_add_form_fields', function($term) use ($obj, $callback) {
+                $type = 'main';
                 call_user_func_array($callback, array($term, $type, $obj));
             }, 10, 2 );
         }

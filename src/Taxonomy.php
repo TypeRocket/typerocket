@@ -115,7 +115,7 @@ class Taxonomy extends Registrable
     }
 
     /**
-     * Set the form bottom hook
+     * Set the form main hook
      *
      * From hook to be added just above the title field
      *
@@ -123,12 +123,12 @@ class Taxonomy extends Registrable
      *
      * @return $this
      */
-    public function setBottomForm( $value = true )
+    public function setMainForm( $value = true )
     {
         if (is_callable( $value )) {
-            $this->form['bottom'] = $value;
+            $this->form['main'] = $value;
         } else {
-            $this->form['bottom'] = true;
+            $this->form['main'] = true;
         }
 
         return $this;
