@@ -664,7 +664,7 @@ abstract class Field
         $array = explode('.', $dots);
         $brackets = array_map(function($item) { return "[{$item}]"; }, $array);
 
-        return $brackets;
+        return implode('', $brackets);
     }
 
     /**
