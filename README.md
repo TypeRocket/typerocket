@@ -174,7 +174,7 @@ You can also use the same design and principles to work with taxonomies.
 ```php
 $publisher = tr_taxonomy('Publisher', 'Publishers');
 $publisher->addPostType('post');
-$publisher->setBottomForm(function() {
+$publisher->setMainForm(function() {
 	$form = tr_form();
 	echo $form->text('Company');
 });
