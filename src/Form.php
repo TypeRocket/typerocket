@@ -472,7 +472,7 @@ class Form
     private function getFieldHelpFunction( Fields\Field $field )
     {
 
-        $brackets   = $field->getBrackets();
+        $brackets   = $field->getDots();
         $resource = $field->getResource();
         $controller = $resource;
         $param = '';

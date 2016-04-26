@@ -268,14 +268,14 @@ abstract class Model
     public function getFieldValue( $field )
     {
         if ($field instanceof Field) {
-            $field = $field->getBrackets();
+            $field = $field->getDots();
         }
 
         if ($this->id == null) {
             return null;
         }
 
-        $keys = $this->geBracketKeys( $field );
+        $keys = $this->getDotKeys( $field );
         $data = $this->getBaseFieldValue( $keys[0] );
 
         return $this->parseValueData( $data, $keys );
@@ -316,16 +316,14 @@ abstract class Model
      * Get keys from TypeRocket brackets
      *
      * @param $str
-     * @param int $set
      *
      * @return mixed
      */
-    private function geBracketKeys( $str, $set = 1 )
+    private function getDotKeys( $str )
     {
-        $regex = '/\[([^]]+)\]/i';
-        preg_match_all( $regex, $str, $matches, PREG_PATTERN_ORDER );
+        $matches = explode('.', $str);
 
-        return $matches[$set];
+        return $matches;
     }
 
     /**

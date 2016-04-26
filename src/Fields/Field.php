@@ -639,7 +639,32 @@ abstract class Field
      */
     public function getBrackets()
     {
-        return "{$this->group}[{$this->name}]{$this->sub}";
+        return $this->getBracketsFromDots();
+    }
+
+    public function getDots()
+    {
+
+        $dots = $this->name;
+
+        if(!empty($this->group)) {
+            $dots = $this->group . '.' . $dots;
+        }
+
+        if(!empty($this->sub)) {
+            $dots .= '.' . $this->sub;
+        }
+
+        return $dots;
+    }
+
+    public function getBracketsFromDots()
+    {
+        $dots = $this->getDots();
+        $array = explode('.', $dots);
+        $brackets = array_map(function($item) { return "[{$item}]"; }, $array);
+
+        return $brackets;
     }
 
     /**
