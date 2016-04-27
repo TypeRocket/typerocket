@@ -13,14 +13,9 @@ abstract class Field
     private $type = null;
     private $attr = array();
 
-    private $itemId = null;
-    private $resource = null;
     /** @var Form */
     private $form = null;
-
     private $prefix = null;
-    private $brackets = null;
-
     private $label = false;
 
     /**
@@ -136,12 +131,14 @@ abstract class Field
      */
     public function configureToForm( Form $form )
     {
-        $this->setGroup( $form->getGroup() );
-        $this->setSub( $form->getSub() );
-        $this->itemId = $form->getItemId();
-        $this->resource = $form->getResource();
-        $this->setPopulate( $form->getPopulate() );
         $this->form = clone $form;
+        $this->setGroup( $this->form->getGroup() );
+        $this->setSub( $this->form->getSub() );
+        $this->itemId = $this->form->getItemId();
+        $this->resource = $this->form->getResource();
+        $this->action = $this->form->getAction();
+        $this->model = $this->form->getModel();
+        $this->setPopulate( $this->form->getPopulate() );
 
         return $this;
     }
@@ -259,29 +256,7 @@ abstract class Field
             $this->setPrefix();
         }
 
-        $this->brackets = $this->getBrackets();
-
-        return $this->prefix . $this->brackets;
-    }
-
-    /**
-     * Get Resource
-     *
-     * @return null
-     */
-    public function getResource()
-    {
-        return $this->resource;
-    }
-
-    /**
-     * Get Item ID
-     *
-     * @return null
-     */
-    public function getItemId()
-    {
-        return $this->itemId;
+        return $this->prefix .$this->getBrackets();
     }
 
     /**

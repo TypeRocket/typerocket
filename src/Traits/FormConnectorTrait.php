@@ -4,10 +4,58 @@ namespace TypeRocket\Traits;
 
 trait FormConnectorTrait
 {
-    protected $populate = true;
-    protected $group = null;
-    protected $sub = null;
-    protected $settings = [];
+
+    private $resource = null;
+    private $action = null;
+    private $itemId = null;
+
+    /** @var \TypeRocket\Models\Model $model */
+    private $model = null;
+
+    private $populate = true;
+    private $group = null;
+    private $sub = null;
+    private $settings = [];
+
+    /**
+     * Get controller
+     *
+     * @return null|string
+     */
+    public function getResource()
+    {
+        return $this->resource;
+    }
+
+    /**
+     * Set Action
+     *
+     * @return null|string
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * Get Item ID
+     *
+     * @return null|string
+     */
+    public function getItemId()
+    {
+        return $this->itemId;
+    }
+
+    /**
+     * Get Model
+     *
+     * @return \TypeRocket\Models\Model
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
 
     /**
      * Set Group into dot notation
@@ -165,7 +213,6 @@ trait FormConnectorTrait
      */
     public function setRenderSetting( $value )
     {
-
         $this->settings['render'] = $value;
 
         return $this;

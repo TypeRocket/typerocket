@@ -13,13 +13,6 @@ class Form
 
     use FormConnectorTrait;
 
-    private $resource = null;
-    private $action = null;
-    private $itemId = null;
-
-    /** @var \TypeRocket\Models\Model $model */
-    private $model = null;
-
     /** @var \TypeRocket\Fields\Field $currentField */
     private $currentField = '';
 
@@ -108,102 +101,6 @@ class Form
         }
 
         return $this;
-    }
-
-    /**
-     * Get controller
-     *
-     * @return null|string
-     */
-    public function getResource()
-    {
-        return $this->resource;
-    }
-
-    /**
-     * Set Action
-     *
-     * @return null|string
-     */
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    /**
-     * Get Item ID
-     *
-     * @return null|string
-     */
-    public function getItemId()
-    {
-        return $this->itemId;
-    }
-
-    /**
-     * Get Item ID
-     *
-     * @return \TypeRocket\Models\Model
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    /**
-     * Get the render setting of the form
-     *
-     * @return null
-     */
-    public function getRenderSetting()
-    {
-        if ( ! array_key_exists( 'render', $this->settings )) {
-            return null;
-        }
-
-        return $this->settings['render'];
-    }
-
-    /**
-     * Render Setting
-     *
-     * By setting render to 'raw' the form will not add any special html wrappers.
-     * You have more control of the design when render is set to raw.
-     *
-     * @param string $value
-     *
-     * @return $this
-     */
-    public function setRenderSetting( $value )
-    {
-        $this->settings['render'] = $value;
-
-        return $this;
-    }
-
-    /**
-     * Set whether to populate fields in the form. If set to false fields will
-     * always be left empty and with their default values.
-     *
-     * @param $populate
-     *
-     * @return $this
-     */
-    public function setPopulate( $populate )
-    {
-        $this->populate = (bool) $populate;
-
-        return $this;
-    }
-
-    /**
-     * Get Populate
-     *
-     * @return bool
-     */
-    public function getPopulate()
-    {
-        return $this->populate;
     }
 
     /**
