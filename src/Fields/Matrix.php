@@ -139,8 +139,15 @@ class Matrix extends Field implements ScriptField {
 
             foreach ($files as $file) {
                 if (file_exists( $dir . '/' . $file )) {
+
+                    $the_file = $file;
                     $path = pathinfo( $file );
                     $key = $this->cleanFileName( $path['filename'] );
+                    $line = fgets(fopen( $dir . '/' . $the_file, 'r'));
+                    if( preg_match("/<[h|H]\\d>(.*)<\\/[h|H]\\d>/U", $line, $matches) ) {
+                        $key = $matches[1];
+                    }
+
                     $this->options[$key] = $path['filename'];
                 }
             }
