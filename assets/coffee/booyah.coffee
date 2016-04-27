@@ -15,9 +15,13 @@ class @Booyah
   templateString: ''
 
   constructor: ->
+    @templateTagKeys = []
+    @templateTagValues = []
+    @templateArray = []
+    @templateString = ''
   ready: ->
     @templateString = @templateArray.join('')
-    @replaceTags
+    @replaceTags()
     @templateString
   addTag: (key, value) ->
     @templateTagKeys.push key

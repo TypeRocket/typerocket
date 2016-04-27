@@ -87,7 +87,7 @@ class Form
             } elseif (isset( $user_id )) {
                 $item_id  = $user_id;
                 $resource = 'users';
-            } elseif ( isset( $taxonomy ) && isset($tag_ID) ) {
+            } elseif ( isset( $taxonomy ) || isset($tag_ID) ) {
                 $item_id  = $tag_ID;
                 $resource = Registry::getTaxonomyResource($taxonomy);
 

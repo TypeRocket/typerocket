@@ -19,7 +19,8 @@ $form->setGroup( $this->getName() );
     $contact = array(
         $form->text('Company Name'),
         $form->text('Company Email'),
-        $form->text('Company Phone')
+        $form->text('Company Phone'),
+        $form->checkbox('Company Open')->setSetting('text', 'Company open for business')->setLabel(false)
     );
     $about = $form->getFromFieldsString( $contact );
 

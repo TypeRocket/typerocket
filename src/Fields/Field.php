@@ -2,7 +2,6 @@
 namespace TypeRocket\Fields;
 
 use \TypeRocket\Form,
-    \TypeRocket\Validate,
     \TypeRocket\Sanitize;
 
 abstract class Field

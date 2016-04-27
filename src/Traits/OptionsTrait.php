@@ -1,6 +1,6 @@
 <?php
 
-namespace TypeRocket\Fields\Traits;
+namespace TypeRocket\Traits;
 
 trait OptionsTrait
 {

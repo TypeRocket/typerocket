@@ -108,11 +108,16 @@
 
     Booyah.prototype.templateString = '';
 
-    function Booyah() {}
+    function Booyah() {
+      this.templateTagKeys = [];
+      this.templateTagValues = [];
+      this.templateArray = [];
+      this.templateString = '';
+    }
 
     Booyah.prototype.ready = function() {
       this.templateString = this.templateArray.join('');
-      this.replaceTags;
+      this.replaceTags();
       return this.templateString;
     };
 
