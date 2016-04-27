@@ -33,7 +33,7 @@ class Radio extends Field
         $field = '<ul class="data-full">';
 
         foreach ($this->options as $key => $value) {
-            if ($option === $value) {
+            if ( $option == $value && isset($option) ) {
                 $this->setAttribute('checked', 'checked');
             } else {
                 $this->removeAttribute('checked');

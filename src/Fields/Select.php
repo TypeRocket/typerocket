@@ -25,7 +25,7 @@ class Select extends Field
         $default = $this->getSetting('default');
         $this->setAttribute('name', $this->getNameAttributeString());
         $option = $this->getValue();
-        $option = ! is_null($option) ? $this->getValue() : $default;
+        $option = ! is_null($option) ? $option : $default;
 
         $generator  = new Generator();
         $generator->newElement( 'select', $this->getAttributes() );
@@ -33,7 +33,7 @@ class Select extends Field
         foreach ($this->options as $key => $value) {
 
             $attr['value'] = $value;
-            if ($option === $value) {
+            if ( $option == $value && isset($option) ) {
                 $attr['selected'] = 'selected';
             } else {
                 unset( $attr['selected'] );
