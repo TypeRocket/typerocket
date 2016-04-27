@@ -105,7 +105,7 @@ class Matrix extends Field implements ScriptField {
             foreach ($options as $name => $value) {
 
                 $attr['value'] = $value;
-                if ($default === $value) {
+                if ( $default == $value && isset($default) ) {
                     $attr['selected'] = 'selected';
                 } else {
                     unset( $attr['selected'] );
