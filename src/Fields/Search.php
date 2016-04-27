@@ -25,7 +25,6 @@ class Search extends Field implements ScriptField
      */
     public function getString()
     {
-        $max = '';
         $input = new Generator();
         $name = $this->getNameAttributeString();
         $value = $this->getValue();
@@ -35,8 +34,16 @@ class Search extends Field implements ScriptField
             $value = esc_attr( call_user_func($sanitize, $value ) );
         }
 
-        $this->appendStringToAttribute('class', 'tr-link', ' ');
+        $search_attributes = [
+            'placeholder' => 'Type to search...',
+            'class' => 'tr-link-search-input'
+        ];
 
-        return $input->newInput($this->getType(), $name, $value, $this->getAttributes() )->getString() . $max;
+        $field = $input->newInput($this->getType(), '', '',  $search_attributes)->getString();
+        $field .= $input->newInput( 'hidden', $name, $value, $this->getAttributes() )->getString();
+        $field .= '<div class="tr-link-search-page"></div>';
+        $field .= '<ul class="tr-link-search-results"></ul>';
+
+        return $field;
     }
 }

@@ -595,6 +595,15 @@
   font-weight: bold;
 }
 
+.tr-link-search-page {
+  margin-top: 3px;
+  margin-bottom: 6px;
+  color: #666;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: italic;
+}
+
 /**
  * For modern browsers
  * 1. The space content is one way to avoid an Opera bug when the

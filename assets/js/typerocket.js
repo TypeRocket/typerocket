@@ -610,13 +610,24 @@
   var tr_delay;
 
   jQuery.fn.TypeRocketLink = function(type) {
-    var search;
+    var search, that;
     if (type == null) {
-      type = 'page';
+      type = 'any';
     }
+    that = this;
     search = encodeURI(this.val());
     jQuery.getJSON('/wp-json/typerocket/v1/search?post_type=' + type + '&s=' + search, function(data) {
-      return console.log(data);
+      var i, len, post, results;
+      console.log(data);
+      if (data) {
+        that.next().next().html('');
+        results = [];
+        for (i = 0, len = data.length; i < len; i++) {
+          post = data[i];
+          results.push(that.next().next().next().append('<li class="tr-link-search-result" data-id="' + post.ID + '" >' + post.post_title));
+        }
+        return results;
+      }
     });
     return this;
   };
@@ -631,12 +642,19 @@
   })();
 
   jQuery(document).ready(function($) {
-    return $('.typerocket-container').on('keyup', '.tr-link', function() {
+    $('.typerocket-container').on('keyup', '.tr-link-search-input', function() {
       var that;
       that = $(this);
       return tr_delay((function() {
         that.TypeRocketLink();
       }), 300);
+    });
+    return $('.typerocket-container').on('click', '.tr-link-search-result', function() {
+      var id, title;
+      id = $(this).data('id');
+      title = $(this).text();
+      $(this).parent().prev().text(title);
+      return $(this).parent().prev().prev().val(id);
     });
   });
 
