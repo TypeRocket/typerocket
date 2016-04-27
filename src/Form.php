@@ -605,6 +605,21 @@ class Form
     }
 
     /**
+     * File Input
+     *
+     * @param string $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return Fields\Search
+     */
+    public function search( $name, array $attr = array(), array $settings = array(), $label = true )
+    {
+        return new Fields\Search( $name, $attr, $settings, $label, $this );
+    }
+
+    /**
      * Gallery Input
      *
      * @param string $name

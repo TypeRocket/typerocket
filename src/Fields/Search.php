@@ -4,8 +4,13 @@ namespace TypeRocket\Fields;
 
 use TypeRocket\Html\Generator;
 
-class Page extends Field
+class Search extends Field implements ScriptField
 {
+
+    public function enqueueScripts()
+    {
+        wp_enqueue_script( 'wp-link' );
+    }
 
     /**
      * Run on construction
@@ -30,16 +35,8 @@ class Page extends Field
             $value = esc_attr( call_user_func($sanitize, $value ) );
         }
 
-        $maxLength = $this->getAttribute('maxlength');
-
-        if ($maxLength != null && $maxLength > 0) {
-            $left = (int) $maxLength - strlen( utf8_decode( $value ) );
-            $max = new Generator();
-            $max->newElement('p', array('class' => 'tr-maxlength'), 'Characters left: ')->appendInside('span', array(), $left);
-            $max = $max->getString();
-        }
+        $this->appendStringToAttribute('class', 'tr-link', ' ');
 
         return $input->newInput($this->getType(), $name, $value, $this->getAttributes() )->getString() . $max;
     }
-
 }

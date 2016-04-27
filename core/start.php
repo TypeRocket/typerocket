@@ -164,4 +164,11 @@ add_filter( 'template_include', function($template) {
     return $template;
 }, 99 );
 
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'typerocket/v1', '/search', [
+        'methods' => 'GET',
+        'callback' => '\\TypeRocket\\WpRestApi::search'
+    ]);
+} );
+
 define( 'TR_END', microtime( true ) );

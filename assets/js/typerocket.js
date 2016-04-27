@@ -607,6 +607,42 @@
 }).call(this);
 
 (function() {
+  var tr_delay;
+
+  jQuery.fn.TypeRocketLink = function(type) {
+    var search;
+    if (type == null) {
+      type = 'page';
+    }
+    search = encodeURI(this.val());
+    jQuery.getJSON('/wp-json/typerocket/v1/search?post_type=' + type + '&s=' + search, function(data) {
+      return console.log(data);
+    });
+    return this;
+  };
+
+  tr_delay = (function() {
+    var timer;
+    timer = 0;
+    return function(callback, ms) {
+      clearTimeout(timer);
+      timer = setTimeout(callback, ms);
+    };
+  })();
+
+  jQuery(document).ready(function($) {
+    return $('.typerocket-container').on('keyup', '.tr-link', function() {
+      var that;
+      that = $(this);
+      return tr_delay((function() {
+        that.TypeRocketLink();
+      }), 300);
+    });
+  });
+
+}).call(this);
+
+(function() {
   jQuery.fn.selectText = function() {
     var doc, element, range, selection;
     doc = document;
