@@ -55,6 +55,8 @@ class TaxonomiesModel extends Model
      */
     public function create( array $fields )
     {
+        // TODO: Make create action
+        die('see todo');
         $fields = $this->secureFields($fields);
         $fields = array_merge($this->default, $fields, $this->static);
         $builtin = $this->getFilteredBuiltinFields($fields);
