@@ -294,7 +294,11 @@ abstract class Model
         $mainKey = $keys[0];
         if (isset( $mainKey ) && ! empty( $data )) {
 
-            if (is_serialized( $data )) {
+            if (  is_string($data) && tr_is_json($data)  ) {
+                $data = json_decode( $data, true );
+            }
+
+            if ( is_string($data) && is_serialized( $data ) ) {
                 $data = unserialize( $data );
             }
 

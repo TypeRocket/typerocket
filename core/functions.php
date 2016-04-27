@@ -131,3 +131,7 @@ function tr_taxonomies_field( $name, $taxonomy, $item_id = null )
 
     return $model->getFieldValue( $name );
 }
+
+function tr_is_json( $string ) {
+    return json_decode($string) ? true : false;
+}
