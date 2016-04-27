@@ -4,7 +4,7 @@ namespace TypeRocket\Traits;
 
 trait OptionsTrait
 {
-    private $options = [];
+    protected $options = [];
 
     public function setOption( $key, $value )
     {

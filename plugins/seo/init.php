@@ -67,7 +67,7 @@ class SeoPlugin
     // Page Title
     public function title( $title, $sep = '', $other = '' )
     {
-        $newTitle = tr_posts_field( '[seo][meta][title]', $this->itemId );
+        $newTitle = tr_posts_field( 'seo.meta.title', $this->itemId );
 
         if ( $newTitle != null ) {
             return $newTitle;
@@ -178,7 +178,7 @@ class SeoPlugin
     public function redirect()
     {
         if ( is_singular() ) {
-            $redirect = tr_posts_field( '[seo][meta][redirect]', $this->itemId );
+            $redirect = tr_posts_field( 'seo.meta.redirect', $this->itemId );
             if ( ! empty( $redirect ) ) {
                 wp_redirect( $redirect, 301 );
                 exit;
@@ -281,7 +281,7 @@ class SeoPlugin
         /** @var \TypeRocket\Form $form */
         $form = new Form();
         $form->setDebugStatus( false );
-        $form->setGroup( '[seo][meta]' );
+        $form->setGroup( 'seo.meta' );
         $buffer->startBuffer();
         echo $form->text( 'title', array( 'id' => 'tr_title' ), $title );
         echo $form->textarea( 'description', array( 'id' => 'tr_description' ), $desc );
@@ -349,7 +349,7 @@ class SeoPlugin
         </span>
         <span id="tr-seo-preview-google-title">
           <?php
-          $title = tr_posts_field( '[seo][meta][title]' );
+          $title = tr_posts_field( 'seo.meta.title' );
           if ( ! empty( $title ) ) {
               $s  = strip_tags( $title );
               $tl = strlen( $s );
@@ -374,7 +374,7 @@ class SeoPlugin
         </span>
         <span id="tr-seo-preview-google-desc">
           <?php
-          $desc = tr_posts_field( '[seo][meta][description]' );
+          $desc = tr_posts_field( 'seo.meta.description' );
           if ( ! empty( $desc ) ) {
               $s  = strip_tags( $desc );
               $dl = strlen( $s );

@@ -6,9 +6,13 @@ use TypeRocket\Html\Generator,
     TypeRocket\Fields\Field,
     TypeRocket\Models\PostTypesModel;
 use TypeRocket\Models\TaxonomiesModel;
+use TypeRocket\Traits\FormConnectorTrait;
+use TypeRocket\Traits\SettingsTrait;
 
 class Form
 {
+
+    use FormConnectorTrait, SettingsTrait;
 
     private $resource = null;
     private $action = null;
@@ -20,11 +24,7 @@ class Form
     /** @var \TypeRocket\Fields\Field $currentField */
     private $currentField = '';
 
-    private $populate = true;
-    private $group = null;
-    private $sub = null;
     private $debugStatus = null;
-    private $settings = array();
 
     /**
      * Instance the From
@@ -149,125 +149,6 @@ class Form
     public function getModel()
     {
         return $this->model;
-    }
-
-    /**
-     * Set Group into bracket syntax
-     *
-     * @param $group
-     *
-     * @return $this
-     */
-    public function setGroup( $group )
-    {
-        $this->group = $group;
-
-        return $this;
-    }
-
-    /**
-     * Get Group
-     *
-     * @return null|string
-     */
-    public function getGroup()
-    {
-        return $this->group;
-    }
-
-    /**
-     * Set Sub Group into bracket syntax
-     *
-     * @param $sub
-     *
-     * @return $this
-     */
-    public function setSub( $sub )
-    {
-        $this->sub = $sub;
-
-        return $this;
-    }
-
-    /**
-     * Get Sub Group
-     *
-     * @return null
-     */
-    public function getSub()
-    {
-        return $this->sub;
-    }
-
-    /**
-     * Set From settings
-     *
-     * @param array $settings
-     *
-     * @return $this
-     */
-    public function setSettings( array $settings )
-    {
-        $this->settings = $settings;
-
-        return $this;
-    }
-
-    /**
-     * Get Form settings
-     *
-     * @return array
-     */
-    public function getSettings()
-    {
-        return $this->settings;
-    }
-
-    /**
-     * Set Form setting by key
-     *
-     * @param $key
-     * @param $value
-     *
-     * @return $this
-     */
-    public function setSetting( $key, $value )
-    {
-        $this->settings[$key] = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get From setting by key
-     *
-     * @param $key
-     *
-     * @return null
-     */
-    public function getSetting( $key )
-    {
-        if ( ! array_key_exists( $key, $this->settings )) {
-            return null;
-        }
-
-        return $this->settings[$key];
-    }
-
-    /**
-     * Remove setting bby key
-     *
-     * @param $key
-     *
-     * @return $this
-     */
-    public function removeSetting( $key )
-    {
-        if (array_key_exists( $key, $this->settings )) {
-            unset( $this->settings[$key] );
-        }
-
-        return $this;
     }
 
     /**
