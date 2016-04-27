@@ -249,7 +249,8 @@ class Form
         if($this->model instanceof TaxonomiesModel) {
             $controller = 'taxonomies';
             $param = ', \''.$resource.'\'';
-            $param .= ', '.$field->getItemId();
+            $id = $field->getItemId() ? $field->getItemId() : '$id';
+            $param .= ', '.$id;
         }
 
         $function   = "tr_{$controller}_field('{$brackets}'{$param});";
