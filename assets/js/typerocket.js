@@ -620,7 +620,7 @@
       var i, len, post, results;
       console.log(data);
       if (data) {
-        that.next().next().html('');
+        that.next().next().next().html('');
         results = [];
         for (i = 0, len = data.length; i < len; i++) {
           post = data[i];

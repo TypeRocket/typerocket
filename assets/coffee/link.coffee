@@ -7,7 +7,7 @@ jQuery.fn.TypeRocketLink = (type = 'any') ->
     console.log data
 
     if data
-      that.next().next().html ''
+      that.next().next().next().html ''
       for post in data
         that.next().next().next().append '<li class="tr-link-search-result" data-id="'+post.ID+'" >'+post.post_title
   @
