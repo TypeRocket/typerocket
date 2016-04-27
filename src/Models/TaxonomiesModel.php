@@ -10,12 +10,7 @@ class TaxonomiesModel extends Model
         'description',
         'name',
         'slug',
-        'parent',
-        'count',
-        'taxonomy',
-        'term_group',
-        'term_taxonomy_id',
-        'term_id'
+        'parent'
     );
 
     protected $guard = array(
@@ -55,28 +50,24 @@ class TaxonomiesModel extends Model
      */
     public function create( array $fields )
     {
-        // TODO: Make create action
-        die('see todo');
         $fields = $this->secureFields($fields);
         $fields = array_merge($this->default, $fields, $this->static);
         $builtin = $this->getFilteredBuiltinFields($fields);
 
         if ( ! empty( $builtin ) ) {
-            remove_action('save_post', 'TypeRocket\Http\Responders\Hook::taxonomy');
+            remove_action('create_term', 'TypeRocket\Http\Responders\Hook::taxonomy');
 
-            if(!empty($this->postType)) {
-                $builtin['post_type'] = $this->postType;
-            }
+            $name = $builtin['name'];
+            unset($builtin['name']);
+            $term = wp_insert_term( $name, $this->taxonomy, $builtin );
+            add_action('create_term', 'TypeRocket\Http\Responders\Hook::taxonomy');
 
-            $post      = wp_insert_post( $builtin );
-            add_action('save_post', 'TypeRocket\Http\Responders\Hook::taxonomy');
-
-            if ( $post instanceof \WP_Error || $post === 0 ) {
-                $default      = 'post_name (slug), post_title, post_content, and post_excerpt are required';
-                $this->errors = ! empty( $post->errors ) ? $post->errors : array( $default );
+            if ( $term instanceof \WP_Error || $term === 0 ) {
+                $default      = 'name is required';
+                $this->errors = ! empty( $term->errors ) ? $term->errors : array( $default );
             } else {
-                $this->id   = $post;
-                $this->setData('post', get_post( $this->id ));
+                $this->id   = $term;
+                $this->setData('term', get_term( $this->id, $this->taxonomy ) );
             }
         }
 
