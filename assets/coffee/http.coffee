@@ -45,11 +45,11 @@ jQuery.typerocketHttp =
       jQuery.ajax settings
       return
     checkData: (data) ->
-# callback group
+      # callback group
       ri = 0
       while TypeRocket.httpCallbacks.length > ri
         if typeof TypeRocket.httpCallbacks[ri] == 'function'
-# Call it, since we have confirmed it is callable​
+          # Call it, since we have confirmed it is callable​
           TypeRocket.httpCallbacks[ri] data
         ri++
       type = ''
