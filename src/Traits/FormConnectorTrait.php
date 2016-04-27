@@ -173,13 +173,14 @@ trait FormConnectorTrait
      * Get From setting by key
      *
      * @param $key
+     * @param null $default default value to return if none
      *
      * @return null
      */
-    public function getSetting( $key )
+    public function getSetting( $key, $default = null )
     {
         if ( ! array_key_exists( $key, $this->settings )) {
-            return null;
+            return $default;
         }
 
         return $this->settings[$key];
