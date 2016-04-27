@@ -3,12 +3,11 @@ namespace TypeRocket\Fields;
 
 use \TypeRocket\Form,
     \TypeRocket\Sanitize,
-    \Typerocket\Traits\FormConnectorTrait,
-    \TypeRocket\Traits\SettingsTrait;
+    \Typerocket\Traits\FormConnectorTrait;
 
 abstract class Field
 {
-    use FormConnectorTrait, SettingsTrait;
+    use FormConnectorTrait;
 
     private $name = null;
     private $type = null;

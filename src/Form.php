@@ -7,12 +7,11 @@ use TypeRocket\Html\Generator,
     TypeRocket\Models\PostTypesModel;
 use TypeRocket\Models\TaxonomiesModel;
 use TypeRocket\Traits\FormConnectorTrait;
-use TypeRocket\Traits\SettingsTrait;
 
 class Form
 {
 
-    use FormConnectorTrait, SettingsTrait;
+    use FormConnectorTrait;
 
     private $resource = null;
     private $action = null;
