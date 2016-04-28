@@ -1,11 +1,11 @@
 jQuery(document).ready ($) ->
   $('.typerocket-container').on 'click', '.tr-builder-add-button', (e) ->
-    e.preventDefault
+    e.preventDefault()
     select = $(this).next()
     select.fadeIn()
 
   $('.typerocket-container').on 'click', '.tr-builder-component-control', (e) ->
-    e.preventDefault
+    e.preventDefault()
     $(this).parent().children().removeClass 'active'
     id = $(this).addClass('active').parent().data 'id'
     index = $(this).index()
@@ -14,6 +14,19 @@ jQuery(document).ready ($) ->
     components.removeClass 'active'
     component = components[index]
     $(component).addClass 'active'
+
+  $('.typerocket-container').on 'click', '.tr-remove-builder-component', (e) ->
+    e.preventDefault()
+    control = $(this).parent()
+    control.parent().children().removeClass 'active'
+    id = control.parent().data 'id'
+    index = $(this).parent().index()
+    frame = $('#frame-'+id)
+    components = frame.children()
+    component = components[index]
+    $(component).remove()
+    control.remove()
+    e.preventBubble()
 
   $('.tr-components').sortable
     start: (e, ui) ->
@@ -59,7 +72,7 @@ jQuery(document).ready ($) ->
           $fields.children().removeClass 'active'
           $components.children().removeClass 'active'
           data.prependTo($fields).addClass 'active'
-          $components.prepend '<li class="active tr-builder-component-control">'+$that.text()
+          $components.prepend '<li class="active tr-builder-component-control">'+$that.text()+'<span class="remove tr-remove-builder-component"></span>'
           if $.isFunction($.fn.sortable)
             $sortables = $fields.find('.tr-gallery-list')
             $items_list = $fields.find('.tr-items-list')

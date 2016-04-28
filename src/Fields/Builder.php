@@ -54,7 +54,7 @@ class Builder extends Matrix
                         }
 
                         ?>
-                    <li class="tr-builder-component-control <?php echo $classes; ?>"><?php echo $name; ?></li>
+                    <li class="tr-builder-component-control <?php echo $classes; ?>"><?php echo $name; ?><span class="remove tr-remove-builder-component"></span></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
@@ -81,7 +81,7 @@ class Builder extends Matrix
             $generator = new Generator();
             $generator->newElement( 'ul', array(
                 'data-mxid' => $this->mxid,
-                'class' => "builder-select-{$name}",
+                'class' => "tr-builder-select builder-select-{$name}",
                 'data-group' => $this->getForm()->getGroup()
             ) );
 

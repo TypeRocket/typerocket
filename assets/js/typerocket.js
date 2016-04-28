@@ -609,13 +609,13 @@
   jQuery(document).ready(function($) {
     $('.typerocket-container').on('click', '.tr-builder-add-button', function(e) {
       var select;
-      e.preventDefault;
+      e.preventDefault();
       select = $(this).next();
       return select.fadeIn();
     });
     $('.typerocket-container').on('click', '.tr-builder-component-control', function(e) {
       var component, components, frame, id, index;
-      e.preventDefault;
+      e.preventDefault();
       $(this).parent().children().removeClass('active');
       id = $(this).addClass('active').parent().data('id');
       index = $(this).index();
@@ -624,6 +624,20 @@
       components.removeClass('active');
       component = components[index];
       return $(component).addClass('active');
+    });
+    $('.typerocket-container').on('click', '.tr-remove-builder-component', function(e) {
+      var component, components, control, frame, id, index;
+      e.preventDefault();
+      control = $(this).parent();
+      control.parent().children().removeClass('active');
+      id = control.parent().data('id');
+      index = $(this).parent().index();
+      frame = $('#frame-' + id);
+      components = frame.children();
+      component = components[index];
+      $(component).remove();
+      control.remove();
+      return e.preventBubble();
     });
     $('.tr-components').sortable({
       start: function(e, ui) {
@@ -676,7 +690,7 @@
             $fields.children().removeClass('active');
             $components.children().removeClass('active');
             data.prependTo($fields).addClass('active');
-            $components.prepend('<li class="active tr-builder-component-control">' + $that.text());
+            $components.prepend('<li class="active tr-builder-component-control">' + $that.text() + '<span class="remove tr-remove-builder-component"></span>');
             if ($.isFunction($.fn.sortable)) {
               $sortables = $fields.find('.tr-gallery-list');
               $items_list = $fields.find('.tr-items-list');
