@@ -1,6 +1,7 @@
 jQuery(document).ready ($) ->
-  $('.typerocket-container').on 'click', '.matrix-button', (e) ->
+  $('.typerocket-container').on 'click', '.tr-builder-button', (e) ->
     $that = $(this)
+    console.log 'clicked matrix'
     if !$that.is(':disabled')
       mxid = $that.data('id')
       group = $that.data('folder')

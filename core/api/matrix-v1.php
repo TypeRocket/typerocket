@@ -21,7 +21,7 @@ if($tr_loaded) {
         $paths = \TypeRocket\Config::getPaths();
 
         $form->setGroup($formGroup . "{$group}.{$tr_matrix_id}.{$type}");
-        $file = $paths['matrix'] . "/{$group}/{$type}.php";
+        $file = $paths['components'] . "/{$group}/{$type}.php";
 
         ?>
         <div class="matrix-field-group tr-repeater-group matrix-type-<?php echo $type; ?> matrix-group-<?php echo $group; ?>">

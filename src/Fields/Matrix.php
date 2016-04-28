@@ -119,7 +119,7 @@ class Matrix extends Field implements ScriptField {
         } else {
 
             $paths = Config::getPaths();
-            $dir = $paths['matrix'] . '/' . $name;
+            $dir = $paths['components'] . '/' . $name;
 
             $select = "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add a files for Matrix <code>{$dir}</code> and add your matrix files to it.</div>";
         }
@@ -131,7 +131,7 @@ class Matrix extends Field implements ScriptField {
     public function setOptionsFromFolder() {
         $paths = Config::getPaths();
         $name = $this->getName();
-        $dir = $paths['matrix'] . '/' . $name;
+        $dir = $paths['components'] . '/' . $name;
 
         if (file_exists( $dir )) {
 
@@ -183,7 +183,7 @@ class Matrix extends Field implements ScriptField {
                     }
 
                     $form->setGroup($root_group . "{$tr_matrix_group}.{$tr_matrix_key}.{$tr_matrix_type}");
-                    $file        = $paths['matrix'] . "/" . $this->getName() . "/{$tr_matrix_type}.php";
+                    $file        = $paths['components'] . "/" . $this->getName() . "/{$tr_matrix_type}.php";
                     $classes = "matrix-field-group tr-repeater-group matrix-type-{$tr_matrix_type} matrix-group-{$tr_matrix_group}";
                     $remove = '#remove';
                     ?>

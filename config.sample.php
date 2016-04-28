@@ -40,7 +40,7 @@ define('TR_PLUGINS', 'seo|dev|theme-options');
 | current theme.
 |
 */
-define('TR_MATRIX_FOLDER_PATH', __DIR__ . '/matrix');
+define('TR_COMPONENTS_FOLDER_PATH', __DIR__ . '/components');
 
 /*
 |--------------------------------------------------------------------------

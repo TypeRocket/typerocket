@@ -544,7 +544,6 @@
     $('.typerocket-container').on('click', '.matrix-button', function(e) {
       var $fields, $select, $that, button_txt, callbacks, form_group, group, mxid, type, url;
       $that = $(this);
-      console.log('clicked matrix');
       if (!$that.is(':disabled')) {
         mxid = $that.data('id');
         group = $that.data('folder');
