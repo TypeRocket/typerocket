@@ -20,6 +20,7 @@ $form->setGroup( $this->getName() );
         $form->text('Company Name'),
         $form->text('Company Email'),
         $form->text('Company Phone'),
+        $form->search('Terms Page')->setSetting('post_type', 'page'),
         $form->checkbox('Company Open')->setSetting('text', 'Company open for business')->setLabel(false)
     );
     $about = $form->getFromFieldsString( $contact );
