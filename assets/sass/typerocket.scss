@@ -61,7 +61,8 @@
 }
 
 .postbox-container .typerocket-container .control-section + .control-section:after,
-.repeater-inputs .control-section + .control-section:after {
+.repeater-inputs .control-section + .control-section:after,
+.tr-frame-fields .control-section + .control-section:after {
     content: '';
     display: block;
     width: 100%;
@@ -466,6 +467,23 @@
 .tr-repeater-group .repeater-inputs {
     padding-left: 40px;
     position: relative;
+
+    > *:first-child {
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+    > h1:first-child,
+    > h3:first-child
+    {
+        margin: 0 -10px 15px;
+        padding: 0 12px 8px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.04);
+        border-bottom: 1px solid #e5e5e5;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 1.4;
+    }
 }
 
 .typerocket-container .dev {
