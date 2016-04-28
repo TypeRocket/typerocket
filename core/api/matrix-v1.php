@@ -14,13 +14,13 @@ if($tr_loaded) {
         $form->setPopulate(false);
         $form->setDebugStatus(false);
 
-        if( ! \TypeRocket\Validate::bracket($formGroup)) {
-            $formGroup = '';
+        if( $formGroup ) {
+            $formGroup .= '.';
         }
 
         $paths = \TypeRocket\Config::getPaths();
 
-        $form->setGroup($formGroup . "[{$group}][{$tr_matrix_id}][{$type}]");
+        $form->setGroup($formGroup . "{$group}.{$tr_matrix_id}.{$type}");
         $file = $paths['matrix'] . "/{$group}/{$type}.php";
 
         ?>

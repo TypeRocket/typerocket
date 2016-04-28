@@ -178,7 +178,11 @@ class Matrix extends Field implements ScriptField {
                     $root_group        = $form->getGroup();
                     $form->setDebugStatus(false);
 
-                    $form->setGroup($root_group . "[{$tr_matrix_group}][{$tr_matrix_key}][{$tr_matrix_type}]");
+                    if($root_group) {
+                        $root_group .= '.';
+                    }
+
+                    $form->setGroup($root_group . "{$tr_matrix_group}.{$tr_matrix_key}.{$tr_matrix_type}");
                     $file        = $paths['matrix'] . "/" . $this->getName() . "/{$tr_matrix_type}.php";
                     $classes = "matrix-field-group tr-repeater-group matrix-type-{$tr_matrix_type} matrix-group-{$tr_matrix_group}";
                     $remove = '#remove';
