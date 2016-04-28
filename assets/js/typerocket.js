@@ -613,6 +613,18 @@
       select = $(this).next();
       return select.fadeIn();
     });
+    $('.typerocket-container').on('click', '.tr-builder-component-control', function(e) {
+      var component, components, frame, id, index;
+      e.preventDefault;
+      $(this).parent().children().removeClass('active');
+      id = $(this).addClass('active').parent().data('id');
+      index = $(this).index();
+      frame = $('#frame-' + id);
+      components = frame.children();
+      components.removeClass('active');
+      component = components[index];
+      return $(component).addClass('active');
+    });
     $('.tr-components').sortable({
       start: function(e, ui) {
         return ui.item.startPos = ui.item.index();
@@ -664,7 +676,7 @@
             $fields.children().removeClass('active');
             $components.children().removeClass('active');
             data.prependTo($fields).addClass('active');
-            $components.prepend('<li class="active">' + $that.text());
+            $components.prepend('<li class="active tr-builder-component-control">' + $that.text());
             if ($.isFunction($.fn.sortable)) {
               $sortables = $fields.find('.tr-gallery-list');
               $items_list = $fields.find('.tr-items-list');

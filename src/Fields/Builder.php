@@ -35,6 +35,7 @@ class Builder extends Matrix
         $buffer = new Buffer();
         $buffer->startBuffer();
         $blocks = $this->getBuilderBlocks();
+        $count = 0;
         ?>
 
         <div class="tr-builder">
@@ -45,8 +46,15 @@ class Builder extends Matrix
                     <?php echo $this->getSelectHtml(); ?>
                 </div>
                 <ul class="tr-components" data-id="<?php echo $this->mxid; ?>" id="components-<?php echo $this->mxid; ?>">
-                    <?php foreach($this->components as $name): ?>
-                    <li><?php echo $name; ?></li>
+                    <?php foreach($this->components as $name):
+                        $count++;
+                        $classes = '';
+                        if ($count == 1) {
+                            $classes .= ' active';
+                        }
+
+                        ?>
+                    <li class="tr-builder-component-control <?php echo $classes; ?>"><?php echo $name; ?></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
@@ -113,10 +121,10 @@ class Builder extends Matrix
         if (is_array( $val )) {
 
             $utility->startBuffer();
-
+            $count = 0;
             foreach ($val as $tr_matrix_key => $data) {
                 foreach ($data as $tr_matrix_type => $fields) {
-
+                    $count++;
                     $tr_matrix_group = $this->getName();
                     $tr_matrix_type  = $block_name = lcfirst( $tr_matrix_type );
                     $root_group      = $form->getGroup();
@@ -135,6 +143,10 @@ class Builder extends Matrix
                         $block_name = $matches[1];
                     }
                     $this->components[] = $block_name;
+
+                    if($count == 1) {
+                        $classes .= ' active';
+                    }
 
                     ?>
                     <div class="<?php echo $classes; ?>">

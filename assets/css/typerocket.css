@@ -3691,9 +3691,9 @@ body .redactor-box-fullscreen {
   margin-bottom: 10px;
 }
 
-.tr-builder .controls .tr-components {
+.tr-builder .controls .tr-components li {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-  cursor: move;
+  border: 1px solid #e5e5e5;
 }
 
 .tr-builder .controls ul {
@@ -3706,4 +3706,17 @@ body .redactor-box-fullscreen {
 
 .tr-builder .builder-select-builder {
   display: none;
+}
+
+.builder-field-group {
+  display: none;
+}
+
+.builder-field-group.active {
+  display: block;
+}
+
+.tr-components li.active {
+  background: #5b9dd9;
+  color: #fff;
 }

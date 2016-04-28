@@ -16,9 +16,9 @@
       margin-bottom: 10px;
     }
 
-    .tr-components {
+    .tr-components li {
       box-shadow: 0 1px 1px rgba(0,0,0,.04);
-      cursor: move;
+      border: 1px solid #e5e5e5;
     }
 
     ul {
@@ -35,4 +35,17 @@
     display: none;
   }
 
+}
+
+.builder-field-group {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
+
+.tr-components li.active {
+  background: #5b9dd9;
+  color: #fff;
 }

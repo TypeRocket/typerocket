@@ -4,6 +4,17 @@ jQuery(document).ready ($) ->
     select = $(this).next()
     select.fadeIn()
 
+  $('.typerocket-container').on 'click', '.tr-builder-component-control', (e) ->
+    e.preventDefault
+    $(this).parent().children().removeClass 'active'
+    id = $(this).addClass('active').parent().data 'id'
+    index = $(this).index()
+    frame = $('#frame-'+id)
+    components = frame.children()
+    components.removeClass 'active'
+    component = components[index]
+    $(component).addClass 'active'
+
   $('.tr-components').sortable
     start: (e, ui) ->
       ui.item.startPos = ui.item.index()
@@ -17,7 +28,6 @@ jQuery(document).ready ($) ->
       builder = components.splice old, 1
       components.splice index, 0, builder[0]
       frame.html components
-
 
 
   $('.typerocket-container').on 'click', '.builder-select-option', (e) ->
@@ -49,7 +59,7 @@ jQuery(document).ready ($) ->
           $fields.children().removeClass 'active'
           $components.children().removeClass 'active'
           data.prependTo($fields).addClass 'active'
-          $components.prepend '<li class="active">'+$that.text()
+          $components.prepend '<li class="active tr-builder-component-control">'+$that.text()
           if $.isFunction($.fn.sortable)
             $sortables = $fields.find('.tr-gallery-list')
             $items_list = $fields.find('.tr-items-list')
