@@ -9,6 +9,8 @@ use TypeRocket\Html\Generator;
 class Builder extends Matrix
 {
 
+    protected $components = [];
+
     public function enqueueScripts() {
         $paths = Config::getPaths();
         $assets = $paths['urls']['assets'];
@@ -32,23 +34,25 @@ class Builder extends Matrix
     {
         $buffer = new Buffer();
         $buffer->startBuffer();
+        $blocks = $this->getBuilderBlocks();
         ?>
 
         <div class="tr-builder">
 
             <div class="controls">
                 <div class="select">
+                    <input type="button" value="Add New" class="button tr-builder-add-button">
                     <?php echo $this->getSelectHtml(); ?>
                 </div>
-                <ul class="tr-components">
-                    <li>
-                        <p>Builder</p>
-                    </li>
+                <ul class="tr-components" data-id="<?php echo $this->mxid; ?>" id="components-<?php echo $this->mxid; ?>">
+                    <?php foreach($this->components as $name): ?>
+                    <li><?php echo $name; ?></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
 
-            <div class="tr-frame-fields" id="<?php echo $this->mxid; ?>">
-                <?php echo $this->getBuilderBlocks(); ?>
+            <div class="tr-frame-fields" data-id="<?php echo $this->mxid; ?>"  id="frame-<?php echo $this->mxid; ?>">
+                <?php echo $blocks; ?>
             </div>
 
         </div>
@@ -69,7 +73,7 @@ class Builder extends Matrix
             $generator = new Generator();
             $generator->newElement( 'ul', array(
                 'data-mxid' => $this->mxid,
-                'class' => "matrix-select-{$name}",
+                'class' => "builder-select-{$name}",
                 'data-group' => $this->getForm()->getGroup()
             ) );
 
@@ -114,8 +118,8 @@ class Builder extends Matrix
                 foreach ($data as $tr_matrix_type => $fields) {
 
                     $tr_matrix_group = $this->getName();
-                    $tr_matrix_type  = lcfirst( $tr_matrix_type );
-                    $root_group        = $form->getGroup();
+                    $tr_matrix_type  = $block_name = lcfirst( $tr_matrix_type );
+                    $root_group      = $form->getGroup();
                     $form->setDebugStatus(false);
 
                     if($root_group) {
@@ -125,6 +129,13 @@ class Builder extends Matrix
                     $form->setGroup($root_group . "{$tr_matrix_group}.{$tr_matrix_key}.{$tr_matrix_type}");
                     $file        = $paths['components'] . "/" . $this->getName() . "/{$tr_matrix_type}.php";
                     $classes = "builder-field-group builder-type-{$tr_matrix_type} builder-group-{$tr_matrix_group}";
+
+                    $line = fgets(fopen( $file, 'r'));
+                    if( preg_match("/<[h|H]\\d>(.*)<\\/[h|H]\\d>/U", $line, $matches) ) {
+                        $block_name = $matches[1];
+                    }
+                    $this->components[] = $block_name;
+
                     ?>
                     <div class="<?php echo $classes; ?>">
                         <div class="builder-inputs">

@@ -607,13 +607,37 @@
 
 (function() {
   jQuery(document).ready(function($) {
+    $('.typerocket-container').on('click', '.tr-builder-add-button', function(e) {
+      var select;
+      e.preventDefault;
+      select = $(this).next();
+      return select.fadeIn();
+    });
+    $('.tr-components').sortable({
+      start: function(e, ui) {
+        return ui.item.startPos = ui.item.index();
+      },
+      update: function(e, ui) {
+        var builder, components, frame, id, index, old;
+        id = ui.item.parent().data('id');
+        frame = $('#frame-' + id);
+        components = frame.children();
+        index = ui.item.index();
+        old = ui.item.startPos;
+        builder = components.splice(old, 1);
+        components.splice(index, 0, builder[0]);
+        return frame.html(components);
+      }
+    });
     $('.typerocket-container').on('click', '.builder-select-option', function(e) {
-      var $fields, $select, $that, callbacks, form_group, group, mxid, type, url;
+      var $components, $fields, $select, $that, callbacks, form_group, group, mxid, type, url;
       $that = $(this);
+      $that.parent().fadeOut();
       if (!$that.hasClass('disabled')) {
         mxid = $that.data('id');
         group = $that.data('folder');
-        $fields = $('#' + mxid);
+        $fields = $('#frame-' + mxid);
+        $components = $('#components-' + mxid);
         $select = $('ul[data-mxid="' + mxid + '"]');
         type = $that.data('value');
         callbacks = TypeRocket.repeaterCallbacks;
@@ -637,7 +661,10 @@
               }
               ri++;
             }
-            data.prependTo($fields);
+            $fields.children().removeClass('active');
+            $components.children().removeClass('active');
+            data.prependTo($fields).addClass('active');
+            $components.prepend('<li class="active">' + $that.text());
             if ($.isFunction($.fn.sortable)) {
               $sortables = $fields.find('.tr-gallery-list');
               $items_list = $fields.find('.tr-items-list');

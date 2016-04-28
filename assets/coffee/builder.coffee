@@ -1,10 +1,33 @@
 jQuery(document).ready ($) ->
+  $('.typerocket-container').on 'click', '.tr-builder-add-button', (e) ->
+    e.preventDefault
+    select = $(this).next()
+    select.fadeIn()
+
+  $('.tr-components').sortable
+    start: (e, ui) ->
+      ui.item.startPos = ui.item.index()
+
+    update: (e, ui) ->
+      id = ui.item.parent().data 'id'
+      frame = $('#frame-'+id)
+      components = frame.children()
+      index = ui.item.index()
+      old = ui.item.startPos
+      builder = components.splice old, 1
+      components.splice index, 0, builder[0]
+      frame.html components
+
+
+
   $('.typerocket-container').on 'click', '.builder-select-option', (e) ->
     $that = $(this)
+    $that.parent().fadeOut()
     if !$that.hasClass('disabled')
       mxid = $that.data('id')
       group = $that.data('folder')
-      $fields = $('#' + mxid)
+      $fields = $('#frame-' + mxid)
+      $components = $('#components-' + mxid)
       $select = $('ul[data-mxid="' + mxid + '"]')
       type = $that.data('value')
       callbacks = TypeRocket.repeaterCallbacks
@@ -23,7 +46,10 @@ jQuery(document).ready ($) ->
             if typeof callbacks[ri] == 'function'
               callbacks[ri] data
             ri++
-          data.prependTo($fields)
+          $fields.children().removeClass 'active'
+          $components.children().removeClass 'active'
+          data.prependTo($fields).addClass 'active'
+          $components.prepend '<li class="active">'+$that.text()
           if $.isFunction($.fn.sortable)
             $sortables = $fields.find('.tr-gallery-list')
             $items_list = $fields.find('.tr-items-list')

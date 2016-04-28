@@ -3674,15 +3674,26 @@ body .redactor-box-fullscreen {
   margin-top: 5px;
 }
 
+.tr-builder:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
 .tr-builder .controls {
   float: left;
 }
 
 .tr-builder .controls li {
   background: #fff;
-  padding: 20px;
+  padding: 10px;
   list-style: none;
   margin-bottom: 10px;
+}
+
+.tr-builder .controls .tr-components {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  cursor: move;
 }
 
 .tr-builder .controls ul {
@@ -3691,4 +3702,8 @@ body .redactor-box-fullscreen {
 
 .tr-builder .tr-frame-fields {
   margin-left: 120px;
+}
+
+.tr-builder .builder-select-builder {
+  display: none;
 }

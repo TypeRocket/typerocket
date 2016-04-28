@@ -1,13 +1,24 @@
 .tr-builder {
 
+  &:after {
+    content:'';
+    display: block;
+    clear: both;
+  }
+
   .controls {
     float: left;
 
     li {
       background: #fff;
-      padding: 20px;
+      padding: 10px;
       list-style: none;
       margin-bottom: 10px;
+    }
+
+    .tr-components {
+      box-shadow: 0 1px 1px rgba(0,0,0,.04);
+      cursor: move;
     }
 
     ul {
@@ -18,6 +29,10 @@
 
   .tr-frame-fields {
     margin-left:  120px;
+  }
+
+  .builder-select-builder {
+    display: none;
   }
 
 }
