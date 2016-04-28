@@ -29,6 +29,7 @@ class Search extends Field implements ScriptField
         $name = $this->getNameAttributeString();
         $value = (int) $this->getValue();
         $title = 'No page selected... Search and click on a result';
+        $type = $this->getSetting('post_type', 'any');
 
         if($value < 1) {
             $value = null;
@@ -38,7 +39,8 @@ class Search extends Field implements ScriptField
 
         $search_attributes = [
             'placeholder' => 'Type to search...',
-            'class' => 'tr-link-search-input'
+            'class' => 'tr-link-search-input',
+            'data-type' => $type
         ];
 
         $field = $input->newInput($this->getType(), null, null,  $search_attributes)->getString();

@@ -643,10 +643,11 @@
 
   jQuery(document).ready(function($) {
     $('.typerocket-container').on('keyup', '.tr-link-search-input', function() {
-      var that;
+      var that, type;
       that = $(this);
+      type = $(this).data('type');
       return tr_delay((function() {
-        that.TypeRocketLink();
+        that.TypeRocketLink(type);
       }), 250);
     });
     return $('.typerocket-container').on('click', '.tr-link-search-result', function() {

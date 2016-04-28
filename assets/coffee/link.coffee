@@ -22,8 +22,9 @@ tr_delay = do ->
 jQuery(document).ready ($) ->
   $('.typerocket-container').on 'keyup', '.tr-link-search-input', ->
     that = $(this)
+    type = $(this).data 'type'
     tr_delay (->
-      that.TypeRocketLink()
+      that.TypeRocketLink type
       return
     ), 250
 
