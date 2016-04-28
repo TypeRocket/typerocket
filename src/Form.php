@@ -675,7 +675,7 @@ class Form
      */
     public function builder( $name, array $attr = [], array $settings = [], $label = true )
     {
-        return new Fields\Matrix( $name, $attr, $settings, $label, $this );
+        return new Fields\Builder( $name, $attr, $settings, $label, $this );
     }
 
     /**
