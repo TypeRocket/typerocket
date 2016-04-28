@@ -636,8 +636,7 @@
       components = frame.children();
       component = components[index];
       $(component).remove();
-      control.remove();
-      return e.preventBubble();
+      return control.remove();
     });
     $('.tr-components').sortable({
       start: function(e, ui) {

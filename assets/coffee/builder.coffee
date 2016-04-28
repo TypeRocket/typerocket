@@ -26,7 +26,6 @@ jQuery(document).ready ($) ->
     component = components[index]
     $(component).remove()
     control.remove()
-    e.preventBubble()
 
   $('.tr-components').sortable
     start: (e, ui) ->
