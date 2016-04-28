@@ -123,6 +123,11 @@ add_action('admin_init', function() {
     $location = 'index.php?typerocket_matrix_group=$matches[1]&typerocket_matrix_type=$matches[2]';
     add_rewrite_rule( $regex, $location, 'top' );
 
+    // Builder API
+    $regex = 'typerocket_builder_api/v1/([^/]*)/([^/]*)/?$';
+    $location = 'index.php?typerocket_builder_group=$matches[1]&typerocket_builder_type=$matches[2]';
+    add_rewrite_rule( $regex, $location, 'top' );
+
 });
 
 add_filter( 'query_vars', function($vars) {
@@ -130,6 +135,8 @@ add_filter( 'query_vars', function($vars) {
     $vars[] = 'typerocket_rest_item';
     $vars[] = 'typerocket_matrix_group';
     $vars[] = 'typerocket_matrix_type';
+    $vars[] = 'typerocket_builder_group';
+    $vars[] = 'typerocket_builder_type';
     return $vars;
 } );
 
@@ -158,6 +165,22 @@ add_filter( 'template_include', function($template) {
 
     if($load_template) {
         require __DIR__ . '/api/matrix-v1.php';
+        die();
+    }
+
+    return $template;
+}, 99 );
+
+add_filter( 'template_include', function($template) {
+
+    $matrix_group = get_query_var('typerocket_builder_group', null);
+    $matrix_type = get_query_var('typerocket_builder_group', null);
+
+    $load_template = ($matrix_group && $matrix_type);
+    $load_template = apply_filters('tr_builder_api_template', $load_template);
+
+    if($load_template) {
+        require __DIR__ . '/api/builder-v1.php';
         die();
     }
 

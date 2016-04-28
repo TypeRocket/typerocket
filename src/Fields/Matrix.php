@@ -11,7 +11,7 @@ class Matrix extends Field implements ScriptField {
 
     use OptionsTrait;
 
-    private $mxid = null;
+    protected $mxid = null;
 
     /**
      * Run on construction

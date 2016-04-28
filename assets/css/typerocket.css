@@ -3673,3 +3673,22 @@ body .redactor-box-fullscreen {
   border: 1px solid #dfdfdf;
   margin-top: 5px;
 }
+
+.tr-builder .controls {
+  float: left;
+}
+
+.tr-builder .controls li {
+  background: #fff;
+  padding: 20px;
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.tr-builder .controls ul {
+  width: 100px;
+}
+
+.tr-builder .tr-frame-fields {
+  margin-left: 120px;
+}

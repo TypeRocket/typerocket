@@ -1,17 +1,15 @@
 jQuery(document).ready ($) ->
-  $('.typerocket-container').on 'click', '.tr-builder-button', (e) ->
+  $('.typerocket-container').on 'click', '.builder-select-option', (e) ->
     $that = $(this)
-    console.log 'clicked matrix'
-    if !$that.is(':disabled')
+    if !$that.hasClass('disabled')
       mxid = $that.data('id')
       group = $that.data('folder')
       $fields = $('#' + mxid)
-      $select = $('select[data-mxid="' + mxid + '"]')
-      button_txt = $that.val()
-      type = $select.val()
+      $select = $('ul[data-mxid="' + mxid + '"]')
+      type = $that.data('value')
       callbacks = TypeRocket.repeaterCallbacks
-      $that.attr('disabled', 'disabled').val 'Adding...'
-      url = '/typerocket_matrix_api/v1/' + group + '/' + type
+      $that.addClass 'disabled'
+      url = '/typerocket_builder_api/v1/' + group + '/' + type
       form_group = $select.data('group')
       $.ajax
         url: url
@@ -25,7 +23,7 @@ jQuery(document).ready ($) ->
             if typeof callbacks[ri] == 'function'
               callbacks[ri] data
             ri++
-          data.prependTo($fields).hide().delay(10).slideDown(300).scrollTop '100%'
+          data.prependTo($fields)
           if $.isFunction($.fn.sortable)
             $sortables = $fields.find('.tr-gallery-list')
             $items_list = $fields.find('.tr-items-list')
@@ -40,7 +38,7 @@ jQuery(document).ready ($) ->
               $items_list.sortable
                 connectWith: '.item'
                 handle: '.move'
-          $that.val(button_txt).removeAttr 'disabled', 'disabled'
+          $that.removeClass 'disabled'
           return
         error: (jqXHR) ->
           $that.val('Try again - Error ' + jqXHR.status).removeAttr 'disabled', 'disabled'
