@@ -4,13 +4,8 @@ namespace TypeRocket\Fields;
 
 use TypeRocket\Html\Generator;
 
-class Search extends Field implements ScriptField
+class Search extends Field
 {
-
-    public function enqueueScripts()
-    {
-        wp_enqueue_script( 'wp-link' );
-    }
 
     /**
      * Run on construction
