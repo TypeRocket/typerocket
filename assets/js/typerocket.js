@@ -628,15 +628,17 @@
     $('.typerocket-container').on('click', '.tr-remove-builder-component', function(e) {
       var component, components, control, frame, id, index;
       e.preventDefault();
-      control = $(this).parent();
-      control.parent().children().removeClass('active');
-      id = control.parent().data('id');
-      index = $(this).parent().index();
-      frame = $('#frame-' + id);
-      components = frame.children();
-      component = components[index];
-      $(component).remove();
-      return control.remove();
+      if (confirm('Remove component?')) {
+        control = $(this).parent();
+        control.parent().children().removeClass('active');
+        id = control.parent().data('id');
+        index = $(this).parent().index();
+        frame = $('#frame-' + id);
+        components = frame.children();
+        component = components[index];
+        $(component).remove();
+        return control.remove();
+      }
     });
     $('.tr-components').sortable({
       start: function(e, ui) {

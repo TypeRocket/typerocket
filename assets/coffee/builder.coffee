@@ -17,15 +17,16 @@ jQuery(document).ready ($) ->
 
   $('.typerocket-container').on 'click', '.tr-remove-builder-component', (e) ->
     e.preventDefault()
-    control = $(this).parent()
-    control.parent().children().removeClass 'active'
-    id = control.parent().data 'id'
-    index = $(this).parent().index()
-    frame = $('#frame-'+id)
-    components = frame.children()
-    component = components[index]
-    $(component).remove()
-    control.remove()
+    if confirm('Remove component?')
+      control = $(this).parent()
+      control.parent().children().removeClass 'active'
+      id = control.parent().data 'id'
+      index = $(this).parent().index()
+      frame = $('#frame-'+id)
+      components = frame.children()
+      component = components[index]
+      $(component).remove()
+      control.remove()
 
   $('.tr-components').sortable
     start: (e, ui) ->
