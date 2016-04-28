@@ -4,12 +4,11 @@ jQuery.fn.TypeRocketLink = (type = 'any') ->
   search = encodeURI this.val()
 
   jQuery.getJSON '/wp-json/typerocket/v1/search?post_type='+type+'&s='+search, (data) ->
-    console.log data
-
     if data
       that.next().next().next().html ''
       for post in data
         that.next().next().next().append '<li class="tr-link-search-result" data-id="'+post.ID+'" >'+post.post_title
+
   @
 
 tr_delay = do ->
@@ -25,10 +24,12 @@ jQuery(document).ready ($) ->
     tr_delay (->
       that.TypeRocketLink()
       return
-    ), 300
+    ), 250
 
   $('.typerocket-container').on 'click', '.tr-link-search-result', ->
     id = $(this).data 'id'
     title = $(this).text()
     $(this).parent().prev().text title
     $(this).parent().prev().prev().val id
+    $(this).parent().prev().prev().prev().focus().val ''
+    $(this).parent().html ''

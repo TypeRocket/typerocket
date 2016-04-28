@@ -618,7 +618,6 @@
     search = encodeURI(this.val());
     jQuery.getJSON('/wp-json/typerocket/v1/search?post_type=' + type + '&s=' + search, function(data) {
       var i, len, post, results;
-      console.log(data);
       if (data) {
         that.next().next().next().html('');
         results = [];
@@ -647,14 +646,16 @@
       that = $(this);
       return tr_delay((function() {
         that.TypeRocketLink();
-      }), 300);
+      }), 250);
     });
     return $('.typerocket-container').on('click', '.tr-link-search-result', function() {
       var id, title;
       id = $(this).data('id');
       title = $(this).text();
       $(this).parent().prev().text(title);
-      return $(this).parent().prev().prev().val(id);
+      $(this).parent().prev().prev().val(id);
+      $(this).parent().prev().prev().prev().focus().val('');
+      return $(this).parent().html('');
     });
   });
 

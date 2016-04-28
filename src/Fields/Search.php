@@ -27,11 +27,13 @@ class Search extends Field implements ScriptField
     {
         $input = new Generator();
         $name = $this->getNameAttributeString();
-        $value = $this->getValue();
-        $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'raw');
+        $value = (int) $this->getValue();
+        $title = 'No page selected... Search and click on a result';
 
-        if ( is_callable($sanitize)) {
-            $value = esc_attr( call_user_func($sanitize, $value ) );
+        if($value < 1) {
+            $value = null;
+        } else {
+            $title = get_post_field('post_title', $value);
         }
 
         $search_attributes = [
@@ -39,9 +41,9 @@ class Search extends Field implements ScriptField
             'class' => 'tr-link-search-input'
         ];
 
-        $field = $input->newInput($this->getType(), '', '',  $search_attributes)->getString();
+        $field = $input->newInput($this->getType(), null, null,  $search_attributes)->getString();
         $field .= $input->newInput( 'hidden', $name, $value, $this->getAttributes() )->getString();
-        $field .= '<div class="tr-link-search-page"></div>';
+        $field .= '<div class="tr-link-search-page">'.$title.'</div>';
         $field .= '<ul class="tr-link-search-results"></ul>';
 
         return $field;
