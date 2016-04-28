@@ -141,7 +141,7 @@ class Form
      *
      * @return $this
      */
-    public function open( $attr = array(), $use_rest = true )
+    public function open( $attr = [], $use_rest = true )
     {
         switch ($this->action) {
             case 'update' :
@@ -155,11 +155,11 @@ class Form
                 break;
         }
 
-        $rest     = array();
-        $defaults = array(
+        $rest     = [];
+        $defaults = [
             'action'      => $_SERVER['REQUEST_URI'],
             'method'      => 'POST'
-        );
+        ];
 
         if ($use_rest == true) {
 
@@ -248,7 +248,7 @@ class Form
 
         if($this->model instanceof TaxonomiesModel) {
             $controller = 'taxonomies';
-            $param = ', \''.$resource.'\'';
+            $param = ", '{$resource}'";
             $id = $field->getItemId() ? $field->getItemId() : '$id';
             $param .= ', '.$id;
         }
@@ -285,9 +285,9 @@ class Form
                 $icon = '<i class="tr-icon-shield"></i> ' . $icon;
             }
 
-            $generator->newElement( 'div', array( 'class' => 'dev' ), $icon );
-            $navTag       = new Tag( 'span', array( 'class' => 'nav' ) );
-            $fieldCopyTag = new Tag( 'span', array( 'class' => 'field' ), $dev_html );
+            $generator->newElement( 'div', [ 'class' => 'dev' ], $icon );
+            $navTag       = new Tag( 'span', [ 'class' => 'nav' ] );
+            $fieldCopyTag = new Tag( 'span', [ 'class' => 'field' ], $dev_html );
             $navTag->appendInnerTag( $fieldCopyTag );
             $html = $generator->appendInside( $navTag )->getString();
         }
@@ -359,7 +359,7 @@ class Form
      *
      * @return string
      */
-    public function getFromFieldsString( array $fields = array() )
+    public function getFromFieldsString( array $fields = [] )
     {
         $html = '';
 
@@ -373,7 +373,7 @@ class Form
                 $parameters = array_pop( $field );
 
                 if (method_exists( $this, $function ) && is_array( $parameters )) {
-                    $html .= (string) call_user_func_array( array( $this, $function ), $parameters );
+                    $html .= (string) call_user_func_array( [ $this, $function ], $parameters );
                 }
             }
 
@@ -392,7 +392,7 @@ class Form
      *
      * @return Fields\Text
      */
-    public function text( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function text( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\Text( $name, $attr, $settings, $label, $this );
     }
@@ -407,7 +407,7 @@ class Form
      *
      * @return Fields\Text
      */
-    public function password( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function password( $name, array $attr = [], array $settings = [], $label = true )
     {
         $field = new Fields\Text( $name, $attr, $settings, $label, $this );
         $field->setType( 'password' );
@@ -425,7 +425,7 @@ class Form
      *
      * @return Fields\Text
      */
-    public function hidden( $name, array $attr = array(), array $settings = array(), $label = false )
+    public function hidden( $name, array $attr = [], array $settings = [], $label = false )
     {
         $field = new Fields\Text( $name, $attr, $settings, $label, $this );
         $field->setType( 'hidden' )->setRenderSetting( 'raw' );
@@ -443,7 +443,7 @@ class Form
      *
      * @return Fields\Submit
      */
-    public function submit( $name, array $attr = array(), array $settings = array(), $label = false )
+    public function submit( $name, array $attr = [], array $settings = [], $label = false )
     {
         $field = new Fields\Submit( $name, $attr, $settings, $label, $this );
         $field->setAttribute( 'value', $name );
@@ -461,7 +461,7 @@ class Form
      *
      * @return Fields\Textarea
      */
-    public function textarea( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function textarea( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\Textarea( $name, $attr, $settings, $label, $this );
     }
@@ -476,7 +476,7 @@ class Form
      *
      * @return Fields\Editor
      */
-    public function editor( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function editor( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\Editor( $name, $attr, $settings, $label, $this );
     }
@@ -491,7 +491,7 @@ class Form
      *
      * @return Fields\Radio
      */
-    public function radio( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function radio( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\Radio( $name, $attr, $settings, $label, $this );
     }
@@ -506,7 +506,7 @@ class Form
      *
      * @return Fields\Checkbox
      */
-    public function checkbox( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function checkbox( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\Checkbox( $name, $attr, $settings, $label, $this );
     }
@@ -521,7 +521,7 @@ class Form
      *
      * @return Fields\Select
      */
-    public function select( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function select( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\Select( $name, $attr, $settings, $label, $this );
     }
@@ -539,7 +539,7 @@ class Form
      *
      * @return Fields\WordPressEditor
      */
-    public function wpEditor( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function wpEditor( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\WordPressEditor( $name, $attr, $settings, $label, $this );
     }
@@ -554,7 +554,7 @@ class Form
      *
      * @return Fields\Color
      */
-    public function color( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function color( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\Color( $name, $attr, $settings, $label, $this );
     }
@@ -569,7 +569,7 @@ class Form
      *
      * @return Fields\Date
      */
-    public function date( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function date( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\Date( $name, $attr, $settings, $label, $this );
     }
@@ -584,7 +584,7 @@ class Form
      *
      * @return Fields\Image
      */
-    public function image( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function image( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\Image( $name, $attr, $settings, $label, $this );
     }
@@ -599,7 +599,7 @@ class Form
      *
      * @return Fields\File
      */
-    public function file( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function file( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\File( $name, $attr, $settings, $label, $this );
     }
@@ -614,7 +614,7 @@ class Form
      *
      * @return Fields\Search
      */
-    public function search( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function search( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\Search( $name, $attr, $settings, $label, $this );
     }
@@ -629,7 +629,7 @@ class Form
      *
      * @return Fields\Gallery
      */
-    public function gallery( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function gallery( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\Gallery( $name, $attr, $settings, $label, $this );
     }
@@ -644,7 +644,7 @@ class Form
      *
      * @return Fields\Items
      */
-    public function items( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function items( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\Items( $name, $attr, $settings, $label, $this );
     }
@@ -659,12 +659,22 @@ class Form
      *
      * @return Fields\Matrix
      */
-    public function matrix(
-        $name,
-        array $attr = array(),
-        array $settings = array(),
-        $label = true
-    ) {
+    public function matrix( $name, array $attr = [], array $settings = [], $label = true ) {
+        return new Fields\Matrix( $name, $attr, $settings, $label, $this );
+    }
+
+    /**
+     * Matrix Input
+     *
+     * @param string $name
+     * @param array $attr
+     * @param array $settings
+     * @param bool|true $label
+     *
+     * @return Fields\Matrix
+     */
+    public function builder( $name, array $attr = [], array $settings = [], $label = true )
+    {
         return new Fields\Matrix( $name, $attr, $settings, $label, $this );
     }
 
@@ -678,7 +688,7 @@ class Form
      *
      * @return Fields\Repeater
      */
-    public function repeater( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function repeater( $name, array $attr = [], array $settings = [], $label = true )
     {
         return new Fields\Repeater( $name, $attr, $settings, $label, $this );
     }
