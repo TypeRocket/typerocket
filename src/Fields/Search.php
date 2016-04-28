@@ -33,7 +33,7 @@ class Search extends Field implements ScriptField
         if($value < 1) {
             $value = null;
         } else {
-            $title = get_post_field('post_title', $value);
+            $title = 'Selection: <b>' . get_post_field('post_title', $value) . '</b>';
         }
 
         $search_attributes = [

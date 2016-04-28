@@ -620,6 +620,7 @@
       var i, len, post, results;
       if (data) {
         that.next().next().next().html('');
+        that.next().next().next().append('<li class="tr-link-search-result-title">Results');
         results = [];
         for (i = 0, len = data.length; i < len; i++) {
           post = data[i];
@@ -652,7 +653,7 @@
       var id, title;
       id = $(this).data('id');
       title = $(this).text();
-      $(this).parent().prev().text(title);
+      $(this).parent().prev().html('Selection: <b>' + title + '</b>');
       $(this).parent().prev().prev().val(id);
       $(this).parent().prev().prev().prev().focus().val('');
       return $(this).parent().html('');

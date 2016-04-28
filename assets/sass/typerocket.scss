@@ -596,42 +596,69 @@
     color: #0073aa;
     font-weight: bold;
 }
+.typerocket-container {
 
-.tr-link-search-result {
-    color: #0073aa;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 8px;
-    margin: 0;
-    border: solid #ddd 1px;
-    border-top: none;
-    background: #eee;
+    .tr-link-search-result {
+        color: #0073aa;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 8px;
+        margin: 0;
+        border: solid #ddd 1px;
+        border-top: none;
+        background: #eee;
 
-    &:hover {
-        background: #0073aa;
-        color: #fff;
+        &:hover {
+            background: #0073aa;
+            color: #fff;
+            -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+        }
+    }
+
+    .tr-link-search-results {
+        margin: 0;
+        background: #fff;
         -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
         box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
     }
-}
 
-.tr-link-search-results {
-    margin: 0;
-    background: #fff;
-    -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
-    box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
-}
+    .tr-link-search-result-title {
+        color: #666;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 8px;
+        margin: 0;
+        border: solid #ddd 1px;
+        border-top: none;
+        background: #fff;
+    }
 
-.tr-link-search-page {
-    padding: 7px;
-    -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
-    box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-top: none;
-    font-weight: normal;
-    background: #fff;
-    color: #0073aa;
+    .tr-link-search-input {
+        border: none;
+        background: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        outline: none;
+        border: 1px solid #ddd;
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+
+    .tr-link-search-page {
+        padding: 7px;
+        margin-top: 5px;
+        -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .07);
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, .07);
+        font-size: 14px;
+        border: 1px solid #ddd;
+        font-weight: normal;
+        background: #fff;
+    }
 }
 
 /**

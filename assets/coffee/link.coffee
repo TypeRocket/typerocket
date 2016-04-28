@@ -6,6 +6,7 @@ jQuery.fn.TypeRocketLink = (type = 'any') ->
   jQuery.getJSON '/wp-json/typerocket/v1/search?post_type='+type+'&s='+search, (data) ->
     if data
       that.next().next().next().html ''
+      that.next().next().next().append '<li class="tr-link-search-result-title">Results'
       for post in data
         that.next().next().next().append '<li class="tr-link-search-result" data-id="'+post.ID+'" >'+post.post_title
 
@@ -29,7 +30,7 @@ jQuery(document).ready ($) ->
   $('.typerocket-container').on 'click', '.tr-link-search-result', ->
     id = $(this).data 'id'
     title = $(this).text()
-    $(this).parent().prev().text title
+    $(this).parent().prev().html 'Selection: <b>'+title+'</b>'
     $(this).parent().prev().prev().val id
     $(this).parent().prev().prev().prev().focus().val ''
     $(this).parent().html ''
