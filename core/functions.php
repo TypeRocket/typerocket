@@ -24,6 +24,13 @@ function tr_taxonomy(
     return $obj;
 }
 
+/**
+ * @param string $singular Singular name for post type
+ * @param string|null $plural Plural name for post type
+ * @param array $settings The settings for the post type
+ *
+ * @return \TypeRocket\PostType
+ */
 function tr_post_type(
     $singular,
     $plural = null,

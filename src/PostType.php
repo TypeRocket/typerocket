@@ -18,7 +18,7 @@ class PostType extends Registrable
      * @param string $plural plural name
      * @param array $settings args override and extend
      */
-    public function __construct( $singular, $plural = null, $settings = array() )
+    public function __construct( $singular, $plural = null, $settings = [] )
     {
 
         if(is_null($plural)) {
@@ -31,7 +31,7 @@ class PostType extends Registrable
         $upperSingular = ucwords( $singular );
         $upperPlural   = ucwords( $plural );
 
-        $labels = array(
+        $labels = [
             'add_new'            => 'Add New',
             'add_new_item'       => 'Add New ' . $upperSingular,
             'edit_item'          => 'Edit ' . $upperSingular,
@@ -44,7 +44,7 @@ class PostType extends Registrable
             'search_items'       => 'Search ' . $upperPlural,
             'singular_name'      => $upperSingular,
             'view_item'          => 'View ' . $upperSingular,
-        );
+        ];
 
         // setup object for later use
         $plural   = Sanitize::underscore( $plural );
@@ -53,7 +53,7 @@ class PostType extends Registrable
         $this->id       = ! $this->id ? $singular : $this->id;
 
         if (array_key_exists( 'capabilities', $settings ) && $settings['capabilities'] === true) :
-            $settings['capabilities'] = array(
+            $settings['capabilities'] = [
                 'publish_posts'       => 'publish_' . $plural,
                 'edit_post'           => 'edit_' . $singular,
                 'edit_posts'          => 'edit_' . $plural,
@@ -63,18 +63,18 @@ class PostType extends Registrable
                 'delete_others_posts' => 'delete_others_' . $plural,
                 'read_post'           => 'read_' . $singular,
                 'read_private_posts'  => 'read_private_' . $plural,
-            );
+            ];
         endif;
 
-        $defaults = array(
+        $defaults = [
             'labels'      => $labels,
             'description' => $plural,
-            'rewrite'     => array( 'slug' => Sanitize::dash( $this->id ) ),
+            'rewrite'     => [ 'slug' => Sanitize::dash( $this->id ) ],
             'public'      => true,
-            'supports'    => array( 'title', 'editor' ),
+            'supports'    => [ 'title', 'editor' ],
             'has_archive' => true,
-            'taxonomies'  => array()
-        );
+            'taxonomies'  => [ ]
+        ];
 
         if (array_key_exists( 'taxonomies', $settings )) {
             $this->taxonomies       = array_merge( $this->taxonomies, $settings['taxonomies'] );
