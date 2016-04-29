@@ -26,10 +26,14 @@
         background: #fff;
         list-style: none;
         margin: 10px 0;
+        min-height: 55px;
         cursor: pointer;
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         img {
           max-width: 100%;
@@ -38,7 +42,18 @@
         }
 
         .tr-builder-component-title {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          opacity: .9;
+          background: #fff;
           padding: 5px;
+          border-color: #5b9dd9;
+          width: 100%;
+          z-index: 10;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
         }
 
         &.active {
@@ -140,9 +155,9 @@
     }
 
     li {
-      height: 90px;
       width: 120px;
-      float: left;
+      vertical-align: top;
+      display: inline-block;
       padding: 10px;
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
@@ -152,10 +167,18 @@
       border: 1px solid #e5e5e5;
       background: #fff;
       text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       cursor: pointer;
+
+      span {
+        display: block;
+        margin-bottom: 3px;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
 
       &:hover {
         background: #5b9dd9;

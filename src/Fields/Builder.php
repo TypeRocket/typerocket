@@ -49,7 +49,7 @@ class Builder extends Matrix
                     <input type="button" value="Add New" class="button tr-builder-add-button">
                     <?php echo $this->getSelectHtml(); ?>
                 </div>
-                <ul class="tr-components" data-id="<?php echo $this->mxid; ?>" id="components-<?php echo $this->mxid; ?>">
+                <ul data-thumbnails="<?php echo TR_COMPONENTS_THUMBNAIL_URL; ?>" class="tr-components" data-id="<?php echo $this->mxid; ?>" id="components-<?php echo $this->mxid; ?>">
                     <?php foreach($this->components as $option):
                         $count++;
                         $type = $option[0];
@@ -58,11 +58,7 @@ class Builder extends Matrix
                         if ($count == 1) {
                             $classes .= ' active';
                         }
-                        $thumbnail = '';
-                        $path = '/' .$component_name . '/' . $type . '.png';
-                        if(file_exists(TR_COMPONENTS_THUMBNAIL_FOLDER_PATH . $path)) {
-                            $thumbnail = TR_COMPONENTS_THUMBNAIL_URL . $path;
-                        }
+                        $thumbnail = $this->getComponentThumbnail($component_name, $type);;
                         ?>
                     <li class="tr-builder-component-control <?php echo $classes; ?>">
                         <?php if ($thumbnail) : ?>
@@ -104,11 +100,18 @@ class Builder extends Matrix
             foreach ($options as $name => $value) {
 
                 $attr['data-value'] = $value;
+                $attr['data-thumbnail'] = $this->getComponentThumbnail($this->getName(), $value);
                 $attr['class'] = 'builder-select-option';
                 $attr['data-id'] = $this->mxid;
                 $attr['data-folder'] = $this->getName();
 
-                $generator->appendInside( 'li', $attr, $name );
+                $img = new Generator();
+                $img->newImage($attr['data-thumbnail']);
+
+                $li = new Generator();
+                $li->newElement('li', $attr, '<span>' . $name . '</span>')->appendInside( $img );
+
+                $generator->appendInside( $li );
             }
 
             $select = $generator->getString();
@@ -123,6 +126,15 @@ class Builder extends Matrix
 
         return $select;
 
+    }
+
+    private function getComponentThumbnail($name, $type) {
+        $path = '/' .$name . '/' . $type . '.png';
+        $thumbnail = '';
+        if(file_exists(TR_COMPONENTS_THUMBNAIL_FOLDER_PATH . $path)) {
+            $thumbnail = TR_COMPONENTS_THUMBNAIL_URL . $path;
+        }
+        return $thumbnail;
     }
 
     private function getBuilderBlocks()

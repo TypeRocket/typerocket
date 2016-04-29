@@ -695,13 +695,14 @@
       }
     });
     $('.typerocket-container').on('click', '.builder-select-option', function(e) {
-      var $components, $fields, $select, $that, form_group, group, mxid, type, url;
+      var $components, $fields, $select, $that, form_group, group, img, mxid, type, url;
       $that = $(this);
       $that.parent().fadeOut();
       $('.tr-builder-select-overlay').remove();
       if (!$that.hasClass('disabled')) {
         mxid = $that.data('id');
         group = $that.data('folder');
+        img = $that.data('thumbnail');
         $fields = $('#frame-' + mxid);
         $components = $('#components-' + mxid);
         $select = $('ul[data-mxid="' + mxid + '"]');
@@ -717,11 +718,16 @@
             form_group: form_group
           },
           success: function(data) {
+            var html;
             data = $(data);
             $fields.children().removeClass('active');
             $components.children().removeClass('active');
             data.prependTo($fields).addClass('active');
-            $components.prepend('<li class="active tr-builder-component-control">' + $that.text() + '<span class="remove tr-remove-builder-component"></span>');
+            if (img) {
+              img = '<img src="' + img + '" />';
+            }
+            html = '<li class="active tr-builder-component-control">' + img + '<span class="tr-builder-component-title">' + $that.text() + '</span><span class="remove tr-remove-builder-component"></span>';
+            $components.prepend(html);
             initComponent(data, $fields);
             return $that.removeClass('disabled');
           },

@@ -3723,8 +3723,18 @@ body .redactor-box-fullscreen {
   background: #fff;
   list-style: none;
   margin: 10px 0;
+  min-height: 55px;
   cursor: pointer;
   box-sizing: border-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .tr-builder .controls .tr-components li img {
@@ -3734,7 +3744,16 @@ body .redactor-box-fullscreen {
 }
 
 .tr-builder .controls .tr-components li .tr-builder-component-title {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  opacity: .9;
+  background: #fff;
   padding: 5px;
+  border-color: #5b9dd9;
+  width: 100%;
+  z-index: 10;
+  box-sizing: border-box;
 }
 
 .tr-builder .controls .tr-components li.active {
@@ -3831,9 +3850,9 @@ body .redactor-box-fullscreen {
 }
 
 .tr-builder .tr-builder-select li {
-  height: 90px;
   width: 120px;
-  float: left;
+  vertical-align: top;
+  display: inline-block;
   padding: 10px;
   box-sizing: border-box;
   margin: 5px;
@@ -3841,16 +3860,18 @@ body .redactor-box-fullscreen {
   border: 1px solid #e5e5e5;
   background: #fff;
   text-align: center;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
   cursor: pointer;
+}
+
+.tr-builder .tr-builder-select li span {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.tr-builder .tr-builder-select li img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 .tr-builder .tr-builder-select li:hover {

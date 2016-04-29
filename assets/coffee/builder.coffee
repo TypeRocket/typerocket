@@ -23,10 +23,6 @@ jQuery(document).ready ($) ->
           handle: '.move'
     return
 
-    # tr[builder][1461954957][builder][matrix][1461959405][builder][page]
-    # tr[builder][1461954957][builder][matrix][1461959241][builder2][page]
-   # tr[builder][1461954957][builder][][matrix][1461959241][builder2][page]
-
 
   $('.typerocket-container').on 'click', '.tr-builder-add-button', (e) ->
     e.preventDefault()
@@ -86,6 +82,7 @@ jQuery(document).ready ($) ->
     if !$that.hasClass('disabled')
       mxid = $that.data('id')
       group = $that.data('folder')
+      img = $that.data('thumbnail')
       $fields = $('#frame-' + mxid)
       $components = $('#components-' + mxid)
       $select = $('ul[data-mxid="' + mxid + '"]')
@@ -103,7 +100,14 @@ jQuery(document).ready ($) ->
           $fields.children().removeClass 'active'
           $components.children().removeClass 'active'
           data.prependTo($fields).addClass 'active'
-          $components.prepend '<li class="active tr-builder-component-control">'+$that.text()+'<span class="remove tr-remove-builder-component"></span>'
+
+          if img
+            img = '<img src="'+img+'" />'
+
+          html = '
+<li class="active tr-builder-component-control">'+img+'<span class="tr-builder-component-title">'+$that.text()+'</span><span class="remove tr-remove-builder-component"></span>
+'
+          $components.prepend html
           initComponent data, $fields
           $that.removeClass 'disabled'
         error: (jqXHR) ->
