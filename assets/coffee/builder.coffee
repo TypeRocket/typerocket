@@ -1,4 +1,29 @@
 jQuery(document).ready ($) ->
+
+  initComponent = (data, fields) ->
+    callbacks = TypeRocket.repeaterCallbacks
+    ri = 0
+    while callbacks.length > ri
+      if typeof callbacks[ri] == 'function'
+        callbacks[ri] data
+      ri++
+    if $.isFunction($.fn.sortable)
+      $sortables = fields.find('.tr-gallery-list')
+      $items_list = fields.find('.tr-items-list')
+      $repeater_fields = fields.find('.tr-repeater-fields')
+      if $sortables.length > 0
+        $sortables.sortable()
+      if $repeater_fields.length > 0
+        $repeater_fields.sortable
+          connectWith: '.tr-repeater-group'
+          handle: '.repeater-controls'
+      if $items_list.length > 0
+        $items_list.sortable
+          connectWith: '.item'
+          handle: '.move'
+    return
+
+
   $('.typerocket-container').on 'click', '.tr-builder-add-button', (e) ->
     e.preventDefault()
     select = $(this).next()
@@ -39,14 +64,15 @@ jQuery(document).ready ($) ->
       ui.item.startPos = ui.item.index()
 
     update: (e, ui) ->
-      id = ui.item.parent().data 'id'
+      select = ui.item.parent()
+      id = select.data 'id'
       frame = $('#frame-'+id)
-      components = frame.children()
+      components = frame.children().detach()
       index = ui.item.index()
       old = ui.item.startPos
       builder = components.splice old, 1
       components.splice index, 0, builder[0]
-      frame.html components
+      frame.append components
 
 
   $('.typerocket-container').on 'click', '.builder-select-option', (e) ->
@@ -60,7 +86,6 @@ jQuery(document).ready ($) ->
       $components = $('#components-' + mxid)
       $select = $('ul[data-mxid="' + mxid + '"]')
       type = $that.data('value')
-      callbacks = TypeRocket.repeaterCallbacks
       $that.addClass 'disabled'
       url = '/typerocket_builder_api/v1/' + group + '/' + type
       form_group = $select.data('group')
@@ -71,31 +96,12 @@ jQuery(document).ready ($) ->
         data: form_group: form_group
         success: (data) ->
           data = $(data)
-          ri = 0
-          while callbacks.length > ri
-            if typeof callbacks[ri] == 'function'
-              callbacks[ri] data
-            ri++
           $fields.children().removeClass 'active'
           $components.children().removeClass 'active'
           data.prependTo($fields).addClass 'active'
           $components.prepend '<li class="active tr-builder-component-control">'+$that.text()+'<span class="remove tr-remove-builder-component"></span>'
-          if $.isFunction($.fn.sortable)
-            $sortables = $fields.find('.tr-gallery-list')
-            $items_list = $fields.find('.tr-items-list')
-            $repeater_fields = $fields.find('.tr-repeater-fields')
-            if $sortables.length > 0
-              $sortables.sortable()
-            if $repeater_fields.length > 0
-              $repeater_fields.sortable
-                connectWith: '.tr-repeater-group'
-                handle: '.repeater-controls'
-            if $items_list.length > 0
-              $items_list.sortable
-                connectWith: '.item'
-                handle: '.move'
+          initComponent data, $fields
           $that.removeClass 'disabled'
-          return
         error: (jqXHR) ->
           $that.val('Try again - Error ' + jqXHR.status).removeAttr 'disabled', 'disabled'
           return

@@ -607,6 +607,38 @@
 
 (function() {
   jQuery(document).ready(function($) {
+    var initComponent;
+    initComponent = function(data, fields) {
+      var $items_list, $repeater_fields, $sortables, callbacks, ri;
+      callbacks = TypeRocket.repeaterCallbacks;
+      ri = 0;
+      while (callbacks.length > ri) {
+        if (typeof callbacks[ri] === 'function') {
+          callbacks[ri](data);
+        }
+        ri++;
+      }
+      if ($.isFunction($.fn.sortable)) {
+        $sortables = fields.find('.tr-gallery-list');
+        $items_list = fields.find('.tr-items-list');
+        $repeater_fields = fields.find('.tr-repeater-fields');
+        if ($sortables.length > 0) {
+          $sortables.sortable();
+        }
+        if ($repeater_fields.length > 0) {
+          $repeater_fields.sortable({
+            connectWith: '.tr-repeater-group',
+            handle: '.repeater-controls'
+          });
+        }
+        if ($items_list.length > 0) {
+          $items_list.sortable({
+            connectWith: '.item',
+            handle: '.move'
+          });
+        }
+      }
+    };
     $('.typerocket-container').on('click', '.tr-builder-add-button', function(e) {
       var overlay, select;
       e.preventDefault();
@@ -650,19 +682,20 @@
         return ui.item.startPos = ui.item.index();
       },
       update: function(e, ui) {
-        var builder, components, frame, id, index, old;
-        id = ui.item.parent().data('id');
+        var builder, components, frame, id, index, old, select;
+        select = ui.item.parent();
+        id = select.data('id');
         frame = $('#frame-' + id);
-        components = frame.children();
+        components = frame.children().detach();
         index = ui.item.index();
         old = ui.item.startPos;
         builder = components.splice(old, 1);
         components.splice(index, 0, builder[0]);
-        return frame.html(components);
+        return frame.append(components);
       }
     });
     $('.typerocket-container').on('click', '.builder-select-option', function(e) {
-      var $components, $fields, $select, $that, callbacks, form_group, group, mxid, type, url;
+      var $components, $fields, $select, $that, form_group, group, mxid, type, url;
       $that = $(this);
       $that.parent().fadeOut();
       $('.tr-builder-select-overlay').remove();
@@ -673,7 +706,6 @@
         $components = $('#components-' + mxid);
         $select = $('ul[data-mxid="' + mxid + '"]');
         type = $that.data('value');
-        callbacks = TypeRocket.repeaterCallbacks;
         $that.addClass('disabled');
         url = '/typerocket_builder_api/v1/' + group + '/' + type;
         form_group = $select.data('group');
@@ -685,40 +717,13 @@
             form_group: form_group
           },
           success: function(data) {
-            var $items_list, $repeater_fields, $sortables, ri;
             data = $(data);
-            ri = 0;
-            while (callbacks.length > ri) {
-              if (typeof callbacks[ri] === 'function') {
-                callbacks[ri](data);
-              }
-              ri++;
-            }
             $fields.children().removeClass('active');
             $components.children().removeClass('active');
             data.prependTo($fields).addClass('active');
             $components.prepend('<li class="active tr-builder-component-control">' + $that.text() + '<span class="remove tr-remove-builder-component"></span>');
-            if ($.isFunction($.fn.sortable)) {
-              $sortables = $fields.find('.tr-gallery-list');
-              $items_list = $fields.find('.tr-items-list');
-              $repeater_fields = $fields.find('.tr-repeater-fields');
-              if ($sortables.length > 0) {
-                $sortables.sortable();
-              }
-              if ($repeater_fields.length > 0) {
-                $repeater_fields.sortable({
-                  connectWith: '.tr-repeater-group',
-                  handle: '.repeater-controls'
-                });
-              }
-              if ($items_list.length > 0) {
-                $items_list.sortable({
-                  connectWith: '.item',
-                  handle: '.move'
-                });
-              }
-            }
-            $that.removeClass('disabled');
+            initComponent(data, $fields);
+            return $that.removeClass('disabled');
           },
           error: function(jqXHR) {
             $that.val('Try again - Error ' + jqXHR.status).removeAttr('disabled', 'disabled');
