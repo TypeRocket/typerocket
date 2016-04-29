@@ -435,13 +435,16 @@
     overflow: hidden;
 }
 
-.tr-repeater-fields .tr-repeater-group.ui-sortable-placeholder,
-.tr-gallery-list li.ui-sortable-placeholder,
-.tr-items-list li.ui-sortable-placeholder {
-    border: dashed 1px #bbb;
-    visibility: visible !important;
-    background: none;
-    z-index: 1;
+body .tr-builder .controls .tr-components li,
+.tr-repeater-fields .tr-repeater-group,
+.tr-gallery-list li,
+.tr-items-list li{
+    &.ui-sortable-placeholder {
+        border: dashed 1px #bbb;
+        visibility: visible !important;
+        background: none;
+        z-index: 1;
+    }
 }
 
 .tr-repeater-fields .tr-repeater-group.ui-sortable-placeholder:after {

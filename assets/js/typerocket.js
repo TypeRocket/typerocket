@@ -608,9 +608,14 @@
 (function() {
   jQuery(document).ready(function($) {
     $('.typerocket-container').on('click', '.tr-builder-add-button', function(e) {
-      var select;
+      var overlay, select;
       e.preventDefault();
       select = $(this).next();
+      overlay = $('<div>').addClass('tr-builder-select-overlay').on('click', function() {
+        $(this).remove();
+        return $('.tr-builder-select').fadeOut();
+      });
+      $('body').append(overlay);
       return select.fadeIn();
     });
     $('.typerocket-container').on('click', '.tr-builder-component-control', function(e) {
@@ -660,6 +665,7 @@
       var $components, $fields, $select, $that, callbacks, form_group, group, mxid, type, url;
       $that = $(this);
       $that.parent().fadeOut();
+      $('.tr-builder-select-overlay').remove();
       if (!$that.hasClass('disabled')) {
         mxid = $that.data('id');
         group = $that.data('folder');

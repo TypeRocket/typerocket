@@ -32,14 +32,17 @@ class Builder extends Matrix
 
     public function getString()
     {
+        $this->setAttribute('name', $this->getNameAttributeString() );
         $buffer = new Buffer();
         $buffer->startBuffer();
         $blocks = $this->getBuilderBlocks();
         $count = 0;
+        $generator = new Generator();
+        $default_null = $generator->newInput('hidden', $this->getAttribute('name'), null)->getString();
         ?>
 
         <div class="tr-builder">
-
+            <div><?php echo $default_null; ?></div>
             <div class="controls">
                 <div class="select">
                     <input type="button" value="Add New" class="button tr-builder-add-button">

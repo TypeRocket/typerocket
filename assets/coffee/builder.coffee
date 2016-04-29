@@ -2,6 +2,12 @@ jQuery(document).ready ($) ->
   $('.typerocket-container').on 'click', '.tr-builder-add-button', (e) ->
     e.preventDefault()
     select = $(this).next()
+
+    overlay = $('<div>').addClass('tr-builder-select-overlay').on 'click', ->
+      $(this).remove()
+      $('.tr-builder-select').fadeOut()
+
+    $('body').append overlay
     select.fadeIn()
 
   $('.typerocket-container').on 'click', '.tr-builder-component-control', (e) ->
@@ -46,6 +52,7 @@ jQuery(document).ready ($) ->
   $('.typerocket-container').on 'click', '.builder-select-option', (e) ->
     $that = $(this)
     $that.parent().fadeOut()
+    $('.tr-builder-select-overlay').remove()
     if !$that.hasClass('disabled')
       mxid = $that.data('id')
       group = $that.data('folder')
