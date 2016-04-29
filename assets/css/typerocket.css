@@ -3716,31 +3716,35 @@ body .redactor-box-fullscreen {
 }
 
 .tr-builder .controls .tr-components li {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   border: 1px solid #e5e5e5;
+  padding: 2px;
   text-align: center;
   position: relative;
   background: #fff;
-  padding: 10px;
   list-style: none;
-  margin-bottom: 10px;
-  height: 90px;
+  margin: 10px 0;
   cursor: pointer;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
   box-sizing: border-box;
 }
 
+.tr-builder .controls .tr-components li img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.tr-builder .controls .tr-components li .tr-builder-component-title {
+  padding: 5px;
+}
+
 .tr-builder .controls .tr-components li.active {
-  background: #5b9dd9;
-  color: #fff;
+  border-color: #5b9dd9;
+  box-shadow: 0 1px 3px 1px #5b9dd9;
+  color: #5b9dd9;
+}
+
+.tr-builder .controls .tr-components li span {
+  display: none;
 }
 
 .tr-builder .controls .tr-components li .remove {
@@ -3783,7 +3787,7 @@ body .redactor-box-fullscreen {
   content: "\f335";
 }
 
-.tr-builder .controls .tr-components li:hover .remove {
+.tr-builder .controls .tr-components li:hover span {
   display: block;
 }
 

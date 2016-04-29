@@ -38,6 +38,7 @@ class Builder extends Matrix
         $blocks = $this->getBuilderBlocks();
         $count = 0;
         $generator = new Generator();
+        $component_name = $this->getName();
         $default_null = $generator->newInput('hidden', $this->getAttribute('name'), null)->getString();
         ?>
 
@@ -49,15 +50,27 @@ class Builder extends Matrix
                     <?php echo $this->getSelectHtml(); ?>
                 </div>
                 <ul class="tr-components" data-id="<?php echo $this->mxid; ?>" id="components-<?php echo $this->mxid; ?>">
-                    <?php foreach($this->components as $name):
+                    <?php foreach($this->components as $option):
                         $count++;
+                        $type = $option[0];
+                        $name = $option[1];
                         $classes = '';
                         if ($count == 1) {
                             $classes .= ' active';
                         }
-
+                        $thumbnail = '';
+                        $path = '/' .$component_name . '/' . $type . '.png';
+                        if(file_exists(TR_COMPONENTS_THUMBNAIL_FOLDER_PATH . $path)) {
+                            $thumbnail = TR_COMPONENTS_THUMBNAIL_URL . $path;
+                        }
                         ?>
-                    <li class="tr-builder-component-control <?php echo $classes; ?>"><?php echo $name; ?><span class="remove tr-remove-builder-component"></span></li>
+                    <li class="tr-builder-component-control <?php echo $classes; ?>">
+                        <?php if ($thumbnail) : ?>
+                        <img src="<?php echo $thumbnail; ?>" alt="Thumbnail, <?php echo $name; ?>">
+                        <?php endif; ?>
+                        <span class="tr-builder-component-title"><?php echo $name; ?></span>
+                        <span class="remove tr-remove-builder-component"></span>
+                    </li>
                     <?php endforeach; ?>
                 </ul>
             </div>
@@ -146,7 +159,7 @@ class Builder extends Matrix
                     if( preg_match("/<[h|H]\\d>(.*)<\\/[h|H]\\d>/U", $line, $matches) ) {
                         $block_name = $matches[1];
                     }
-                    $this->components[] = $block_name;
+                    $this->components[] = [$tr_matrix_type, $block_name];
 
                     if($count == 1) {
                         $classes .= ' active';

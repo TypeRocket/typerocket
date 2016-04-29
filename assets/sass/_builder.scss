@@ -19,26 +19,36 @@
       width: 120px;
 
       li {
-        box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
         border: 1px solid #e5e5e5;
+        padding: 2px;
         text-align: center;
         position: relative;
         background: #fff;
-        padding: 10px;
         list-style: none;
-        margin-bottom: 10px;
-        height: 90px;
+        margin: 10px 0;
         cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
 
+        img {
+          max-width: 100%;
+          height: auto;
+          display: block;
+        }
+
+        .tr-builder-component-title {
+          padding: 5px;
+        }
+
         &.active {
-          background: #5b9dd9;
-          color: #fff;
+          border-color: #5b9dd9;
+          box-shadow: 0 1px 3px 1px #5b9dd9;
+          color: #5b9dd9;
+        }
+
+        span {
+          display: none;
         }
 
         .remove {
@@ -83,7 +93,7 @@
 
         }
 
-        &:hover .remove {
+        &:hover span {
           display: block;
         }
 

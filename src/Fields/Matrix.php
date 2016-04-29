@@ -138,7 +138,14 @@ class Matrix extends Field implements ScriptField {
             $files = preg_grep( '/^([^.])/', scandir( $dir ) );
 
             foreach ($files as $file) {
-                if (file_exists( $dir . '/' . $file )) {
+
+                $is_php_file = function($haystack) {
+                    // search forward starting from end minus needle length characters
+                    $needle = '.php';
+                    return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
+                };
+
+                if (file_exists( $dir . '/' . $file ) && $is_php_file($file) ) {
 
                     $the_file = $file;
                     $path = pathinfo( $file );
@@ -147,7 +154,6 @@ class Matrix extends Field implements ScriptField {
                     if( preg_match("/<[h|H]\\d>(.*)<\\/[h|H]\\d>/U", $line, $matches) ) {
                         $key = $matches[1];
                     }
-
                     $this->options[$key] = $path['filename'];
                 }
             }

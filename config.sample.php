@@ -41,6 +41,8 @@ define('TR_PLUGINS', 'seo|dev|theme-options');
 |
 */
 define('TR_COMPONENTS_FOLDER_PATH', __DIR__ . '/components');
+define('TR_COMPONENTS_THUMBNAIL_URL', get_stylesheet_directory_uri() . '/' .TR_FOLDER . '/components');
+define('TR_COMPONENTS_THUMBNAIL_FOLDER_PATH', __DIR__ . '/components');
 
 /*
 |--------------------------------------------------------------------------
