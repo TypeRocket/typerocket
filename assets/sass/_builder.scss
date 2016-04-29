@@ -5,6 +5,7 @@
     content:'';
     display: block;
     clear: both;
+    height: 0;
   }
 
   .tr-builder-add-button {
@@ -127,20 +128,31 @@
 
 }
 
-.tr-frame-fields {
+.builder-inputs {
   background: #fff;
   box-shadow: 0 1px 1px rgba(0,0,0,.04);
   border: 1px solid #e5e5e5;
   padding: 10px;
+  float: left;
+  width: 100%;
 
-  .builder-inputs > *:first-child {
+  &:after {
+    content:'';
+    display: block;
+    clear: both;
+    height: 0;
+  }
+
+  > *:first-child {
     margin-top: 0;
     padding-top: 0;
   }
 
-  .builder-inputs > h1:first-child,
-  .builder-inputs > h3:first-child
-  {
+  > h1:first-child,
+  > h2:first-child,
+  > h3:first-child,
+  > h4:first-child,
+  > h5:first-child {
     margin: 0 -10px 15px;
     padding: 0 12px 8px;
     box-shadow: 0 1px 1px rgba(0,0,0,.04);
