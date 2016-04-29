@@ -23,6 +23,10 @@ jQuery(document).ready ($) ->
           handle: '.move'
     return
 
+    # tr[builder][1461954957][builder][matrix][1461959405][builder][page]
+    # tr[builder][1461954957][builder][matrix][1461959241][builder2][page]
+   # tr[builder][1461954957][builder][][matrix][1461959241][builder2][page]
+
 
   $('.typerocket-container').on 'click', '.tr-builder-add-button', (e) ->
     e.preventDefault()

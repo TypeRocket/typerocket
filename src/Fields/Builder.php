@@ -132,12 +132,13 @@ class Builder extends Matrix
                     $tr_matrix_type  = $block_name = lcfirst( $tr_matrix_type );
                     $root_group      = $form->getGroup();
                     $form->setDebugStatus(false);
+                    $append_group = $root_group;
 
                     if($root_group) {
-                        $root_group .= '.';
+                        $append_group .= '.';
                     }
 
-                    $form->setGroup($root_group . "{$tr_matrix_group}.{$tr_matrix_key}.{$tr_matrix_type}");
+                    $form->setGroup($append_group . "{$tr_matrix_group}.{$tr_matrix_key}.{$tr_matrix_type}");
                     $file        = $paths['components'] . "/" . $this->getName() . "/{$tr_matrix_type}.php";
                     $classes = "builder-field-group builder-type-{$tr_matrix_type} builder-group-{$tr_matrix_group}";
 
