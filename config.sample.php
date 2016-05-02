@@ -32,17 +32,17 @@ define('TR_PLUGINS', 'seo|dev|theme-options');
 
 /*
 |--------------------------------------------------------------------------
-| Matrix Folder
+| Components Folder
 |--------------------------------------------------------------------------
 |
-| The folder where you wish to locate your matrix groups. This should be set
-| to a location outside of TypeRocket. For example, directly in your
-| current theme.
+| The folder where you wish to locate your matrix and builder groups. This
+| should be set to a location outside of TypeRocket. For example, directly
+| in your current theme.
 |
 */
-define('TR_COMPONENTS_FOLDER_PATH', __DIR__ . '/components');
-define('TR_COMPONENTS_THUMBNAIL_URL', get_stylesheet_directory_uri() . '/' .TR_FOLDER . '/components');
-define('TR_COMPONENTS_THUMBNAIL_FOLDER_PATH', __DIR__ . '/components');
+define('TR_COMPONENTS_FOLDER_PATH', __DIR__ . '/../components');
+define('TR_COMPONENTS_THUMBNAIL_URL', get_stylesheet_directory_uri() . '/components');
+define('TR_COMPONENTS_THUMBNAIL_FOLDER_PATH', __DIR__ . '/../components');
 
 /*
 |--------------------------------------------------------------------------
