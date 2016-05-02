@@ -264,6 +264,7 @@ abstract class Model
      */
     protected function secureFields( array $fields )
     {
+        // Fillable
         $fillable = array();
         if ( ! empty( $this->fillable ) && is_array( $this->fillable )) {
             foreach ($this->fillable as $field_name) {
@@ -274,12 +275,18 @@ abstract class Model
             $fields = $fillable;
         }
 
+        // Guard
         if ( ! empty( $this->guard ) && is_array( $this->guard )) {
             foreach ($this->guard as $field_name) {
                 if (isset( $fields[$field_name] ) && ! in_array( $field_name, $this->fillable )) {
                     unset( $fields[$field_name] );
                 }
             }
+        }
+
+        // Format
+        if ( ! empty( $this->format ) && is_array( $this->format )) {
+            $fields = $this->formatFields($fields);
         }
 
         return apply_filters( 'tr_model_secure_fields', $fields, $this );
@@ -341,6 +348,10 @@ abstract class Model
         }
 
         return $data;
+    }
+
+    private function formatFields(array $fields) {
+        return $fields;
     }
 
     /**
