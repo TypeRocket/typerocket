@@ -55,12 +55,12 @@ class TaxonomiesModel extends Model
         $builtin = $this->getFilteredBuiltinFields($fields);
 
         if ( ! empty( $builtin ) ) {
-            remove_action('create_term', 'TypeRocket\Http\Responders\Hook::taxonomy');
+            remove_action('create_term', 'TypeRocket\Http\Responders\Hook::taxonomies');
 
             $name = $builtin['name'];
             unset($builtin['name']);
             $term = wp_insert_term( $name, $this->taxonomy, $builtin );
-            add_action('create_term', 'TypeRocket\Http\Responders\Hook::taxonomy');
+            add_action('create_term', 'TypeRocket\Http\Responders\Hook::taxonomies');
 
             if ( $term instanceof \WP_Error || $term === 0 ) {
                 $default      = 'name is required';
@@ -91,9 +91,9 @@ class TaxonomiesModel extends Model
             $builtin = $this->getFilteredBuiltinFields($fields);
 
             if ( ! empty( $builtin ) ) {
-                remove_action('create_term', 'TypeRocket\Http\Responders\Hook::taxonomy');
+                remove_action('edit_term', 'TypeRocket\Http\Responders\Hook::taxonomies');
                 $term = wp_update_term( $this->id, $this->taxonomy, $builtin );
-                add_action('create_term', 'TypeRocket\Http\Responders\Hook::taxonomy');
+                add_action('edit_term', 'TypeRocket\Http\Responders\Hook::taxonomies');
 
                 if ( $term instanceof \WP_Error || $term === 0 ) {
                     $default      = 'name is required';
