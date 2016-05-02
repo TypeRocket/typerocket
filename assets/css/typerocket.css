@@ -475,7 +475,10 @@ body .tr-builder .controls .tr-components li.ui-sortable-placeholder,
 }
 
 .tr-repeater-group .repeater-inputs > h1:first-child,
-.tr-repeater-group .repeater-inputs > h3:first-child {
+.tr-repeater-group .repeater-inputs > h2:first-child,
+.tr-repeater-group .repeater-inputs > h3:first-child,
+.tr-repeater-group .repeater-inputs > h4:first-child,
+.tr-repeater-group .repeater-inputs > h5:first-child {
   margin: 0 -10px 15px;
   padding: 0 12px 8px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);

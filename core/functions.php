@@ -91,7 +91,7 @@ function tr_posts_field( $name, $item_id = null )
     return $model->getFieldValue( $name );
 }
 
-function tr_posts_builder_field( $name, $item_id = null ) {
+function tr_posts_components_field( $name, $item_id = null ) {
     global $post;
 
     if (isset( $post->ID ) && is_null( $item_id )) {
@@ -107,7 +107,7 @@ function tr_posts_builder_field( $name, $item_id = null ) {
         foreach($builder_data as $data) {
             $key = key($data);
             $component = strtolower(key($data));
-            $function = 'tr_builder_' . $name . '_' . $component;
+            $function = 'tr_component_' . $name . '_' . $component;
             if(function_exists($function)) {
                 $function($data[$key]);
             } else {
