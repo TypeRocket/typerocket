@@ -77,7 +77,7 @@ class TaxonomiesModel extends Model
     }
 
     /**
-     * Update post from TypeRocket fields
+     * Update term from TypeRocket fields
      *
      * @param array $fields
      *
@@ -85,19 +85,23 @@ class TaxonomiesModel extends Model
      */
     public function update( array $fields )
     {
-        if($this->id != null && ! wp_is_post_revision( $this->id ) ) {
+        if($this->id != null) {
             $fields = $this->secureFields($fields);
             $fields = array_merge($fields, $this->static);
             $builtin = $this->getFilteredBuiltinFields($fields);
 
             if ( ! empty( $builtin ) ) {
-                remove_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
-                $builtin['ID'] = $this->id;
-                $post = $this->getData('post');
-                $builtin['post_type'] = $post->post_type;
-                wp_update_post( $builtin );
-                add_action('save_post', 'TypeRocket\Http\Responders\Hook::posts');
-                $this->setData('post', get_post( $this->id ));
+                remove_action('create_term', 'TypeRocket\Http\Responders\Hook::taxonomy');
+                $term = wp_update_term( $this->id, $this->taxonomy, $builtin );
+                add_action('create_term', 'TypeRocket\Http\Responders\Hook::taxonomy');
+
+                if ( $term instanceof \WP_Error || $term === 0 ) {
+                    $default      = 'name is required';
+                    $this->errors = ! empty( $term->errors ) ? $term->errors : array( $default );
+                } else {
+                    $this->id   = $term;
+                    $this->setData('term', get_term( $this->id, $this->taxonomy ) );
+                }
             }
 
             $this->saveMeta( $fields );
