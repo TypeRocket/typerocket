@@ -119,13 +119,13 @@ add_action('admin_init', function() {
     add_rewrite_rule( $regex, $location, 'top' );
 
     // Matrix API
-    $regex = 'typerocket_matrix_api/v1/([^/]*)/([^/]*)/?$';
-    $location = 'index.php?typerocket_matrix_group=$matches[1]&typerocket_matrix_type=$matches[2]';
+    $regex = 'typerocket_matrix_api/v1/([^/]*)/([^/]*)/([^/]*)/?$';
+    $location = 'index.php?typerocket_matrix_group=$matches[1]&typerocket_matrix_type=$matches[2]&typerocket_matrix_folder=$matches[3]';
     add_rewrite_rule( $regex, $location, 'top' );
 
     // Builder API
-    $regex = 'typerocket_builder_api/v1/([^/]*)/([^/]*)/?$';
-    $location = 'index.php?typerocket_builder_group=$matches[1]&typerocket_builder_type=$matches[2]';
+    $regex = 'typerocket_builder_api/v1/([^/]*)/([^/]*)/([^/]*)/?$';
+    $location = 'index.php?typerocket_builder_group=$matches[1]&typerocket_builder_type=$matches[2]&typerocket_builder_folder=$matches[3]';
     add_rewrite_rule( $regex, $location, 'top' );
 
 });
@@ -134,8 +134,10 @@ add_filter( 'query_vars', function($vars) {
     $vars[] = 'typerocket_rest_controller';
     $vars[] = 'typerocket_rest_item';
     $vars[] = 'typerocket_matrix_group';
+    $vars[] = 'typerocket_matrix_folder';
     $vars[] = 'typerocket_matrix_type';
     $vars[] = 'typerocket_builder_group';
+    $vars[] = 'typerocket_builder_folder';
     $vars[] = 'typerocket_builder_type';
     return $vars;
 } );
@@ -159,8 +161,9 @@ add_filter( 'template_include', function($template) {
 
     $matrix_group = get_query_var('typerocket_matrix_group', null);
     $matrix_type = get_query_var('typerocket_matrix_type', null);
+    $matrix_folder = get_query_var('typerocket_matrix_folder', null);
 
-    $load_template = ($matrix_group && $matrix_type);
+    $load_template = ($matrix_group && $matrix_type && $matrix_folder);
     $load_template = apply_filters('tr_matrix_api_template', $load_template);
 
     if($load_template) {
@@ -173,10 +176,11 @@ add_filter( 'template_include', function($template) {
 
 add_filter( 'template_include', function($template) {
 
-    $matrix_group = get_query_var('typerocket_builder_group', null);
-    $matrix_type = get_query_var('typerocket_builder_group', null);
+    $builder_group = get_query_var('typerocket_builder_group', null);
+    $builder_type = get_query_var('typerocket_builder_type', null);
+    $builder_folder = get_query_var('typerocket_builder_folder', null);
 
-    $load_template = ($matrix_group && $matrix_type);
+    $load_template = ($builder_group && $builder_type && $builder_folder );
     $load_template = apply_filters('tr_builder_api_template', $load_template);
 
     if($load_template) {

@@ -83,14 +83,15 @@ jQuery(document).ready ($) ->
       $('.tr-builder-select-overlay').remove()
       if !$that.hasClass('disabled')
         mxid = $that.data('id')
-        group = $that.data('folder')
+        folder = $that.data('folder')
+        group = $that.data('group')
         img = $that.data('thumbnail')
         $fields = $('#frame-' + mxid)
         $components = $('#components-' + mxid)
         $select = $('ul[data-mxid="' + mxid + '"]')
         type = $that.data('value')
         $that.addClass 'disabled'
-        url = '/typerocket_builder_api/v1/' + group + '/' + type
+        url = '/typerocket_builder_api/v1/' + group + '/' + type  + '/' + folder
         form_group = $select.data('group')
         $.ajax
           url: url

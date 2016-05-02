@@ -542,18 +542,19 @@
 (function() {
   jQuery(document).ready(function($) {
     $('.typerocket-container').on('click', '.matrix-button', function(e) {
-      var $fields, $select, $that, button_txt, callbacks, form_group, group, mxid, type, url;
+      var $fields, $select, $that, button_txt, callbacks, folder, form_group, group, mxid, type, url;
       $that = $(this);
       if (!$that.is(':disabled')) {
         mxid = $that.data('id');
-        group = $that.data('folder');
+        folder = $that.data('folder');
+        group = $that.data('group');
         $fields = $('#' + mxid);
         $select = $('select[data-mxid="' + mxid + '"]');
         button_txt = $that.val();
         type = $select.val();
         callbacks = TypeRocket.repeaterCallbacks;
         $that.attr('disabled', 'disabled').val('Adding...');
-        url = '/typerocket_matrix_api/v1/' + group + '/' + type;
+        url = '/typerocket_matrix_api/v1/' + group + '/' + type + '/' + folder;
         form_group = $select.data('group');
         $.ajax({
           url: url,
@@ -696,20 +697,21 @@
         }
       });
       $('.typerocket-container').on('click', '.builder-select-option', function(e) {
-        var $components, $fields, $select, $that, form_group, group, img, mxid, type, url;
+        var $components, $fields, $select, $that, folder, form_group, group, img, mxid, type, url;
         $that = $(this);
         $that.parent().fadeOut();
         $('.tr-builder-select-overlay').remove();
         if (!$that.hasClass('disabled')) {
           mxid = $that.data('id');
-          group = $that.data('folder');
+          folder = $that.data('folder');
+          group = $that.data('group');
           img = $that.data('thumbnail');
           $fields = $('#frame-' + mxid);
           $components = $('#components-' + mxid);
           $select = $('ul[data-mxid="' + mxid + '"]');
           type = $that.data('value');
           $that.addClass('disabled');
-          url = '/typerocket_builder_api/v1/' + group + '/' + type;
+          url = '/typerocket_builder_api/v1/' + group + '/' + type + '/' + folder;
           form_group = $select.data('group');
           $.ajax({
             url: url,

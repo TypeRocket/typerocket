@@ -3,14 +3,15 @@ jQuery(document).ready ($) ->
     $that = $(this)
     if !$that.is(':disabled')
       mxid = $that.data('id')
-      group = $that.data('folder')
+      folder = $that.data('folder')
+      group = $that.data('group')
       $fields = $('#' + mxid)
       $select = $('select[data-mxid="' + mxid + '"]')
       button_txt = $that.val()
       type = $select.val()
       callbacks = TypeRocket.repeaterCallbacks
       $that.attr('disabled', 'disabled').val 'Adding...'
-      url = '/typerocket_matrix_api/v1/' + group + '/' + type
+      url = '/typerocket_matrix_api/v1/' + group + '/' + type + '/' + folder
       form_group = $select.data('group')
       $.ajax
         url: url

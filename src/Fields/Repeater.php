@@ -7,6 +7,7 @@ class Repeater extends Field implements ScriptField
 {
 
     private $fields = [];
+    private $headline = null;
 
     /**
      * Run on construction
@@ -32,6 +33,8 @@ class Repeater extends Field implements ScriptField
         $name     = $this->getName();
         $form->setDebugStatus( false );
         $html     = '';
+
+        $headline = $this->headline ? '<h1>' . $this->headline . '</h1>': '';
 
         // add controls
         if (isset( $settings['help'] )) {
@@ -73,7 +76,7 @@ class Repeater extends Field implements ScriptField
 
         // render js template data
         $html .= "<div class=\"tr-repeater-group-template\" data-id=\"{$name}\">";
-        $html .= $openContainer . $templateFields . $endContainer;
+        $html .= $openContainer . $headline . $templateFields . $endContainer;
         $html .= '</div>';
 
         // render saved data
@@ -84,6 +87,7 @@ class Repeater extends Field implements ScriptField
                 $html .= '<div class="tr-repeater-group">';
                 $html .= $openContainer;
                 $form->setGroup( $root_group . ".{$k}" );
+                $html .= $headline;
                 $html .= $form->getFromFieldsString( $this->fields );
                 $html .= $endContainer;
                 $html .= '</div>';
@@ -121,6 +125,17 @@ class Repeater extends Field implements ScriptField
     public function getFields()
     {
         return $this->fields;
+    }
+
+    public function setHeadline($headline = null) {
+        $this->headline = $headline;
+
+        return $this;
+    }
+
+    public function getHeadline()
+    {
+        return $this->headline;
     }
 
 }

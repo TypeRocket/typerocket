@@ -38,7 +38,7 @@ class Builder extends Matrix
         $blocks = $this->getBuilderBlocks();
         $count = 0;
         $generator = new Generator();
-        $component_name = $this->getName();
+        $component_name = $this->getComponentFolder();
         $default_null = $generator->newInput('hidden', $this->getAttribute('name'), null)->getString();
         ?>
 
@@ -58,7 +58,7 @@ class Builder extends Matrix
                         if ($count == 1) {
                             $classes .= ' active';
                         }
-                        $thumbnail = $this->getComponentThumbnail($component_name, $type);;
+                        $thumbnail = $this->getComponentThumbnail($component_name, $type);
                         ?>
                     <li class="tr-builder-component-control <?php echo $classes; ?>">
                         <?php if ($thumbnail) : ?>
@@ -86,6 +86,7 @@ class Builder extends Matrix
     {
 
         $name = $this->getName();
+        $folder = $this->getComponentFolder();
         $options = $this->getOptions();
         $options = $options ? $options : $this->setOptionsFromFolder()->getOptions();
 
@@ -100,10 +101,11 @@ class Builder extends Matrix
             foreach ($options as $name => $value) {
 
                 $attr['data-value'] = $value;
-                $attr['data-thumbnail'] = $this->getComponentThumbnail($this->getName(), $value);
+                $attr['data-thumbnail'] = $this->getComponentThumbnail($folder, $value);
                 $attr['class'] = 'builder-select-option';
                 $attr['data-id'] = $this->mxid;
-                $attr['data-folder'] = $this->getName();
+                $attr['data-folder'] = $folder;
+                $attr['data-group'] = $this->getName();
 
                 $img = new Generator();
                 $img->newImage($attr['data-thumbnail']);
@@ -119,7 +121,7 @@ class Builder extends Matrix
         } else {
 
             $paths = Config::getPaths();
-            $dir = $paths['components'] . '/' . $name;
+            $dir = $paths['components'] . '/' . $folder;
 
             $select = "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add a files for Matrix <code>{$dir}</code> and add your matrix files to it.</div>";
         }
@@ -145,6 +147,7 @@ class Builder extends Matrix
         $blocks = '';
         $form = $this->getForm();
         $paths = Config::getPaths();
+        $folder = $this->getComponentFolder();
 
         if (is_array( $val )) {
 
@@ -164,13 +167,13 @@ class Builder extends Matrix
                     }
 
                     $form->setGroup($append_group . "{$tr_matrix_group}.{$tr_matrix_key}.{$tr_matrix_type}");
-                    $file        = $paths['components'] . "/" . $this->getName() . "/{$tr_matrix_type}.php";
+                    $file        = $paths['components'] . "/" . $folder . "/{$tr_matrix_type}.php";
                     $classes = "builder-field-group builder-type-{$tr_matrix_type} builder-group-{$tr_matrix_group}";
 
                     if(file_exists($file)) {
                         $line = fgets(fopen( $file, 'r'));
                         if( preg_match("/<[h|H]\\d>(.*)<\\/[h|H]\\d>/U", $line, $matches) ) {
-                            $block_name = $matches[1];
+                            $block_name = strip_tags($matches[1]);
                         }
                     }
 

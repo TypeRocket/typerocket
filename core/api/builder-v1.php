@@ -4,6 +4,7 @@ $tr_loaded = defined('TR_START');
 if($tr_loaded) {
     $group = get_query_var('typerocket_builder_group', null);
     $type = get_query_var('typerocket_builder_type', null);
+    $folder = get_query_var('typerocket_builder_folder', null);
     $formGroup = $_POST['form_group'];
 
     $load = apply_filters('tr_matrix_api_load', true, $group, $type, $formGroup);
@@ -21,7 +22,7 @@ if($tr_loaded) {
         $paths = \TypeRocket\Config::getPaths();
 
         $form->setGroup($formGroup . "{$group}.{$tr_matrix_id}.{$type}");
-        $file = $paths['components'] . "/{$group}/{$type}.php";
+        $file = $paths['components'] . "/{$folder}/{$type}.php";
 
         ?>
         <div class="builder-field-group builder-type-<?php echo $type; ?> builder-group-<?php echo $group; ?>">

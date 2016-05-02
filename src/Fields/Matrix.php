@@ -12,6 +12,7 @@ class Matrix extends Field implements ScriptField {
     use OptionsTrait;
 
     protected $mxid = null;
+    protected $component_folder = null;
 
     /**
      * Run on construction
@@ -41,7 +42,8 @@ class Matrix extends Field implements ScriptField {
 
         // setup select list of files
         $select = $this->getSelectHtml();
-        $name = $this->getName();
+        $folder = $this->getComponentFolder();
+        $group = $this->getName();
         $settings = $this->getSettings();
         $blocks = $this->getMatrixBlocks();
 
@@ -62,7 +64,7 @@ class Matrix extends Field implements ScriptField {
 <div class='matrix-controls controls'>
 {$select}
 <div class=\"tr-repeater-button-add\">
-<input type=\"button\" value=\"Add New\" data-id='{$this->mxid}' data-folder='{$name}' class=\"button matrix-button\">
+<input type=\"button\" value=\"Add New\" data-id='{$this->mxid}' data-group='{$group}' data-folder='{$folder}' class=\"button matrix-button\">
 </div>
 <div class=\"button-group\">
 <input type=\"button\" value=\"Flip\" class=\"flip button\">
@@ -81,7 +83,6 @@ class Matrix extends Field implements ScriptField {
     {
 
         $name = Sanitize::underscore($name);
-        $name = str_replace( '-', ' ', $name );
 
         return ucwords( $name );
     }
@@ -90,6 +91,7 @@ class Matrix extends Field implements ScriptField {
     {
 
         $name = $this->getName();
+        $folder = $this->getComponentFolder();
         $options = $this->getOptions();
         $options = $options ? $options : $this->setOptionsFromFolder()->getOptions();
 
@@ -119,7 +121,7 @@ class Matrix extends Field implements ScriptField {
         } else {
 
             $paths = Config::getPaths();
-            $dir = $paths['components'] . '/' . $name;
+            $dir = $paths['components'] . '/' . $folder;
 
             $select = "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add a files for Matrix <code>{$dir}</code> and add your matrix files to it.</div>";
         }
@@ -130,8 +132,8 @@ class Matrix extends Field implements ScriptField {
 
     public function setOptionsFromFolder() {
         $paths = Config::getPaths();
-        $name = $this->getName();
-        $dir = $paths['components'] . '/' . $name;
+        $folder = $this->getComponentFolder();
+        $dir = $paths['components'] . '/' . $folder;
 
         if (file_exists( $dir )) {
 
@@ -152,7 +154,7 @@ class Matrix extends Field implements ScriptField {
                     $key = $this->cleanFileName( $path['filename'] );
                     $line = fgets(fopen( $dir . '/' . $the_file, 'r'));
                     if( preg_match("/<[h|H]\\d>(.*)<\\/[h|H]\\d>/U", $line, $matches) ) {
-                        $key = $matches[1];
+                        $key = strip_tags($matches[1]);
                     }
                     $this->options[$key] = $path['filename'];
                 }
@@ -171,6 +173,7 @@ class Matrix extends Field implements ScriptField {
         $blocks = '';
         $form = $this->getForm();
         $paths = Config::getPaths();
+        $folder = $this->getComponentFolder();
 
         if (is_array( $val )) {
 
@@ -190,7 +193,7 @@ class Matrix extends Field implements ScriptField {
                     }
 
                     $form->setGroup($append_group . "{$tr_matrix_group}.{$tr_matrix_key}.{$tr_matrix_type}");
-                    $file        = $paths['components'] . "/" . $this->getName() . "/{$tr_matrix_type}.php";
+                    $file        = $paths['components'] . "/" . $folder . "/{$tr_matrix_type}.php";
                     $classes = "matrix-field-group tr-repeater-group matrix-type-{$tr_matrix_type} matrix-group-{$tr_matrix_group}";
                     $remove = '#remove';
                     ?>
@@ -228,6 +231,27 @@ class Matrix extends Field implements ScriptField {
 
         return trim($blocks);
 
+    }
+
+    public function getComponentFolder() {
+
+        if( ! $this->component_folder ) {
+            $this->component_folder = $this->getName();
+        }
+
+        return $this->component_folder;
+    }
+
+    public function setComponentFolder($folder_name = '') {
+
+        $paths = Config::getPaths();
+        $dir = $paths['components'] . '/' . $folder_name;
+
+        if(file_exists($dir)) {
+            $this->component_folder = $folder_name;
+        }
+
+        return $this;
     }
 
 }
