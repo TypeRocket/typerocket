@@ -6,31 +6,31 @@ use TypeRocket\Http\Middleware\Controller;
 class Kernel
 {
 
-    protected $middleware = array(
+    protected $middleware = [
         'hookGlobal' =>
-            array('AuthRead'),
+            [ 'AuthRead' ],
         'restGlobal' =>
-            array(
+            [
                 'AuthRead',
                 'ValidateCsrf'
-            ),
+            ],
         'noResource' =>
-            array('AuthAdmin'),
+            [ 'AuthAdmin' ],
         'users' =>
-            array('IsUserOrCanEditUsers'),
+            [ 'IsUserOrCanEditUsers' ],
         'posts' =>
-            array('OwnsPostOrCanEditPosts'),
+            [ 'OwnsPostOrCanEditPosts' ],
         'pages' =>
-            array('OwnsPostOrCanEditPosts'),
+            [ 'OwnsPostOrCanEditPosts' ],
         'comments' =>
-            array('OwnsCommentOrCanEditComments'),
+            [ 'OwnsCommentOrCanEditComments' ],
         'options' =>
-            array('CanManageOptions'),
+            [ 'CanManageOptions' ],
         'categories' =>
-            array('CanManageCategories'),
+            [ 'CanManageCategories' ],
         'tags' =>
-            array('CanManageCategories')
-    );
+            [ 'CanManageCategories' ]
+    ];
 
     /**
      * Handle Middleware

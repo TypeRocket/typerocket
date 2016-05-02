@@ -28,7 +28,7 @@ class Request
         $this->setResourceId( $id );
         $this->uri    = $_SERVER['REQUEST_URI'];
         $this->host   = $_SERVER['HTTP_HOST'];
-        $this->fields = ! empty ( $_POST['tr'] ) ? $_POST['tr'] : array();
+        $this->fields = ! empty ( $_POST['tr'] ) ? $_POST['tr'] : [];
         $this->post   = ! empty ( $_POST ) ? $_POST : null;
         $this->get    = ! empty ( $_GET ) ? $_GET : null;
         $this->files  = ! empty ( $_FILES ) ? $_FILES : null;
