@@ -12,9 +12,9 @@ class BuilderPlugin
         $path = $paths['urls']['plugins'] . '/builder/';
 
         $this->post_types = apply_filters('tr_builder_post_types', ['page'] );
-
         wp_enqueue_style( 'tr-builder-plugin-css', $path . 'builder.css' );
         wp_enqueue_script( 'tr-builder-plugin-script', $path . 'builder.js', [ 'jquery' ], '1.0', true );
+        do_action('tr_builder_plugin_init');
     }
 
     function edit_form_after_title( $post )
@@ -46,9 +46,9 @@ class BuilderPlugin
             echo '</div>';
 
             echo '<div id="tr_page_builder" ' . $hide_builder . ' class="typerocket-container typerocket-dev">';
-            do_action('tr_before_builder');
-            echo $form->builder('Builder');
-            do_action('tr_after_builder');
+            do_action('tr_before_builder_field');
+            echo $form->builder('Builder')->setDebugHelperFunction("tr_posts_builder_field('builder');");
+            do_action('tr_after_builder_field');
             echo '</div><div id="builderStandardEditor" ' . $hide_editor . '>';
 
         endif;
@@ -56,7 +56,7 @@ class BuilderPlugin
 
     function edit_form_after_editor( $post )
     {
-        if ($post->post_type == 'page') :
+        if ( is_array( $this->post_types ) && in_array($post->post_type, $this->post_types) ) :
             echo '</div>';
         endif;
     }

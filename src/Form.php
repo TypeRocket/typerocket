@@ -236,24 +236,29 @@ class Form
      */
     private function getFieldHelpFunction( Fields\Field $field )
     {
+        $helper = $field->getDebugHelperFunction();
 
-        $brackets   = $field->getDots();
-        $resource = $field->getResource();
-        $controller = $resource;
-        $param = '';
+        if($helper) {
+            $function = $helper;
+        } else {
+            $dots   = $field->getDots();
+            $resource = $field->getResource();
+            $controller = $resource;
+            $param = '';
 
-        if($this->model instanceof PostTypesModel) {
-            $controller = 'posts';
+            if($this->model instanceof PostTypesModel) {
+                $controller = 'posts';
+            }
+
+            if($this->model instanceof TaxonomiesModel) {
+                $controller = 'taxonomies';
+                $param = ", '{$resource}'";
+                $id = $field->getItemId() ? $field->getItemId() : '$id';
+                $param .= ', '.$id;
+            }
+
+            $function   = "tr_{$controller}_field('{$dots}'{$param});";
         }
-
-        if($this->model instanceof TaxonomiesModel) {
-            $controller = 'taxonomies';
-            $param = ", '{$resource}'";
-            $id = $field->getItemId() ? $field->getItemId() : '$id';
-            $param .= ', '.$id;
-        }
-
-        $function   = "tr_{$controller}_field('{$brackets}'{$param});";
 
         return $function;
     }

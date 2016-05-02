@@ -105,10 +105,11 @@ function tr_posts_builder_field( $name, $item_id = null ) {
 
     if( is_array($builder_data) ) {
         foreach($builder_data as $data) {
+            $key = key($data);
             $component = strtolower(key($data));
             $function = 'tr_builder_' . $name . '_' . $component;
             if(function_exists($function)) {
-                $function($data);
+                $function($data[$key]);
             } else {
                 echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add builder content here by defining: <code>function {$function}(\$data) {}</code></div>";
             }

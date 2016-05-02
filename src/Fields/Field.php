@@ -16,6 +16,7 @@ abstract class Field
     /** @var Form */
     private $form = null;
     private $prefix = null;
+    private $helper = null;
     private $label = false;
 
     /**
@@ -446,6 +447,16 @@ abstract class Field
         $brackets = array_map(function($item) { return "[{$item}]"; }, $array);
 
         return implode('', $brackets);
+    }
+
+    public function setDebugHelperFunction( $helper = null ) {
+        $this->helper = $helper;
+
+        return $this;
+    }
+
+    public function getDebugHelperFunction() {
+        return $this->helper;
     }
 
     /**
