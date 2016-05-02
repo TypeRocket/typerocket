@@ -9,6 +9,7 @@ abstract class Model
     protected $id = null;
     protected $fillable = array();
     protected $guard = array();
+    protected $format = [];
     protected $static = array();
     protected $default = array();
     protected $errors = null;
@@ -31,6 +32,7 @@ abstract class Model
         $this->init();
         $this->fillable = apply_filters( 'tr_model_fillable' . $suffix, $this->fillable, $this );
         $this->guard    = apply_filters( 'tr_model_guard' . $suffix, $this->guard, $this );
+        $this->format    = apply_filters( 'tr_model_format' . $suffix, $this->format, $this );
         do_action( 'tr_model', $this );
     }
 
@@ -49,6 +51,13 @@ abstract class Model
     public function setFillableFields( array $fillable )
     {
         $this->fillable = $fillable;
+
+        return $this;
+    }
+
+    public function setFormatFields( array $format )
+    {
+        $this->format = $format;
 
         return $this;
     }
@@ -80,7 +89,7 @@ abstract class Model
      */
     public function appendFillableField( $field_name )
     {
-        if ( ! array_key_exists( $field_name, $this->fillable )) {
+        if ( ! in_array( $field_name, $this->fillable )) {
             $this->fillable[] = $field_name;
         }
 
@@ -90,7 +99,7 @@ abstract class Model
     /**
      * Append Guard
      *
-     * Add a field to guard.
+     * Add a field to guard if not set to fillable.
      *
      * @param $field_name
      *
@@ -98,8 +107,26 @@ abstract class Model
      */
     public function appendGuardField( $field_name )
     {
-        if ( ! array_key_exists( $field_name, $this->fillable )) {
+        if ( ! in_array( $field_name, $this->fillable )) {
             $this->guard[] = $field_name;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Append Format
+     *
+     * Add a field to format.
+     *
+     * @param $field_name
+     *
+     * @return $this
+     */
+    public function appendFormatField( $field_name )
+    {
+        if ( ! in_array( $field_name, $this->format )) {
+            $this->format[] = $field_name;
         }
 
         return $this;
