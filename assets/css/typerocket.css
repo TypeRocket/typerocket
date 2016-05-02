@@ -440,6 +440,7 @@ body .tr-builder .controls .tr-components li.ui-sortable-placeholder,
   visibility: visible !important;
   background: none;
   z-index: 1;
+  box-shadow: none;
 }
 
 .tr-repeater-fields .tr-repeater-group.ui-sortable-placeholder:after {
