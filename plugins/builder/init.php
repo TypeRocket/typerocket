@@ -39,7 +39,7 @@ class BuilderPlugin
                 $hide_builder  = 'style="display: none;"';
             }
 
-            echo '<div id="tr_page_type_toggle"><div><a id="tr_page_builder_control" href="#tr_page_builder" class="button ' . $builder_active . '">Page Builder</a><a href="#builderStandardEditor" class="button ' . $editor_active . '">Standard Editor</a></div></div>';
+            echo '<div id="tr_page_type_toggle"><div><a id="tr_page_builder_control" href="#tr_page_builder" class="button ' . $builder_active . '">Builder</a><a href="#builderStandardEditor" class="button ' . $editor_active . '">Standard Editor</a></div></div>';
 
             echo '<div id="builderSelectRadio">';
             echo $form->checkbox( 'Use Builder' );

@@ -91,6 +91,32 @@ function tr_posts_field( $name, $item_id = null )
     return $model->getFieldValue( $name );
 }
 
+function tr_posts_builder_field( $name, $item_id = null ) {
+    global $post;
+
+    if (isset( $post->ID ) && is_null( $item_id )) {
+        $item_id = $post->ID;
+    }
+
+    $model = new \TypeRocket\Models\PostTypesModel();
+    $model->findById($item_id);
+
+    $builder_data = $model->getFieldValue( $name );
+
+    if( is_array($builder_data) ) {
+        foreach($builder_data as $data) {
+            $component = strtolower(key($data));
+            $function = 'tr_builder_' . $name . '_' . $component;
+            if(function_exists($function)) {
+                $function($data);
+            } else {
+                echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add builder content here by defining: <code>function {$function}(\$data) {}</code></div>";
+            }
+        }
+    }
+
+}
+
 function tr_users_field( $name, $item_id = null )
 {
     global $user_id, $post;
@@ -141,4 +167,12 @@ function tr_taxonomies_field( $name, $taxonomy, $item_id = null )
 
 function tr_is_json( $string ) {
     return json_decode($string) ? true : false;
+}
+
+/**
+ * Enable TypeRocket on the front end of the website
+ */
+function tr_frontend() {
+    $core = new TypeRocket\Core(false);
+    $core->initFrontEnd();
 }
