@@ -46,9 +46,9 @@ class BuilderPlugin
             echo '</div>';
 
             echo '<div id="tr_page_builder" ' . $hide_builder . ' class="typerocket-container typerocket-dev">';
-            do_action('tr_before_builder_field');
+            do_action('tr_before_builder_field', $this, $form, $use_builder);
             echo $form->builder('Builder')->setDebugHelperFunction("tr_posts_builder_field('builder');");
-            do_action('tr_after_builder_field');
+            do_action('tr_after_builder_field', $this, $form, $use_builder);
             echo '</div><div id="builderStandardEditor" ' . $hide_editor . '>';
 
         endif;
