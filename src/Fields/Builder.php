@@ -167,10 +167,13 @@ class Builder extends Matrix
                     $file        = $paths['components'] . "/" . $this->getName() . "/{$tr_matrix_type}.php";
                     $classes = "builder-field-group builder-type-{$tr_matrix_type} builder-group-{$tr_matrix_group}";
 
-                    $line = fgets(fopen( $file, 'r'));
-                    if( preg_match("/<[h|H]\\d>(.*)<\\/[h|H]\\d>/U", $line, $matches) ) {
-                        $block_name = $matches[1];
+                    if(file_exists($file)) {
+                        $line = fgets(fopen( $file, 'r'));
+                        if( preg_match("/<[h|H]\\d>(.*)<\\/[h|H]\\d>/U", $line, $matches) ) {
+                            $block_name = $matches[1];
+                        }
                     }
+
                     $this->components[] = [$tr_matrix_type, $block_name];
 
                     if($count == 1) {
