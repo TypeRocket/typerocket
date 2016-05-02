@@ -6,3 +6,5 @@
 !dev/*
 !theme-options/
 !theme-options/*
+!builder/
+!builder/*
