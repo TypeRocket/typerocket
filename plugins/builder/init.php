@@ -14,7 +14,7 @@ class BuilderPlugin
         $this->post_types = apply_filters('tr_builder_post_types', ['page'] );
         wp_enqueue_style( 'tr-builder-plugin-css', $path . 'builder.css' );
         wp_enqueue_script( 'tr-builder-plugin-script', $path . 'builder.js', [ 'jquery' ], '1.0', true );
-        do_action('tr_builder_plugin_init');
+        do_action('tr_builder_plugin_init', $this);
     }
 
     function edit_form_after_title( $post )
