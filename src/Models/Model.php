@@ -351,6 +351,29 @@ abstract class Model
     }
 
     private function formatFields(array $fields) {
+
+        $func = function(array &$arr, $path, $fn) {
+            $loc = &$arr;
+            foreach(explode('.', $path) as $step)
+            {
+                $loc = &$loc[$step];
+            }
+
+            if( is_callable($fn)) {
+                $loc = $fn($loc);
+            } elseif( is_callable('\\TypeRocket\\Sanitize::' . $fn ) ) {
+                $fn = '\\TypeRocket\\Sanitize::' . $fn;
+                $loc = $fn($loc);
+            }
+
+            return $loc;
+        };
+
+        foreach ($this->format as $path => $fn) {
+            $func($fields, $path, $fn);
+        }
+
+
         return $fields;
     }
 
