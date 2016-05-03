@@ -13,8 +13,18 @@ trait OptionsTrait
         return $this;
     }
 
-    public function setOptions( $options )
+    public function setOptions( $options, $style = 'standard' )
     {
+
+        switch ($style) {
+            case 'flat':
+                $options = array_combine($options, $options);
+                break;
+            case 'flip' :
+                $options = array_flip($options);
+                break;
+        }
+
         $this->options = $options;
 
         return $this;
