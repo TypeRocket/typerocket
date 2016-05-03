@@ -208,9 +208,10 @@ add_filter('tr_model_secure_fields', function($fields, $model) {
 
 TypeRocket also supports wildcards using dot notation for deeply nested fields.
 
-##### Example: On an existing model like `PagesModel`
+##### Example: Existing Model
 
-Here we have a custom event component used by a builder field with a field that requires a link.
+On an existing model like `PagesModel`... here we might have a custom event component used by a builder field with a
+field that requires a link.
 
 ```php
 // In your themes functions.php
@@ -221,25 +222,25 @@ add_action('tr_model', function($model) {
 });
 ```
 
-##### Example: On the `BooksModel`
+##### Example: New Model
 
-Here we have a custom authors component used by a matrix field with a field that requires an attachment ID.
+On an `EventsModel`... here we might have a custom event component used by a matrix field with a field that
+requires an attachment ID.
 
 ```php
-<?php // /typerocket/app/Models/BooksModel.php
+<?php // /typerocket/app/Models/EventsModel.php
 namespace TypeRocket\Models;
 
-class BooksModel extends PostTypesModel
+class EventsModel extends PostTypesModel
 {
     protected $fillable = array(
-        'book_cover',
-        'isbn_number'
+        'matrix',
     );
 
     protected $postType = 'book';
 
     protected $format = array(
-       'matrix.*.authors.avatar' => 'intval'
+       'matrix.*.event.photo' => 'intval'
     );
 }
 ```
