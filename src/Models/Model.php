@@ -48,6 +48,15 @@ abstract class Model
         return $this;
     }
 
+    /**
+     * Set Fillable
+     *
+     * Fields that are write protected by default unless fillable
+     *
+     * @param array $fillable
+     *
+     * @return $this
+     */
     public function setFillableFields( array $fillable )
     {
         $this->fillable = $fillable;
@@ -55,6 +64,15 @@ abstract class Model
         return $this;
     }
 
+    /**
+     * Set Format
+     *
+     * Fields that are write protected by default unless fillable
+     *
+     * @param array $format
+     *
+     * @return $this
+     */
     public function setFormatFields( array $format )
     {
         $this->format = $format;
@@ -89,7 +107,7 @@ abstract class Model
      */
     public function appendFillableField( $field_name )
     {
-        if ( ! in_array( $field_name, $this->fillable )) {
+        if ( ! in_array( $field_name, $this->fillable ) && ! in_array( $field_name, $this->guard ) ) {
             $this->fillable[] = $field_name;
         }
 
@@ -107,7 +125,7 @@ abstract class Model
      */
     public function appendGuardField( $field_name )
     {
-        if ( ! in_array( $field_name, $this->fillable )) {
+        if ( ! in_array( $field_name, $this->fillable ) && ! in_array( $field_name, $this->guard ) ) {
             $this->guard[] = $field_name;
         }
 
@@ -119,14 +137,15 @@ abstract class Model
      *
      * Add a field to format.
      *
-     * @param $field_name
+     * @param string $field_name dot notation with support for wild card *
+     * @param callable $callback function or method to call on $field_name
      *
      * @return $this
      */
-    public function appendFormatField( $field_name )
+    public function appendFormatField( $field_name, $callback )
     {
-        if ( ! in_array( $field_name, $this->format )) {
-            $this->format[] = $field_name;
+        if ( ! array_key_exists( $field_name, $this->format )) {
+            $this->format[$field_name] = $callback;
         }
 
         return $this;
