@@ -237,7 +237,7 @@ class EventsModel extends PostTypesModel
         'matrix',
     );
 
-    protected $postType = 'book';
+    protected $postType = 'event';
 
     protected $format = array(
        'matrix.*.event.photo' => 'intval'
