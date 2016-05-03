@@ -394,6 +394,8 @@ abstract class Model
                 }
             } elseif( isset($loc[$step] ) ) {
                 $loc = &$loc[$step];
+            } else {
+                return null;
             }
 
         }
