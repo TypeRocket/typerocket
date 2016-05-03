@@ -141,12 +141,49 @@ class XKernel extends Kernel
 
 ```
 
-### Filter Fields Example
+### Format Fields Example
 
-If we want to filter the fields we can do this as well. Lets use the controller filter to sanitize the data being saved.
+Back at our `BooksModel` we can also format the fields when they are being saved. This allows us to filter and sanitize
+data before it is saved.
 
 - Make sure the "ISBN Number" doesn't contain invalid characters
 - Cast the "Book Cover" to an integer since we reference it by the attachment ID.
+
+```php
+<?php // /typerocket/app/Models/BooksModel.php
+namespace TypeRocket\Models;
+
+class BooksModel extends PostTypesModel
+{
+    protected $fillable = array(
+        'book_cover',
+        'isbn_number'
+    );
+
+    protected $postType = 'book';
+
+    protected $format = array(
+        'book_cover' => 'intval',
+        'isbn_number' => 'format_isbn'
+    );
+}
+```
+
+Then,
+
+```php
+<?php // In your themes functions.php
+function format_isbn($isbn) {
+    $isbn = strtoupper($isbn);
+    $isbn = preg_replace('/((?![Xx0-9-]+).)*/i', '', $isbn);
+    return $isbn;
+}
+```
+
+#### Filter Fields Hook
+
+Alternatively, you can filter the fields you when do not have access to the model. The model filter
+`tr_model_secure_fields` lets you access our fields so you can sanitize the data being saved.
 
 ```php
 add_filter('tr_model_secure_fields', function($fields, $model) {
