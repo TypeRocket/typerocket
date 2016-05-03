@@ -352,29 +352,43 @@ abstract class Model
 
     private function formatFields(array $fields) {
 
-        $func = function(array &$arr, $path, $fn) {
-            $loc = &$arr;
-            foreach(explode('.', $path) as $step)
-            {
+        foreach ($this->format as $path => $fn) {
+            $this->ArrayDots($fields, $path, $fn);
+        }
+
+        return $fields;
+    }
+
+    private function ArrayDots(array &$arr, $path, $fn) {
+        $loc = &$arr;
+        $dots = explode('.', $path);
+        foreach($dots as $step)
+        {
+            array_shift($dots);
+            if($step === '*' && is_array($loc)) {
+                $new_loc = &$loc;
+                $indies = array_keys($new_loc);
+                foreach($indies as $index) {
+                    if(isset($new_loc[$index])) {
+                        $this->ArrayDots($new_loc[$index], implode('.', $dots), $fn);
+                    }
+                }
+            } elseif( isset($loc[$step] ) ) {
                 $loc = &$loc[$step];
             }
 
-            if( is_callable($fn)) {
+        }
+
+        if(!isset($indies)) {
+            if( is_callable($fn) ) {
                 $loc = $fn($loc);
             } elseif( is_callable('\\TypeRocket\\Sanitize::' . $fn ) ) {
                 $fn = '\\TypeRocket\\Sanitize::' . $fn;
                 $loc = $fn($loc);
             }
-
-            return $loc;
-        };
-
-        foreach ($this->format as $path => $fn) {
-            $func($fields, $path, $fn);
         }
 
-
-        return $fields;
+        return $loc;
     }
 
     /**
