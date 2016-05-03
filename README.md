@@ -212,7 +212,8 @@ TypeRocket also supports wildcards using dot notation for deeply nested fields.
 
 Here we have a custom event component used by a builder field with a field that requires a link.
 
-```php // In your themes functions.php
+```php
+// In your themes functions.php
 add_action('tr_model', function($model) {
     if( $model instanceof \TypeRocket\Models\PagesModel ) {
         $model->appendFormatField('builder.*.event.button_link_location', 'esc_url');
@@ -248,6 +249,7 @@ class BooksModel extends PostTypesModel
 You can also use the same design and principles to work with taxonomies.
 
 ```php
+<?php
 $publisher = tr_taxonomy('Publisher', 'Publishers');
 $publisher->addPostType('post');
 $publisher->setMainForm(function() {
