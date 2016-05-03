@@ -204,6 +204,42 @@ add_filter('tr_model_secure_fields', function($fields, $model) {
 }, 10, 2);
 ```
 
+#### Wild Cards
+
+TypeRocket also supports wildcards using dot notation for deeply nested fields. For example, when using the new builder
+field and custom components.
+
+##### Example: On an existing model like `PagesModel`
+
+```php // In your themes functions.php
+add_action('tr_model', function($model) {
+    if( $model instanceof \TypeRocket\Models\PagesModel ) {
+        $model->appendFormatField('builder.*.event.button_link_location', 'esc_url');
+    }
+});
+```
+
+##### Example: On the `BooksModel`
+
+```php
+<?php // /typerocket/app/Models/BooksModel.php
+namespace TypeRocket\Models;
+
+class BooksModel extends PostTypesModel
+{
+    protected $fillable = array(
+        'book_cover',
+        'isbn_number'
+    );
+
+    protected $postType = 'book';
+
+    protected $format = array(
+       'builder.*.event.button_link_location' => 'esc_url'
+    );
+}
+```
+
 ### Custom Taxonomy Fields
 
 You can also use the same design and principles to work with taxonomies.
