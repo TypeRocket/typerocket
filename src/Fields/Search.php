@@ -34,11 +34,17 @@ class Search extends Field
 
         if($value < 1) {
             $value = null;
-        } elseif( empty($taxonomy) ) {
+        }
+
+        if( empty($taxonomy) ) {
             $search_attributes['data-posttype'] = $type;
-            $title = 'Selection: <b>' . get_post_field('post_title', $value) . '</b>';
         } else {
             $search_attributes['data-taxonomy'] = $taxonomy;
+        }
+
+        if( empty($taxonomy) && $value ) {
+            $title = 'Selection: <b>' . get_post_field('post_title', $value) . '</b>';
+        } elseif( $value ) {
             $term = get_term( $value, $taxonomy );
             $title = 'Selection: <b>' . $term->name . '</b>';
         }
