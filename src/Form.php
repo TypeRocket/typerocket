@@ -338,6 +338,7 @@ class Form
         $field     = $field->getString();
         $id        = $this->getCurrentField()->getSetting( 'id' );
         $help      = $this->getCurrentField()->getSetting( 'help' );
+        $section_class = $this->getCurrentField()->getSetting( 'classes', '' );
         $fieldHtml = $this->getCurrentField()->getSetting( 'render' );
         $formHtml  = $this->getSetting( 'render' );
 
@@ -348,7 +349,7 @@ class Form
             $html = $field;
         } else {
             $type = strtolower( str_ireplace( '\\', '-', get_class( $this->getCurrentField() ) ) );
-            $html = "<div class=\"control-section {$type}\" {$id}>{$label}<div class=\"control\">{$field}{$help}</div></div>";
+            $html = "<div class=\"control-section {$section_class} {$type}\" {$id}>{$label}<div class=\"control\">{$field}{$help}</div></div>";
         }
 
         $html = apply_filters( 'tr_from_field_html', $html, $this );
