@@ -28,21 +28,31 @@ class WpRestApi
             return $search;
         };
 
-        add_filter( 'posts_search', $func, 500, 2 );
-
         $params = $request->get_params();
+        $results = null;
 
-        $query = new \WP_Query( [
-            'post_type' => $params['post_type'],
-            's' => $params['s'],
-            'posts_per_page' => 10
-        ] );
+        if( array_key_exists('taxonomy', $params) ) {
+            $taxonomy = $params['taxonomy'];
+            $terms = get_terms( [
+                'taxonomy' => $taxonomy,
+                'hide_empty' => false,
+            ] );
 
-        if ( empty( $query->posts ) ) {
-            return null;
+            $results = $terms;
+        } else {
+            add_filter( 'posts_search', $func, 500, 2 );
+            $query = new \WP_Query( [
+                'post_type' => $params['post_type'],
+                's' => $params['s'],
+                'posts_per_page' => 10
+            ] );
+
+            if ( ! empty( $query->posts ) ) {
+                $results =  $query->posts;
+            }
         }
 
-        return $query->posts;
+        return $results;
     }
 
 }

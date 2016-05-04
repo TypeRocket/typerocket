@@ -23,20 +23,25 @@ class Search extends Field
         $input = new Generator();
         $name = $this->getNameAttributeString();
         $value = (int) $this->getValue();
-        $title = 'No page selected... Search and click on a result';
+        $title = 'No selection... Search and click on a result';
         $type = $this->getSetting('post_type', 'any');
-
-        if($value < 1) {
-            $value = null;
-        } else {
-            $title = 'Selection: <b>' . get_post_field('post_title', $value) . '</b>';
-        }
+        $taxonomy = $this->getSetting('taxonomy', '');
 
         $search_attributes = [
             'placeholder' => 'Type to search...',
-            'class' => 'tr-link-search-input',
-            'data-type' => $type
+            'class' => 'tr-link-search-input'
         ];
+
+        if($value < 1) {
+            $value = null;
+        } elseif( empty($taxonomy) ) {
+            $search_attributes['data-posttype'] = $type;
+            $title = 'Selection: <b>' . get_post_field('post_title', $value) . '</b>';
+        } else {
+            $search_attributes['data-taxonomy'] = $taxonomy;
+            $term = get_term( $value, $taxonomy );
+            $title = 'Selection: <b>' . $term->term_name . '</b>';
+        }
 
         $field = $input->newInput($this->getType(), null, null,  $search_attributes)->getString();
         $field .= $input->newInput( 'hidden', $name, $value, $this->getAttributes() )->getString();
