@@ -28,6 +28,7 @@ class WpRestApi
             return $search;
         };
 
+        $limit = 10;
         $params = $request->get_params();
         $results = null;
 
@@ -36,6 +37,9 @@ class WpRestApi
             $terms = get_terms( [
                 'taxonomy' => $taxonomy,
                 'hide_empty' => false,
+                'search' =>  $params['s'],
+                'number' => $limit
+
             ] );
 
             $results = $terms;
@@ -44,7 +48,7 @@ class WpRestApi
             $query = new \WP_Query( [
                 'post_type' => $params['post_type'],
                 's' => $params['s'],
-                'posts_per_page' => 10
+                'posts_per_page' => $limit
             ] );
 
             if ( ! empty( $query->posts ) ) {

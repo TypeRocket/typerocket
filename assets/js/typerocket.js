@@ -748,22 +748,36 @@
 (function() {
   var tr_delay;
 
-  jQuery.fn.TypeRocketLink = function(type) {
-    var search, that;
+  jQuery.fn.TypeRocketLink = function(type, taxonomy) {
+    var param, search, that;
     if (type == null) {
       type = 'any';
     }
+    if (taxonomy == null) {
+      taxonomy = '';
+    }
     that = this;
     search = encodeURI(this.val());
-    jQuery.getJSON('/wp-json/typerocket/v1/search?post_type=' + type + '&s=' + search, function(data) {
-      var i, len, post, results;
+    param = 'post_type=' + type + '&s=' + search;
+    if (taxonomy) {
+      param += '&taxonomy=' + taxonomy;
+    }
+    jQuery.getJSON('/wp-json/typerocket/v1/search?' + param, function(data) {
+      var i, id, item, len, results, title;
       if (data) {
         that.next().next().next().html('');
         that.next().next().next().append('<li class="tr-link-search-result-title">Results');
         results = [];
         for (i = 0, len = data.length; i < len; i++) {
-          post = data[i];
-          results.push(that.next().next().next().append('<li class="tr-link-search-result" data-id="' + post.ID + '" >' + post.post_title));
+          item = data[i];
+          if (item.post_title) {
+            title = item.post_title;
+            id = item.ID;
+          } else {
+            title = item.name;
+            id = item.term_id;
+          }
+          results.push(that.next().next().next().append('<li class="tr-link-search-result" data-id="' + id + '" >' + title));
         }
         return results;
       }
@@ -782,11 +796,12 @@
 
   jQuery(document).ready(function($) {
     $('.typerocket-container').on('keyup', '.tr-link-search-input', function() {
-      var that, type;
+      var taxonomy, that, type;
       that = $(this);
-      type = $(this).data('type');
+      type = $(this).data('posttype');
+      taxonomy = $(this).data('taxonomy');
       return tr_delay((function() {
-        that.TypeRocketLink(type);
+        that.TypeRocketLink(type, taxonomy);
       }), 250);
     });
     return $('.typerocket-container').on('click', '.tr-link-search-result', function() {

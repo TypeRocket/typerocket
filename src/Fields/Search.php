@@ -40,7 +40,7 @@ class Search extends Field
         } else {
             $search_attributes['data-taxonomy'] = $taxonomy;
             $term = get_term( $value, $taxonomy );
-            $title = 'Selection: <b>' . $term->term_name . '</b>';
+            $title = 'Selection: <b>' . $term->name . '</b>';
         }
 
         $field = $input->newInput($this->getType(), null, null,  $search_attributes)->getString();

@@ -1,14 +1,25 @@
-jQuery.fn.TypeRocketLink = (type = 'any') ->
+jQuery.fn.TypeRocketLink = (type = 'any', taxonomy = '') ->
 
   that = this
   search = encodeURI this.val()
+  param = 'post_type='+type+'&s='+search
 
-  jQuery.getJSON '/wp-json/typerocket/v1/search?post_type='+type+'&s='+search, (data) ->
+  if taxonomy
+    param += '&taxonomy='+taxonomy
+
+  jQuery.getJSON '/wp-json/typerocket/v1/search?'+param, (data) ->
     if data
       that.next().next().next().html ''
       that.next().next().next().append '<li class="tr-link-search-result-title">Results'
-      for post in data
-        that.next().next().next().append '<li class="tr-link-search-result" data-id="'+post.ID+'" >'+post.post_title
+      for item in data
+        if item.post_title
+          title = item.post_title
+          id = item.ID
+        else
+          title = item.name
+          id = item.term_id
+
+        that.next().next().next().append '<li class="tr-link-search-result" data-id="'+id+'" >'+title
 
   @
 
@@ -22,9 +33,10 @@ tr_delay = do ->
 jQuery(document).ready ($) ->
   $('.typerocket-container').on 'keyup', '.tr-link-search-input', ->
     that = $(this)
-    type = $(this).data 'type'
+    type = $(this).data 'posttype'
+    taxonomy = $(this).data 'taxonomy'
     tr_delay (->
-      that.TypeRocketLink type
+      that.TypeRocketLink type, taxonomy
       return
     ), 250
 
