@@ -207,6 +207,31 @@ abstract class Field
     }
 
     /**
+     * Set Help Text
+     *
+     * @param string $value help text
+     *
+     * @return $this
+     */
+    public function setHelp( $value )
+    {
+        $this->settings['help'] = (string) $value;
+
+        return $this;
+    }
+
+    /**
+     *
+     * Get Help Text
+     *
+     * @return string help text
+     */
+    public function getHelp()
+    {
+        return $this->settings['help'];
+    }
+
+    /**
      * Remove Attribute by key
      *
      * @param $key
