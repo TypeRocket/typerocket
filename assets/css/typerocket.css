@@ -3083,6 +3083,10 @@ body .redactor-box-fullscreen {
   border-bottom: none;
 }
 
+.tr-tabbed-box .no-sidebar .tr-contextual-help-back {
+  border-right: none;
+}
+
 .tr-contextual-help-columns {
   position: relative;
 }

@@ -771,7 +771,7 @@
         for (i = 0, len = data.length; i < len; i++) {
           item = data[i];
           if (item.post_title) {
-            title = item.post_title;
+            title = item.post_title + '(' + item.post_type + ')';
             id = item.ID;
           } else {
             title = item.name;
