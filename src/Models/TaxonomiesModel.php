@@ -161,6 +161,21 @@ class TaxonomiesModel extends Model
                     $term = $this->getData('term');
                     $data = $term->term_id;
                     break;
+                case 'name' :
+                    /** @var \WP_Term $term */
+                    $term = $this->getData('term');
+                    $data = $term->name;
+                    break;
+                case 'description' :
+                    /** @var \WP_Term $term */
+                    $term = $this->getData('term');
+                    $data = $term->description;
+                    break;
+                case 'slug' :
+                    /** @var \WP_Term $term */
+                    $term = $this->getData('term');
+                    $data = $term->slug;
+                    break;
                 default :
                     $data = get_term_meta( $field_name, $this->id, 'raw' );
                     break;
