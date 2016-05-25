@@ -167,7 +167,9 @@ function tr_taxonomies_field( $name, $taxonomy, $item_id = null )
 }
 
 function tr_is_json( $string ) {
-    return json_decode($string) ? true : false;
+    $j = json_decode($string);
+    $r = $j ? true : false;
+    return $r;
 }
 
 /**
