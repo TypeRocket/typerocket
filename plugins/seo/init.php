@@ -1,7 +1,7 @@
 <?php
 namespace TypeRocket;
 
-class DiscoverSeoPlugin
+class TypeRocketSeoPlugin
 {
 
     public $itemId = null;
@@ -398,4 +398,4 @@ class DiscoverSeoPlugin
 
 }
 
-add_action( 'typerocket_loaded', array( new DiscoverSeoPlugin(), 'setup' ) );
+add_action( 'typerocket_loaded', array( new TypeRocketSeoPlugin(), 'setup' ) );
