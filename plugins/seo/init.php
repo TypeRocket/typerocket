@@ -1,7 +1,7 @@
 <?php
 namespace TypeRocket;
 
-class SeoPlugin
+class DiscoverSeoPlugin
 {
 
     public $itemId = null;
@@ -12,6 +12,8 @@ class SeoPlugin
             echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
             exit;
         }
+
+        add_filter( 'jetpack_enable_opengraph', '__return_false', 99 );
     }
 
     public function setup()
@@ -89,7 +91,7 @@ class SeoPlugin
 
         // meta vars
         $url              = get_the_permalink($object_id);
-        $seo              = tr_posts_field('[seo][meta]', $object_id);
+        $seo              = tr_posts_field('seo.meta', $object_id);
         $desc             = esc_attr( $seo['description'] );
         $og_title         = esc_attr( $seo['og_title'] );
         $og_desc          = esc_attr( $seo['og_desc'] );
@@ -270,11 +272,11 @@ class SeoPlugin
         $card_opts = array(
             'Summary'             => 'summary',
             'Summary large image' => 'summary_large_image',
-            "Photo"               => 'photo',
-            "Gallery"             => 'gallery',
-            "Product"             => 'product',
-            "App"                 => 'app',
-            "Player"              => 'player'
+//            "Photo"               => 'photo',
+//            "Gallery"             => 'gallery',
+//            "Product"             => 'product',
+//            "App"                 => 'app',
+//            "Player"              => 'player'
         );
 
         // build form
@@ -396,4 +398,4 @@ class SeoPlugin
 
 }
 
-add_action( 'typerocket_loaded', array( new SeoPlugin(), 'setup' ) );
+add_action( 'typerocket_loaded', array( new DiscoverSeoPlugin(), 'setup' ) );
