@@ -48,6 +48,7 @@ class WpRestApi
             $query = new \WP_Query( [
                 'post_type' => $params['post_type'],
                 's' => $params['s'],
+                'post_status' => ['publish', 'pending', 'draft', 'future']
                 'posts_per_page' => $limit
             ] );
 
