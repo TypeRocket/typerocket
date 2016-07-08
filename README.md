@@ -1,7 +1,7 @@
 ## TypeRocket 3
 Coding advanced WordPress themes became a blast. Be good looking and do cool stuff with less code.
 
-See http://typerocket.com for version 2. Version 3.0 is waiting official release.
+See [http://typerocket.com](http://typerocket.com) for version 2. Version 3.0 is waiting official release.
 
 ### Requirements
 
@@ -18,9 +18,9 @@ See http://typerocket.com for version 2. Version 3.0 is waiting official release
 - Add fields to post types, comments, meta boxes, option pages, user profiles and even on the front-end inside theme template files.
 - You can access a number of pre-made TypeRocket plugins for features like SEO and Theme Options installed directly into your theme.
 
-### Documentation
+### 2.0 Documentation
 
-https://typerocket.com/docs/
+[https://typerocket.com/docs/](https://typerocket.com/docs/)
 
 ### Book Post Type Example
 
@@ -78,10 +78,10 @@ namespace TypeRocket\Models;
 
 class BooksModel extends PostTypesModel
 {
-    protected $fillable = array(
+    protected $fillable = [
         'book_cover',
         'isbn_number'
-    );
+    ];
 
     protected $postType = 'book';
 }
@@ -113,30 +113,31 @@ namespace TypeRocket\Http;
 class XKernel extends Kernel
 {
 
-    protected $middleware = array(
+    protected $middleware = [
         'hookGlobal' =>
-            array('AuthRead'),
+            [ Middleware\AuthRead::class ],
         'restGlobal' =>
-            array(
-                'AuthRead',
-                'ValidateCsrf'
-            ),
-        'noResource' => array(
-            'AuthAdmin'
-        ),
-        'books' => // new resource middleware
-            array('OwnsPostOrCanEditPosts'),
+            [
+                Middleware\AuthRead::class,
+                Middleware\ValidateCsrf::class
+            ],
+        'noResource' =>
+            [ Middleware\AuthAdmin::class ],
         'users' =>
-            array('IsUserOrCanEditUsers'),
+            [ Middleware\IsUserOrCanEditUsers::class ],
         'posts' =>
-            array('OwnsPostOrCanEditPosts'),
+            [ Middleware\OwnsPostOrCanEditPosts::class ],
         'pages' =>
-            array('OwnsPostOrCanEditPosts'),
+            [ Middleware\OwnsPostOrCanEditPosts::class ],
         'comments' =>
-            array('OwnsCommentOrCanEditComments'),
+            [ Middleware\OwnsCommentOrCanEditComments::class ],
         'options' =>
-            array('CanManageOptions')
-    );
+            [ Middleware\CanManageOptions::class ],
+        'categories' =>
+            [ Middleware\CanManageCategories::class ],
+        'tags' =>
+            [ Middleware\CanManageCategories::class ]
+    ];
 }
 
 ```
@@ -155,17 +156,17 @@ namespace TypeRocket\Models;
 
 class BooksModel extends PostTypesModel
 {
-    protected $fillable = array(
+    protected $fillable = [
         'book_cover',
         'isbn_number'
-    );
+    ];
 
     protected $postType = 'book';
 
-    protected $format = array(
+    protected $format = [
         'book_cover' => 'intval',
         'isbn_number' => 'format_isbn'
-    );
+    ];
 }
 ```
 
@@ -233,15 +234,13 @@ namespace TypeRocket\Models;
 
 class EventsModel extends PostTypesModel
 {
-    protected $fillable = array(
-        'matrix',
-    );
+    protected $fillable = ['matrix'];
 
     protected $postType = 'event';
 
-    protected $format = array(
+    protected $format = [
        'matrix.*.event.photo' => 'intval'
-    );
+    ];
 }
 ```
 
