@@ -60,7 +60,6 @@ class Kernel
         $middleware = apply_filters('tr_kernel_middleware', $middleware, $request, $type);
 
         foreach($middleware as $class) {
-            $class = '\\TypeRocket\\Http\\Middleware\\' . $class;
             $client = new $class($request, $response, $client);
         }
 
