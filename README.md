@@ -1,7 +1,7 @@
 ## TypeRocket 3
 Coding advanced WordPress themes became a blast. Be good looking and do cool stuff with less code.
 
-http://typerocket.com
+See http://typerocket.com for version 2. Version 3.0 is waiting official release.
 
 ### Requirements
 
