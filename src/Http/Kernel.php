@@ -8,28 +8,28 @@ class Kernel
 
     protected $middleware = [
         'hookGlobal' =>
-            [ Middleware\AuthRead::class ],
+            [ 'AuthRead' ],
         'restGlobal' =>
             [
-                Middleware\AuthRead::class,
-                Middleware\ValidateCsrf::class
+                'AuthRead',
+                'ValidateCsrf'
             ],
         'noResource' =>
-            [ Middleware\AuthAdmin::class ],
+            [ 'AuthAdmin' ],
         'users' =>
-            [ Middleware\IsUserOrCanEditUsers::class ],
+            [ 'IsUserOrCanEditUsers' ],
         'posts' =>
-            [ Middleware\OwnsPostOrCanEditPosts::class ],
+            [ 'OwnsPostOrCanEditPosts' ],
         'pages' =>
-            [ Middleware\OwnsPostOrCanEditPosts::class ],
+            [ 'OwnsPostOrCanEditPosts' ],
         'comments' =>
-            [ Middleware\OwnsCommentOrCanEditComments::class ],
+            [ 'OwnsCommentOrCanEditComments' ],
         'options' =>
-            [ Middleware\CanManageOptions::class ],
+            [ 'CanManageOptions' ],
         'categories' =>
-            [ Middleware\CanManageCategories::class ],
+            [ 'CanManageCategories' ],
         'tags' =>
-            [ Middleware\CanManageCategories::class ]
+            [ 'CanManageCategories' ]
     ];
 
     /**
@@ -60,6 +60,7 @@ class Kernel
         $middleware = apply_filters('tr_kernel_middleware', $middleware, $request, $type);
 
         foreach($middleware as $class) {
+            $class = '\\TypeRocket\\Http\\Middleware\\' . $class;
             $client = new $class($request, $response, $client);
         }
 
