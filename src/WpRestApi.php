@@ -16,7 +16,7 @@ class WpRestApi
             $search =
             $searchand = '';
             foreach ( (array) $q['search_terms'] as $term ) {
-                $term = esc_sql( like_escape( $term ) );
+                $term = esc_sql( $wpdb::esc_like( $term ) );
                 $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
                 $searchand = ' AND ';
             }
