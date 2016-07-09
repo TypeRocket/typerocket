@@ -32,7 +32,7 @@ abstract class Model
         $this->init();
         $this->fillable = apply_filters( 'tr_model_fillable' . $suffix, $this->fillable, $this );
         $this->guard    = apply_filters( 'tr_model_guard' . $suffix, $this->guard, $this );
-        $this->format    = apply_filters( 'tr_model_format' . $suffix, $this->format, $this );
+        $this->format   = apply_filters( 'tr_model_format' . $suffix, $this->format, $this );
         do_action( 'tr_model', $this );
     }
 
@@ -369,6 +369,13 @@ abstract class Model
         return $data;
     }
 
+    /**
+     * Format fields
+     *
+     * @param array $fields
+     *
+     * @return array
+     */
     private function formatFields(array $fields) {
 
         foreach ($this->format as $path => $fn) {
@@ -378,6 +385,15 @@ abstract class Model
         return $fields;
     }
 
+    /**
+     * Used to format fields
+     *
+     * @param array $arr
+     * @param $path
+     * @param $fn
+     *
+     * @return array|null
+     */
     private function ArrayDots(array &$arr, $path, $fn) {
         $loc = &$arr;
         $dots = explode('.', $path);
