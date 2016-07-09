@@ -272,11 +272,6 @@ class TypeRocketSeoPlugin
         $card_opts = array(
             'Summary'             => 'summary',
             'Summary large image' => 'summary_large_image',
-//            "Photo"               => 'photo',
-//            "Gallery"             => 'gallery',
-//            "Product"             => 'product',
-//            "App"                 => 'app',
-//            "Player"              => 'player'
         );
 
         // build form
