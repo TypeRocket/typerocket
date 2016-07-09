@@ -34,13 +34,8 @@ class Items extends Field
         if (is_array( $items )) {
             foreach ($items as $value) {
 
-                $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'attribute');
-
-                if ( is_callable($sanitize)) {
-                    $value = call_user_func($sanitize, $value );
-                }
-
-                $input = $generator->newInput( 'text', $name . '[]', esc_attr( $value ) )->getString();
+                $value = esc_attr( $this->sanitize($value, 'raw') );
+                $input = $generator->newInput( 'text', $name . '[]', $value )->getString();
                 $remove = '#remove';
                 $list .= $generator->newElement( 'li', array( 'class' => 'item' ),
                     '<div class="move tr-icon-menu"></div><a href="'.$remove.'" class="tr-icon-remove2 remove" title="Remove Item"></a>' . $input )->getString();

@@ -2,9 +2,11 @@
 namespace TypeRocket\Fields;
 
 use \TypeRocket\Html\Generator;
+use TypeRocket\Traits\MaxlengthTrait;
 
 class Text extends Field
 {
+    use MaxlengthTrait;
 
     /**
      * Run on construction
@@ -19,24 +21,12 @@ class Text extends Field
      */
     public function getString()
     {
-        $max = '';
         $input = new Generator();
         $name = $this->getNameAttributeString();
         $value = $this->getValue();
-        $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'raw');
+        $value = esc_attr( $this->sanitize($value, 'raw') );
 
-        if ( is_callable($sanitize)) {
-            $value = esc_attr( call_user_func($sanitize, $value ) );
-        }
-
-        $maxLength = $this->getAttribute('maxlength');
-
-        if ($maxLength != null && $maxLength > 0) {
-            $left = (int) $maxLength - strlen( utf8_decode( $value ) );
-            $max = new Generator();
-            $max->newElement('p', array('class' => 'tr-maxlength'), 'Characters left: ')->appendInside('span', array(), $left);
-            $max = $max->getString();
-        }
+        $max = $this->getMaxlength( $value,  $this->getAttribute('maxlength'));
 
         return $input->newInput($this->getType(), $name, $value, $this->getAttributes() )->getString() . $max;
     }

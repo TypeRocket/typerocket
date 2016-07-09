@@ -3,9 +3,12 @@ namespace TypeRocket\Fields;
 
 use \TypeRocket\Html\Generator,
     \TypeRocket\Config;
+use TypeRocket\Traits\MaxlengthTrait;
 
 class Editor extends Textarea implements ScriptField
 {
+    use MaxlengthTrait;
+
     /**
      * Run on construction
      */
@@ -26,25 +29,13 @@ class Editor extends Textarea implements ScriptField
      */
     public function getString()
     {
-        $max = '';
         $generator = new Generator();
         $value = $this->getValue();
         $this->setAttribute('name', $this->getNameAttributeString());
         $this->appendStringToAttribute('class', ' typerocket-editor ');
-        $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'editor');
+        $value = esc_attr( $this->sanitize($value, 'editor') );
 
-        if ( is_callable($sanitize)) {
-            $value = call_user_func($sanitize, $value );
-        }
-
-        $maxLength = $this->getAttribute('maxlength');
-
-        if ( $maxLength != null && $maxLength > 0) {
-            $left = (int) $maxLength - strlen( utf8_decode( $value ) );
-            $max = new Generator();
-            $max->newElement('p', ['class' => 'tr-maxlength'], 'Characters left: ')->appendInside('span', [], $left);
-            $max = $max->getString();
-        }
+        $max = $this->getMaxlength( $value,  $this->getAttribute('maxlength'));
 
         return $generator->newElement( 'textarea', $this->getAttributes(), $value )->getString() . $max;
     }

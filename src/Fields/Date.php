@@ -25,11 +25,7 @@ class Date extends Field implements ScriptField
         $name  = $this->getNameAttributeString();
         $this->removeAttribute( 'name' );
         $value = $this->getValue();
-        $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', 'raw');
-
-        if ( is_callable($sanitize)) {
-            $value = esc_attr( call_user_func($sanitize, $value ) );
-        }
+        $value = esc_attr( $this->sanitize($value, 'raw') );
 
         $this->appendStringToAttribute( 'class', ' date-picker' );
         $input = new Generator();
