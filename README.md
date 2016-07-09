@@ -319,10 +319,11 @@ Use `npm install --dev`
 {
   "private": true,
   "devDependencies": {
-    "gulp": "^3.8.8"
+    "gulp": "~3.9",
+    "laravel-elixir-coffeescript": "^1.0.2"
   },
   "dependencies": {
-    "laravel-elixir": "^3.0.0"
+    "laravel-elixir": "^6.0.0-9"
   }
 }
 ```
@@ -334,24 +335,23 @@ Update the `elixir.config.assetsPath` to your root typerocket folder location.
 ```js
 var elixir = require('laravel-elixir');
 
-elixir.config.assetsPath = './wp-content/themes/typerocket_dev/typerocket/assets';
+elixir.config.assetsPath = './wp-content/themes/default/typerocket/assets';
 elixir.config.sourcemaps = false;
 
 elixir(function(mix) {
-  mix.sass('*.scss', elixir.config.assetsPath + '/css/typerocket.css', 'sass');
+    var coffee_items = [
+        'http.coffee',
+        'booyah.coffee',
+        'typerocket.coffee',
+        'items.coffee',
+        'media.coffee',
+        'matrix.coffee',
+        'builder.coffee',
+        'link.coffee',
+        'dev.coffee'
+    ];
 
-  var coffee_items = [
-    'http.coffee',
-    'booyah.coffee',
-    'typerocket.coffee',
-    'items.coffee',
-    'media.coffee',
-    'matrix.coffee',
-    'builder.coffee',
-    'link.coffee',
-    'dev.coffee'
-  ];
-
-  mix.coffee( coffee_items , elixir.config.assetsPath + '/js/typerocket.js', 'coffee');
+    mix.coffee( coffee_items , elixir.config.assetsPath + '/js/typerocket.js', 'coffee');
+    mix.sass(['*.scss'], elixir.config.assetsPath + '/css/typerocket.css');
 });
 ```

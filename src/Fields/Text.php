@@ -26,7 +26,7 @@ class Text extends Field
         $value = $this->getValue();
         $value = esc_attr( $this->sanitize($value, 'raw') );
 
-        $max = $this->getMaxlength( $value,  $this->getAttribute('maxlength'));
+        $max = $this->getMaxlength( $value, $this->getAttribute('maxlength'));
 
         return $input->newInput($this->getType(), $name, $value, $this->getAttributes() )->getString() . $max;
     }
