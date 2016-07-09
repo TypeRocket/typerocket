@@ -1,13 +1,14 @@
 <?php
 /*
 |--------------------------------------------------------------------------
-| TypeRocket Folder
+| Enabled Plugins
 |--------------------------------------------------------------------------
 |
-| The name of the folder containing TypeRocket.
+| The folder names of the TypeRocket plugins you wish to enable separated
+| by pipes.
 |
 */
-define('TR_FOLDER', 'typerocket');
+define('TR_PLUGINS', 'seo|dev|theme-options|builder');
 
 /*
 |--------------------------------------------------------------------------
@@ -21,14 +22,13 @@ define('TR_DEBUG', true);
 
 /*
 |--------------------------------------------------------------------------
-| Enabled Plugins
+| TypeRocket Folder
 |--------------------------------------------------------------------------
 |
-| The folder names of the TypeRocket plugins you wish to enable separated
-| by pipes.
+| The name of the folder containing TypeRocket.
 |
 */
-define('TR_PLUGINS', 'seo|dev|theme-options');
+define('TR_FOLDER', 'typerocket');
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ define('TR_COMPONENTS_THUMBNAIL_FOLDER_PATH', __DIR__ . '/../components');
 | your current theme.
 |
 */
-define('TR_APP_FOLDER_PATH', __DIR__ . '/app');
+define('TR_APP_FOLDER_PATH', __DIR__ . '/../app');
 
 /*
 |--------------------------------------------------------------------------
@@ -77,7 +77,7 @@ define('TR_PLUGINS_URL', get_stylesheet_directory_uri() . '/' .TR_FOLDER . '/plu
 | A 'random' string of text to help with security from time to time.
 |
 */
-define('TR_SEED', 'asdfa65739asfl0');
+define('TR_SEED', 'PUT_TYPEROCKET_SEED_HERE');
 
 /*
 |--------------------------------------------------------------------------
