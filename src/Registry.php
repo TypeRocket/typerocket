@@ -4,9 +4,9 @@ namespace TypeRocket;
 class Registry
 {
 
-    private static $collection = array();
-    private static $postTypes = array( 'post' => 'posts', 'page' => 'pages' );
-    private static $taxonomies = array( 'category' => 'categories', 'post_tag' => 'tags' );
+    private static $collection = [];
+    private static $postTypes = ['post' => 'posts', 'page' => 'pages'];
+    private static $taxonomies = ['category' => 'categories', 'post_tag' => 'tags'];
 
     /**
      * Add a post type resource
@@ -67,8 +67,8 @@ class Registry
      */
     public static function initHooks()
     {
-        $collection = array();
-        $later = array();
+        $collection = [];
+        $later = [];
 
         if(empty(self::$collection)) {
             return;
@@ -91,13 +91,13 @@ class Registry
 
         foreach ($collection as $obj) {
             if ($obj instanceof Taxonomy) {
-                add_action( 'init', array( $obj, 'register' ) );
+                add_action( 'init', [$obj, 'register']);
 
                 self::taxonomyFormContent($obj);
 
             } elseif ($obj instanceof PostType) {
                 /** @var PostType $obj */
-                add_action( 'init', array( $obj, 'register' ) );
+                add_action( 'init', [$obj, 'register']);
 
                 if (is_string( $obj->getTitlePlaceholder() )) {
                     add_filter( 'enter_title_here', function($title) use ($obj) {
@@ -117,8 +117,8 @@ class Registry
                 self::postTypeFormContent($obj);
 
             } elseif ($obj instanceof MetaBox) {
-                add_action( 'admin_init', array( $obj, 'register' ) );
-                add_action( 'add_meta_boxes', array( $obj, 'register' ) );
+                add_action( 'admin_init', [$obj, 'register']);
+                add_action( 'add_meta_boxes', [$obj, 'register']);
             }
         }
     }
@@ -146,12 +146,12 @@ class Registry
         if ($obj->getForm( 'main' )) {
             add_action( $obj->getId() . '_edit_form', function($term) use ($obj, $callback) {
                 $type = 'main';
-                call_user_func_array($callback, array($term, $type, $obj));
+                call_user_func_array($callback, [$term, $type, $obj]);
             }, 10, 2 );
 
             add_action( $obj->getId() . '_add_form_fields', function($term) use ($obj, $callback) {
                 $type = 'main';
-                call_user_func_array($callback, array($term, $type, $obj));
+                call_user_func_array($callback, [$term, $type, $obj]);
             }, 10, 2 );
         }
     }
@@ -190,7 +190,7 @@ class Registry
         if ($obj->getForm( 'top' )) {
             add_action( 'edit_form_top', function($post) use ($obj, $callback) {
                 $type = 'top';
-                call_user_func_array($callback, array($post, $type, $obj));
+                call_user_func_array($callback, [$post, $type, $obj]);
             } );
         }
 
@@ -198,7 +198,7 @@ class Registry
         if ($obj->getForm( 'title' )) {
             add_action( 'edit_form_after_title', function($post) use ($obj, $callback) {
                 $type = 'title';
-                call_user_func_array($callback, array($post, $type, $obj));
+                call_user_func_array($callback, [$post, $type, $obj]);
             } );
         }
 
@@ -206,7 +206,7 @@ class Registry
         if ($obj->getForm( 'editor' )) {
             add_action( 'edit_form_after_editor', function($post) use ($obj, $callback) {
                 $type = 'editor';
-                call_user_func_array($callback, array($post, $type, $obj));
+                call_user_func_array($callback, [$post, $type, $obj]);
             } );
         }
 
@@ -214,7 +214,7 @@ class Registry
         if ($obj->getForm( 'bottom' )) {
             add_action( 'dbx_post_sidebar', function($post) use ($obj, $callback) {
                 $type = 'bottom';
-                call_user_func_array($callback, array($post, $type, $obj));
+                call_user_func_array($callback, [$post, $type, $obj]);
             } );
         }
 
