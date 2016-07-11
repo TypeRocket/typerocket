@@ -12,11 +12,10 @@ class WpRestApi
             if ( empty( $search ) )
                 return $search; // skip processing - no search term in query
             $q = $wp_query->query_vars;
-            $n = ! empty( $q['exact'] ) ? '' : '%';
             $search = $searchand = '';
             foreach ( (array) $q['search_terms'] as $term ) {
                 $term = esc_sql( $wpdb->esc_like( $term ) );
-                $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
+                $search .= "{$searchand}($wpdb->posts.post_title LIKE '%{$term}%')";
                 $searchand = ' AND ';
             }
             if ( ! empty( $search ) ) {
