@@ -5,7 +5,7 @@
 |--------------------------------------------------------------------------
 |
 | The folder names of the TypeRocket plugins you wish to enable separated
-| by pipes. seo|dev|theme-options|builder
+| by pipes: seo|dev|theme-options|builder
 |
 | Plugins are located at: https://github.com/TypeRocket/plugins
 */
@@ -23,13 +23,13 @@ define('TR_DEBUG', true);
 
 /*
 |--------------------------------------------------------------------------
-| TypeRocket Folder
+| TypeRocket Assets
 |--------------------------------------------------------------------------
 |
-| The name of the folder containing TypeRocket.
+| The folder where you wish to locate typerocket core assets.
 |
 */
-define('TR_FOLDER', 'typerocket');
+define('TR_ASSETS_URL', get_stylesheet_directory_uri() . '/typerocket/assets');
 
 /*
 |--------------------------------------------------------------------------
@@ -42,8 +42,8 @@ define('TR_FOLDER', 'typerocket');
 |
 */
 define('TR_COMPONENTS_FOLDER_PATH', __DIR__ . '/../components');
+define('TR_COMPONENTS_THUMBNAIL_FOLDER_PATH', TR_COMPONENTS_FOLDER_PATH );
 define('TR_COMPONENTS_THUMBNAIL_URL', get_stylesheet_directory_uri() . '/components');
-define('TR_COMPONENTS_THUMBNAIL_FOLDER_PATH', __DIR__ . '/../components');
 
 /*
 |--------------------------------------------------------------------------
@@ -80,13 +80,3 @@ define('TR_PLUGINS_URL', get_stylesheet_directory_uri() . '/plugins');
 |
 */
 define('TR_SEED', 'PUT_TYPEROCKET_SEED_HERE');
-
-/*
-|--------------------------------------------------------------------------
-| Assets
-|--------------------------------------------------------------------------
-|
-| The folder where you wish to locate typerocket core assets.
-|
-*/
-define('TR_ASSETS_URL', get_stylesheet_directory_uri() . '/' . TR_FOLDER . '/assets');

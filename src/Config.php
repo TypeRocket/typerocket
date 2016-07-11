@@ -17,7 +17,6 @@ class Config
     {
         if (self::$paths === null) {
             self::$debug   = defined( 'TR_DEBUG' ) ? TR_DEBUG : false;
-            self::$folder  = defined( 'TR_FOLDER' ) ? TR_FOLDER : 'typerocket';
             self::$seed    = defined( 'TR_SEED' ) ? TR_SEED : 'replaceThis';
             self::$plugins = defined( 'TR_PLUGINS' ) ? TR_PLUGINS : '';
             self::$paths   = $this->defaultPaths();
@@ -83,13 +82,13 @@ class Config
     {
         return [
             'assets'  => __DIR__ . '/../assets',
-            'plugins' => defined( 'TR_PLUGINS_FOLDER_PATH' ) ? TR_PLUGINS_FOLDER_PATH : __DIR__ . '/../plugins',
-            'components'  => defined( 'TR_COMPONENTS_FOLDER_PATH' ) ? TR_COMPONENTS_FOLDER_PATH : __DIR__ . '/../components',
-            'extend'  => defined( 'TR_APP_FOLDER_PATH' ) ? TR_APP_FOLDER_PATH : __DIR__ . '/../app',
+            'plugins' => defined( 'TR_PLUGINS_FOLDER_PATH' ) ? TR_PLUGINS_FOLDER_PATH : __DIR__ . '/../../plugins',
+            'components'  => defined( 'TR_COMPONENTS_FOLDER_PATH' ) ? TR_COMPONENTS_FOLDER_PATH : __DIR__ . '/../../components',
+            'extend'  => defined( 'TR_APP_FOLDER_PATH' ) ? TR_APP_FOLDER_PATH : __DIR__ . '/../../app',
             'urls'    => [
                 'theme'   => get_stylesheet_directory_uri(),
-                'assets'  => defined( 'TR_ASSETS_URL' ) ? TR_ASSETS_URL : get_stylesheet_directory_uri() . '/' . self::$folder . '/assets',
-                'plugins' => defined( 'TR_PLUGINS_URL' ) ? TR_PLUGINS_URL : get_stylesheet_directory_uri() . '/' . self::$folder . '/plugins'
+                'assets'  => defined( 'TR_ASSETS_URL' ) ? TR_ASSETS_URL : get_stylesheet_directory_uri() . '/typerocket/assets',
+                'plugins' => defined( 'TR_PLUGINS_URL' ) ? TR_PLUGINS_URL : get_stylesheet_directory_uri() . '/plugins'
             ]
         ];
     }
