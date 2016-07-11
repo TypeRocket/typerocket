@@ -5,10 +5,11 @@
 |--------------------------------------------------------------------------
 |
 | The folder names of the TypeRocket plugins you wish to enable separated
-| by pipes.
+| by pipes. seo|dev|theme-options|builder
 |
+| Plugins are located at: https://github.com/TypeRocket/plugins
 */
-define('TR_PLUGINS', 'seo|dev|theme-options|builder');
+define('TR_PLUGINS', '');
 
 /*
 |--------------------------------------------------------------------------
