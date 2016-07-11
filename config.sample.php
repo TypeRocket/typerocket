@@ -8,6 +8,7 @@
 | by pipes: seo|dev|theme-options|builder
 |
 | Plugins are located at: https://github.com/TypeRocket/plugins
+|
 */
 define('TR_PLUGINS', '');
 
