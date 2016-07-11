@@ -8,6 +8,12 @@ See [http://typerocket.com](http://typerocket.com) for version 2. Version 3.0 is
 - WordPress 4.5+
 - PHP 5.4+
 
+### Typerocket Plugins
+
+The TypeRocket 3.0 plugins "Theme Options", "SEO", "Dev' and "Builder" have all been moved to their own repository.
+
+[View TypeRocket Plugins](https://github.com/TypeRocket/plugins)
+
 ### Language
 
 - English only
