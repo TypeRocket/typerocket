@@ -5,7 +5,7 @@ class Buffer
 {
 
     private $buffering = false;
-    private $buffer = array();
+    private $buffer = [];
 
     public function __get( $property )
     {
@@ -57,14 +57,14 @@ class Buffer
      */
     public function getBuffer( $index )
     {
-        return $this->buffer[$index];
+        return $this->buffer[Sanitize::underscore($index)];
     }
 
     /**
      * Remove all data from Buffer
      */
     public function cleanBuffer() {
-        $this->buffer = array();
+        $this->buffer = [];
     }
 
 }
