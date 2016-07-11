@@ -45,7 +45,6 @@ require $tr_config_file;
 |
 */
 spl_autoload_register( function ( $class ) {
-
     $prefix   = 'TypeRocket\\';
     $base_dir = __DIR__ . '/../src/';
 
@@ -71,7 +70,6 @@ spl_autoload_register( function ( $class ) {
 |
 */
 spl_autoload_register( function ( $class ) {
-
     $prefix   = TR_APP_NAMESPACE . '\\';
     $base_dir = TR_APP_FOLDER_PATH;
     $base_dir = preg_replace('/\/$/', '', $base_dir);
