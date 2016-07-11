@@ -6,7 +6,7 @@ See [http://typerocket.com](http://typerocket.com) for version 2. Version 3.0 is
 ### Requirements
 
 - WordPress 4.5+
-- PHP 5.4+
+- PHP 5.5+
 
 ### Typerocket Plugins
 
