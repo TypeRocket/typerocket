@@ -9,8 +9,8 @@ namespace TypeRocket;
 class Taxonomy extends Registrable
 {
 
-    private $postTypes = array();
-    private $form = array();
+    private $postTypes = [];
+    private $form = [];
     private $resource = null;
 
     /**
@@ -20,7 +20,7 @@ class Taxonomy extends Registrable
      * @param string $plural plural name
      * @param array $settings args override and extend
      */
-    public function __construct( $singular, $plural = null, $settings = array() )
+    public function __construct( $singular, $plural = null, $settings = [])
     {
 
         if (is_null( $plural )) {
@@ -31,7 +31,7 @@ class Taxonomy extends Registrable
         $upperSingular = ucwords( $singular );
         $lowerPlural   = strtolower( $plural );
 
-        $labels = array(
+        $labels = [
             'add_new_item'               => __( 'Add New ' . $upperSingular ),
             'add_or_remove_items'        => __( 'Add or remove ' . $lowerPlural ),
             'all_items'                  => __( 'All ' . $upperPlural ),
@@ -49,7 +49,7 @@ class Taxonomy extends Registrable
             'singular_name'              => __( $upperSingular ),
             'update_item'                => __( 'Update ' . $upperSingular ),
             'view_item'                  => __( 'View ' . $upperSingular )
-        );
+        ];
 
         if (array_key_exists( 'hierarchical', $settings ) && $settings['hierarchical'] === true) :
             $settings['hierarchical'] = true;
@@ -64,19 +64,19 @@ class Taxonomy extends Registrable
         $this->id     = ! $this->id ? $singular : $this->id;
 
         if (array_key_exists( 'capabilities', $settings ) && $settings['capabilities'] === true) :
-            $settings['capabilities'] = array(
+            $settings['capabilities'] = [
                 'manage_terms' => 'manage_' . $plural,
                 'edit_terms'   => 'manage_' . $plural,
                 'delete_terms' => 'manage_' . $plural,
                 'assign_terms' => 'edit_posts',
-            );
+            ];
         endif;
 
-        $defaults = array(
+        $defaults = [
             'labels'            => $labels,
             'show_admin_column' => false,
-            'rewrite'           => array( 'slug' => Sanitize::dash( $this->id ) ),
-        );
+            'rewrite'           => ['slug' => Sanitize::dash( $this->id )],
+        ];
 
         $this->args = array_merge( $defaults, $settings );
 
@@ -92,7 +92,7 @@ class Taxonomy extends Registrable
      */
     public function setSlug( $slug )
     {
-        $this->args['rewrite'] = array( 'slug' => Sanitize::dash( $slug ) );
+        $this->args['rewrite'] = ['slug' => Sanitize::dash( $slug )];
 
         return $this;
     }

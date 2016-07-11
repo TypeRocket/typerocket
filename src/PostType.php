@@ -5,9 +5,9 @@ class PostType extends Registrable
 {
 
     private $title = null;
-    private $form = array();
-    private $taxonomies = array();
-    private $metaBoxes = array();
+    private $form = [];
+    private $taxonomies = [];
+    private $metaBoxes = [];
     private $icon = null;
     private $resource = null;
 
@@ -258,7 +258,7 @@ class PostType extends Registrable
      */
     public function setSlug( $slug )
     {
-        $this->args['rewrite'] = array( 'slug' => Sanitize::dash( $slug ) );
+        $this->args['rewrite'] = ['slug' => Sanitize::dash( $slug )];
 
         return $this;
     }
