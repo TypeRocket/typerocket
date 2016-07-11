@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Get model by recourse
+ *
+ * @param string $resource use the resource name to get model
+ *
+ * @return null
+ */
 function tr_get_model($resource) {
 
     $Resource = ucfirst($resource);
@@ -17,6 +24,15 @@ function tr_get_model($resource) {
     return $object;
 }
 
+/**
+ * Register taxonomy
+ *
+ * @param $singular
+ * @param null $plural
+ * @param array $settings
+ *
+ * @return \TypeRocket\Taxonomy
+ */
 function tr_taxonomy(
     $singular,
     $plural = null,
@@ -29,6 +45,8 @@ function tr_taxonomy(
 }
 
 /**
+ * Register post type
+ *
  * @param string $singular Singular name for post type
  * @param string|null $plural Plural name for post type
  * @param array $settings The settings for the post type
@@ -46,6 +64,15 @@ function tr_post_type(
     return $obj;
 }
 
+/**
+ * Register meta box
+ *
+ * @param null $name
+ * @param null $screen
+ * @param array $settings
+ *
+ * @return \TypeRocket\MetaBox
+ */
 function tr_meta_box(
     $name = null,
     $screen = null,
@@ -57,11 +84,21 @@ function tr_meta_box(
     return $obj;
 }
 
+/**
+ * Create tabs
+ *
+ * @return \TypeRocket\Tabs
+ */
 function tr_tabs()
 {
     return new \TypeRocket\Tabs();
 }
 
+/**
+ * Create buffer
+ *
+ * @return \TypeRocket\Buffer
+ */
 function tr_buffer()
 {
     return new \TypeRocket\Buffer();
@@ -81,6 +118,14 @@ function tr_form($resource = 'auto', $action = 'update', $item_id = null )
     return new \TypeRocket\Form($resource, $action, $item_id);
 }
 
+/**
+ * Get the posts meta
+ *
+ * @param string $name use dot notation
+ * @param null $item_id
+ *
+ * @return array|mixed|null|string
+ */
 function tr_posts_field( $name, $item_id = null )
 {
     global $post;
@@ -95,6 +140,12 @@ function tr_posts_field( $name, $item_id = null )
     return $model->getFieldValue( $name );
 }
 
+/**
+ * Get components
+ *
+ * @param string $name use dot notation
+ * @param null $item_id
+ */
 function tr_posts_components_field( $name, $item_id = null ) {
     global $post;
 
@@ -122,6 +173,14 @@ function tr_posts_components_field( $name, $item_id = null ) {
 
 }
 
+/**
+ * Get users meta
+ *
+ * @param string $name use dot notation
+ * @param null $item_id
+ *
+ * @return array|mixed|null|string
+ */
 function tr_users_field( $name, $item_id = null )
 {
     global $user_id, $post;
@@ -140,6 +199,13 @@ function tr_users_field( $name, $item_id = null )
     return $model->getFieldValue( $name );
 }
 
+/**
+ * Get options
+ *
+ * @param string $name use dot notation
+ *
+ * @return array|mixed|null|string
+ */
 function tr_options_field( $name )
 {
     $model = new \TypeRocket\Models\OptionsModel();
@@ -147,6 +213,14 @@ function tr_options_field( $name )
     return $model->getFieldValue( $name );
 }
 
+/**
+ * Get comments meta
+ *
+ * @param string $name use dot notation
+ * @param null $item_id
+ *
+ * @return array|mixed|null|string
+ */
 function tr_comments_field( $name, $item_id = null )
 {
     global $comment;
@@ -161,6 +235,15 @@ function tr_comments_field( $name, $item_id = null )
     return $model->getFieldValue( $name );
 }
 
+/**
+ *  Get taxonomy meta
+ *
+ * @param string $name use dot notation
+ * @param string $taxonomy taxonomy id
+ * @param null $item_id
+ *
+ * @return array|mixed|null|string
+ */
 function tr_taxonomies_field( $name, $taxonomy, $item_id = null )
 {
     /** @var \TypeRocket\Models\TaxonomiesModel $model */
@@ -170,6 +253,13 @@ function tr_taxonomies_field( $name, $taxonomy, $item_id = null )
     return $model->getFieldValue( $name );
 }
 
+/**
+ * Detect is JSON
+ *
+ * @param $string
+ *
+ * @return bool
+ */
 function tr_is_json( $string ) {
     $j = json_decode($string);
     $r = $j ? true : false;
