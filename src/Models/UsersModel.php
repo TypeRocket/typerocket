@@ -4,7 +4,7 @@ namespace TypeRocket\Models;
 class UsersModel extends Model
 {
 
-    protected $builtin = array(
+    protected $builtin = [
         'user_login',
         'user_nicename',
         'user_email',
@@ -15,11 +15,11 @@ class UsersModel extends Model
         'user_registered',
         'id',
         'user_pass'
-    );
+    ];
 
-    protected $guard = array(
+    protected $guard = [
         'id'
-    );
+    ];
 
     public function findById( $id )
     {
@@ -42,7 +42,7 @@ class UsersModel extends Model
             add_action( 'user_register', 'TypeRocket\Http\Responders\Hook::users' );
 
             if ($user instanceof \WP_Error || ! is_int( $user )) {
-                $this->errors = isset( $user->errors ) ? $user->errors : array();
+                $this->errors = isset( $user->errors ) ? $user->errors : [];
             } else {
                 $this->id   = $user;
                 $this->setData('user', get_userdata( $this->id ));
@@ -72,7 +72,7 @@ class UsersModel extends Model
 
             $this->saveMeta( $fields );
         } else {
-            $this->errors = array( 'No item to update' );
+            $this->errors = ['No item to update'];
         }
 
         return $this;

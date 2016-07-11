@@ -97,11 +97,11 @@ class Matrix extends Field implements ScriptField {
 
         if ($options) {
             $generator = new Generator();
-            $generator->newElement( 'select', array(
+            $generator->newElement( 'select', [
                 'data-mxid' => $this->mxid,
                 'class' => "matrix-select-{$name}",
                 'data-group' => $this->getForm()->getGroup()
-            ) );
+            ]);
             $default = $this->getSetting('default');
 
             foreach ($options as $name => $value) {

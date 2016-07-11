@@ -19,8 +19,8 @@ class Response {
     private $status = 200;
     private $valid = true;
     private $flash = true;
-    private $errors = array();
-    private $data = array();
+    private $errors = [];
+    private $data = [];
 
     /**
      * Set HTTP status code

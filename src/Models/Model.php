@@ -7,13 +7,13 @@ abstract class Model
 {
 
     protected $id = null;
-    protected $fillable = array();
-    protected $guard = array();
+    protected $fillable = [];
+    protected $guard = [];
     protected $format = [];
-    protected $static = array();
-    protected $default = array();
+    protected $static = [];
+    protected $default = [];
     protected $errors = null;
-    protected $builtin = array();
+    protected $builtin = [];
     private $data = null;
 
     /**
@@ -284,7 +284,7 @@ abstract class Model
     protected function secureFields( array $fields )
     {
         // Fillable
-        $fillable = array();
+        $fillable = [];
         if ( ! empty( $this->fillable ) && is_array( $this->fillable )) {
             foreach ($this->fillable as $field_name) {
                 if (isset( $fields[$field_name] )) {

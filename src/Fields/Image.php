@@ -45,20 +45,20 @@ class Image extends Field implements ScriptField
 
         $html = $generator->newInput( 'hidden', $name, $value, $this->getAttributes() )->getString();
         $html .= '<div class="button-group">';
-        $html .= $generator->newElement( 'input', array(
+        $html .= $generator->newElement( 'input', [
             'type'  => 'button',
             'class' => 'image-picker-button button',
             'value' => $this->getSetting( 'button' )
-        ) )->getString();
-        $html .= $generator->newElement( 'input', array(
+        ])->getString();
+        $html .= $generator->newElement( 'input', [
             'type'  => 'button',
             'class' => 'image-picker-clear button',
             'value' => 'Clear'
-        ) )->getString();
+        ])->getString();
         $html .= '</div>';
-        $html .= $generator->newElement( 'div', array(
+        $html .= $generator->newElement( 'div', [
             'class' => 'image-picker-placeholder'
-        ), $image )->getString();
+        ], $image )->getString();
 
         return $html;
     }

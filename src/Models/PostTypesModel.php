@@ -4,7 +4,7 @@ namespace TypeRocket\Models;
 class PostTypesModel extends Model
 {
 
-    protected $builtin = array(
+    protected $builtin = [
         'post_author',
         'post_date',
         'post_date_gmt',
@@ -28,11 +28,11 @@ class PostTypesModel extends Model
         'comment_count',
         'post_password',
         'id'
-    );
-    protected $guard = array(
+    ];
+    protected $guard = [
         'post_type',
         'id'
-    );
+    ];
 
     protected $postType = null;
 
@@ -78,7 +78,7 @@ class PostTypesModel extends Model
 
             if ( $post instanceof \WP_Error || $post === 0 ) {
                 $default      = 'post_name (slug), post_title, post_content, and post_excerpt are required';
-                $this->errors = ! empty( $post->errors ) ? $post->errors : array( $default );
+                $this->errors = ! empty( $post->errors ) ? $post->errors : [$default];
             } else {
                 $this->id   = $post;
                 $this->setData('post', get_post( $this->id ));
@@ -117,7 +117,7 @@ class PostTypesModel extends Model
             $this->saveMeta( $fields );
 
         } else {
-            $this->errors = array('No item to update');
+            $this->errors = ['No item to update'];
         }
 
         return $this;

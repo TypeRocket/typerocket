@@ -6,21 +6,21 @@ class TaxonomiesModel extends Model
 
     protected $taxonomy = null;
 
-    protected $builtin = array(
+    protected $builtin = [
         'description',
         'name',
         'slug',
         'parent'
-    );
+    ];
 
-    protected $guard = array(
+    protected $guard = [
         'term_id',
         'term_taxonomy_id',
         'taxonomy',
         'term_group',
         'parent',
         'count',
-    );
+    ];
 
     /**
      * Get comment by ID
@@ -64,7 +64,7 @@ class TaxonomiesModel extends Model
 
             if ( $term instanceof \WP_Error || $term === 0 ) {
                 $default      = 'name is required';
-                $this->errors = ! empty( $term->errors ) ? $term->errors : array( $default );
+                $this->errors = ! empty( $term->errors ) ? $term->errors : [$default];
             } else {
                 $this->id   = $term;
                 $this->setData('term', get_term( $this->id, $this->taxonomy ) );
@@ -97,7 +97,7 @@ class TaxonomiesModel extends Model
 
                 if ( $term instanceof \WP_Error || $term === 0 ) {
                     $default      = 'name is required';
-                    $this->errors = ! empty( $term->errors ) ? $term->errors : array( $default );
+                    $this->errors = ! empty( $term->errors ) ? $term->errors : [$default];
                 } else {
                     $this->id   = $term;
                     $this->setData('term', get_term( $this->id, $this->taxonomy ) );
@@ -107,7 +107,7 @@ class TaxonomiesModel extends Model
             $this->saveMeta( $fields );
 
         } else {
-            $this->errors = array('No item to update');
+            $this->errors = ['No item to update'];
         }
 
         return $this;

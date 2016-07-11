@@ -20,7 +20,7 @@ function tr_get_model($resource) {
 function tr_taxonomy(
     $singular,
     $plural = null,
-    $settings = array()
+    $settings = []
 ) {
     $obj = new \TypeRocket\Taxonomy($singular, $plural, $settings);
     $obj->addToRegistry();
@@ -38,7 +38,7 @@ function tr_taxonomy(
 function tr_post_type(
     $singular,
     $plural = null,
-    $settings = array()
+    $settings = []
 ) {
     $obj = new \TypeRocket\PostType($singular, $plural, $settings);
     $obj->addToRegistry();
@@ -49,7 +49,7 @@ function tr_post_type(
 function tr_meta_box(
     $name = null,
     $screen = null,
-    $settings = array()
+    $settings = []
 ) {
     $obj = new \TypeRocket\MetaBox($name, $screen, $settings);
     $obj->addToRegistry();

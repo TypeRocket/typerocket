@@ -41,7 +41,7 @@ require $tr_config_file;
 | Require Core Classes
 |--------------------------------------------------------------------------
 |
-| Require the core classes of TypeRocket.
+| Autoload the core classes of TypeRocket.
 |
 */
 spl_autoload_register( function ( $class ) {
@@ -67,7 +67,7 @@ spl_autoload_register( function ( $class ) {
 | Require App Classes
 |--------------------------------------------------------------------------
 |
-| Require the app classes for TypeRocket custom classes.
+| Autoload the custom app classes for TypeRocket.
 |
 */
 spl_autoload_register( function ( $class ) {

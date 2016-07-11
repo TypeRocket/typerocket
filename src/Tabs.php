@@ -4,7 +4,7 @@ namespace TypeRocket;
 class Tabs
 {
 
-    private $tabs = array();
+    private $tabs = [];
     private $sidebar = null;
 
     public function __get( $property )
@@ -66,7 +66,7 @@ class Tabs
 
         if( ! is_array($settings)) {
             $args = func_get_args();
-            $settings = array();
+            $settings = [];
             $settings['id'] = Sanitize::underscore($args[0]);
             $settings['title'] = $args[0];
             $settings['content'] = $args[1];
@@ -84,13 +84,13 @@ class Tabs
      * @return $this
      */
     private function addTabFromArray($settings) {
-        $defaults = array(
+        $defaults = [
             'title'    => false,
             'id'       => false,
             'content'  => '',
             'callback' => false,
             'url'      => false
-        );
+        ];
         $settings     = wp_parse_args( $settings, $defaults );
 
         $settings['id'] = sanitize_html_class( $settings['id'] );
@@ -130,7 +130,7 @@ class Tabs
      */
     public function removeTabs()
     {
-        $this->tabs = array();
+        $this->tabs = [];
 
         return $this;
     }
@@ -244,7 +244,7 @@ class Tabs
 
                         // If it exists, fire tab callback.
                         if ( ! empty( $tab['callback'] )) {
-                            call_user_func_array( $tab['callback'], array( $this, $tab ) );
+                            call_user_func_array( $tab['callback'], [$this, $tab]);
                         }
                         ?>
                     </div>
@@ -318,7 +318,7 @@ class Tabs
 
                                 // If it exists, fire tab callback.
                                 if ( ! empty( $tab['callback'] )) {
-                                    call_user_func_array( $tab['callback'], array( $this, $tab ) );
+                                    call_user_func_array( $tab['callback'], [$this, $tab]);
                                 }
                                 ?>
                             </div>

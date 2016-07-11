@@ -25,7 +25,7 @@ class WordPressEditor extends Field implements ScriptField
     {
         $this->setAttribute('name', $this->getNameAttributeString());
         $value    = Sanitize::editor( $this->getValue() );
-        $settings = $this->getSetting('options', array());
+        $settings = $this->getSetting('options', []);
 
         $override = array(
             'textarea_name' => $this->getAttribute('name')
@@ -34,7 +34,7 @@ class WordPressEditor extends Field implements ScriptField
         $defaults = array(
             'textarea_rows' => 10,
             'teeny'         => true,
-            'tinymce'       => array( 'plugins' => 'wordpress' )
+            'tinymce'       => ['plugins' => 'wordpress']
         );
 
         $settings = array_merge( $defaults, $settings, $override );

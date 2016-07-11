@@ -4,7 +4,7 @@ namespace TypeRocket\Models;
 class CommentsModel extends Model
 {
 
-    protected $builtin = array(
+    protected $builtin = [
         'comment_author',
         'comment_author_email',
         'comment_author_url',
@@ -20,11 +20,11 @@ class CommentsModel extends Model
         'comment_author_ip',
         'comment_post_id',
         'comment_id'
-    );
+    ];
 
-    protected $guard = array(
+    protected $guard = [
         'comment_id'
-    );
+    ];
 
     /**
      * Get comment by ID
@@ -63,16 +63,16 @@ class CommentsModel extends Model
 
             if (empty( $comment )) {
                 $message      = 'Comment not created.';
-                $this->errors = array( $message );
+                $this->errors = [$message];
             } else {
                 $this->id   = $comment;
                 $this->setData('comment', get_comment( $this->id ) );
             }
         } else {
-            $this->errors = array(
+            $this->errors = [
                 'Missing post ID `comment_post_id`.',
                 'Missing comment content `comment_content`.'
-            );
+            ];
         }
 
         $this->saveMeta( $fields );
@@ -105,7 +105,7 @@ class CommentsModel extends Model
 
             $this->saveMeta( $fields );
         } else {
-            $this->errors = array( 'No item to update' );
+            $this->errors = ['No item to update'];
         }
 
         return $this;

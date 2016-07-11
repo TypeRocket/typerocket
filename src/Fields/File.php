@@ -42,20 +42,20 @@ class File extends Field implements ScriptField
 
         $html = $generator->newInput( 'hidden', $name, $value, $this->getAttributes() )->getString();
         $html .= '<div class="button-group">';
-        $html .= $generator->newElement( 'input', array(
+        $html .= $generator->newElement( 'input', [
             'type'  => 'button',
             'class' => 'file-picker-button button',
             'value' => $this->getSetting( 'button' )
-        ) )->getString();;
-        $html .= $generator->newElement( 'input', array(
+        ])->getString();
+        $html .= $generator->newElement( 'input', [
             'type'  => 'button',
             'class' => 'file-picker-clear button',
             'value' => 'Clear'
-        ) )->getString();;
+        ])->getString();
         $html .= '</div>';
-        $html .= $generator->newElement( 'div', array(
+        $html .= $generator->newElement( 'div', [
             'class' => 'file-picker-placeholder'
-        ), $file )->getString();
+        ], $file )->getString();
 
         return $html;
     }

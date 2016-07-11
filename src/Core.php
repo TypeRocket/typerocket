@@ -46,12 +46,12 @@ class Core
             echo '</div>';
         };
 
-        add_action( 'post_updated_messages', array( $this, 'setMessages' ) );
+        add_action( 'post_updated_messages', [$this, 'setMessages']);
         add_action( 'edit_user_profile', $useContent );
         add_action( 'show_user_profile', $useContent );
-        add_action( 'admin_init', array( $this, 'addCss' ) );
-        add_action( 'admin_init', array( $this, 'addJs' ) );
-        add_action( 'admin_footer', array( $this, 'addBottomJs' ) );
+        add_action( 'admin_init', [$this, 'addCss']);
+        add_action( 'admin_init', [$this, 'addJs']);
+        add_action( 'admin_footer', [$this, 'addBottomJs']);
     }
 
     /**
@@ -126,7 +126,7 @@ class Core
                 $view = $preview = '';
             endif;
 
-            $messages[$pt] = array(
+            $messages[$pt] = [
                 1  => sprintf( __( '%s updated. %s' ), $singular, $view ),
                 2  => __( 'Custom field updated.' ),
                 3  => __( 'Custom field deleted.' ),
@@ -139,7 +139,7 @@ class Core
                 9  => sprintf( __( '%s scheduled for: <strong>%1$s</strong>. %s' ), $singular,
                     date_i18n( 'M j, Y @ G:i', strtotime( $post->post_date ) ), $preview ),
                 10 => sprintf( __( '%s draft updated. ' ), $singular ),
-            );
+            ];
 
         endif;
 

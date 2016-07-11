@@ -11,7 +11,7 @@ abstract class Field
 
     private $name = null;
     private $type = null;
-    private $attr = array();
+    private $attr = [];
 
     /** @var Form */
     private $form = null;
@@ -29,7 +29,7 @@ abstract class Field
      *
      * @internal A Form must be passed for the field to work
      */
-    public function __construct( $name, array $attr = array(), array $settings = array(), $label = true )
+    public function __construct( $name, array $attr = [], array $settings = [], $label = true )
     {
         $args = func_get_args();
         $this->init();
@@ -100,7 +100,7 @@ abstract class Field
      *
      * @return $this
      */
-    private function setup( $name, array $attr = array(), array $settings = array(), $label = true )
+    private function setup( $name, array $attr = [], array $settings = [], $label = true )
     {
         $this->settings = $settings;
         $this->label    = $label;

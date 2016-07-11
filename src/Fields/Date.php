@@ -14,7 +14,7 @@ class Date extends Field implements ScriptField
     }
 
     public function enqueueScripts() {
-        wp_enqueue_script( 'jquery-ui-datepicker', array( 'jquery' ), '1.0', true );
+        wp_enqueue_script( 'jquery-ui-datepicker', ['jquery'], '1.0', true );
     }
 
     /**

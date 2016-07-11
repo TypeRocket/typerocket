@@ -20,7 +20,6 @@ class Items extends Field
     {
         $name = $this->getNameAttributeString();
         $this->appendStringToAttribute( 'class', ' items-list' );
-        // $this->attr['class'] = 'items-list';
         $items = $this->getValue();
         $this->removeAttribute('name');
         $generator = new Generator();
@@ -37,7 +36,7 @@ class Items extends Field
                 $value = esc_attr( $this->sanitize($value, 'raw') );
                 $input = $generator->newInput( 'text', $name . '[]', $value )->getString();
                 $remove = '#remove';
-                $list .= $generator->newElement( 'li', array( 'class' => 'item' ),
+                $list .= $generator->newElement( 'li', ['class' => 'item'],
                     '<div class="move tr-icon-menu"></div><a href="'.$remove.'" class="tr-icon-remove2 remove" title="Remove Item"></a>' . $input )->getString();
 
             }
@@ -46,26 +45,26 @@ class Items extends Field
         $this->removeAttribute('id');
         $html = $generator->newInput( 'hidden', $name, '0', $this->getAttributes() )->getString();
         $html .= '<div class="button-group">';
-        $html .= $generator->newElement( 'input', array(
+        $html .= $generator->newElement( 'input', [
             'type'  => 'button',
             'class' => 'items-list-button button',
             'value' => $this->getSetting('button')
-        ) )->getString();
-        $html .= $generator->newElement( 'input', array(
+        ])->getString();
+        $html .= $generator->newElement( 'input', [
             'type'  => 'button',
             'class' => 'items-list-clear button',
             'value' => 'Clear'
-        ) )->getString();
+        ])->getString();
         $html .= '</div>';
 
         if (is_null( $name ) && is_string( $this->getAttribute('data-name') )) {
             $name = $this->getAttribute('data-name');
         }
 
-        $html .= $generator->newElement( 'ul', array(
+        $html .= $generator->newElement( 'ul', [
             'data-name' => $name,
             'class'     => 'tr-items-list cf'
-        ), $list )->getString();
+        ], $list )->getString();
 
         return $html;
     }

@@ -19,7 +19,7 @@ class Repeater extends Field implements ScriptField
 
     public function enqueueScripts()
     {
-        wp_enqueue_script( 'jquery-ui-sortable', array( 'jquery' ), '1.0', true );
+        wp_enqueue_script( 'jquery-ui-sortable', ['jquery'], '1.0', true );
     }
 
     /**

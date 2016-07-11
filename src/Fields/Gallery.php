@@ -54,24 +54,24 @@ class Gallery extends Field implements ScriptField
         $container = new Generator();
         $html      = $generator->newInput( 'hidden', $name, '0', $this->getAttributes() )->getString();
 
-        $button = $generator->newElement( 'input', array(
+        $button = $generator->newElement( 'input', [
             'type'  => 'button',
             'class' => 'gallery-picker-button button',
             'value' => $this->getSetting( 'button' )
-        ) )->getTag();
+        ])->getTag();
 
-        $clear = $generator->newElement( 'input', array(
+        $clear = $generator->newElement( 'input', [
             'type'  => 'button',
             'class' => 'gallery-picker-clear button',
             'value' => 'Clear'
-        ) )->getTag();
+        ])->getTag();
 
         $html .= $container->newElement( 'div',
-            array( 'class' => 'button-group' ) )->appendInside( $button )->appendInside( $clear )->getString();
+            ['class' => 'button-group'])->appendInside( $button )->appendInside( $clear )->getString();
 
-        $html .= $generator->newElement( 'ul', array(
+        $html .= $generator->newElement( 'ul', [
             'class' => 'tr-gallery-list cf'
-        ), $list )->getString();
+        ], $list )->getString();
 
         return $html;
     }

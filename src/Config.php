@@ -81,17 +81,17 @@ class Config
      */
     private function defaultPaths()
     {
-        return array(
+        return [
             'assets'  => __DIR__ . '/../assets',
             'plugins' => defined( 'TR_PLUGINS_FOLDER_PATH' ) ? TR_PLUGINS_FOLDER_PATH : __DIR__ . '/../plugins',
             'components'  => defined( 'TR_COMPONENTS_FOLDER_PATH' ) ? TR_COMPONENTS_FOLDER_PATH : __DIR__ . '/../components',
             'extend'  => defined( 'TR_APP_FOLDER_PATH' ) ? TR_APP_FOLDER_PATH : __DIR__ . '/../app',
-            'urls'    => array(
+            'urls'    => [
                 'theme'   => get_stylesheet_directory_uri(),
                 'assets'  => defined( 'TR_ASSETS_URL' ) ? TR_ASSETS_URL : get_stylesheet_directory_uri() . '/' . self::$folder . '/assets',
                 'plugins' => defined( 'TR_PLUGINS_URL' ) ? TR_PLUGINS_URL : get_stylesheet_directory_uri() . '/' . self::$folder . '/plugins'
-            )
-        );
+            ]
+        ];
     }
 
 }

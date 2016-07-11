@@ -27,8 +27,9 @@ class Color extends Field implements ScriptField
         $value = Sanitize::hex( $this->getValue() );
         $this->removeAttribute( 'name' );
         $this->appendStringToAttribute( 'class', ' color-picker' );
+        $palette = 'tr_' . $this->getName() . '_color_palette';
 
-        wp_localize_script( 'typerocket-scripts', $this->getPrefix() . '_' . $this->getName() . '_color_palette', $this->getSetting( 'palette' ) );
+        wp_localize_script( 'typerocket-scripts', $palette, $this->getSetting( 'palette' ) );
 
         if ($this->getSetting( 'palette' )) {
             $this->setAttribute( 'data-default-color', $this->getSetting( 'palette' ) );

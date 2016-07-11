@@ -29,7 +29,7 @@ namespace TypeRocket;
 class Inflect
 {
 
-    private static $plural = array(
+    private static $plural = [
         '/(quiz)$/i'                     => "$1zes",
         '/^(ox)$/i'                      => "$1en",
         '/([m|l])ouse$/i'                => "$1ice",
@@ -49,9 +49,9 @@ class Inflect
         '/(us)$/i'                       => "$1es",
         '/s$/i'                          => "s",
         '/$/'                            => "s"
-    );
+    ];
 
-    private static $singular = array(
+    private static $singular = [
         '/(quiz)zes$/i'                                                    => "$1",
         '/(matr)ices$/i'                                                   => "$1ix",
         '/(vert|ind)ices$/i'                                               => "$1ex",
@@ -80,9 +80,9 @@ class Inflect
         '/(corpse)s$/i'                                                    => "$1",
         '/(us)es$/i'                                                       => "$1",
         '/s$/i'                                                            => ""
-    );
+    ];
 
-    private static $irregular = array(
+    private static $irregular = [
         'move'   => 'moves',
         'foot'   => 'feet',
         'goose'  => 'geese',
@@ -92,9 +92,9 @@ class Inflect
         'tooth'  => 'teeth',
         'person' => 'people',
         'valve'  => 'valves'
-    );
+    ];
 
-    private static $uncountable = array(
+    private static $uncountable = [
         'sheep',
         'fish',
         'deer',
@@ -104,7 +104,7 @@ class Inflect
         'rice',
         'information',
         'equipment'
-    );
+    ];
 
     public static function pluralize( $string )
     {

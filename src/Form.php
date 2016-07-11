@@ -169,10 +169,10 @@ class Form
 
             $scheme = is_ssl() ? 'https' : 'http';
 
-            $rest = array(
+            $rest = [
                 'class'    => 'typerocket-rest-form',
                 'data-api' => home_url('/', $scheme ) . 'typerocket_rest_api/v1/' . $this->resource . '/' . $this->itemId
-            );
+            ];
         }
 
         $attr = array_merge( $defaults, $attr, $rest );
@@ -200,7 +200,7 @@ class Form
         if (is_string( $value )) {
             $generator = new Generator();
             $html .= $generator->newInput( 'submit', '_tr_submit_form', $value,
-                array( 'id' => '_tr_submit_form', 'class' => 'button button-primary' ) )->getString();
+                ['id' => '_tr_submit_form', 'class' => 'button button-primary'])->getString();
         }
 
         $html .= '</form>';

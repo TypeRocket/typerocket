@@ -20,37 +20,37 @@ class Generator
         return $this->getString();
     }
 
-    public function newElement( $tag, array $attributes = array(), $text = '' )
+    public function newElement( $tag, array $attributes = [], $text = '' )
     {
         $this->tag = new Tag( $tag, $attributes, $text );
 
         return $this;
     }
 
-    public function newLink( $text = '', $url = '#', array $attributes = array() )
+    public function newLink( $text = '', $url = '#', array $attributes = [])
     {
 
-        $attributes = array_merge( array( 'href' => $url ), $attributes );
+        $attributes = array_merge( ['href' => $url], $attributes );
 
         $this->tag = new Tag( 'a', $attributes, $text );
 
         return $this;
     }
 
-    public function newImage( $src = '', array $attributes = array() )
+    public function newImage( $src = '', array $attributes = [])
     {
 
-        $attributes = array_merge( array( 'src' => $src ), $attributes );
+        $attributes = array_merge( ['src' => $src], $attributes );
 
         $this->tag = new Tag( 'img', $attributes );
 
         return $this;
     }
 
-    public function newInput( $type, $name, $value, array $attributes = array() )
+    public function newInput( $type, $name, $value, array $attributes = [])
     {
 
-        $defaults = array( 'type' => $type, 'name' => $name, 'value' => $value );
+        $defaults = ['type' => $type, 'name' => $name, 'value' => $value];
 
         if (is_null( $name )) {
             unset( $defaults['name'] );
@@ -91,7 +91,7 @@ class Generator
      *
      * @return $this
      */
-    public function appendInside( $tag, array $attributes = array(), $text = '' )
+    public function appendInside( $tag, array $attributes = [], $text = '' )
     {
 
         if ($tag instanceof Generator) {
@@ -113,7 +113,7 @@ class Generator
      *
      * @return $this
      */
-    public function prependInside( $tag, array $attributes = array(), $text = '' )
+    public function prependInside( $tag, array $attributes = [], $text = '' )
     {
 
         if ($tag instanceof Generator) {

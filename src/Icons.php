@@ -15,7 +15,7 @@ class Icons extends Collection
      * Load icons and they font encoding
      */
     public function __construct() {
-        $icons = array(
+        $icons = [
             'home'                => '\e600',
             'office'              => '\e601',
             'newspaper'           => '\e602',
@@ -294,7 +294,7 @@ class Icons extends Collection
             'IE'                  => '\e72e',
             'opera'               => '\e72f',
             'safari'              => '\e730',
-        );
+        ];
 
         $this->exchangeArray($icons);
     }
