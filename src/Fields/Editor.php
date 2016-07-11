@@ -17,6 +17,9 @@ class Editor extends Textarea implements ScriptField
         $this->setType( 'editor' );
     }
 
+    /**
+     * Get the scripts
+     */
     public function enqueueScripts() {
         $paths = Config::getPaths();
         $assets = $paths['urls']['assets'];

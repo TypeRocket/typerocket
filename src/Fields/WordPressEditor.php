@@ -14,6 +14,9 @@ class WordPressEditor extends Field implements ScriptField
         $this->setType( 'wp_editor' );
     }
 
+    /**
+     * Get the scripts
+     */
     public function enqueueScripts() {
         wp_enqueue_media();
     }

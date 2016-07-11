@@ -13,6 +13,9 @@ class Date extends Field implements ScriptField
         $this->setType( 'date' );
     }
 
+    /**
+     * Get the scripts
+     */
     public function enqueueScripts() {
         wp_enqueue_script( 'jquery-ui-datepicker', ['jquery'], '1.0', true );
     }

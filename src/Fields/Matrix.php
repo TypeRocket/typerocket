@@ -23,6 +23,9 @@ class Matrix extends Field implements ScriptField {
         $this->setType( 'matrix' );
     }
 
+    /**
+     * Get the scripts
+     */
     public function enqueueScripts() {
         $paths = Config::getPaths();
         $assets = $paths['urls']['assets'];
@@ -79,6 +82,13 @@ class Matrix extends Field implements ScriptField {
         return $html;
     }
 
+    /**
+     * Sanitize the file name for component
+     *
+     * @param $name
+     *
+     * @return string
+     */
     private function cleanFileName( $name )
     {
 
@@ -87,6 +97,11 @@ class Matrix extends Field implements ScriptField {
         return ucwords( $name );
     }
 
+    /**
+     * Set the select list for components
+     *
+     * @return string
+     */
     private function getSelectHtml()
     {
 
@@ -130,6 +145,11 @@ class Matrix extends Field implements ScriptField {
 
     }
 
+    /**
+     * Set options from folder
+     *
+     * @return $this
+     */
     public function setOptionsFromFolder() {
         $paths = Config::getPaths();
         $folder = $this->getComponentFolder();
@@ -165,6 +185,11 @@ class Matrix extends Field implements ScriptField {
         return $this;
     }
 
+    /**
+     * Get component block
+     *
+     * @return string
+     */
     private function getMatrixBlocks()
     {
 
@@ -233,6 +258,11 @@ class Matrix extends Field implements ScriptField {
 
     }
 
+    /**
+     * Get component folder
+     *
+     * @return null|string
+     */
     public function getComponentFolder() {
 
         if( ! $this->component_folder ) {
@@ -242,6 +272,13 @@ class Matrix extends Field implements ScriptField {
         return $this->component_folder;
     }
 
+    /**
+     * Set component folder
+     *
+     * @param string $folder_name
+     *
+     * @return $this
+     */
     public function setComponentFolder($folder_name = '') {
 
         $paths = Config::getPaths();

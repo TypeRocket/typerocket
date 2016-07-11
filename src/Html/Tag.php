@@ -48,21 +48,43 @@ class Tag
         return $this->getString();
     }
 
+    /**
+     * Get tag
+     *
+     * @return mixed
+     */
     public function getTag()
     {
         return $this->tag;
     }
 
+    /**
+     * Get attributes
+     *
+     * @return mixed
+     */
     public function getAttributes()
     {
         return $this->attributes;
     }
 
+    /**
+     * Get Special Tag
+     *
+     * @return bool
+     */
     public function getSpecialTag()
     {
         return $this->specialTag;
     }
 
+    /**
+     * Get attribute
+     *
+     * @param $attribute
+     *
+     * @return null
+     */
     public function getAttributeValue( $attribute )
     {
         $value = null;
@@ -74,11 +96,21 @@ class Tag
         return $value;
     }
 
+    /**
+     * Get inner HTML tags
+     */
     public function getInnerHtmlTags()
     {
         $this->innerHtmlTags;
     }
 
+    /**
+     * Set tag text
+     *
+     * @param $text
+     *
+     * @return $this
+     */
     public function setText( $text )
     {
         $this->text = (string) $text;
@@ -86,6 +118,13 @@ class Tag
         return $this;
     }
 
+    /**
+     * Set Tag name
+     *
+     * @param $tag
+     *
+     * @return $this
+     */
     public function setTag( $tag )
     {
         if (is_string( $tag )) {
@@ -95,6 +134,13 @@ class Tag
         return $this;
     }
 
+    /**
+     * Set attributes
+     *
+     * @param array $attributes
+     *
+     * @return $this
+     */
     public function setAttributes( array $attributes )
     {
         $this->attributes = $attributes;
@@ -102,6 +148,14 @@ class Tag
         return $this;
     }
 
+    /**
+     * Set attribute
+     *
+     * @param $attribute
+     * @param $value
+     *
+     * @return $this
+     */
     public function setAttribute( $attribute, $value )
     {
         $this->attributes[$attribute] = $value;
@@ -109,6 +163,13 @@ class Tag
         return $this;
     }
 
+    /**
+     * Update attributes and merge them
+     *
+     * @param array $attributes
+     *
+     * @return $this
+     */
     public function updateAttributes( array $attributes )
     {
         $this->attributes = array_merge( $this->attributes, $attributes );
@@ -116,6 +177,13 @@ class Tag
         return $this;
     }
 
+    /**
+     * Remove attribute
+     *
+     * @param $attribute
+     *
+     * @return $this
+     */
     public function removeAttribute( $attribute )
     {
         if (array_key_exists( $attribute, $this->attributes )) {
@@ -125,6 +193,13 @@ class Tag
         return $this;
     }
 
+    /**
+     * Append Inner Tag
+     *
+     * @param \TypeRocket\Html\Tag $tag
+     *
+     * @return $this
+     */
     public function appendInnerTag( Tag $tag )
     {
         $this->innerHtmlTags->append( $tag );
@@ -132,6 +207,13 @@ class Tag
         return $this;
     }
 
+    /**
+     * Prepend inner tag
+     *
+     * @param \TypeRocket\Html\Tag $tag
+     *
+     * @return $this
+     */
     public function prependInnerTag( Tag $tag )
     {
         $this->innerHtmlTags->prepend( $tag );
@@ -151,6 +233,11 @@ class Tag
         return $this;
     }
 
+    /**
+     * Get string
+     *
+     * @return string
+     */
     public function getString() {
 
         $openTag = $this->getStringOpenTag();
@@ -161,6 +248,11 @@ class Tag
 
     }
 
+    /**
+     * Get the opening tag in string form
+     *
+     * @return string
+     */
     public function getStringOpenTag() {
         $openTag = "<{$this->tag}";
 
@@ -177,6 +269,11 @@ class Tag
         return $openTag;
     }
 
+    /**
+     * Get the closing tag as string
+     *
+     * @return string
+     */
     public function getStringCloseTag() {
         $closeTag = '';
 
@@ -187,6 +284,11 @@ class Tag
         return $closeTag;
     }
 
+    /**
+     * Get the string with inner HTML
+     *
+     * @return string
+     */
     public function getStringInnerHtmlWithTags() {
         $innerHtmlTags = $innerHtml ='';
 

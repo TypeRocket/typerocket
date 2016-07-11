@@ -14,6 +14,9 @@ class Color extends Field implements ScriptField
         $this->setType( 'color' );
     }
 
+    /**
+     * Get the scripts
+     */
     public function enqueueScripts() {
         wp_enqueue_script( 'wp-color-picker'  );
     }

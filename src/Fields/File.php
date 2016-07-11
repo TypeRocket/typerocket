@@ -13,6 +13,9 @@ class File extends Field implements ScriptField
         $this->setType( 'file' );
     }
 
+    /**
+     * Get the scripts
+     */
     public function enqueueScripts() {
         wp_enqueue_media();
     }

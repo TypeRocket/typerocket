@@ -17,6 +17,9 @@ class Repeater extends Field implements ScriptField
         $this->setType( 'repeater' );
     }
 
+    /**
+     * Get the scripts
+     */
     public function enqueueScripts()
     {
         wp_enqueue_script( 'jquery-ui-sortable', ['jquery'], '1.0', true );
@@ -101,11 +104,23 @@ class Repeater extends Field implements ScriptField
         return $html;
     }
 
+    /**
+     * Get the repeater template field for JS hook
+     *
+     * @return string
+     */
     private function getTemplateFields()
     {
         return $this->getForm()->setDebugStatus(false)->getFromFieldsString( $this->fields );
     }
 
+    /**
+     * Set fields for repeater
+     *
+     * @param array $fields
+     *
+     * @return $this
+     */
     public function setFields( array $fields )
     {
         $this->fields = $fields;
@@ -113,6 +128,13 @@ class Repeater extends Field implements ScriptField
         return $this;
     }
 
+    /**
+     * Append field
+     *
+     * @param $field
+     *
+     * @return $this
+     */
     public function appendField( $field )
     {
         if(is_array($field) || $field instanceof Field) {
@@ -122,17 +144,34 @@ class Repeater extends Field implements ScriptField
         return $this;
     }
 
+    /**
+     * Get Fields
+     *
+     * @return array
+     */
     public function getFields()
     {
         return $this->fields;
     }
 
+    /**
+     * Set headline for the repeater groups
+     *
+     * @param null $headline
+     *
+     * @return $this
+     */
     public function setHeadline($headline = null) {
         $this->headline = $headline;
 
         return $this;
     }
 
+    /**
+     * Get repeater group headline
+     *
+     * @return null
+     */
     public function getHeadline()
     {
         return $this->headline;

@@ -438,6 +438,14 @@ abstract class Field
         return $value;
     }
 
+    /**
+     * Sanitize field value
+     *
+     * @param $value
+     * @param null $default
+     *
+     * @return mixed
+     */
     protected function sanitize( $value, $default = null )
     {
         $sanitize = "\\TypeRocket\\Sanitize::" . $this->getSetting('sanitize', $default );
@@ -460,6 +468,11 @@ abstract class Field
         return $this->getBracketsFromDots();
     }
 
+    /**
+     * Get the dot syntax
+     *
+     * @return null|string
+     */
     public function getDots()
     {
 
@@ -485,12 +498,24 @@ abstract class Field
         return implode('', $brackets);
     }
 
+    /**
+     * Set the field debugger helper for the front-end
+     *
+     * @param null $helper
+     *
+     * @return $this
+     */
     public function setDebugHelperFunction( $helper = null ) {
         $this->helper = $helper;
 
         return $this;
     }
 
+    /**
+     * Get the field debugger helper for the front-end
+     *
+     * @return null
+     */
     public function getDebugHelperFunction() {
         return $this->helper;
     }

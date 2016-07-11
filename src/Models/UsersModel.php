@@ -21,6 +21,13 @@ class UsersModel extends Model
         'id'
     ];
 
+    /**
+     * Find post by ID
+     *
+     * @param $id
+     *
+     * @return $this
+     */
     public function findById( $id )
     {
         $this->id   = $id;
@@ -29,6 +36,13 @@ class UsersModel extends Model
         return $this;
     }
 
+    /**
+     * Create users from TypeRocket fields
+     *
+     * @param array $fields
+     *
+     * @return $this
+     */
     function create( array $fields )
     {
         $fields = $this->secureFields( $fields );
@@ -55,6 +69,13 @@ class UsersModel extends Model
         return $this;
     }
 
+    /**
+     * Update user from TypeRocket fields
+     *
+     * @param array $fields
+     *
+     * @return $this
+     */
     function update( array $fields )
     {
         if ($this->id != null) {

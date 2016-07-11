@@ -7,6 +7,14 @@ use TypeRocket\Html\Generator;
 trait MaxlengthTrait
 {
 
+    /**
+     * Get the max length for text type fields
+     *
+     * @param $value
+     * @param $maxLength
+     *
+     * @return string|\TypeRocket\Html\Generator
+     */
     public function getMaxlength( $value, $maxLength )
     {
         if ( $maxLength != null && $maxLength > 0) {

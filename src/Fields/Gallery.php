@@ -13,6 +13,9 @@ class Gallery extends Field implements ScriptField
         $this->setType( 'gallery' );
     }
 
+    /**
+     * Get the scripts
+     */
     public function enqueueScripts() {
         wp_enqueue_media();
     }

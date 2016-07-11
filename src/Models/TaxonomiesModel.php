@@ -40,8 +40,8 @@ class TaxonomiesModel extends Model
     /**
      * Create term from TypeRocket fields
      *
-     * Set the post type property on extended model so they
-     * are saved to the correct type. See the PagesModel
+     * Set the taxonomy property on extended model so they
+     * are saved to the correct type. See the CategoriesModel
      * as example.
      *
      * @param array $fields

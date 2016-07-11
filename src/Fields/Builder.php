@@ -11,6 +11,9 @@ class Builder extends Matrix
 
     protected $components = [];
 
+    /**
+     * Get the scripts
+     */
     public function enqueueScripts() {
         $paths = Config::getPaths();
         $assets = $paths['urls']['assets'];
@@ -30,6 +33,11 @@ class Builder extends Matrix
         $this->setType( 'builder' );
     }
 
+    /**
+     * Get the string
+     *
+     * @return mixed
+     */
     public function getString()
     {
         $this->setAttribute('name', $this->getNameAttributeString() );
@@ -82,6 +90,11 @@ class Builder extends Matrix
         return $buffer->getBuffer('main');
     }
 
+    /**
+     * Get select drop down
+     *
+     * @return string
+     */
     private function getSelectHtml()
     {
 
@@ -130,6 +143,14 @@ class Builder extends Matrix
 
     }
 
+    /**
+     * Get the component thumbnail
+     *
+     * @param $name
+     * @param $type
+     *
+     * @return string
+     */
     private function getComponentThumbnail($name, $type) {
         $path = '/' .$name . '/' . $type . '.png';
         $thumbnail = '';
@@ -139,6 +160,11 @@ class Builder extends Matrix
         return $thumbnail;
     }
 
+    /**
+     * Get the block
+     *
+     * @return string
+     */
     private function getBuilderBlocks()
     {
 

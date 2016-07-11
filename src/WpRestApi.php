@@ -5,6 +5,13 @@ namespace TypeRocket;
 class WpRestApi
 {
 
+    /**
+     * Get search results list
+     *
+     * @param \WP_REST_Request $request
+     *
+     * @return array|int|null|\WP_Error
+     */
     public static function search(  \WP_REST_Request $request ) {
         $func = function( $search, &$wp_query )
         {

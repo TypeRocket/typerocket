@@ -13,6 +13,9 @@ class Image extends Field implements ScriptField
         $this->setType( 'image' );
     }
 
+    /**
+     * Get the scripts
+     */
     public function enqueueScripts() {
         wp_enqueue_media();
     }
