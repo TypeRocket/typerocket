@@ -121,7 +121,7 @@ class TypeRocketSeoPlugin
                 }
             }
 
-            $robot_data = substr( $robot_data, 0, - 2 );
+            $robot_data = mb_substr( $robot_data, 0, - 2 );
             if ( ! empty( $robot_data ) ) {
                 echo "<meta name=\"robots\" content=\"{$robot_data}\" />";
             }
@@ -139,8 +139,8 @@ class TypeRocketSeoPlugin
             $src = $src[0];
             $prefix = 'https';
 
-            if (substr($src, 0, strlen($prefix)) == $prefix) {
-                $src = substr($src, strlen($prefix));
+            if (mb_substr($src, 0, mb_strlen($prefix)) == $prefix) {
+                $src = mb_substr($src, mb_strlen($prefix));
                 $src = 'http' . $src;
             }
 
@@ -342,19 +342,19 @@ class TypeRocketSeoPlugin
 
             <div class="tr-seo-preview-google">
         <span id="tr-seo-preview-google-title-orig">
-          <?php echo substr( strip_tags( $post->post_title ), 0, 59 ); ?>
+          <?php echo mb_substr( strip_tags( $post->post_title ), 0, 59 ); ?>
         </span>
         <span id="tr-seo-preview-google-title">
           <?php
           $title = tr_posts_field( 'seo.meta.title' );
           if ( ! empty( $title ) ) {
               $s  = strip_tags( $title );
-              $tl = strlen( $s );
-              echo substr( $s, 0, 59 );
+              $tl = mb_strlen( $s );
+              echo mb_substr( $s, 0, 59 );
           } else {
               $s  = strip_tags( $post->post_title );
-              $tl = strlen( $s );
-              echo substr( $s, 0, 59 );
+              $tl = mb_strlen( $s );
+              echo mb_substr( $s, 0, 59 );
           }
 
           if ( $tl > 59 ) {
@@ -363,11 +363,11 @@ class TypeRocketSeoPlugin
           ?>
         </span>
 
-                <div id="tr-seo-preview-google-url">
-                    <?php echo get_permalink( $post->ID ); ?>
-                </div>
+        <div id="tr-seo-preview-google-url">
+            <?php echo get_permalink( $post->ID ); ?>
+        </div>
         <span id="tr-seo-preview-google-desc-orig">
-          <?php echo substr( strip_tags( $post->post_content ), 0, 150 ); ?>
+          <?php echo mb_substr( strip_tags( $post->post_content ), 0, 150 ); ?>
         </span>
         <span id="tr-seo-preview-google-desc">
           <?php
@@ -375,11 +375,11 @@ class TypeRocketSeoPlugin
           if ( ! empty( $desc ) ) {
               $s  = strip_tags( $desc );
               $dl = strlen( $s );
-              echo substr( $s, 0, 150 );
+              echo mb_substr( $s, 0, 150 );
           } else {
               $s  = strip_tags( $post->post_content );
               $dl = strlen( $s );
-              echo substr( $s, 0, 150 );
+              echo mb_substr( $s, 0, 150 );
           }
 
           if ( $dl > 150 ) {
