@@ -8,7 +8,7 @@ class MetaBox extends Registrable
     private $callback = null;
     private $context = null;
     private $priority = null;
-    private $screens = array();
+    private $screens = [];
 
     /**
      * Make Meta Box
@@ -17,7 +17,7 @@ class MetaBox extends Registrable
      * @param null|string|array $screen
      * @param array $settings
      */
-    public function __construct( $name, $screen = null, array $settings = array() )
+    public function __construct( $name, $screen = null, array $settings = [])
     {
         $this->label = $this->id = $name;
         $this->id    = Sanitize::underscore( $this->id );
@@ -36,11 +36,11 @@ class MetaBox extends Registrable
 
         unset( $settings['label'] );
 
-        $defaults = array(
+        $defaults = [
             'context'  => 'normal', // 'normal', 'advanced', or 'side'
             'priority' => 'high', // 'high', 'core', 'default' or 'low'
-            'args'     => array()
-        ); // arguments to pass into your callback function.
+            'args'     => []
+        ]; // arguments to pass into your callback function.
 
         $settings = array_merge( $defaults, $settings );
 
@@ -145,7 +145,7 @@ class MetaBox extends Registrable
 
                     echo '<div class="typerocket-container">';
                     if (is_callable( $callback )) :
-                        call_user_func_array( $callback, array( $obj ) );
+                        call_user_func_array( $callback, [$obj]);
                     elseif (function_exists( $func )) :
                         $func( $obj );
                     elseif (TR_DEBUG == true) :
