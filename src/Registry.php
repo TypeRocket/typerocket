@@ -127,10 +127,9 @@ class Registry
 
         $callback = function( $term, $type, $obj )
         {
-            if ( $term->taxonomy == $obj->getId() || $term == $obj->getId() ) {
+            if ( $term == $obj->getId() || $term->taxonomy == $obj->getId() ) {
                 $func = 'add_form_content_' . $obj->getId() . '_' . $type;
                 echo '<div class="typerocket-container">';
-
                 $form = $obj->getForm( $type );
                 if (is_callable( $form )) {
                     call_user_func( $form, $term );

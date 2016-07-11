@@ -1,7 +1,7 @@
 ## TypeRocket 3
 Coding advanced WordPress themes became a blast. Be good looking and do cool stuff with less code.
 
-See [http://typerocket.com](http://typerocket.com) for version 2. Version 3.0 is waiting official release.
+See [http://typerocket.com](http://typerocket.com) for version 2. Version 3.0 is waiting official release and is in BETA.
 
 ### Requirements
 
@@ -73,8 +73,10 @@ Set the fields for the "Book" post type the only fillable fields to make things 
 `BooksModel.php` is the main file we care about.
 
 ```php
-<?php // /typerocket/app/Models/BooksModel.php
-namespace TypeRocket\Models;
+<?php // /app/Models/BooksModel.php
+namespace App\Models;
+
+use \TypeRocket\Models\PostTypesModel;
 
 class BooksModel extends PostTypesModel
 {
@@ -90,8 +92,10 @@ class BooksModel extends PostTypesModel
 `BooksController.php` needs to be created to handle the actions. Blank works just fine.
 
 ```php
-<?php // /typerocket/app/Controllers/BooksController.php
-namespace TypeRocket\Controllers;
+<?php // /app/Controllers/BooksController.php
+namespace App\Controllers;
+
+use \TypeRocket\Controllers\PostTypesController;
 
 class BooksController extends PostTypesController
 {
@@ -107,36 +111,36 @@ You will need to create a new Kernel class called XKernel to specify the middlew
 `XKernel.php` manages the middleware for the resource and request types.
 
 ```php
-<?php // /typerocket/app/Http/XKernel.php
-namespace TypeRocket\Http;
+<?php // /app/Http/XKernel.php
+namespace App\Http;
 
-class XKernel extends Kernel
+class XKernel extends \TypeRocket\Http\Kernel
 {
 
     protected $middleware = [
         'hookGlobal' =>
-            [ Middleware\AuthRead::class ],
+            [ \TypeRocket\Http\Middleware\AuthRead::class ],
         'restGlobal' =>
             [
-                Middleware\AuthRead::class,
-                Middleware\ValidateCsrf::class
+                \TypeRocket\Http\Middleware\AuthRead::class,
+                \TypeRocket\Http\Middleware\ValidateCsrf::class
             ],
         'noResource' =>
-            [ Middleware\AuthAdmin::class ],
+            [ \TypeRocket\Http\Middleware\AuthAdmin::class ],
         'users' =>
-            [ Middleware\IsUserOrCanEditUsers::class ],
+            [ \TypeRocket\Http\Middleware\IsUserOrCanEditUsers::class ],
         'posts' =>
-            [ Middleware\OwnsPostOrCanEditPosts::class ],
+            [ \TypeRocket\Http\Middleware\OwnsPostOrCanEditPosts::class ],
         'pages' =>
-            [ Middleware\OwnsPostOrCanEditPosts::class ],
+            [ \TypeRocket\Http\Middleware\OwnsPostOrCanEditPosts::class ],
         'comments' =>
-            [ Middleware\OwnsCommentOrCanEditComments::class ],
+            [ \TypeRocket\Http\Middleware\OwnsCommentOrCanEditComments::class ],
         'options' =>
-            [ Middleware\CanManageOptions::class ],
+            [ \TypeRocket\Http\Middleware\CanManageOptions::class ],
         'categories' =>
-            [ Middleware\CanManageCategories::class ],
+            [ \TypeRocket\Http\Middleware\CanManageCategories::class ],
         'tags' =>
-            [ Middleware\CanManageCategories::class ]
+            [ \TypeRocket\Http\Middleware\CanManageCategories::class ]
     ];
 }
 
@@ -151,8 +155,10 @@ data before it is saved.
 - Cast the "Book Cover" to an integer since we reference it by the attachment ID.
 
 ```php
-<?php // /typerocket/app/Models/BooksModel.php
-namespace TypeRocket\Models;
+<?php // /app/Models/BooksModel.php
+namespace App\Models;
+
+use \TypeRocket\Models\PostTypesModel;
 
 class BooksModel extends PostTypesModel
 {
@@ -229,8 +235,10 @@ On an `EventsModel`... here we might have a custom event component used by a mat
 requires an attachment ID.
 
 ```php
-<?php // /typerocket/app/Models/EventsModel.php
-namespace TypeRocket\Models;
+<?php // /app/Models/EventsModel.php
+namespace App\Models;
+
+use \TypeRocket\Models\PostTypesModel;
 
 class EventsModel extends PostTypesModel
 {
@@ -246,7 +254,7 @@ class EventsModel extends PostTypesModel
 
 ### Custom Taxonomy Fields
 
-You can also use the same design and principles to work with taxonomies.
+You can also use the same design and principles to work with taxonomies. You will want to create both a Controller and Model when adding a custom taxonomy.
 
 ```php
 <?php

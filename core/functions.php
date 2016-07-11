@@ -6,6 +6,10 @@ function tr_get_model($resource) {
     $model = "\\TypeRocket\\Models\\{$Resource}Model";
     $object = null;
 
+    if( ! class_exists($model) ) {
+        $model = "\\" . TR_APP_NAMESPACE . "\\Models\\{$Resource}Model";
+    }
+
     if( class_exists($model) ) {
         $object = new $model;
     }

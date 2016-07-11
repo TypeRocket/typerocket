@@ -34,10 +34,13 @@ class Controller extends Middleware
         }
 
         $resource = ucfirst( $request->getResource() );
-        $controller    = "\\TypeRocket\\Controllers\\{$resource}Controller";
-        $model    = "\\TypeRocket\\Models\\{$resource}Model";
+        $controller  = "\\TypeRocket\\Controllers\\{$resource}Controller";
 
-        if ($response->getValid() && class_exists( $controller ) && class_exists( $model ) ) {
+        if( ! class_exists( $controller ) ) {
+            $controller  = "\\" . TR_APP_NAMESPACE . "\\Controllers\\{$resource}Controller";
+        }
+
+        if ($response->getValid() && class_exists( $controller ) ) {
             $controller = new $controller( $request, $response);
             $id         = $request->getResourceId();
 

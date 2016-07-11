@@ -48,7 +48,6 @@ spl_autoload_register( function ( $class ) {
 
     $prefix   = 'TypeRocket\\';
     $base_dir = __DIR__ . '/../src/';
-    $app = defined('TR_APP_FOLDER_PATH') ? TR_APP_FOLDER_PATH . '/' : __DIR__ . '/../app/';
 
     $len = strlen( $prefix );
     if (strncmp( $prefix, $class, $len ) !== 0) {
@@ -58,11 +57,36 @@ spl_autoload_register( function ( $class ) {
     $relative_class = substr( $class, $len );
 
     $file = str_replace( '\\', '/', $relative_class ) . '.php';
-    $app =  $app . $file;
     if (file_exists( $base_dir . $file )) {
         require $base_dir . $file;
-    } elseif( file_exists( $app )) {
-        require $app;
+    }
+} );
+
+/*
+|--------------------------------------------------------------------------
+| Require App Classes
+|--------------------------------------------------------------------------
+|
+| Require the app classes for TypeRocket custom classes.
+|
+*/
+spl_autoload_register( function ( $class ) {
+
+    $prefix   = TR_APP_NAMESPACE . '\\';
+    $base_dir = TR_APP_FOLDER_PATH;
+    $base_dir = preg_replace('/\/$/', '', $base_dir);
+
+    $len = strlen( $prefix );
+    if (strncmp( $prefix, $class, $len ) !== 0) {
+        return;
+    }
+
+    $relative_class = substr( $class, $len );
+
+    $file = str_replace( '\\', '/', $relative_class ) . '.php';
+
+    if (file_exists( $base_dir . '/' . $file )) {
+        require $base_dir . '/' . $file;
     }
 } );
 

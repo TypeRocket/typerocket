@@ -54,6 +54,7 @@ define('TR_COMPONENTS_THUMBNAIL_FOLDER_PATH', __DIR__ . '/../components');
 | your current theme.
 |
 */
+define('TR_APP_NAMESPACE', 'App');
 define('TR_APP_FOLDER_PATH', __DIR__ . '/../app');
 
 /*
@@ -66,8 +67,8 @@ define('TR_APP_FOLDER_PATH', __DIR__ . '/../app');
 | current theme.
 |
 */
-define('TR_PLUGINS_FOLDER_PATH', __DIR__ . '/plugins');
-define('TR_PLUGINS_URL', get_stylesheet_directory_uri() . '/' .TR_FOLDER . '/plugins');
+define('TR_PLUGINS_FOLDER_PATH', __DIR__ . '/../plugins');
+define('TR_PLUGINS_URL', get_stylesheet_directory_uri() . '/plugins');
 
 /*
 |--------------------------------------------------------------------------

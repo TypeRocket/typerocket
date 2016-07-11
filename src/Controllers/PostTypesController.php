@@ -3,7 +3,7 @@ namespace TypeRocket\Controllers;
 
 use TypeRocket\Models\PostTypesModel;
 
-class PostTypesController extends Controller
+abstract class PostTypesController extends Controller
 {
 
     /** @var PostTypesModel */
@@ -19,7 +19,12 @@ class PostTypesController extends Controller
         $type       = substr( $reflect->getShortName(), 0, - 10 );
         $this->type = $type;
 
-        $class       = "\\TypeRocket\\Models\\{$type}Model";
+        if( ! $this->modelClass ) {
+            $class = "\\" . TR_APP_NAMESPACE . "\\Models\\{$this->type}Model";
+        } else {
+            $class = $this->modelClass;
+        }
+
         $this->model = new $class();
     }
 

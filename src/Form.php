@@ -32,8 +32,12 @@ class Form
         $this->itemId = $itemId;
         $this->autoConfig();
 
-        $model = ucfirst($this->resource);
-        $model = "\\TypeRocket\\Models\\{$model}Model";
+        $Resource = ucfirst($this->resource);
+        $model = "\\TypeRocket\\Models\\{$Resource}Model";
+
+        if( ! class_exists($model) ) {
+            $model = "\\" . TR_APP_NAMESPACE . "\\Models\\{$Resource}Model";
+        }
 
         if(class_exists($model)) {
             $this->model = new $model();
@@ -67,8 +71,8 @@ class Form
                 $resource = Registry::getPostTypeResource($post->post_type);
 
                 $Resource = ucfirst($resource);
-                $model = "\\TypeRocket\\Models\\{$Resource}Model";
-                $controller = "\\TypeRocket\\Controllers\\{$Resource}Controller";
+                $model = "\\" . TR_APP_NAMESPACE . "\\Models\\{$Resource}Model";
+                $controller = "\\" . TR_APP_NAMESPACE . "\\Controllers\\{$Resource}Controller";
 
                 if( empty($resource) || ! class_exists($model) || ! class_exists($controller) ) {
                     $resource = 'posts';
@@ -84,8 +88,8 @@ class Form
                 $resource = Registry::getTaxonomyResource($taxonomy);
 
                 $Resource = ucfirst($resource);
-                $model = "\\TypeRocket\\Models\\{$Resource}Model";
-                $controller = "\\TypeRocket\\Controllers\\{$Resource}Controller";
+                $model = "\\" . TR_APP_NAMESPACE . "\\Models\\{$Resource}Model";
+                $controller = "\\" . TR_APP_NAMESPACE . "\\Controllers\\{$Resource}Controller";
 
                 if( empty($resource) || ! class_exists($model) || ! class_exists($controller) ) {
                     $resource = 'categories';

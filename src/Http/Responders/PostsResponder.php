@@ -25,8 +25,14 @@ class PostsResponder extends Responder
         $type       = get_post_type( $id );
         $resource   = Registry::getPostTypeResource( $type );
         $prefix     = ucfirst( $resource );
+
         $controller = "\\TypeRocket\\Controllers\\{$prefix}Controller";
         $model      = "\\TypeRocket\\Models\\{$prefix}Model";
+
+        if( ! class_exists( $controller ) || ! class_exists( $model ) ) {
+            $controller = "\\" . TR_APP_NAMESPACE . "\\Controllers\\{$prefix}Controller";
+            $model      = "\\" . TR_APP_NAMESPACE . "\\Models\\{$prefix}Model";
+        }
 
         if ( empty($prefix) || ! class_exists( $controller ) || ! class_exists( $model )) {
             $resource = 'posts';

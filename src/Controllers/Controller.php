@@ -21,6 +21,8 @@ abstract class Controller
     /** @var \TypeRocket\Http\Request */
     protected $request = null;
 
+    protected $modelClass = null;
+
     public function __construct( Request $request, Response $response )
     {
         $this->response = $response;

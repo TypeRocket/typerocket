@@ -21,7 +21,7 @@ abstract class Responder
      */
     public function runKernel(Request $request, Response $response, $type = 'hookGlobal')
     {
-        $XKernel = "\\TypeRocket\\Http\\XKernel";
+        $XKernel = "\\" . TR_APP_NAMESPACE . "\\Http\\XKernel";
 
         if ( class_exists( $XKernel ) ) {
             new $XKernel( $request, $response, $type);
