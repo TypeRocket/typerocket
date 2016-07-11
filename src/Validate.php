@@ -33,20 +33,6 @@ class Validate
     }
 
     /**
-     * Validate Bracket Syntax
-     *
-     * For post input name groups. Used for getting values of ACPT forms.
-     *
-     * @param $group
-     *
-     * @return int
-     */
-    public static function bracket( $group )
-    {
-        return preg_match( "/^\[.+\]/", $group );
-    }
-
-    /**
      * Is a given string a color formatted in hexadecimal notation?
      *
      * @param string $hex
