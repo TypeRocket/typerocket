@@ -2,7 +2,7 @@
 namespace TypeRocket\Fields;
 
 use \TypeRocket\Html\Generator;
-use TypeRocket\Traits\MaxlengthTrait;
+use \TypeRocket\Traits\MaxlengthTrait;
 
 class Text extends Field
 {

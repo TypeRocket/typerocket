@@ -57,4 +57,32 @@ class Search extends Field
 
         return $field;
     }
+
+    /**
+     * Search by post type only
+     *
+     * @param $type
+     *
+     * @return $this
+     */
+    public function setPostType($type)
+    {
+        $this->setSetting('post_type', $type);
+
+        return $this;
+    }
+
+    /**
+     * Search by taxonomy only
+     *
+     * @param $taxonomy
+     *
+     * @return $this
+     */
+    public function setTaxonomy($taxonomy)
+    {
+        $this->setSetting('taxonomy', $taxonomy);
+
+        return $this;
+    }
 }
