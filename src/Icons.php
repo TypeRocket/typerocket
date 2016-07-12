@@ -11,6 +11,10 @@ namespace TypeRocket;
 class Icons extends Collection
 {
 
+    public $fontFamily = 'typerocket-icons';
+    public $fontWeight = '400';
+    public $fontSize = '15px/1';
+
     /**
      * Load icons and they font encoding
      */

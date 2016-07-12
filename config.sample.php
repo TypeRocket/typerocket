@@ -81,3 +81,13 @@ define('TR_PLUGINS_URL', get_stylesheet_directory_uri() . '/plugins');
 |
 */
 define('TR_SEED', NONCE_KEY);
+
+/*
+|--------------------------------------------------------------------------
+| Icons
+|--------------------------------------------------------------------------
+|
+| Set the class responsible for icons
+|
+*/
+define('TR_ICONS', "\\TypeRocket\\Icons");

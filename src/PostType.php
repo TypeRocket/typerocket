@@ -98,16 +98,21 @@ class PostType extends Registrable
     public function setIcon( $name )
     {
         $name       = strtolower( $name );
-        $icons      = new Icons();
+        $icons      = Config::getIcons();
+
+        if( ! $icons instanceof Icons ) {
+            $icons = new Icons();
+        }
+
         $this->icon = $icons[$name];
         $obj = $this;
-        add_action( 'admin_head', function() use ($obj) {
+        add_action( 'admin_head', function() use ($obj, $icons) {
             $postType = $obj->getId();
             $icon = $obj->getIcon();
             echo "
             <style type=\"text/css\">
                 #adminmenu #menu-posts-{$postType} .wp-menu-image:before {
-                    font: 400 15px/1 'typerocket-icons' !important;
+                    font: {$icons->fontWeight} {$icons->fontSize} {$icons->fontFamily} !important;
                     content: '{$icon}';
                     speak: none;
                     -webkit-font-smoothing: antialiased;

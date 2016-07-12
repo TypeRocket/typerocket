@@ -7,6 +7,7 @@ class Config
     static private $paths = null;
     static private $debug = false;
     static private $seed = null;
+    static private $icons = null;
     static private $plugins = null;
     static private $frontend = false;
 
@@ -19,6 +20,7 @@ class Config
             self::$debug   = defined( 'TR_DEBUG' ) ? TR_DEBUG : false;
             self::$seed    = defined( 'TR_SEED' ) ? TR_SEED : NONCE_KEY;
             self::$plugins = defined( 'TR_PLUGINS' ) ? TR_PLUGINS : '';
+            self::$icons   = defined( 'TR_ICONS' ) ? TR_ICONS : Icons::class;
             self::$paths   = $this->defaultPaths();
         }
     }
@@ -101,6 +103,25 @@ class Config
     public static function enableFrontend()
     {
         self::$frontend = true;
+    }
+
+    /**
+     * Set Icons
+     *
+     * This action can not be undone
+     *
+     * @param string $class set the icon class
+     */
+    public static function setIcons( $class )
+    {
+        if( class_exists( $class ) ) {
+            self::$icons = $class;
+        }
+    }
+
+    public static function getIcons()
+    {
+        return new self::$icons();
     }
 
 }
