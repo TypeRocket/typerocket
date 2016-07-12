@@ -46,6 +46,13 @@ class Checkbox extends Field
         return $field->getString();
     }
 
+    /**
+     * Add text description next to checkbox
+     *
+     * @param string $text
+     *
+     * @return $this
+     */
     public function setText( $text = '' ) {
         $this->setSetting('text', $text);
 

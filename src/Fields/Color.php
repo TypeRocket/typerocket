@@ -57,7 +57,9 @@ class Color extends Field implements ScriptField
     /**
      * Set color palette
      *
-     * @param $palette
+     * Use 6 character hex only eg. [ '#222222', '#000000' ]
+     *
+     * @param array $palette set the color palette
      *
      * @return $this
      */
