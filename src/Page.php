@@ -12,6 +12,15 @@ class Page extends Registrable
     /** @var null|Page parent page */
     public $parent = null;
     public $showTitle = true;
+    public $builtin = [
+        'tools' => 'tools.php',
+        'dashboard' => 'index.php',
+        'media' => 'upload.php',
+        'appearance' => 'themes.php',
+        'plugins' => 'plugins.php',
+        'users' => 'users.php',
+        'settings' => 'options-general.php',
+    ];
 
     /**
      * Page constructor.
@@ -26,7 +35,7 @@ class Page extends Registrable
         $this->section    = Sanitize::underscore( $section );
         $this->id    = Sanitize::underscore( $this->title );
         $this->args = array_merge( [
-            'menu_title' => $this->title,
+            'menu' => $this->title,
             'capability' => 'administrator',
             'position' => 99,
             'view' => Config::getPaths()['views'] . '/' . $this->section . '/' . $this->id . '.php',
@@ -151,7 +160,7 @@ class Page extends Registrable
      */
     public function register()
     {
-        $menu_title = $this->args['menu_title'];
+        $menu_title = $this->args['menu'];
         $capability = $this->args['capability'];
         $slug = $this->getSlug();
         $position = $this->args['position'];
@@ -178,7 +187,9 @@ class Page extends Registrable
 
         };
 
-        if( ! $this->parent ) {
+        if( array_key_exists( $this->section, $this->builtin ) ) {
+            add_submenu_page( $this->builtin[$this->section] , $this->title, $menu_title, $capability, $slug, \Closure::bind( $callback, $this ) );
+        } elseif( ! $this->parent ) {
             add_menu_page( $this->title, $menu_title, $capability, $slug, \Closure::bind( $callback, $this ), '', $position);
             if( !empty($this->pages) ) {
                 add_submenu_page( $slug , $this->title, $menu_title, $capability, $slug );
