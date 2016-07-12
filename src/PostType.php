@@ -104,21 +104,26 @@ class PostType extends Registrable
             $icons = new Icons();
         }
 
-        $this->icon = $icons[$name];
-        $obj = $this;
-        add_action( 'admin_head', function() use ($obj, $icons) {
-            $postType = $obj->getId();
-            $icon = $obj->getIcon();
+        $this->icon = !empty($icons[$name]) ? $icons[$name] : null;
+        if( ! $this->icon ) {
+            return $this;
+        }
+
+        add_action( 'admin_head', \Closure::bind( function() use ($icons) {
+            $postType = $this->getId();
+            $icon = $this->getIcon();
             echo "
             <style type=\"text/css\">
                 #adminmenu #menu-posts-{$postType} .wp-menu-image:before {
                     font: {$icons->fontWeight} {$icons->fontSize} {$icons->fontFamily} !important;
                     content: '{$icon}';
                     speak: none;
+                    top: 2px;
+                    position: relative;
                     -webkit-font-smoothing: antialiased;
                 }
             </style>";
-        } );
+        }, $this) );
 
         return $this;
     }

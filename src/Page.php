@@ -53,7 +53,10 @@ class Page extends Registrable
             $icons = new Icons();
         }
 
-        $this->icon = $icons[$name];
+        $this->icon = !empty($icons[$name]) ? $icons[$name] : null;
+        if( ! $this->icon ) {
+            return $this;
+        }
 
         add_action( 'admin_head', \Closure::bind( function() use ($icons) {
             $slug = $this->args['slug'];
@@ -64,6 +67,8 @@ class Page extends Registrable
                     font: {$icons->fontWeight} {$icons->fontSize} {$icons->fontFamily} !important;
                     content: '{$icon}';
                     speak: none;
+                    top: 2px;
+                    position: relative;
                     -webkit-font-smoothing: antialiased;
                 }
             </style>";
