@@ -106,6 +106,16 @@ class Config
     }
 
     /**
+     * Get the icons class
+     *
+     * @return mixed
+     */
+    public static function getIcons()
+    {
+        return new self::$icons();
+    }
+
+    /**
      * Set Icons
      *
      * This action can not be undone
@@ -117,11 +127,6 @@ class Config
         if( class_exists( $class ) ) {
             self::$icons = $class;
         }
-    }
-
-    public static function getIcons()
-    {
-        return new self::$icons();
     }
 
 }
