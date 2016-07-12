@@ -79,11 +79,16 @@ class Registry
                 $collection[] = $obj;
                 $use = $obj->getApplied();
                 foreach($use as $objUsed) {
-                    if( ! in_array($objUsed, $collection)) {
+                    if( ! in_array($objUsed, $collection) && ! $objUsed instanceof Page) {
                         $later[] = $obj;
                         array_pop($collection);
                         break 1;
                     }
+                }
+
+                if ($obj instanceof Page && ! empty( $obj->parent ) ) {
+                    $later[] = $obj;
+                    array_pop($collection);
                 }
             }
         }
@@ -119,6 +124,8 @@ class Registry
             } elseif ($obj instanceof MetaBox) {
                 add_action( 'admin_init', [$obj, 'register']);
                 add_action( 'add_meta_boxes', [$obj, 'register']);
+            } elseif ($obj instanceof Page) {
+                add_action( 'admin_menu', [$obj, 'register']);
             }
         }
     }

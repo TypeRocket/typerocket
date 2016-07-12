@@ -91,3 +91,13 @@ define('TR_SEED', NONCE_KEY);
 |
 */
 define('TR_ICONS', "\\TypeRocket\\Icons");
+
+/*
+|--------------------------------------------------------------------------
+| Admin Page Views
+|--------------------------------------------------------------------------
+|
+| Set the admin pages location. This is for the admin pages views.
+|
+*/
+define('TR_VIEWS',  __DIR__ . '/../views');
