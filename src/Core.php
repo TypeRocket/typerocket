@@ -59,6 +59,7 @@ class Core
      */
     public function initFrontEnd()
     {
+        Config::enableFrontend();
         add_action( 'wp_enqueue_scripts', [ $this, 'addCss' ] );
         add_action( 'wp_enqueue_scripts', [ $this, 'addJs' ] );
         add_action( 'wp_footer', [ $this, 'addBottomJs' ] );
@@ -174,6 +175,9 @@ class Core
 
     /**
      * Add JavaScript to very bottom
+     *
+     * This is in place so that all other scripts from fields come
+     * before the main typerocket script.
      */
     public function addBottomJs()
     {

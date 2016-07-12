@@ -6,9 +6,9 @@ class Config
 
     static private $paths = null;
     static private $debug = false;
-    static private $folder = null;
     static private $seed = null;
     static private $plugins = null;
+    static private $frontend = false;
 
     /**
      * Set initial values
@@ -54,13 +54,13 @@ class Config
     }
 
     /**
-     * Get the TypeRocket folder name
+     * Check TypeRocket for frontend
      *
      * @return null|string
      */
-    static public function getFolder()
+    static public function getFrontend()
     {
-        return self::$folder;
+        return self::$frontend;
     }
 
     /**
@@ -91,6 +91,16 @@ class Config
                 'plugins' => defined( 'TR_PLUGINS_URL' ) ? TR_PLUGINS_URL : get_stylesheet_directory_uri() . '/plugins'
             ]
         ];
+    }
+
+    /**
+     * Tell config that front end TypeRocket was enabled
+     *
+     * This action can not be undone
+     */
+    public static function enableFrontend()
+    {
+        self::$frontend = true;
     }
 
 }

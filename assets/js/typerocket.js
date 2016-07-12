@@ -204,6 +204,8 @@
         $(obj).find('.color-picker[name]').each(function() {
           var pal, settings;
           pal = $(this).attr('id') + '_color_palette';
+          console.log(pal);
+          console.log(window[pal]);
           settings = {
             palettes: window[pal]
           };

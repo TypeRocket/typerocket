@@ -20,10 +20,6 @@ class Submit extends Field
     public function getString()
     {
         $name = '_tr_submit_form';
-
-        $this->removeAttribute('id');
-        $this->setAttribute('id', $name);
-
         $value = esc_attr( $this->getAttribute('value') );
         $this->removeAttribute('value');
         $this->removeAttribute('name');

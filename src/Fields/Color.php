@@ -1,6 +1,7 @@
 <?php
 namespace TypeRocket\Fields;
 
+use TypeRocket\Config;
 use \TypeRocket\Html\Generator,
     \TypeRocket\Sanitize;
 
@@ -30,17 +31,42 @@ class Color extends Field implements ScriptField
         $value = Sanitize::hex( $this->getValue() );
         $this->removeAttribute( 'name' );
         $this->appendStringToAttribute( 'class', ' color-picker' );
-        $palette = 'tr_' . $this->getName() . '_color_palette';
+        $palette = 'tr_' . uniqid() . '_color_picker';
+        $this->setAttribute('id', $palette);
+        $obj = $this;
 
-        wp_localize_script( 'typerocket-scripts', $palette, $this->getSetting( 'palette' ) );
+        $callback = \Closure::bind(function() use ($palette, $obj) {
+            wp_localize_script( 'typerocket-scripts', $palette . '_color_palette', $this->getSetting( 'palette' ) );
+        }, $this);
 
-        if ($this->getSetting( 'palette' )) {
-            $this->setAttribute( 'data-default-color', $this->getSetting( 'palette' ) );
+        add_action('admin_footer', $callback, 999999999999 );
+
+        if( Config::getFrontend() ) {
+            add_action('wp_footer', $callback, 999999999999 );
+        }
+
+        if ( $this->getSetting( 'palette' ) ) {
+            $this->setAttribute( 'data-default-color', $this->getSetting( 'palette' )[0] );
         }
 
         $input = new Generator();
 
         return $input->newInput( 'text', $name, $value, $this->getAttributes() )->getString();
+    }
+
+    /**
+     * Set color palette
+     *
+     * @param $palette
+     *
+     * @return $this
+     */
+    public function setPalette( array $palette ) {
+        if( ! empty( $palette) ) {
+            $this->setSetting('palette', $palette );
+        }
+
+        return $this;
     }
 
 }

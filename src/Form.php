@@ -200,7 +200,7 @@ class Form
         if (is_string( $value )) {
             $generator = new Generator();
             $html .= $generator->newInput( 'submit', '_tr_submit_form', $value,
-                ['id' => '_tr_submit_form', 'class' => 'button button-primary'])->getString();
+                ['class' => 'button button-primary'])->getString();
         }
 
         $html .= '</form>';

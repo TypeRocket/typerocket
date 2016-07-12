@@ -27,10 +27,15 @@ class Radio extends Field
         $option = $this->getValue();
         $option     = ! is_null($option) ? $this->getValue() : $default;
         $this->removeAttribute('name');
+        $id = $this->getAttribute('id', '');
         $this->removeAttribute('id');
         $generator = new Html\Generator();
 
-        $field = '<ul class="data-full">';
+        if($id) {
+            $id = " id=\"{$id}\"";
+        }
+
+        $field = "<ul class=\"data-full\"{$id}>";
 
         foreach ($this->options as $key => $value) {
             if ( $option == $value && isset($option) ) {
