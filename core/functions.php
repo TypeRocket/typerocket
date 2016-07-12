@@ -84,6 +84,13 @@ function tr_meta_box(
     return $obj;
 }
 
+function tr_page( $section, $title, array $settings = [] ) {
+    $obj = new \TypeRocket\Page($section, $title, $settings);
+    $obj->addToRegistry();
+
+    return $obj;
+}
+
 /**
  * Create tabs
  *
