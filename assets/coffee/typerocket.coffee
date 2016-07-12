@@ -43,8 +43,6 @@ jQuery(document).ready ($) ->
     if $.isFunction($.fn.wpColorPicker)
       $(obj).find('.color-picker[name]').each ->
         pal = $(this).attr('id') + '_color_palette'
-        console.log pal
-        console.log window[pal]
         settings = palettes: window[pal]
         $(this).wpColorPicker settings
         return

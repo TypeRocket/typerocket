@@ -1,8 +1,8 @@
 <?php
 namespace TypeRocket\Fields;
 
-use TypeRocket\Traits\OptionsTrait;
-use \TypeRocket\Html;
+use \TypeRocket\Traits\OptionsTrait,
+    \TypeRocket\Html;
 
 class Radio extends Field
 {

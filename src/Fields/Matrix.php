@@ -1,10 +1,10 @@
 <?php
 namespace TypeRocket\Fields;
 
-use TypeRocket\Traits\OptionsTrait,
-    TypeRocket\Html\Generator,
-    TypeRocket\Config,
-    TypeRocket\Buffer,
+use \TypeRocket\Traits\OptionsTrait,
+    \TypeRocket\Html\Generator,
+    \TypeRocket\Config,
+    \TypeRocket\Buffer,
     \TypeRocket\Sanitize;
 
 class Matrix extends Field implements ScriptField {

@@ -2,7 +2,7 @@
 
 namespace TypeRocket\Fields;
 
-use TypeRocket\Html\Generator;
+use \TypeRocket\Html\Generator;
 
 class Search extends Field
 {

@@ -2,8 +2,8 @@
 namespace TypeRocket\Fields;
 
 use \TypeRocket\Html\Generator,
-    \TypeRocket\Config;
-use TypeRocket\Traits\MaxlengthTrait;
+    \TypeRocket\Config,
+    \TypeRocket\Traits\MaxlengthTrait;
 
 class Editor extends Textarea implements ScriptField
 {

@@ -2,9 +2,9 @@
 
 namespace TypeRocket\Fields;
 
-use TypeRocket\Buffer;
-use TypeRocket\Config;
-use TypeRocket\Html\Generator;
+use \TypeRocket\Buffer,
+    \TypeRocket\Config,
+    \TypeRocket\Html\Generator;
 
 class Builder extends Matrix
 {

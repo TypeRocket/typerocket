@@ -1,8 +1,8 @@
 <?php
 namespace TypeRocket\Fields;
 
-use TypeRocket\Config;
-use \TypeRocket\Html\Generator,
+use \TypeRocket\Config,
+    \TypeRocket\Html\Generator,
     \TypeRocket\Sanitize;
 
 class Color extends Field implements ScriptField
