@@ -29,6 +29,7 @@ class PostTypesModel extends Model
         'post_password',
         'id'
     ];
+
     protected $guard = [
         'post_type',
         'id'

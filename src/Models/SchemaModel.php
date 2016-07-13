@@ -7,6 +7,10 @@ class SchemaModel extends Model
     public $resource = null;
     protected $query = [];
 
+    protected $guard = [
+        'id'
+    ];
+
     /**
      * Find all
      *
