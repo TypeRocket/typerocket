@@ -482,7 +482,7 @@ abstract class Model
      *
      * @param $id
      *
-     * @return mixed
+     * @return mixed|$this
      */
     abstract function findById( $id );
 
@@ -494,7 +494,7 @@ abstract class Model
      * their values.
      *
      * This method must be implemented to return the base value
-     * of a field if it is saved as a bracket group.
+     * of a field if it is saved as a dot group.
      *
      * @param $field_name
      *
