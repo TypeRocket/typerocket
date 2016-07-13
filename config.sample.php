@@ -80,7 +80,7 @@ define('TR_PLUGINS_URL', get_stylesheet_directory_uri() . '/plugins');
 | A 'random' string of text to help with security from time to time.
 |
 */
-define('TR_SEED', NONCE_KEY);
+define('TR_SEED', 'PUT_TYPEROCKET_SEED_HERE');
 
 /*
 |--------------------------------------------------------------------------
