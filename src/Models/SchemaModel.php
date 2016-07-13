@@ -137,6 +137,9 @@ class SchemaModel extends Model
      */
     public function create(array $fields)
     {
+        $fields = $this->secureFields($fields);
+        $fields = array_merge($this->default, $fields, $this->static);
+
         $this->query['create'] = true;
         unset($this->query['select']);
         $this->query['data'] = $fields;
@@ -153,6 +156,9 @@ class SchemaModel extends Model
      */
     public function update(array $fields)
     {
+        $fields = $this->secureFields($fields);
+        $fields = array_merge($this->default, $fields, $this->static);
+
         $this->query['update'] = true;
         unset($this->query['select']);
         $this->query['data'] = $fields;
