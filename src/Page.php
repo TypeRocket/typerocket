@@ -12,6 +12,7 @@ class Page extends Registrable
     /** @var null|Page parent page */
     public $parent = null;
     public $showTitle = true;
+    public $showMenu = true;
     public $builtin = [
         'tools' => 'tools.php',
         'dashboard' => 'index.php',
@@ -139,6 +140,31 @@ class Page extends Registrable
         return $this->parent;
     }
 
+
+    /**
+     * Get Title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set Title
+     *
+     * @param $title
+     *
+     * @return $this
+     */
+    public function setTitle( $title )
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
     /**
      * Remove title from page
      *
@@ -147,6 +173,18 @@ class Page extends Registrable
     public function removeTitle()
     {
         $this->showTitle = false;
+
+        return $this;
+    }
+
+    /**
+     * Remove menu
+     *
+     * @return $this
+     */
+    public function removeMenu()
+    {
+        $this->showMenu = false;
 
         return $this;
     }
@@ -191,14 +229,35 @@ class Page extends Registrable
             add_submenu_page( $this->builtin[$this->section] , $this->title, $menu_title, $capability, $slug, \Closure::bind( $callback, $this ) );
         } elseif( ! $this->parent ) {
             add_menu_page( $this->title, $menu_title, $capability, $slug, \Closure::bind( $callback, $this ), '', $position);
-            if( !empty($this->pages) ) {
+            if( $this->hasShownSubPages() ) {
                 add_submenu_page( $slug , $this->title, $menu_title, $capability, $slug );
             }
         } else {
-            add_submenu_page( $this->parent->getSlug() , $this->title, $menu_title, $capability, $slug, \Closure::bind( $callback, $this ) );
+
+            $parent_slug = $this->showMenu ? $this->parent->getSlug() : null;
+
+            add_submenu_page( $parent_slug, $this->title, $menu_title, $capability, $slug, \Closure::bind( $callback, $this ) );
         }
 
         return $this;
+    }
+
+    /**
+     * Has shown sub pages
+     *
+     * @return bool
+     */
+    public function hasShownSubPages()
+    {
+        if( ! empty( $this->pages ) ) {
+            foreach($this->pages as $page) {
+                if( $page->showMenu ) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
