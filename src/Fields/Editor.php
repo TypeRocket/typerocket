@@ -33,8 +33,8 @@ class Editor extends Textarea implements ScriptField
     public function getString()
     {
         $generator = new Generator();
-        $value = $this->getValue();
         $this->setAttribute('name', $this->getNameAttributeString());
+        $value = $this->getValue();
         $this->appendStringToAttribute('class', ' typerocket-editor ');
         $value = esc_attr( $this->sanitize($value, 'editor') );
 
