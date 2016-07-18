@@ -18,6 +18,7 @@ function tr_get_model($resource) {
     }
 
     if( class_exists($model) ) {
+        /** @var \TypeRocket\Models\Model $object */
         $object = new $model;
     }
 
@@ -84,21 +85,51 @@ function tr_meta_box(
     return $obj;
 }
 
-function tr_page( $section, $title, array $settings = [] ) {
-    $obj = new \TypeRocket\Page($section, $title, $settings);
+/**
+ * @param $resource
+ * @param $action
+ * @param $title
+ * @param array $settings
+ *
+ * @return \TypeRocket\Page
+ */
+function tr_page( $resource, $action, $title, array $settings = []) {
+    $obj = new \TypeRocket\Page($resource, $action, $title, $settings);
     $obj->addToRegistry();
 
     return $obj;
 }
 
 /**
+ * @param $resource
+ * @param $singular
+ *
+ * @return \TypeRocket\Page
+ */
+function tr_resource_page( $resource, $singular ) {
+    return tr_page($resource, 'index', $resource)->apply(
+        tr_page($resource, 'update', 'Update ' . $singular )->removeMenu(),
+        tr_page($resource, 'create', 'Create ' . $singular )->setArgument('menu', 'Add New')
+    );
+}
+
+/**
  * Create tabs
  *
- * @return \TypeRocket\Tabs
+ * @return \TypeRocket\Layout\Tabs
  */
 function tr_tabs()
 {
-    return new \TypeRocket\Tabs();
+    return new \TypeRocket\Layout\Tabs();
+}
+
+/**
+ * Create tables
+ *
+ * @return \TypeRocket\Layout\Tables
+ */
+function tr_tables() {
+    return new \TypeRocket\Layout\Tables();
 }
 
 /**

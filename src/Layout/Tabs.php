@@ -1,5 +1,5 @@
 <?php
-namespace TypeRocket;
+namespace TypeRocket\Layout;
 
 class Tabs
 {
@@ -166,7 +166,7 @@ class Tabs
     }
 
     /**
-     * Render the screen's help section.
+     * Render the screen's help resource.
      *
      * This will trigger the deprecated filters for backwards compatibility.
      *
@@ -232,7 +232,7 @@ class Tabs
 
             <div class="tr-sections">
                 <?php
-                $classes = 'tab-section active';
+                $classes = 'tab-resource active';
                 foreach ($tabs as $tab):
                     $panel_id = "tab-panel-{$tab['id']}";
                     ?>
@@ -249,7 +249,7 @@ class Tabs
                         ?>
                     </div>
                     <?php
-                    $classes  = 'tab-section';
+                    $classes  = 'tab-resource';
                 endforeach;
                 ?>
             </div>

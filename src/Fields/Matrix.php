@@ -63,7 +63,7 @@ class Matrix extends Field implements ScriptField {
 
         // add it all
         $html = "
-<div class='tr-matrix control-section tr-repeater'>
+<div class='tr-matrix control-resource tr-repeater'>
 <div class='matrix-controls controls'>
 {$select}
 <div class=\"tr-repeater-button-add\">

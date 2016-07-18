@@ -6,7 +6,8 @@ class Page extends Registrable
 {
 
     public $title = 'Admin Page Title';
-    public $section = 'admin';
+    public $resource = 'admin';
+    public $action = 'index';
     public $icon = null;
     public $pages = [];
     /** @var null|Page parent page */
@@ -26,21 +27,23 @@ class Page extends Registrable
     /**
      * Page constructor.
      *
-     * @param string $section set the
+     * @param string $resource set the
+     * @param $action
      * @param string $name
      * @param array $settings
      */
-    public function __construct($section, $name, array $settings = [])
+    public function __construct($resource, $action, $name, array $settings = [])
     {
-        $this->title = $name;
-        $this->section    = Sanitize::underscore( $section );
-        $this->id    = Sanitize::underscore( $this->title );
-        $this->args = array_merge( [
+        $this->title    = $name;
+        $this->resource = Sanitize::underscore( $resource );
+        $this->id       = Sanitize::underscore( $this->title );
+        $this->action   = Sanitize::underscore( $action );
+        $this->args     = array_merge( [
             'menu' => $this->title,
             'capability' => 'administrator',
             'position' => 99,
-            'view' => Config::getPaths()['views'] . '/' . $this->section . '/' . $this->id . '.php',
-            'slug' => $this->section . '_' . $this->id,
+            'view' => Config::getPaths()['views'] . '/' . $this->resource . '/' . $this->action . '.php',
+            'slug' => $this->resource . '_' . $this->action,
         ], $settings );
 
     }
@@ -225,18 +228,22 @@ class Page extends Registrable
 
         };
 
-        if( array_key_exists( $this->section, $this->builtin ) ) {
-            add_submenu_page( $this->builtin[$this->section] , $this->title, $menu_title, $capability, $slug, \Closure::bind( $callback, $this ) );
+        if( array_key_exists( $this->resource, $this->builtin ) ) {
+            add_submenu_page( $this->builtin[$this->resource] , $this->title, $menu_title, $capability, $slug, \Closure::bind( $callback, $this ) );
         } elseif( ! $this->parent ) {
             add_menu_page( $this->title, $menu_title, $capability, $slug, \Closure::bind( $callback, $this ), '', $position);
             if( $this->hasShownSubPages() ) {
                 add_submenu_page( $slug , $this->title, $menu_title, $capability, $slug );
             }
         } else {
-
-            $parent_slug = $this->showMenu ? $this->parent->getSlug() : null;
-
+            $parent_slug = $this->parent->getSlug();
             add_submenu_page( $parent_slug, $this->title, $menu_title, $capability, $slug, \Closure::bind( $callback, $this ) );
+
+            if( ! $this->showMenu ) {
+                add_action( 'admin_head', function() use ($parent_slug, $slug) {
+                    remove_submenu_page( $parent_slug, $slug );
+                } );
+            }
         }
 
         return $this;

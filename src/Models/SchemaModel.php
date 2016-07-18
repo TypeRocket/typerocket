@@ -5,7 +5,10 @@ namespace TypeRocket\Models;
 class SchemaModel extends Model
 {
     public $resource = null;
+    public $table = null;
+
     protected $query = [];
+    public $lastCompiledSQL = null;
 
     protected $guard = [
         'id'
@@ -50,22 +53,24 @@ class SchemaModel extends Model
      */
     public function where($column, $arg1, $arg2 = null, $condition = 'AND')
     {
-        $group = microtime();
+        $whereQuery = [];
 
         if( !empty($this->query['where']) ) {
-            $this->query['where'][$group]['condition'] = strtoupper($condition);
+            $whereQuery['condition'] = strtoupper($condition);
         } else {
-            $this->query['where'][$group]['condition'] = 'WHERE';
+            $whereQuery['condition'] = 'WHERE';
         }
 
-        $this->query['where'][$group]['column'] = $column;
-        $this->query['where'][$group]['operator'] = '=';
-        $this->query['where'][$group]['value'] = $arg1;
+        $whereQuery['column'] = $column;
+        $whereQuery['operator'] = '=';
+        $whereQuery['value'] = $arg1;
 
         if( !empty($arg2) ) {
-            $this->query['where'][$group]['operator'] = strtoupper($arg1);
-            $this->query['where'][$group]['value'] = $arg2;
+            $whereQuery['operator'] = strtoupper($arg1);
+            $whereQuery['value'] = $arg2;
         }
+
+        $this->query['where'][] = $whereQuery;
 
         return $this;
     }
@@ -217,13 +222,20 @@ class SchemaModel extends Model
         return $this->getValueOrNull( $data[0]->$field_name );
     }
 
+    /**
+     * Run the SQL query from the query property
+     *
+     * @param array $query
+     *
+     * @return array|bool|false|int|null|object
+     */
     protected function runQuery( array $query = [] ) {
         /** @var \wpdb $wpdb */
         global $wpdb;
 
-        $table = $wpdb->prefix . $this->resource;
+        $table = $this->table ? $this->table : $wpdb->prefix . $this->resource;
         $result = [];
-        $sql_where = $sql_limit = $sql_values = $sql_columns = $sql_update = $sql_order = '';
+        $sql_where = $sql_limit = $sql_values = $sql_columns = $sql_update = $sql = $sql_order = '';
 
         if( empty($query) ) {
             $query = $this->query;
@@ -313,6 +325,8 @@ class SchemaModel extends Model
             $sql = 'UPDATE ' . $table . ' SET ' . $sql_update . $sql_where;
             $result = $wpdb->query( $sql );
         }
+
+        $this->lastCompiledSQL = $sql;
 
         return $result;
     }

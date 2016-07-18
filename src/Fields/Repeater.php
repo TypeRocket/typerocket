@@ -59,7 +59,7 @@ class Repeater extends Field implements ScriptField
         $openContainer = '<div class="repeater-controls"><div class="collapse"></div><div class="move"></div><a href="' . $href . '" class="remove" title="remove"></a></div><div class="repeater-inputs">';
         $endContainer  = '</div>';
 
-        $html .= '<div class="control-section tr-repeater">'; // start tr-repeater
+        $html .= '<div class="control-resource tr-repeater">'; // start tr-repeater
 
         // setup repeater
         $cache_group = $form->getGroup();
