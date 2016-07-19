@@ -2,6 +2,7 @@
 namespace TypeRocket\Models;
 
 use TypeRocket\Fields\Field;
+use TypeRocket\Sanitize;
 
 abstract class Model
 {
@@ -15,6 +16,7 @@ abstract class Model
     protected $errors = null;
     protected $builtin = [];
     private $data = null;
+    private $old = null;
 
     /**
      * Construct Model based on resource
@@ -324,14 +326,27 @@ abstract class Model
             $field = $field->getDots();
         }
 
-        if ($this->id == null) {
+        if ($this->id == null && ! $this->old ) {
             return null;
         }
 
         $keys = $this->getDotKeys( $field );
-        $data = $this->getBaseFieldValue( $keys[0] );
+
+        if($this->old) {
+            $data = $this->old[$keys[0]];
+        } else {
+            $data = $this->getBaseFieldValue( $keys[0] );
+        }
 
         return $this->parseValueData( $data, $keys );
+    }
+
+    public function oldStore() {
+        if( !empty($_COOKIE['old_fields_key']) ) {
+            $id = Sanitize::underscore($_COOKIE['old_fields_key']);
+            $this->old = get_transient( 'tr_old_fields_' . $id);
+            setcookie("old_fields_key", "", time() - 36000);
+        }
     }
 
     /**

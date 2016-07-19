@@ -3,25 +3,20 @@
 namespace TypeRocket\Layout;
 
 use TypeRocket\Html\Generator;
+use TypeRocket\Models\SchemaModel;
 use TypeRocket\Page;
 
 class Tables
 {
     public $results;
     public $columns;
+    public $model;
     public $page = null;
     public $settings = ['update_column' => 'id'];
 
-    /**
-     * @param array $results
-     *
-     * @return $this
-     */
-    public function setResults( array $results )
+    public function __construct( SchemaModel $model )
     {
-        $this->results = $results;
-
-        return $this;
+        $this->model = $model;
     }
 
     /**
@@ -36,15 +31,13 @@ class Tables
         return $this;
     }
 
+    /**
+     * @param \TypeRocket\Page $page
+     *
+     * @return $this
+     */
     public function setPage( Page $page) {
         $this->page = $page;
-
-        return $this;
-    }
-
-    public function setUpdateColumn($name)
-    {
-        $this->settings['update_column'] = strtolower($name);
 
         return $this;
     }
@@ -54,7 +47,7 @@ class Tables
      */
     public function render()
     {
-        $results = $this->results;
+        $results = $this->model->findAll()->get();
         $columns = $this->columns;
         $table = new Generator();
         $head = new Generator();
@@ -72,13 +65,13 @@ class Tables
 
         $th_row = new Generator();
         $th_row->newElement('tr', ['class' => 'manage-column']);
-        foreach ( $columns as $column => $label ) {
+        foreach ( $columns as $column => $data ) {
             $th = new Generator();
 
-            if( is_string($label) ) {
-                $th->newElement('th', [], ucfirst($label));
+            if( ! is_string($column) ) {
+                $th->newElement('th', [], ucfirst($data));
             } else {
-                $th->newElement('th', [], $column);
+                $th->newElement('th', [], $data['label']);
             }
 
             $th_row->appendInside($th);
@@ -89,27 +82,48 @@ class Tables
         foreach ( $results as $result ) {
             $td_row = new Generator();
             $td_row->newElement('tr', ['class' => 'manage-column']);
-            foreach($columns as $column => $label ) {
+            foreach($columns as $column => $data ) {
+                $url = '';
 
+                // get columns if none set
                 if( ! is_string($column) ) {
-                    $column = $label;
+                    $column = $data;
                 }
 
-                $value = $result->$column;
+                $text = $result->$column;
 
-                if( $this->page instanceof Page && $column == $this->settings['update_column'] && !empty($this->page->pages) ) {
+                if($this->page instanceof Page && !empty($this->page->pages) ) {
                     foreach ($this->page->pages as $page) {
                         /** @var Page $page */
                         if( $page->action == 'update' ) {
-                            $url   = admin_url() .  $page->getAdminPage() . '?page=' . $page->getSlug() . '&item_id=' . (int) $result->id;
-                            $value = "<a href=\"{$url}\">{$value}</a>";
+                            $url = $page->getUrl( ['item_id' => (int) $result->id] );
                             break;
                         }
+                    }
+
+                    if( !empty($data['actions']) ) {
+                        $text = "<strong><a href=\"{$url}\">{$text}</a></strong>";
+                        $text .= "<div class=\"row-actions\">";
+                        foreach ( $data['actions'] as $index => $action ) {
+
+                            if($index > 0 ) {
+                                $text .= ' | ';
+                            }
+
+                            switch ($action) {
+                                case 'edit' :
+                                    $text .= "<span class=\"edit\"><a href=\"{$url}\">Edit</a></span>";
+                                    break;
+                                case 'delete' :
+                                    $text .= "<span class=\"delete\"><a href=\"{$url}\">Delete</a></span>";
+                            }
+                        }
+                        $text .= "</div>";
                     }
                 }
 
                 $td = new Generator();
-                $td->newElement('td', [], $value);
+                $td->newElement('td', [], $text);
                 $td_row->appendInside($td);
             }
             $body->appendInside($td_row);

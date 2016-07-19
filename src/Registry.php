@@ -125,6 +125,10 @@ class Registry
                 add_action( 'admin_init', [$obj, 'register']);
                 add_action( 'add_meta_boxes', [$obj, 'register']);
             } elseif ($obj instanceof Page) {
+                if($obj->useController) {
+                    add_action( 'admin_init', [$obj, 'respond'] );
+                }
+
                 add_action( 'admin_menu', [$obj, 'register']);
             }
         }

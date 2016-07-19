@@ -5,6 +5,7 @@ class Request
 {
 
     private $resource = null;
+    private $action = null;
     private $method = null;
     private $id = null;
     private $uri = null;
@@ -20,12 +21,14 @@ class Request
      * @param string $resource the resource
      * @param string $method the method PUT, POST, GET, DELETE
      * @param int $id the resource ID
+     * @param string $action
      */
-    public function __construct( $resource, $method, $id )
+    public function __construct( $resource, $method, $id, $action = 'auto' )
     {
         $this->setResource( $resource );
         $this->setMethod( $method );
         $this->setResourceId( $id );
+        $this->setAction( $action );
         $this->uri    = $_SERVER['REQUEST_URI'];
         $this->host   = $_SERVER['HTTP_HOST'];
         $this->fields = ! empty ( $_POST['tr'] ) ? $_POST['tr'] : [];
@@ -33,6 +36,30 @@ class Request
         $this->get    = ! empty ( $_GET ) ? $_GET : null;
         $this->files  = ! empty ( $_FILES ) ? $_FILES : null;
 
+    }
+
+    /**
+     * Set the method
+     *
+     * @param $action
+     *
+     * @return $this
+     */
+    private function setAction( $action )
+    {
+        $this->action = strtolower( $action );
+
+        return $this;
+    }
+
+    /**
+     * Set the method
+     *
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
     }
 
     /**

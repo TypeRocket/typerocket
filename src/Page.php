@@ -2,6 +2,8 @@
 
 namespace TypeRocket;
 
+use TypeRocket\Http\Responders\ResourceResponder;
+
 class Page extends Registrable
 {
 
@@ -15,6 +17,7 @@ class Page extends Registrable
     public $showTitle = true;
     public $showMenu = true;
     public $showAddNewButton = false;
+    public $useController = false;
     public $builtin = [
         'tools' => 'tools.php',
         'dashboard' => 'index.php',
@@ -43,7 +46,7 @@ class Page extends Registrable
             'menu' => $this->title,
             'capability' => 'administrator',
             'position' => 99,
-            'view' => Config::getPaths()['views'] . '/' . $this->resource . '/' . $this->action . '.php',
+            'view_file' => null,
             'slug' => $this->resource . '_' . $this->action,
         ], $settings );
 
@@ -194,6 +197,43 @@ class Page extends Registrable
     }
 
     /**
+     * Get URL for admin page
+     *
+     * @param array $params
+     *
+     * @return string
+     */
+    public function getUrl( array $params = [] ) {
+        $query = http_build_query( array_merge(
+            [ 'page' => $this->getSlug() ],
+            $params
+        ) );
+        $url = admin_url() . $this->getAdminPage() . '?' . $query;
+
+        return $url;
+    }
+
+    /**
+     * Get URL for admin page with existing params in URL
+     *
+     * @param array $params
+     *
+     * @return string
+     */
+    public function getUrlWithParams( array $params = [] ) {
+        parse_str(parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY), $request_params);
+
+        $query = http_build_query( array_merge(
+            [ 'page' => $this->getSlug() ],
+            $request_params,
+            $params
+        ) );
+        $url = admin_url() . $this->getAdminPage() . '?' . $query;
+
+        return $url;
+    }
+
+    /**
      * Remove menu
      *
      * @return $this
@@ -218,6 +258,13 @@ class Page extends Registrable
         return $this;
     }
 
+    public function useController()
+    {
+        $this->useController = true;
+
+        return $this;
+    }
+
     /**
      * Register with WordPress
      *
@@ -234,7 +281,6 @@ class Page extends Registrable
 
         $callback = function() {
 
-            $view = $this->args['view'];
             $url = $action = '';
 
             if( $this->parent ) {
@@ -249,8 +295,7 @@ class Page extends Registrable
             foreach ($all_pages as $page) {
                 /** @var Page $page */
                 if($page->action == 'create') {
-                    $wp_page = $this->getAdminPage();
-                    $url =  admin_url() . $wp_page . '?page=' . $page->getSlug();
+                    $url =  $page->getUrl();
                     break;
                 }
             }
@@ -264,10 +309,15 @@ class Page extends Registrable
             }
 
             echo '<div>';
-            if (file_exists( $view )) {
-                include( $view );
+
+            if( file_exists($this->args['view_file']) ) {
+                include( $this->args['view_file'] );
+            } elseif (file_exists( View::file() )) {
+                extract( View::data()) ;
+                include( View::file() );
             } elseif( TR_DEBUG == true ) {
-                echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by creating: <code>{$view}</code></div>";
+                $file = View::file();
+                echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by creating: <code>{$file}</code></div>";
             }
             echo '</div></div>';
             do_action('tr_page_end_view_' . $this->id, $this);
@@ -293,6 +343,19 @@ class Page extends Registrable
         }
 
         return $this;
+    }
+
+    public function respond()
+    {
+        parse_str(parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY), $request_params);
+
+        if( !empty($request_params['page']) &&  $request_params['page'] == $this->getSlug() ) {
+            $respond = new ResourceResponder();
+            $respond->setResource( $this->resource );
+            $respond->setAction( $this->action );
+            $item_id = !empty($_GET['item_id']) ? (int) $_GET['item_id'] : null;
+            $respond->respond( $item_id );
+        }
     }
 
     /**

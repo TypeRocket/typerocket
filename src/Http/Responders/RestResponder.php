@@ -24,7 +24,7 @@ class RestResponder extends Responder
         $request  = new Request( $this->resource, $method, $id );
         $response = new Response();
 
-        $this->runKernel($request, $response, 'restGlobal');
+        $this->runKernel($request, $response, 'apiGlobal');
 
         status_header( $response->getStatus() );
         wp_send_json( $response->getResponseArray() );

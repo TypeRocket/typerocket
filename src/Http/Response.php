@@ -261,4 +261,24 @@ class Response {
         return $vars;
     }
 
+    public function flashAdminNotice()
+    {
+        $this->flash = true;
+
+        add_action( 'admin_notices', \Closure::bind(function() {
+            $classes = 'notice-success';
+
+            if($this->errors) {
+                $classes = 'notice-error';
+            }
+            ?>
+            <div class="notice <?php echo $classes; ?> is-dismissible">
+                <p><?php echo $this->getMessage(); ?></p>
+            </div>
+            <?php
+        }, $this) );
+
+
+    }
+
 }

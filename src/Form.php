@@ -19,6 +19,7 @@ class Form
     private $currentField = '';
 
     private $debugStatus = null;
+    private $useRest = false;
 
     /**
      * Instance the From
@@ -110,6 +111,30 @@ class Form
     }
 
     /**
+     * Use TypeRocket Rest to submit form
+     *
+     * @return $this
+     */
+    public function useRest()
+    {
+        $this->useRest = true;
+
+        return $this;
+    }
+
+    /**
+     * Return old data is missing
+     *
+     * @return $this
+     */
+    public function useOld()
+    {
+        $this->model->oldStore();
+
+        return $this;
+    }
+
+    /**
      * Set the current Field to process
      *
      * @param Field $field
@@ -143,11 +168,10 @@ class Form
      * Not needed post types, for example, since WordPress already opens this for you.
      *
      * @param array $attr
-     * @param bool|true $use_rest
      *
      * @return $this
      */
-    public function open( $attr = [], $use_rest = true )
+    public function open( $attr = [] )
     {
         switch ($this->action) {
             case 'update' :
@@ -167,7 +191,7 @@ class Form
             'method'      => 'POST'
         ];
 
-        if ($use_rest == true) {
+        if ($this->useRest == true) {
 
             $scheme = is_ssl() ? 'https' : 'http';
 

@@ -114,9 +114,9 @@ function tr_resource_pages( $singular, $plural = null, array $settings = [] ) {
     }
 
     return tr_page($plural, 'index', $plural, $settings)->apply(
-        tr_page($plural, 'update', 'Edit ' . $singular )->addNewButton()->removeMenu(),
-        tr_page($plural, 'create', 'Add ' . $singular )->setArgument('menu', 'Add New')
-    )->addNewButton();
+        tr_page($plural, 'update', 'Edit ' . $singular )->useController()->addNewButton()->removeMenu(),
+        tr_page($plural, 'create', 'Add ' . $singular )->useController()->setArgument('menu', 'Add New')
+    )->addNewButton()->useController();
 }
 
 /**
@@ -132,10 +132,12 @@ function tr_tabs()
 /**
  * Create tables
  *
+ * @param $model
+ *
  * @return \TypeRocket\Layout\Tables
  */
-function tr_tables() {
-    return new \TypeRocket\Layout\Tables();
+function tr_tables( \TypeRocket\Models\SchemaModel $model ) {
+    return new \TypeRocket\Layout\Tables( $model );
 }
 
 /**

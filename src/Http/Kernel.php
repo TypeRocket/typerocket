@@ -9,7 +9,12 @@ class Kernel
     protected $middleware = [
         'hookGlobal' =>
             [ Middleware\AuthRead::class ],
-        'restGlobal' =>
+        'apiGlobal' =>
+            [
+                Middleware\AuthRead::class,
+                Middleware\ValidateCsrf::class
+            ],
+        'pageGlobal' =>
             [
                 Middleware\AuthRead::class,
                 Middleware\ValidateCsrf::class

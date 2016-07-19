@@ -126,7 +126,7 @@ class XKernel extends \TypeRocket\Http\Kernel
     protected $middleware = [
         'hookGlobal' =>
             [ \TypeRocket\Http\Middleware\AuthRead::class ],
-        'restGlobal' =>
+        'apiGlobal' =>
             [
                 \TypeRocket\Http\Middleware\AuthRead::class,
                 \TypeRocket\Http\Middleware\ValidateCsrf::class

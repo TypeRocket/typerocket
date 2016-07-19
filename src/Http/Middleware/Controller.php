@@ -18,20 +18,55 @@ class Controller extends Middleware
 
         $method = $request->getMethod();
         $action = null;
-        switch ($method) {
-            case 'PUT' :
-                $action = 'update';
-                break;
-            case 'GET' :
-                $action = 'read';
-                break;
-            case 'DELETE' :
-                $action = 'delete';
-                break;
-            case 'POST' :
-                $action = 'create';
-                break;
+        if( $request->getAction() == 'auto' ) {
+            switch ($method) {
+                case 'PUT' :
+                    $action = 'update';
+                    break;
+                case 'GET' :
+                    $action = 'read';
+                    break;
+                case 'DELETE' :
+                    $action = 'delete';
+                    break;
+                case 'POST' :
+                    $action = 'create';
+                    break;
+            }
+        } else {
+            switch ( $request->getAction() ) {
+                case 'create' :
+                    if( $method == 'POST' ) {
+                        $action = 'create';
+                    } else {
+                        $action = 'add';
+                    }
+                    break;
+                case 'update' :
+                    if( $method == 'PUT' ) {
+                        $action = 'update';
+                    } else {
+                        $action = 'edit';
+                    }
+                    break;
+                case 'delete' :
+                    if( $method == 'DELETE' ) {
+                        $action = 'update';
+                    }
+                    break;
+                case 'index' :
+                    if( $method == 'GET' ) {
+                        $action = 'index';
+                    }
+                    break;
+                case 'read' :
+                    if( $method == 'GET' ) {
+                        $action = 'read';
+                    }
+                    break;
+            }
         }
+
 
         $resource = ucfirst( $request->getResource() );
         $controller  = "\\TypeRocket\\Controllers\\{$resource}Controller";
