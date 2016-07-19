@@ -353,7 +353,7 @@ class Form
             $html = $field;
         } else {
             $type = strtolower( str_ireplace( '\\', '-', get_class( $this->getCurrentField() ) ) );
-            $html = "<div class=\"control-resource {$section_class} {$type}\" {$id}>{$label}<div class=\"control\">{$field}{$help}</div></div>";
+            $html = "<div class=\"control-section {$section_class} {$type}\" {$id}>{$label}<div class=\"control\">{$field}{$help}</div></div>";
         }
 
         $html = apply_filters( 'tr_from_field_html', $html, $this );

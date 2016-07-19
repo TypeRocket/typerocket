@@ -166,7 +166,7 @@ class Tabs
     }
 
     /**
-     * Render the screen's help resource.
+     * Render the screen's help section.
      *
      * This will trigger the deprecated filters for backwards compatibility.
      *
@@ -232,7 +232,7 @@ class Tabs
 
             <div class="tr-sections">
                 <?php
-                $classes = 'tab-resource active';
+                $classes = 'tab-section active';
                 foreach ($tabs as $tab):
                     $panel_id = "tab-panel-{$tab['id']}";
                     ?>
@@ -249,7 +249,7 @@ class Tabs
                         ?>
                     </div>
                     <?php
-                    $classes  = 'tab-resource';
+                    $classes  = 'tab-section';
                 endforeach;
                 ?>
             </div>
