@@ -108,8 +108,8 @@ function tr_page( $resource, $action, $title, array $settings = []) {
  */
 function tr_resource_page( $resource, $singular ) {
     return tr_page($resource, 'index', $resource)->apply(
-        tr_page($resource, 'update', 'Update ' . $singular )->removeMenu(),
-        tr_page($resource, 'create', 'Create ' . $singular )->setArgument('menu', 'Add New')
+        tr_page($resource, 'update', 'Edit ' . $singular )->removeMenu(),
+        tr_page($resource, 'create', 'Add ' . $singular )->setArgument('menu', 'Add New')
     )->addNewButton();
 }
 
