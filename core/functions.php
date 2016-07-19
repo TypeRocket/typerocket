@@ -110,7 +110,7 @@ function tr_resource_page( $resource, $singular ) {
     return tr_page($resource, 'index', $resource)->apply(
         tr_page($resource, 'update', 'Update ' . $singular )->removeMenu(),
         tr_page($resource, 'create', 'Create ' . $singular )->setArgument('menu', 'Add New')
-    );
+    )->addNewButton();
 }
 
 /**

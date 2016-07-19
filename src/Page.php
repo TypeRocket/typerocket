@@ -14,6 +14,7 @@ class Page extends Registrable
     public $parent = null;
     public $showTitle = true;
     public $showMenu = true;
+    public $showAddNewButton = false;
     public $builtin = [
         'tools' => 'tools.php',
         'dashboard' => 'index.php',
@@ -21,7 +22,7 @@ class Page extends Registrable
         'appearance' => 'themes.php',
         'plugins' => 'plugins.php',
         'users' => 'users.php',
-        'settings' => 'options-general.php',
+        'settings' => 'options-general.php'
     ];
 
     /**
@@ -193,6 +194,17 @@ class Page extends Registrable
     }
 
     /**
+     * Show create button
+     *
+     * @return $this
+     */
+    public function addNewButton() {
+        $this->showAddNewButton = true;
+
+        return $this;
+    }
+
+    /**
      * Register with WordPress
      *
      * Override this in concrete classes
@@ -213,7 +225,24 @@ class Page extends Registrable
             do_action('tr_page_start_view_' . $this->id, $this);
             echo '<div id="typerocket-admin-page" class="wrap typerocket-container">';
 
-            if( $this->showTitle ) {
+            if( $this->showAddNewButton ) {
+                // page-title-action
+                $url = '';
+
+                if( $this->pages ) {
+                    foreach ($this->pages as $page) {
+                        if($page->action == 'create') {
+                            $wp_page = !empty($this->builtin[$page->section]) ? $this->builtin[$page->section] : 'admin.php';
+                            $url =  admin_url() . $wp_page . '?page=' . $page->getSlug();
+                            break;
+                        }
+                    }
+                }
+
+
+                $action = ' <a href="'.$url.'" class="page-title-action">Add New</a>';
+                echo '<h1>'. $this->title . $action . '</h1>';
+            } elseif( $this->showTitle ) {
                 echo '<h2>'. $this->title .'</h2>';
             }
 
