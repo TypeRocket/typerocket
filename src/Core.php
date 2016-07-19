@@ -52,6 +52,7 @@ class Core
         add_action( 'admin_init', [$this, 'addCss']);
         add_action( 'admin_init', [$this, 'addJs']);
         add_action( 'admin_footer', [$this, 'addBottomJs']);
+        add_action( 'admin_notices', [$this, 'setFlash']);
     }
 
     /**
@@ -145,6 +146,25 @@ class Core
         endif;
 
         return $messages;
+    }
+
+    public function setFlash() {
+        if( !empty($_COOKIE['tr_admin_flash']) ) {
+            $classes = 'notice-success';
+            $id   = Sanitize::underscore($_COOKIE['tr_admin_flash']);
+            $data = get_transient('tr_admin_flash_' . $id);
+            delete_transient('tr_admin_flash_' . $id);
+            if ($data['errors']) {
+                $classes = 'notice-error';
+            }
+            if( !empty($data) ) {
+                ?>
+                <div class="notice <?php echo $classes; ?> is-dismissible">
+                    <p><?php echo $data['message']; ?></p>
+                </div>
+                <?php
+            }
+        }
     }
 
     /**

@@ -1,6 +1,8 @@
 <?php
 namespace TypeRocket\Http;
 
+use TypeRocket\Sanitize;
+
 /**
  * Class Response
  *
@@ -263,21 +265,15 @@ class Response {
 
     public function flashAdminNotice()
     {
-        $this->flash = true;
+        $this->flash = false;
 
-        add_action( 'admin_notices', \Closure::bind(function() {
-            $classes = 'notice-success';
-
-            if($this->errors) {
-                $classes = 'notice-error';
-            }
-            ?>
-            <div class="notice <?php echo $classes; ?> is-dismissible">
-                <p><?php echo $this->getMessage(); ?></p>
-            </div>
-            <?php
-        }, $this) );
-
+        $cookie_id = Sanitize::underscore(uniqid() . time() . uniqid());
+        setcookie('tr_admin_flash', $cookie_id, time() + 1 * MINUTE_IN_SECONDS, '/', null, isset($_SERVER["HTTPS"]), true);
+        $data = [
+            'errors' => $this->getErrors(),
+            'message' => $this->getMessage(),
+        ];
+        set_transient( 'tr_admin_flash_' . $cookie_id, $data, 1 * MINUTE_IN_SECONDS );
 
     }
 
