@@ -106,7 +106,7 @@ function tr_page( $resource, $action, $title, array $settings = []) {
  *
  * @return \TypeRocket\Page
  */
-function tr_resource_page( $resource, $singular ) {
+function tr_resource_pages( $resource, $singular ) {
     return tr_page($resource, 'index', $resource)->apply(
         tr_page($resource, 'update', 'Edit ' . $singular )->removeMenu(),
         tr_page($resource, 'create', 'Add ' . $singular )->setArgument('menu', 'Add New')
