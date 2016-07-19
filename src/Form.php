@@ -1,10 +1,12 @@
 <?php
 namespace TypeRocket;
 
+use TypeRocket\Fields\Submit;
 use TypeRocket\Html\Generator,
     TypeRocket\Html\Tag,
     TypeRocket\Fields\Field,
     TypeRocket\Models\PostTypesModel;
+use TypeRocket\Models\SchemaModel;
 use TypeRocket\Models\TaxonomiesModel;
 use TypeRocket\Traits\FormConnectorTrait;
 
@@ -261,6 +263,13 @@ class Form
                 $param .= ', '.$id;
             }
 
+            if($this->model instanceof SchemaModel) {
+                $controller = 'resource';
+                $param = ", '{$resource}'";
+                $id = $field->getItemId() ? $field->getItemId() : '$id';
+                $param .= ', '.$id;
+            }
+
             $function   = "tr_{$controller}_field('{$dots}'{$param});";
         }
 
@@ -276,7 +285,7 @@ class Form
     {
         $generator = new Generator();
         $html      = '';
-        if ($this->getDebugStatus() === true) {
+        if ($this->getDebugStatus() === true && ! $this->currentField instanceof Submit ) {
             $dev_html = $this->getFieldHelpFunction( $this->currentField );
             $fillable = $this->model->getFillableFields();
             $guard = $this->model->getGuardFields();

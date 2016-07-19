@@ -573,6 +573,9 @@ body .tr-builder .controls .tr-components li.ui-sortable-placeholder,
   font-weight: normal;
   background: #fff; }
 
+.wrap .tr-admin-page-title {
+  margin-bottom: 10px; }
+
 /**
  * For modern browsers
  * 1. The space content is one way to avoid an Opera bug when the

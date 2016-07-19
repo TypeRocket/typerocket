@@ -1,6 +1,8 @@
 <?php
 namespace TypeRocket\Layout;
 
+use TypeRocket\Sanitize;
+
 class Tabs
 {
 

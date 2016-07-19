@@ -28,14 +28,14 @@ class Page extends Registrable
     /**
      * Page constructor.
      *
-     * @param string $resource set the
-     * @param $action
-     * @param string $name
-     * @param array $settings
+     * @param string $resource set the resource or section the page belongs to
+     * @param string $action set the action the page is responsible for
+     * @param string $title set the title of the page and menu
+     * @param array $settings menu, capability, position, view, slug
      */
-    public function __construct($resource, $action, $name, array $settings = [])
+    public function __construct($resource, $action, $title, array $settings = [])
     {
-        $this->title    = $name;
+        $this->title    = $title;
         $this->resource = Sanitize::underscore( $resource );
         $this->id       = Sanitize::underscore( $this->title );
         $this->action   = Sanitize::underscore( $action );
@@ -144,7 +144,6 @@ class Page extends Registrable
         return $this->parent;
     }
 
-
     /**
      * Get Title
      *
@@ -182,6 +181,19 @@ class Page extends Registrable
     }
 
     /**
+     * Get admin page
+     *
+     * Get the page such as admin.php tools.php upload.php that Page belongs to
+     *
+     * @return mixed|string
+     */
+    public function getAdminPage()
+    {
+        $resource = $this->resource;
+        return !empty($this->builtin[$resource]) ? $this->builtin[$resource] : 'admin.php';
+    }
+
+    /**
      * Remove menu
      *
      * @return $this
@@ -196,10 +208,12 @@ class Page extends Registrable
     /**
      * Show create button
      *
+     * @param bool $url
+     *
      * @return $this
      */
-    public function addNewButton() {
-        $this->showAddNewButton = true;
+    public function addNewButton( $url = true ) {
+        $this->showAddNewButton = $url;
 
         return $this;
     }
@@ -221,29 +235,32 @@ class Page extends Registrable
         $callback = function() {
 
             $view = $this->args['view'];
+            $url = $action = '';
+
+            if( $this->parent ) {
+                $all_pages = $this->parent->pages;
+            } else {
+                $all_pages = $this->pages;
+            }
 
             do_action('tr_page_start_view_' . $this->id, $this);
             echo '<div id="typerocket-admin-page" class="wrap typerocket-container">';
 
-            if( $this->showAddNewButton ) {
-                // page-title-action
-                $url = '';
-
-                if( $this->pages ) {
-                    foreach ($this->pages as $page) {
-                        if($page->action == 'create') {
-                            $wp_page = !empty($this->builtin[$page->section]) ? $this->builtin[$page->section] : 'admin.php';
-                            $url =  admin_url() . $wp_page . '?page=' . $page->getSlug();
-                            break;
-                        }
-                    }
+            foreach ($all_pages as $page) {
+                /** @var Page $page */
+                if($page->action == 'create') {
+                    $wp_page = $this->getAdminPage();
+                    $url =  admin_url() . $wp_page . '?page=' . $page->getSlug();
+                    break;
                 }
+            }
 
-
+            if( $url && $this->showAddNewButton ) {
                 $action = ' <a href="'.$url.'" class="page-title-action">Add New</a>';
-                echo '<h1>'. $this->title . $action . '</h1>';
-            } elseif( $this->showTitle ) {
-                echo '<h2>'. $this->title .'</h2>';
+            }
+
+            if( $this->showTitle ) {
+                echo '<h1 class="tr-admin-page-title">'. $this->title . $action . '</h1>';
             }
 
             echo '<div>';

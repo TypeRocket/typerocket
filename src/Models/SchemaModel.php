@@ -157,7 +157,7 @@ class SchemaModel extends Model
      *
      * @param array $fields
      *
-     * @return $this
+     * @return mixed
      */
     public function update(array $fields)
     {

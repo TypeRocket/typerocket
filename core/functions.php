@@ -108,7 +108,7 @@ function tr_page( $resource, $action, $title, array $settings = []) {
  */
 function tr_resource_pages( $resource, $singular ) {
     return tr_page($resource, 'index', $resource)->apply(
-        tr_page($resource, 'update', 'Edit ' . $singular )->removeMenu(),
+        tr_page($resource, 'update', 'Edit ' . $singular )->addNewButton()->removeMenu(),
         tr_page($resource, 'create', 'Add ' . $singular )->setArgument('menu', 'Add New')
     )->addNewButton();
 }
@@ -157,7 +157,7 @@ function tr_form($resource = 'auto', $action = 'update', $item_id = null )
 }
 
 /**
- * Get the posts meta
+ * Get the posts field
  *
  * @param string $name use dot notation
  * @param null $item_id
@@ -212,7 +212,7 @@ function tr_posts_components_field( $name, $item_id = null ) {
 }
 
 /**
- * Get users meta
+ * Get users field
  *
  * @param string $name use dot notation
  * @param null $item_id
@@ -252,7 +252,7 @@ function tr_options_field( $name )
 }
 
 /**
- * Get comments meta
+ * Get comments field
  *
  * @param string $name use dot notation
  * @param null $item_id
@@ -274,11 +274,11 @@ function tr_comments_field( $name, $item_id = null )
 }
 
 /**
- *  Get taxonomy meta
+ *  Get taxonomy field
  *
  * @param string $name use dot notation
  * @param string $taxonomy taxonomy id
- * @param null $item_id
+ * @param null|int $item_id
  *
  * @return array|mixed|null|string
  */
@@ -286,6 +286,24 @@ function tr_taxonomies_field( $name, $taxonomy, $item_id = null )
 {
     /** @var \TypeRocket\Models\TaxonomiesModel $model */
     $model = tr_get_model($taxonomy);
+    $model->findById($item_id);
+
+    return $model->getFieldValue( $name );
+}
+
+/**
+ * Get resource
+ *
+ * @param string $name use dot notation
+ * @param string $resource
+ * @param null|int $item_id
+ *
+ * @return array|mixed|null|string
+ */
+function tr_resource_field( $name, $resource, $item_id = null )
+{
+    /** @var \TypeRocket\Models\TaxonomiesModel $model */
+    $model = tr_get_model($resource);
     $model->findById($item_id);
 
     return $model->getFieldValue( $name );
