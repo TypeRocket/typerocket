@@ -101,15 +101,21 @@ function tr_page( $resource, $action, $title, array $settings = []) {
 }
 
 /**
- * @param $resource
- * @param $singular
+ * @param string $singular
+ * @param string $plural
+ * @param array $settings
  *
  * @return \TypeRocket\Page
  */
-function tr_resource_pages( $resource, $singular ) {
-    return tr_page($resource, 'index', $resource)->apply(
-        tr_page($resource, 'update', 'Edit ' . $singular )->addNewButton()->removeMenu(),
-        tr_page($resource, 'create', 'Add ' . $singular )->setArgument('menu', 'Add New')
+function tr_resource_pages( $singular, $plural = null, array $settings = [] ) {
+
+    if( ! $plural ) {
+        $plural = \TypeRocket\Inflect::pluralize($singular);
+    }
+
+    return tr_page($plural, 'index', $plural, $settings)->apply(
+        tr_page($plural, 'update', 'Edit ' . $singular )->addNewButton()->removeMenu(),
+        tr_page($plural, 'create', 'Add ' . $singular )->setArgument('menu', 'Add New')
     )->addNewButton();
 }
 

@@ -99,8 +99,9 @@ class Tables
 
                 if( $this->page instanceof Page && $column == $this->settings['update_column'] && !empty($this->page->pages) ) {
                     foreach ($this->page->pages as $page) {
+                        /** @var Page $page */
                         if( $page->action == 'update' ) {
-                            $url   = admin_url() . 'admin.php?page=' . $page->getSlug() . '&item_id=' . (int) $result->id;
+                            $url   = admin_url() .  $page->getAdminPage() . '?page=' . $page->getSlug() . '&item_id=' . (int) $result->id;
                             $value = "<a href=\"{$url}\">{$value}</a>";
                             break;
                         }
