@@ -9,6 +9,7 @@ class SchemaModel extends Model
 
     protected $query = [];
     public $lastCompiledSQL = null;
+    public $return_one = false;
 
     protected $guard = [
         'id'
@@ -122,12 +123,12 @@ class SchemaModel extends Model
     }
 
     /**
-     * First
-     *
-     * @return $this
+     * @return array|bool|false|int|null|object
      */
     public function first() {
-        return $this->findAll()->take(1);
+        $this->return_one = true;
+        $this->take(1);
+        return $this->runQuery();
     }
 
     /**
@@ -312,6 +313,11 @@ class SchemaModel extends Model
         if( array_key_exists('select', $query) ) {
             $sql = 'SELECT * FROM '. $table . $sql_where . $sql_order . $sql_limit;
             $result = $wpdb->get_results( $sql );
+
+            if($result && $this->return_one) {
+                $result = $result[0];
+            }
+
         } elseif( array_key_exists('delete', $query) ) {
             $sql = 'DELETE FROM ' . $table . $sql_where;
             $result = $wpdb->query( $sql );

@@ -1,9 +1,11 @@
 <?php
 namespace TypeRocket\Http\Responders;
 
+use TypeRocket\Http\Redirect;
 use \TypeRocket\Http\Request,
     \TypeRocket\Http\Response;
 use TypeRocket\Sanitize;
+use TypeRocket\View;
 
 class ResourceResponder extends Responder
 {
@@ -27,9 +29,25 @@ class ResourceResponder extends Responder
         $response = new Response();
 
         $this->runKernel($request, $response, 'pageGlobal');
+        $returned = $this->kernel->router->returned;
 
-        if( $response->getRedirect() ) {
-            wp_redirect($response->getRedirect());
+        if( $returned ) {
+
+            if( $returned instanceof Redirect ) {
+                $returned->now();
+            }
+
+            if( is_string($returned) ) {
+                echo $returned;
+            }
+
+            if( is_array($returned) ) {
+                wp_send_json($returned);
+            }
+
+        } else {
+            status_header( $response->getStatus() );
+            wp_send_json( $response->getResponseArray() );
         }
     }
 

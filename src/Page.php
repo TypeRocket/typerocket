@@ -312,9 +312,9 @@ class Page extends Registrable
 
             if( file_exists($this->args['view_file']) ) {
                 include( $this->args['view_file'] );
-            } elseif (file_exists( View::file() )) {
-                extract( View::data() );
-                include( View::file() );
+            } elseif (file_exists( View::$file )) {
+                extract( View::$data );
+                include( View::$file );
             } elseif( TR_DEBUG == true ) {
                 echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by creating or setting a view.</div>";
             }

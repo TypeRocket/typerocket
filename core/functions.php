@@ -353,3 +353,10 @@ function tr_redirect() {
 function tr_cookie() {
     return new \TypeRocket\Http\Cookie();
 }
+
+/**
+ * @return \TypeRocket\Http\Cookie
+ */
+function tr_view() {
+    return new \TypeRocket\View();
+}

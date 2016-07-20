@@ -7,6 +7,8 @@ use \TypeRocket\Http\Kernel,
 
 abstract class Responder
 {
+    public $kernel;
+
     abstract public function respond( $id );
 
     /**
@@ -24,9 +26,9 @@ abstract class Responder
         $XKernel = "\\" . TR_APP_NAMESPACE . "\\Http\\XKernel";
 
         if ( class_exists( $XKernel ) ) {
-            new $XKernel( $request, $response, $type);
+            $this->kernel = new $XKernel( $request, $response, $type);
         } else {
-            new Kernel($request, $response, $type);
+            $this->kernel =  new Kernel($request, $response, $type);
         }
     }
 }
