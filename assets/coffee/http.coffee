@@ -57,7 +57,7 @@ jQuery.typerocketHttp =
       type = data.message_type
 
       if data.flash == true
-        jQuery('body').prepend jQuery('<div class="typerocket-rest-alert node-' + type + ' ">' + data.message + '</div>').delay(2000).fadeOut( 100, ->
+        jQuery('body').prepend jQuery('<div class="typerocket-ajax-alert tr-alert-' + type + ' ">' + data.message + '</div>').delay(2000).fadeOut( 100, ->
           jQuery(this).remove()
           return
         )
@@ -74,8 +74,7 @@ jQuery(document).ready ($) ->
 
     if confirm("Confirm Delete.")
       target = $(this).data('target');
-      $(target).slideUp 1200, ->
-        # $(this).remove()
+      $(target).remove()
 
       data =
         _tr_ajax_request: '1'

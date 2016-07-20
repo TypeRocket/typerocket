@@ -157,7 +157,7 @@ class Core
             $classes = 'notice-' . $data['type'];
             if( !empty($data) ) {
                 ?>
-                <div class="notice <?php echo $classes; ?> is-dismissible">
+                <div class="notice tr-admin-notice <?php echo $classes; ?> is-dismissible">
                     <p><?php echo $data['message']; ?></p>
                 </div>
                 <?php
