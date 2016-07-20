@@ -152,12 +152,9 @@ class Core
 
     public function setFlash() {
         if( !empty($_COOKIE['tr_admin_flash']) ) {
-            $classes = 'notice-success';
             $cookie = new Cookie();
             $data = $cookie->getTransient('tr_admin_flash');
-            if ( ! $data['valid'] ) {
-                $classes = 'notice-error';
-            }
+            $classes = 'notice-' . $data['type'];
             if( !empty($data) ) {
                 ?>
                 <div class="notice <?php echo $classes; ?> is-dismissible">

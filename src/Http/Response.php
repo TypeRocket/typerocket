@@ -291,17 +291,19 @@ class Response {
     }
 
     /**
-     * @return Response $this
+     * @param $message
+     * @param $type
+     *
+     * @return \TypeRocket\Http\Response $this
      */
-    public function flashAdminNotice()
+    public function flashAdminNotice($message, $type = 'success')
     {
         $this->flash = false;
 
         $cookie = new Cookie();
         $data = [
-            'errors' => $this->getErrors(),
-            'valid' => $this->getValid(),
-            'message' => $this->getMessage(),
+            'type' => $type,
+            'message' => $message,
         ];
 
         $cookie->setTransient('tr_admin_flash', $data);
