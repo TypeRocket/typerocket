@@ -95,9 +95,9 @@ class Router extends Middleware
                 break;
             case 'delete' :
                 if( $method == 'DELETE' ) {
-                    $action = 'delete';
+                    $action = 'destroy';
                 } else {
-                    wp_die('This page is not for viewing');
+                    $action = 'delete';
                 }
                 break;
             case 'index' :

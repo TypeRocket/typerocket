@@ -46,4 +46,14 @@ abstract class ResourceController extends Controller
      */
     abstract function delete($id);
 
+    /**
+     * Delete
+     *
+     * @param $id
+     *
+     * @return mixed
+     */
+    abstract function destroy($id);
+
+
 }
