@@ -18,7 +18,6 @@ class Response {
     private $message_type = 'success';
     private $redirect = false;
     private $status = 200;
-    private $valid = true;
     private $flash = true;
     private $errors = [];
     private $data = [];
@@ -27,10 +26,15 @@ class Response {
      * Set HTTP status code
      *
      * @param $status
+     *
+     * @return $this
      */
     public function setStatus( $status )
     {
+        status_header( (int) $status );
         $this->status = (int) $status;
+
+        return $this;
     }
 
     /**
@@ -62,22 +66,6 @@ class Response {
     public function setRedirect( $url )
     {
         $this->redirect = $url;
-
-        return $this;
-    }
-
-    /**
-     * Set Invalid
-     *
-     * Set the response as invalid. This does not return a 404 status
-     * or a 401 status. If is only a hook to check if a request
-     * is valid.
-     *
-     * @return $this
-     */
-    public function setInvalid()
-    {
-        $this->valid = false;
 
         return $this;
     }
@@ -227,18 +215,6 @@ class Response {
     }
 
     /**
-     * Get Valid
-     *
-     * Get the valid property to see if the response is
-     * valid.
-     *
-     * @return bool
-     */
-    public function getValid() {
-        return $this->valid;
-    }
-
-    /**
      * Get Flash
      *
      * Get the flash property to see if the front-end should
@@ -314,6 +290,42 @@ class Response {
         }
 
         return $this;
+    }
+
+    /**
+     * Exit
+     *
+     * @param int $code
+     */
+    public function exit( $code = 500 ) {
+        if( ! empty($_POST['_tr_ajax_request']) ) {
+            $this->exitJson($code);
+        } else {
+            $this->exitMessage($code);
+        }
+    }
+
+    /**
+     * Exit with JSON dump
+     *
+     * @param int $code
+     */
+    public function exitJson( $code = 500 )
+    {
+        $this->setStatus($code);
+        wp_send_json( $this->getResponseArray() );
+        die();
+    }
+
+    /**
+     * Exit with message
+     *
+     * @param int $code
+     */
+    public function exitMessage( $code = 500 )
+    {
+        $this->setStatus($code);
+        wp_die($this->message);
     }
 
 }

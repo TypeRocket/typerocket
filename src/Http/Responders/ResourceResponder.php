@@ -44,7 +44,6 @@ class ResourceResponder extends Responder
             }
 
         } else {
-            status_header( $response->getStatus() );
             wp_send_json( $response->getResponseArray() );
         }
     }

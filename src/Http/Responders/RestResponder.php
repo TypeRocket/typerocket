@@ -33,7 +33,6 @@ class RestResponder extends Responder
 
         $this->runKernel($request, $response, 'apiGlobal');
 
-        status_header( $response->getStatus() );
         wp_send_json( $response->getResponseArray() );
     }
 

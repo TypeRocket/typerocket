@@ -38,11 +38,10 @@ abstract class PostTypesController extends Controller
         $errors = $this->model->findById( $id )->update( $this->request->getFields() )->getErrors();
 
         if ( ! empty ( $errors )) {
-            $this->response->setMessage( "{$this->type} not updated" );
+            $this->response->flashNotice( $this->type . ' not updated', 'success' );
             $this->response->setError( 'model', $errors );
-            $this->response->setInvalid();
         } else {
-            $this->response->setMessage( $this->type . ' updated' );
+            $this->response->flashNotice( $this->type . ' updated', 'success' );
             $this->response->setData('resourceId', $this->model->getId());
         }
 
@@ -56,11 +55,10 @@ abstract class PostTypesController extends Controller
         $errors = $this->model->create( $this->request->getFields() )->getErrors();
 
         if ( ! empty ( $errors ) ) {
-            $this->response->setMessage( $this->type . ' not created' );
+            $this->response->flashNotice( $this->type . ' not created', 'error' );
             $this->response->setError( 'model', $errors );
-            $this->response->setInvalid();
         } else {
-            $this->response->setMessage( $this->type . ' created' );
+            $this->response->flashNotice( $this->type . ' created', 'success' );
             $this->response->setStatus(201);
             $this->response->setData('resourceId', $this->model->getId());
         }

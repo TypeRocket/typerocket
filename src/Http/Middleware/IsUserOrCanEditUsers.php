@@ -18,10 +18,9 @@ class IsUserOrCanEditUsers extends Middleware
         $user  = get_user_by( 'id', $this->request->getResourceId() );
 
         if ($user->ID != $currentUser->ID && ! current_user_can( 'edit_users' )) {
-            $this->response->setInvalid();
             $this->response->setError( 'auth', false );
-            $this->response->setStatus(401);
-            $this->response->setMessage( "Sorry, you don't have enough rights." );
+            $this->response->flashNotice( "Sorry, you don't have enough rights.", 'error' );
+            $this->response->exit(401);
         }
 
         $this->next->handle();

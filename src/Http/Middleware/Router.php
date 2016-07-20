@@ -32,7 +32,7 @@ class Router extends Middleware
         if ( class_exists( $controller ) ) {
             $this->controller = $controller = new $controller( $this->request, $this->response);
 
-            if ( ! $controller instanceof Controller || ! $this->response->getValid() || ! method_exists( $controller, $this->action ) ) {
+            if ( ! $controller instanceof Controller || ! method_exists( $controller, $this->action ) ) {
                 $this->response->setError( 'controller', 'Routing error');
                 $this->response->setStatus(405);
                 $this->response->setInvalid();
@@ -46,11 +46,9 @@ class Router extends Middleware
     }
 
     public function handle() {
-        if ( $this->response->getValid() ) {
-            $action = $this->action;
-            $controller = $this->controller;
-            $this->returned = $controller->$action( $this->item_id );
-        }
+        $action = $this->action;
+        $controller = $this->controller;
+        $this->returned = $controller->$action( $this->item_id );
     }
 
     public function getMiddlewareGroups() {

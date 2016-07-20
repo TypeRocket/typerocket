@@ -17,11 +17,10 @@ class UsersController extends Controller
         $errors = $user->findById( $id )->update( $this->request->getFields() )->getErrors();
 
         if ( ! empty ( $errors )) {
-            $this->response->setMessage( 'User not updated' );
+            $this->response->flashNotice( 'User not updated', 'error' );
             $this->response->setError( 'model', $errors );
-            $this->response->setInvalid();
         } else {
-            $this->response->setMessage( 'User updated' );
+            $this->response->flashNotice( 'User updated', 'success' );
             $this->response->setData('resourceId', $user->getId());
         }
     }
@@ -35,11 +34,10 @@ class UsersController extends Controller
         $errors = $user->create( $this->request->getFields() )->getErrors();
 
         if ( ! empty ( $errors )) {
-            $this->response->setMessage( 'User not created' );
+            $this->response->flashNotice( 'User not created', 'error' );
             $this->response->setError( 'model', $errors );
-            $this->response->setInvalid();
         } else {
-            $this->response->setMessage( 'User created' );
+            $this->response->flashNotice( 'User created', 'success' );
             $this->response->setStatus(201);
             $this->response->setData('resourceId', $user->getId());
         }

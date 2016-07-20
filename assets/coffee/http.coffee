@@ -52,16 +52,12 @@ jQuery.typerocketHttp =
       ri = 0
       while TypeRocket.httpCallbacks.length > ri
         if typeof TypeRocket.httpCallbacks[ri] == 'function'
-          # Call it, since we have confirmed it is callable​
           TypeRocket.httpCallbacks[ri] data
         ri++
-      type = ''
-      if data.valid == true
-        type = 'success'
-      else
-        type = 'error'
+      type = data.message_type
+
       if data.flash == true
-        jQuery('body').prepend jQuery('<div class="typerocket-rest-alert node-' + type + ' ">' + data.message + '</div>').delay(1500).fadeOut(100, ->
+        jQuery('body').prepend jQuery('<div class="typerocket-rest-alert node-' + type + ' ">' + data.message + '</div>').delay(2000).fadeOut(100, ->
           jQuery(this).remove()
           return
         )

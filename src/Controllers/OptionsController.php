@@ -17,12 +17,10 @@ class OptionsController extends Controller
         $errors  = $options->create( $this->request->getFields() )->getErrors();
 
         if ( ! empty ( $errors )) {
-            $this->response->setMessage( 'Options not updated' );
+            $this->response->flashNotice( 'Options not updated', 'error' );
             $this->response->setError( 'model', $errors );
-            $this->response->setInvalid();
         } else {
-            $this->response->setMessage( 'Updated' );
-            $this->response->setData('resourceId', $options->getId());
+            $this->response->flashNotice( 'Updated', 'success' );
         }
 
     }
@@ -35,12 +33,11 @@ class OptionsController extends Controller
         $options = new OptionsModel();
         $errors  = $options->create( $this->request->getFields() )->getErrors();
 
-        if ( ! empty ( $errors )) {
-            $this->response->setMessage( 'Options not created' );
+        if ( ! empty( $errors ) ) {
+            $this->response->flashNotice( 'Options not created', 'error' );
             $this->response->setError( 'model', $errors );
-            $this->response->setInvalid();
-            $this->response->setMessage( 'Options updated' );
-            $this->response->setData('resourceId', $options->getId());
+        } else {
+            $this->response->flashNotice( 'Options created', 'success' );
         }
 
     }

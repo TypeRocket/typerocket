@@ -17,11 +17,10 @@ class CommentsController extends Controller
         $errors   = $comments->findById( $id )->update( $this->request->getFields() )->getErrors();
 
         if ( ! empty ( $errors )) {
-            $this->response->setMessage( 'Comment not updated' );
+            $this->response->flashNotice( 'Comment not updated', 'error' );
             $this->response->setError( 'model', $errors );
-            $this->response->setInvalid();
         } else {
-            $this->response->setMessage( 'Comment updated' );
+            $this->response->flashNotice( 'Comment updated', 'success' );
             $this->response->setData('resourceId', $comments->getId());
         }
 
@@ -36,11 +35,10 @@ class CommentsController extends Controller
         $errors   = $comments->create( $this->request->getFields() )->getErrors();
 
         if ( ! empty ( $errors )) {
-            $this->response->setMessage( 'Comment not created' );
+            $this->response->flashNotice( 'Comment not created', 'error' );
             $this->response->setError( 'model', $errors );
-            $this->response->setInvalid();
         } else {
-            $this->response->setMessage( 'Comment created' );
+            $this->response->flashNotice( 'Comment created', 'success' );
             $this->response->setStatus(201);
             $this->response->setData('resourceId', $comments->getId());
         }
