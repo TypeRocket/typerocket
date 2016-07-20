@@ -19,7 +19,6 @@
       if (trailing) {
         url = this.tools.addTrailingSlash(url);
       }
-      console.log(url);
       this.tools.ajax({
         method: method,
         data: data,
@@ -91,9 +90,14 @@
       $.typerocketHttp.send('POST', $(this).attr('action'), $(this).serialize());
     });
     return $('.tr-delete-row-rest-button').on('click', function(e) {
+      var data;
       e.preventDefault();
       if (confirm("Confirm Delete.")) {
-        return $.typerocketHttp.send('DELETE', $(this).attr('href'), [], false);
+        data = {
+          _tr_ajax_request: '1',
+          _method: 'DELETE'
+        };
+        return $.typerocketHttp.send('POST', $(this).attr('href'), data, false);
       }
     });
   });

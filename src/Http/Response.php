@@ -14,7 +14,8 @@ namespace TypeRocket\Http;
  */
 class Response {
 
-    private $message = 'No Response';
+    private $message = 'No Message Set';
+    private $message_type = 'success';
     private $redirect = false;
     private $status = 200;
     private $valid = true;
@@ -296,17 +297,21 @@ class Response {
      *
      * @return \TypeRocket\Http\Response $this
      */
-    public function flashAdminNotice($message, $type = 'success')
+    public function flashNotice($message, $type = 'success')
     {
-        $this->flash = false;
+        $this->flash = true;
+        $this->message = $message;
+        $this->message_type = strtolower($type);
 
         $cookie = new Cookie();
         $data = [
-            'type' => $type,
+            'type' => $this->message_type,
             'message' => $message,
         ];
 
-        $cookie->setTransient('tr_admin_flash', $data);
+        if(empty($_POST['_tr_ajax_request'])) {
+            $cookie->setTransient('tr_admin_flash', $data);
+        }
 
         return $this;
     }

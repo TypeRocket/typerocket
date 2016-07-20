@@ -4,7 +4,6 @@ namespace TypeRocket\Http\Responders;
 use TypeRocket\Http\Redirect;
 use \TypeRocket\Http\Request,
     \TypeRocket\Http\Response;
-use TypeRocket\View;
 
 class ResourceResponder extends Responder
 {
@@ -30,7 +29,7 @@ class ResourceResponder extends Responder
         $this->runKernel($request, $response, 'pageGlobal');
         $returned = $this->kernel->router->returned;
 
-        if( $returned ) {
+        if( $returned && empty($_POST['_tr_ajax_request']) ) {
 
             if( $returned instanceof Redirect ) {
                 $returned->now();

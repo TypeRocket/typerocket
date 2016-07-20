@@ -148,8 +148,18 @@ class Form
             $params = ['item_id' => $this->itemId];
         }
 
+        $action = $this->action;
+        switch($action) {
+            case 'create' :
+                $action = 'add';
+                break;
+            case 'update' :
+                $action = 'edit';
+                break;
+        }
+
         $query = http_build_query( array_merge(
-            [ 'page' => $this->resource . '_' . $this->action ],
+            [ 'page' => $this->resource . '_' . $action ],
             $params
         ) );
         $this->form_url = admin_url() . 'admin.php?' . $query;
@@ -204,16 +214,17 @@ class Form
      *
      * @param array $attr
      *
-     * @return $this
+     * @return string
      */
     public function open( $attr = [] )
     {
+        $r = '';
+
         switch ($this->action) {
             case 'update' :
                 $method = 'PUT';
                 break;
             case 'create' :
-            case 'add' :
                 $method = 'POST';
                 break;
             default :
@@ -237,8 +248,12 @@ class Form
 
         $form      = new Tag( 'form', $attr );
         $generator = new Generator();
+        $r .= $form->getStringOpenTag();
 
-        $r = $form->getStringOpenTag();
+        if ($this->useAjax == true) {
+            $r .= $generator->newInput( 'hidden', '_tr_ajax_request', '1' )->getString();
+        }
+
         $r .= $generator->newInput( 'hidden', '_method', $method )->getString();
         $r .= wp_nonce_field( 'form_' .  Config::getSeed() , '_tr_nonce_form', false, false );
 
@@ -250,7 +265,7 @@ class Form
      *
      * @param null|string $value
      *
-     * @return $this
+     * @return string
      */
     public function close( $value = null )
     {

@@ -35,7 +35,7 @@ class TaxonomiesResponder extends Responder
             $resource = 'categories';
         }
 
-        $request  = new Request( $resource, 'PUT', $id );
+        $request  = new Request( $resource, 'PUT', $id, 'update' );
         $response = new Response();
 
         $this->runKernel($request, $response);

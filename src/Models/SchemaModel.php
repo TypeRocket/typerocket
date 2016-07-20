@@ -181,8 +181,24 @@ class SchemaModel extends Model
      */
     public function findById($id)
     {
+        $this->return_one = true;
         $this->id = (int) $id;
         return $this->where('id', $id)->take(1)->findAll();
+    }
+
+    /**
+     * Find by ID or die
+     *
+     * @param $id
+     *
+     * @return \TypeRocket\Models\SchemaModel
+     */
+    public function findOrDie($id) {
+        if( ! $data = $this->findById($id)->get() ) {
+            wp_die('Something went wrong');
+        }
+
+        return $data;
     }
 
     /**
@@ -220,7 +236,7 @@ class SchemaModel extends Model
     protected function getBaseFieldValue($field_name)
     {
         $data = $this->findById($this->id)->get();
-        return $this->getValueOrNull( $data[0]->$field_name );
+        return $this->getValueOrNull( $data->$field_name );
     }
 
     /**

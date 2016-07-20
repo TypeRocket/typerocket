@@ -12,11 +12,8 @@ jQuery.typerocketHttp =
     @send 'DELETE', url, data
     return
   send: (method, url, data, trailing = true ) ->
-
     if trailing
       url = @tools.addTrailingSlash(url)
-
-    console.log url
 
     @tools.ajax
       method: method
@@ -80,4 +77,7 @@ jQuery(document).ready ($) ->
     e.preventDefault()
 
     if confirm("Confirm Delete.")
-      $.typerocketHttp.send 'DELETE', $(this).attr('href'), [], false
+      data =
+        _tr_ajax_request: '1'
+        _method: 'DELETE'
+      $.typerocketHttp.send 'POST', $(this).attr('href'), data , false

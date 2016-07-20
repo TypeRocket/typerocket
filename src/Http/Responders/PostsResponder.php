@@ -38,7 +38,7 @@ class PostsResponder extends Responder
             $resource = 'posts';
         }
 
-        $request  = new Request( $resource, 'PUT', $postId );
+        $request  = new Request( $resource, 'PUT', $postId, 'update' );
         $response = new Response();
 
         $this->runKernel($request, $response);

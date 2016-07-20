@@ -15,7 +15,7 @@ class CommentsResponder extends Responder {
      */
     public function respond( $commentId ) {
 
-        $request = new Request('comments', 'PUT', $commentId);
+        $request = new Request('comments', 'PUT', $commentId, 'update');
         $response = new Response();
 
         $this->runKernel($request, $response);

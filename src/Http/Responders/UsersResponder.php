@@ -15,7 +15,7 @@ class UsersResponder extends Responder {
      */
     public function respond( $userId ) {
 
-        $request = new Request('users', 'PUT', $userId);
+        $request = new Request('users', 'PUT', $userId, 'update');
         $response = new Response();
 
         $this->runKernel($request, $response);

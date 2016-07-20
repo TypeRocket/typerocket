@@ -80,55 +80,41 @@ class Router extends Middleware
 
         $method = $request->getMethod();
         $action = null;
-        if( $request->getAction() == 'auto' ) {
-            switch ($method) {
-                case 'PUT' :
-                    $action = 'update';
-                    break;
-                case 'DELETE' :
-                    $action = 'delete';
-                    break;
-                case 'POST' :
+        switch ( $request->getAction() ) {
+            case 'add' :
+                if( $method == 'POST' ) {
                     $action = 'create';
-                    break;
-            }
-        } else {
-            switch ( $request->getAction() ) {
-                case 'add' :
-                    if( $method == 'POST' ) {
-                        $action = 'create';
-                    } else {
-                        $action = 'add';
-                    }
-                    break;
-                case 'edit' :
-                    if( $method == 'PUT' ) {
-                        $action = 'update';
-                    } else {
-                        $action = 'edit';
-                    }
-                    break;
-                case 'delete' :
-                    if( $method == 'DELETE' ) {
-                        $action = 'delete';
-                    } else {
-                        wp_die('This page is not for viewing');
-                    }
-                    break;
-                case 'index' :
-                    if( $method == 'GET' ) {
-                        $action = 'index';
-                    }
-                    break;
-                case 'show' :
-                    if( $method == 'GET' ) {
-                        $action = 'show';
-                    }
-                    break;
-                default :
-                    $action = $request->getAction();
-                    break;
-            }
+                } else {
+                    $action = 'add';
+                }
+                break;
+            case 'edit' :
+                if( $method == 'PUT' ) {
+                    $action = 'update';
+                } else {
+                    $action = 'edit';
+                }
+                break;
+            case 'delete' :
+                if( $method == 'DELETE' ) {
+                    $action = 'delete';
+                } else {
+                    wp_die('This page is not for viewing');
+                }
+                break;
+            case 'index' :
+                if( $method == 'GET' ) {
+                    $action = 'index';
+                }
+                break;
+            case 'show' :
+                if( $method == 'GET' ) {
+                    $action = 'show';
+                }
+                break;
+            default :
+                $action = $request->getAction();
+                break;
         }
 
         return $action;
