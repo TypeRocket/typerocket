@@ -16,7 +16,7 @@ class AuthAdmin extends Middleware
 
         if ( ! current_user_can('administrator') ) {
             $this->response->setInvalid();
-            $this->response->setError( 'auth', false );
+            $this->response->setError('auth', false);
             $this->response->setStatus(401);
             $this->response->setMessage( "Sorry, you don't have enough rights." );
         }
