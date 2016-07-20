@@ -32,7 +32,6 @@ jQuery.typerocketHttp =
       if ! str.indexOf('.php')
         return str.replace(/\/?(\?|#|$)/, '/$1')
       str
-
     ajax: (obj) ->
       tools = this
       settings =
