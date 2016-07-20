@@ -28,12 +28,6 @@ class ResourceResponder extends Responder
 
         $this->runKernel($request, $response, 'pageGlobal');
 
-        if( $response->setInvalid() && !empty($request->getFields()) ) {
-            $cookie_id = Sanitize::underscore(uniqid() . time() . uniqid());
-            setcookie('old_fields_key', $cookie_id, time() + MINUTE_IN_SECONDS, '/', null, isset($_SERVER["HTTPS"]), true);
-            set_transient( 'tr_old_fields_' . $cookie_id, $request->getFields(),  MINUTE_IN_SECONDS );
-        }
-
         if( $response->getRedirect() ) {
             wp_redirect($response->getRedirect());
         }

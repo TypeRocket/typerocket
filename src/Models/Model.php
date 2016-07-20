@@ -2,6 +2,7 @@
 namespace TypeRocket\Models;
 
 use TypeRocket\Fields\Field;
+use TypeRocket\Http\Cookie;
 use TypeRocket\Sanitize;
 
 abstract class Model
@@ -342,10 +343,9 @@ abstract class Model
     }
 
     public function oldStore() {
-        if( !empty($_COOKIE['old_fields_key']) ) {
-            $id = Sanitize::underscore($_COOKIE['old_fields_key']);
-            $this->old = get_transient( 'tr_old_fields_' . $id);
-            setcookie("old_fields_key", "", time() - 36000);
+        if( !empty($_COOKIE['tr_old_fields']) ) {
+            $cookie = new Cookie();
+            $this->old = $cookie->getTransient('tr_old_fields');
         }
     }
 

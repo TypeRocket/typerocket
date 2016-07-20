@@ -12,11 +12,17 @@
     "delete": function(url, data) {
       this.send('DELETE', url, data);
     },
-    send: function(method, url, data) {
+    send: function(method, url, data, trailing) {
+      if (trailing == null) {
+        trailing = true;
+      }
+      if (trailing) {
+        url = this.tools.addTrailingSlash(url);
+      }
       this.tools.ajax({
         method: method,
         data: data,
-        url: this.tools.addTrailingSlash(url)
+        url: url
       });
     },
     tools: {
@@ -82,6 +88,12 @@
       e.preventDefault();
       TypeRocket.lastSubmittedForm = $(this);
       $.typerocketHttp.send('POST', $(this).data('api'), $(this).serialize());
+    });
+    return $('.tr-delete-row-rest-button').on('click', function(e) {
+      e.preventDefault();
+      if (confirm("Confirm Delete.")) {
+        return $.typerocketHttp.send('DELETE', $(this).attr('href'), [], false);
+      }
     });
   });
 

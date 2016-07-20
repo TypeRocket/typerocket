@@ -13,7 +13,7 @@ abstract class PostTypesController extends Controller
     /**
      * Dynamically load proper Model based on post type
      */
-    protected function init()
+    protected function config()
     {
         $reflect    = new \ReflectionClass( $this );
         $type       = substr( $reflect->getShortName(), 0, - 10 );
@@ -55,7 +55,7 @@ abstract class PostTypesController extends Controller
     {
         $errors = $this->model->create( $this->request->getFields() )->getErrors();
 
-        if ( ! empty ( $errors )) {
+        if ( ! empty ( $errors ) ) {
             $this->response->setMessage( $this->type . ' not created' );
             $this->response->setError( 'model', $errors );
             $this->response->setInvalid();

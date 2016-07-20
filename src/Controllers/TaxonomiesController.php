@@ -13,7 +13,7 @@ abstract class TaxonomiesController extends Controller
     /**
      * Dynamically load proper Model based on post type
      */
-    protected function init()
+    protected function config()
     {
         $reflect    = new \ReflectionClass( $this );
         $type       = substr( $reflect->getShortName(), 0, - 10 );

@@ -1,10 +1,17 @@
 <?php
 namespace TypeRocket\Http;
 
-use TypeRocket\Http\Middleware\Controller;
+use TypeRocket\Http\Middleware\Router;
 
 class Kernel
 {
+
+    public $request;
+    public $response;
+
+    /** @var Router */
+    public $router;
+    public $group;
 
     protected $middleware = [
         'hookGlobal' =>
@@ -46,9 +53,13 @@ class Kernel
      *
      * @param Request $request
      * @param Response $response
-     * @param string $type
+     * @param string $group selected middleware group
      */
-    public function __construct(Request $request, Response $response, $type = 'hookGlobal') {
+    public function __construct(Request $request, Response $response, $group = 'hookGlobal') {
+
+        $this->response = $response;
+        $this->request = $request;
+        $this->group = $group;
 
         $resource = strtolower( $request->getResource() );
 
@@ -58,11 +69,8 @@ class Kernel
             $resourceMiddleware = $this->middleware['noResource'];
         }
 
-        $client = new Controller($request, $response);
-
-        $middleware = array_merge($resourceMiddleware, $this->middleware[$type]);
-        $middleware = array_reverse($middleware);
-        $middleware = apply_filters('tr_kernel_middleware', $middleware, $request, $type);
+        $client = $this->router = new Router($request, $response);
+        $middleware = $this->compileMiddleware($resourceMiddleware);
 
         foreach($middleware as $class) {
             $client = new $class($request, $response, $client);
@@ -70,6 +78,26 @@ class Kernel
 
         $client->handle();
 
+    }
+
+    /**
+     * Compile middleware from controller, router and kernel
+     *
+     * @param $middleware
+     *
+     * @return mixed|void
+     */
+    public function compileMiddleware( $middleware ) {
+
+        $routerWare = [];
+        $groups = $this->router->getMiddlewareGroups();
+        foreach( $groups as $group ) {
+            $routerWare[] = $this->middleware[$group];
+        }
+
+        $middleware = array_merge( $middleware, $this->middleware[$this->group], $routerWare);
+        $middleware = array_reverse($middleware);
+        return apply_filters('tr_kernel_middleware', $middleware, $this->request, $this->group);
     }
 
 }

@@ -1,6 +1,8 @@
 <?php
 namespace TypeRocket;
 
+use TypeRocket\Http\Cookie;
+
 class Core
 {
 
@@ -151,10 +153,9 @@ class Core
     public function setFlash() {
         if( !empty($_COOKIE['tr_admin_flash']) ) {
             $classes = 'notice-success';
-            $id   = Sanitize::underscore($_COOKIE['tr_admin_flash']);
-            $data = get_transient('tr_admin_flash_' . $id);
-            delete_transient('tr_admin_flash_' . $id);
-            if ($data['errors']) {
+            $cookie = new Cookie();
+            $data = $cookie->getTransient('tr_admin_flash');
+            if ( ! $data['valid'] ) {
                 $classes = 'notice-error';
             }
             if( !empty($data) ) {

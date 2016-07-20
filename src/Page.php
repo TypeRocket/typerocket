@@ -44,7 +44,7 @@ class Page extends Registrable
         $this->action   = Sanitize::underscore( $action );
         $this->args     = array_merge( [
             'menu' => $this->title,
-            'capability' => 'administrator',
+            'capability' => 'read',
             'position' => 99,
             'view_file' => null,
             'slug' => $this->resource . '_' . $this->action,
@@ -246,7 +246,7 @@ class Page extends Registrable
     }
 
     /**
-     * Show create button
+     * Show new button
      *
      * @param bool $url
      *
@@ -294,7 +294,7 @@ class Page extends Registrable
 
             foreach ($all_pages as $page) {
                 /** @var Page $page */
-                if($page->action == 'create') {
+                if($page->action == 'add') {
                     $url =  $page->getUrl();
                     break;
                 }
@@ -313,11 +313,10 @@ class Page extends Registrable
             if( file_exists($this->args['view_file']) ) {
                 include( $this->args['view_file'] );
             } elseif (file_exists( View::file() )) {
-                extract( View::data()) ;
+                extract( View::data() );
                 include( View::file() );
             } elseif( TR_DEBUG == true ) {
-                $file = View::file();
-                echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by creating: <code>{$file}</code></div>";
+                echo "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add content here by creating or setting a view.</div>";
             }
             echo '</div></div>';
             do_action('tr_page_end_view_' . $this->id, $this);

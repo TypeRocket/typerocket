@@ -17,6 +17,12 @@ abstract class Middleware
     	$this->next = $middleware;
     	$this->request = $request;
     	$this->response = $response;
+        $this->init();
+    }
+
+    public function init() {
+
+        return $this;
     }
 
     abstract public function handle();

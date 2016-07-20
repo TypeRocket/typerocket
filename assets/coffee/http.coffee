@@ -11,11 +11,15 @@ jQuery.typerocketHttp =
   delete: (url, data) ->
     @send 'DELETE', url, data
     return
-  send: (method, url, data) ->
+  send: (method, url, data, trailing = true ) ->
+
+    if trailing
+      url = @tools.addTrailingSlash(url)
+
     @tools.ajax
       method: method
       data: data
-      url: @tools.addTrailingSlash(url)
+      url: url
     return
   tools:
     stripTrailingSlash: (str) ->
@@ -69,4 +73,9 @@ jQuery(document).ready ($) ->
     TypeRocket.lastSubmittedForm = $(this)
     $.typerocketHttp.send 'POST', $(this).data('api'), $(this).serialize()
     return
-  return
+
+  $('.tr-delete-row-rest-button').on 'click', (e) ->
+    e.preventDefault()
+
+    if confirm("Confirm Delete.")
+      $.typerocketHttp.send 'DELETE', $(this).attr('href'), [], false

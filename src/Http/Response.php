@@ -1,8 +1,6 @@
 <?php
 namespace TypeRocket\Http;
 
-use TypeRocket\Sanitize;
-
 /**
  * Class Response
  *
@@ -263,18 +261,52 @@ class Response {
         return $vars;
     }
 
+    /**
+     * @param $data
+     *
+     * @return Response $this
+     */
+    public function with( $data ) {
+
+        if( !empty( $data ) ) {
+            $cookie = new Cookie();
+            $cookie->setTransient('tr_redirect_data', $data);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $fields
+     *
+     * @return Response $this
+     */
+    public function withFields( $fields ) {
+        if( !empty( $fields ) ) {
+            $cookie = new Cookie();
+            $cookie->setTransient('tr_old_fields', $fields);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Response $this
+     */
     public function flashAdminNotice()
     {
         $this->flash = false;
 
-        $cookie_id = Sanitize::underscore(uniqid() . time() . uniqid());
-        setcookie('tr_admin_flash', $cookie_id, time() + 1 * MINUTE_IN_SECONDS, '/', null, isset($_SERVER["HTTPS"]), true);
+        $cookie = new Cookie();
         $data = [
             'errors' => $this->getErrors(),
+            'valid' => $this->getValid(),
             'message' => $this->getMessage(),
         ];
-        set_transient( 'tr_admin_flash_' . $cookie_id, $data, 1 * MINUTE_IN_SECONDS );
 
+        $cookie->setTransient('tr_admin_flash', $data);
+
+        return $this;
     }
 
 }

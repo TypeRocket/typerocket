@@ -2,6 +2,7 @@
 
 namespace TypeRocket\Layout;
 
+use TypeRocket\Config;
 use TypeRocket\Html\Generator;
 use TypeRocket\Models\SchemaModel;
 use TypeRocket\Page;
@@ -83,7 +84,7 @@ class Tables
             $td_row = new Generator();
             $td_row->newElement('tr', ['class' => 'manage-column']);
             foreach($columns as $column => $data ) {
-                $url = '';
+                $show_url = $edit_url = $delete_url = '';
 
                 // get columns if none set
                 if( ! is_string($column) ) {
@@ -95,14 +96,21 @@ class Tables
                 if($this->page instanceof Page && !empty($this->page->pages) ) {
                     foreach ($this->page->pages as $page) {
                         /** @var Page $page */
-                        if( $page->action == 'update' ) {
-                            $url = $page->getUrl( ['item_id' => (int) $result->id] );
-                            break;
+                        if( $page->action == 'edit' ) {
+                            $edit_url = $page->getUrl( ['item_id' => (int) $result->id] );
+                        }
+
+                        if( $page->action == 'show' ) {
+                            $show_url = $page->getUrl( ['item_id' => (int) $result->id] );
+                        }
+
+                        if( $page->action == 'delete' ) {
+                            $delete_url = $page->getUrl( ['item_id' => (int) $result->id] );
                         }
                     }
 
                     if( !empty($data['actions']) ) {
-                        $text = "<strong><a href=\"{$url}\">{$text}</a></strong>";
+                        $text = "<strong><a href=\"{$edit_url}\">{$text}</a></strong>";
                         $text .= "<div class=\"row-actions\">";
                         foreach ( $data['actions'] as $index => $action ) {
 
@@ -112,10 +120,14 @@ class Tables
 
                             switch ($action) {
                                 case 'edit' :
-                                    $text .= "<span class=\"edit\"><a href=\"{$url}\">Edit</a></span>";
+                                    $text .= "<span class=\"edit\"><a href=\"{$edit_url}\">Edit</a></span>";
                                     break;
                                 case 'delete' :
-                                    $text .= "<span class=\"delete\"><a href=\"{$url}\">Delete</a></span>";
+                                    $delete_url = wp_nonce_url($delete_url, 'form_' . Config::getSeed(), '_tr_nonce_form');
+                                    $text .= "<span class=\"delete\"><a class=\"tr-delete-row-rest-button\" href=\"{$delete_url}\">Delete</a></span>";
+                                    break;
+                                case 'view' :
+                                    $text .= "<span class=\"view\"><a href=\"{$show_url}\">View</a></span>";
                             }
                         }
                         $text .= "</div>";

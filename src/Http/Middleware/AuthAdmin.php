@@ -14,7 +14,7 @@ class AuthAdmin extends Middleware
 
     public function handle() {
 
-        if ( ! current_user_can('administrator')) {
+        if ( ! current_user_can('administrator') ) {
             $this->response->setInvalid();
             $this->response->setError( 'auth', false );
             $this->response->setStatus(401);

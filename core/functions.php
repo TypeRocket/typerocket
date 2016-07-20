@@ -114,8 +114,10 @@ function tr_resource_pages( $singular, $plural = null, array $settings = [] ) {
     }
 
     return tr_page($plural, 'index', $plural, $settings)->apply(
-        tr_page($plural, 'update', 'Edit ' . $singular )->useController()->addNewButton()->removeMenu(),
-        tr_page($plural, 'create', 'Add ' . $singular )->useController()->setArgument('menu', 'Add New')
+        tr_page($plural, 'edit', 'Edit ' . $singular )->useController()->addNewButton()->removeMenu(),
+        tr_page($plural, 'show', $singular )->useController()->addNewButton()->removeMenu(),
+        tr_page($plural, 'delete', 'Delete ' . $singular )->useController()->removeMenu(),
+        tr_page($plural, 'add', 'Add ' . $singular )->useController()->setArgument('menu', 'Add New')
     )->addNewButton()->useController();
 }
 
@@ -336,4 +338,18 @@ function tr_is_json( $string ) {
 function tr_frontend() {
     $core = new TypeRocket\Core(false);
     $core->initFrontEnd();
+}
+
+/**
+ * @return \TypeRocket\Http\Redirect
+ */
+function tr_redirect() {
+    return new \TypeRocket\Http\Redirect();
+}
+
+/**
+ * @return \TypeRocket\Http\Cookie
+ */
+function tr_cookie() {
+    return new \TypeRocket\Http\Cookie();
 }
