@@ -85,9 +85,11 @@
       $.typerocketHttp.send('POST', $(this).attr('action'), $(this).serialize());
     });
     return $('.tr-delete-row-rest-button').on('click', function(e) {
-      var data;
+      var data, target;
       e.preventDefault();
       if (confirm("Confirm Delete.")) {
+        target = $(this).data('target');
+        $(target).slideUp(1200, function() {});
         data = {
           _tr_ajax_request: '1',
           _method: 'DELETE'

@@ -80,64 +80,72 @@ class Tables
         $head->appendInside($th_row);
         $foot->appendInside($th_row);
 
-        foreach ( $results as $result ) {
-            $td_row = new Generator();
-            $td_row->newElement('tr', ['class' => 'manage-column']);
-            foreach($columns as $column => $data ) {
-                $show_url = $edit_url = $delete_url = '';
+        if( !empty($results)) {
+            foreach ($results as $result) {
+                $td_row = new Generator();
+                $row_id = 'result-row-' . $result->id;
+                $td_row->newElement('tr', ['class' => 'manage-column', 'id' => $row_id]);
+                foreach ($columns as $column => $data) {
+                    $show_url = $edit_url = $delete_url = '';
 
-                // get columns if none set
-                if( ! is_string($column) ) {
-                    $column = $data;
-                }
+                    // get columns if none set
+                    if ( ! is_string($column)) {
+                        $column = $data;
+                    }
 
-                $text = $result->$column;
+                    $text = $result->$column;
 
-                if($this->page instanceof Page && !empty($this->page->pages) ) {
-                    foreach ($this->page->pages as $page) {
-                        /** @var Page $page */
-                        if( $page->action == 'edit' ) {
-                            $edit_url = $page->getUrl( ['item_id' => (int) $result->id] );
+                    if ($this->page instanceof Page && ! empty($this->page->pages)) {
+                        foreach ($this->page->pages as $page) {
+                            /** @var Page $page */
+                            if ($page->action == 'edit') {
+                                $edit_url = $page->getUrl(['item_id' => (int)$result->id]);
+                            }
+
+                            if ($page->action == 'show') {
+                                $show_url = $page->getUrl(['item_id' => (int)$result->id]);
+                            }
+
+                            if ($page->action == 'delete') {
+                                $delete_url = $page->getUrl(['item_id' => (int)$result->id]);
+                            }
                         }
 
-                        if( $page->action == 'show' ) {
-                            $show_url = $page->getUrl( ['item_id' => (int) $result->id] );
-                        }
+                        if ( ! empty($data['actions'])) {
+                            $text = "<strong><a href=\"{$edit_url}\">{$text}</a></strong>";
+                            $text .= "<div class=\"row-actions\">";
+                            foreach ($data['actions'] as $index => $action) {
 
-                        if( $page->action == 'delete' ) {
-                            $delete_url = $page->getUrl( ['item_id' => (int) $result->id] );
+                                if ($index > 0) {
+                                    $text .= ' | ';
+                                }
+
+                                switch ($action) {
+                                    case 'edit' :
+                                        $text .= "<span class=\"edit\"><a href=\"{$edit_url}\">Edit</a></span>";
+                                        break;
+                                    case 'delete' :
+                                        $delete_url = wp_nonce_url($delete_url, 'form_' . Config::getSeed(),
+                                            '_tr_nonce_form');
+                                        $text .= "<span class=\"delete\"><a data-target=\"#{$row_id}\" class=\"tr-delete-row-rest-button\" href=\"{$delete_url}\">Delete</a></span>";
+                                        break;
+                                    case 'view' :
+                                        $text .= "<span class=\"view\"><a href=\"{$show_url}\">View</a></span>";
+                                }
+                            }
+                            $text .= "</div>";
                         }
                     }
 
-                    if( !empty($data['actions']) ) {
-                        $text = "<strong><a href=\"{$edit_url}\">{$text}</a></strong>";
-                        $text .= "<div class=\"row-actions\">";
-                        foreach ( $data['actions'] as $index => $action ) {
-
-                            if($index > 0 ) {
-                                $text .= ' | ';
-                            }
-
-                            switch ($action) {
-                                case 'edit' :
-                                    $text .= "<span class=\"edit\"><a href=\"{$edit_url}\">Edit</a></span>";
-                                    break;
-                                case 'delete' :
-                                    $delete_url = wp_nonce_url($delete_url, 'form_' . Config::getSeed(), '_tr_nonce_form');
-                                    $text .= "<span class=\"delete\"><a class=\"tr-delete-row-rest-button\" href=\"{$delete_url}\">Delete</a></span>";
-                                    break;
-                                case 'view' :
-                                    $text .= "<span class=\"view\"><a href=\"{$show_url}\">View</a></span>";
-                            }
-                        }
-                        $text .= "</div>";
-                    }
+                    $td = new Generator();
+                    $td->newElement('td', [], $text);
+                    $td_row->appendInside($td);
                 }
-
-                $td = new Generator();
-                $td->newElement('td', [], $text);
-                $td_row->appendInside($td);
+                $body->appendInside($td_row);
             }
+        } else {
+            $td_row = new Generator();
+            $td_row->newElement('tr', [], '<td>No results.</td>');
             $body->appendInside($td_row);
         }
 
