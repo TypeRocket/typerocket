@@ -16,6 +16,8 @@ jQuery.typerocketHttp =
     if trailing
       url = @tools.addTrailingSlash(url)
 
+    console.log url
+
     @tools.ajax
       method: method
       data: data
@@ -27,9 +29,10 @@ jQuery.typerocketHttp =
         return str.substr(0, str.length - 1)
       str
     addTrailingSlash: (str) ->
-      if str.substr(-1) != '/'
-        str = str + '/'
+      if ! str.indexOf('.php')
+        return str.replace(/\/?(\?|#|$)/, '/$1')
       str
+
     ajax: (obj) ->
       tools = this
       settings =

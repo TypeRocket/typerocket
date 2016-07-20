@@ -19,6 +19,7 @@
       if (trailing) {
         url = this.tools.addTrailingSlash(url);
       }
+      console.log(url);
       this.tools.ajax({
         method: method,
         data: data,
@@ -33,8 +34,8 @@
         return str;
       },
       addTrailingSlash: function(str) {
-        if (str.substr(-1) !== '/') {
-          str = str + '/';
+        if (!str.indexOf('.php')) {
+          return str.replace(/\/?(\?|#|$)/, '/$1');
         }
         return str;
       },
