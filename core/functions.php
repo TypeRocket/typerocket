@@ -355,8 +355,11 @@ function tr_cookie() {
 }
 
 /**
- * @return \TypeRocket\Http\Cookie
+ * @param $dots
+ * @param array $data
+ *
+ * @return \TypeRocket\View
  */
-function tr_view() {
-    return new \TypeRocket\View();
+function tr_view( $dots , array $data = [] ) {
+    return new \TypeRocket\View( $dots, $data );
 }

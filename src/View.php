@@ -12,8 +12,7 @@ class View
         $dots = explode('.', $dots);
 
         self::$file = Config::getPaths()['views'] . '/' . implode('/', $dots) . '.php';
-
-        return self::$data = $data;
+        self::$data = $data;
     }
 
     public function file() {
