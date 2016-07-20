@@ -40,6 +40,7 @@ class PostsResponder extends Responder
 
         $request  = new Request( $resource, 'PUT', $postId, 'update' );
         $response = new Response();
+        $response->blockFlash();
 
         $this->runKernel($request, $response);
 

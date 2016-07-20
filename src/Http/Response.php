@@ -19,6 +19,7 @@ class Response {
     private $redirect = false;
     private $status = 200;
     private $flash = true;
+    private $block_flash = false;
     private $errors = [];
     private $data = [];
 
@@ -227,6 +228,17 @@ class Response {
     }
 
     /**
+     * Block Flash
+     *
+     * Block the flashing no matter what.
+     *
+     * @return bool
+     */
+    public function blockFlash() {
+        return $this->block_flash = true;
+    }
+
+    /**
      * Get Response Properties
      *
      * Return the private properties that make up the response
@@ -275,18 +287,20 @@ class Response {
      */
     public function flashNotice($message, $type = 'success')
     {
-        $this->flash = true;
-        $this->message = $message;
-        $this->message_type = strtolower($type);
+        if( ! $this->block_flash ) {
+            $this->flash = true;
+            $this->message = $message;
+            $this->message_type = strtolower($type);
 
-        $cookie = new Cookie();
-        $data = [
-            'type' => $this->message_type,
-            'message' => $message,
-        ];
+            $cookie = new Cookie();
+            $data = [
+                'type' => $this->message_type,
+                'message' => $message,
+            ];
 
-        if(empty($_POST['_tr_ajax_request'])) {
-            $cookie->setTransient('tr_admin_flash', $data);
+            if(empty($_POST['_tr_ajax_request'])) {
+                $cookie->setTransient('tr_admin_flash', $data);
+            }
         }
 
         return $this;

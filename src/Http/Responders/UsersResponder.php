@@ -17,6 +17,7 @@ class UsersResponder extends Responder {
 
         $request = new Request('users', 'PUT', $userId, 'update');
         $response = new Response();
+        $response->blockFlash();
 
         $this->runKernel($request, $response);
     }

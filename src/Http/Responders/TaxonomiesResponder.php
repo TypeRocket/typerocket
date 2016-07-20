@@ -37,6 +37,7 @@ class TaxonomiesResponder extends Responder
 
         $request  = new Request( $resource, 'PUT', $id, 'update' );
         $response = new Response();
+        $response->blockFlash();
 
         $this->runKernel($request, $response);
 

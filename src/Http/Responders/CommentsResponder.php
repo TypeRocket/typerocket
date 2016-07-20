@@ -17,6 +17,7 @@ class CommentsResponder extends Responder {
 
         $request = new Request('comments', 'PUT', $commentId, 'update');
         $response = new Response();
+        $response->blockFlash();
 
         $this->runKernel($request, $response);
 
