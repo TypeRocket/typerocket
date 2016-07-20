@@ -4,7 +4,6 @@ namespace TypeRocket\Http\Responders;
 use TypeRocket\Http\Redirect;
 use \TypeRocket\Http\Request,
     \TypeRocket\Http\Response;
-use TypeRocket\Sanitize;
 use TypeRocket\View;
 
 class ResourceResponder extends Responder

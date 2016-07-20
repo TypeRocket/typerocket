@@ -84,10 +84,10 @@
   };
 
   jQuery(document).ready(function($) {
-    $('form.typerocket-rest-form').on('submit', function(e) {
+    $('form.typerocket-ajax-form').on('submit', function(e) {
       e.preventDefault();
       TypeRocket.lastSubmittedForm = $(this);
-      $.typerocketHttp.send('POST', $(this).data('api'), $(this).serialize());
+      $.typerocketHttp.send('POST', $(this).attr('action'), $(this).serialize());
     });
     return $('.tr-delete-row-rest-button').on('click', function(e) {
       e.preventDefault();

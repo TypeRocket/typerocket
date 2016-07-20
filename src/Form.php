@@ -19,7 +19,8 @@ class Form
     private $currentField = '';
 
     private $debugStatus = null;
-    private $useRest = false;
+    private $useAjax = false;
+    private $form_url;
 
     /**
      * Instance the From
@@ -111,13 +112,47 @@ class Form
     }
 
     /**
+     * Use Ajax
+     *
+     * @return $this
+     */
+    public function useAjax() {
+        $this->useAjax = true;
+
+        return $this;
+    }
+
+    /**
      * Use TypeRocket Rest to submit form
      *
      * @return $this
      */
     public function useRest()
     {
-        $this->useRest = true;
+        $scheme = is_ssl() ? 'https' : 'http';
+        $this->form_url = home_url('/', $scheme ) . 'typerocket_rest_api/v1/' . $this->resource . '/' . $this->itemId;
+
+        return $this;
+    }
+
+    /**
+     * Use TypeRocket Rest to submit form
+     *
+     * @return $this
+     */
+    public function useResource()
+    {
+        $params = [];
+
+        if($this->itemId) {
+            $params = ['item_id' => $this->itemId];
+        }
+
+        $query = http_build_query( array_merge(
+            [ 'page' => $this->resource . '_' . $this->action ],
+            $params
+        ) );
+        $this->form_url = admin_url() . 'admin.php?' . $query;
 
         return $this;
     }
@@ -178,6 +213,7 @@ class Form
                 $method = 'PUT';
                 break;
             case 'create' :
+            case 'add' :
                 $method = 'POST';
                 break;
             default :
@@ -185,23 +221,19 @@ class Form
                 break;
         }
 
-        $rest     = [];
+        $ajax     = [];
         $defaults = [
-            'action'      => $_SERVER['REQUEST_URI'],
+            'action'      => $this->form_url ? $this->form_url : $_SERVER['REQUEST_URI'],
             'method'      => 'POST'
         ];
 
-        if ($this->useRest == true) {
-
-            $scheme = is_ssl() ? 'https' : 'http';
-
-            $rest = [
-                'class'    => 'typerocket-rest-form',
-                'data-api' => home_url('/', $scheme ) . 'typerocket_rest_api/v1/' . $this->resource . '/' . $this->itemId
+        if ($this->useAjax == true) {
+            $ajax = [
+                'class'    => 'typerocket-ajax-form'
             ];
         }
 
-        $attr = array_merge( $defaults, $attr, $rest );
+        $attr = array_merge( $defaults, $attr, $ajax );
 
         $form      = new Tag( 'form', $attr );
         $generator = new Generator();

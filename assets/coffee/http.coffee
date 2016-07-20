@@ -68,10 +68,10 @@ jQuery.typerocketHttp =
         )
       return
 jQuery(document).ready ($) ->
-  $('form.typerocket-rest-form').on 'submit', (e) ->
+  $('form.typerocket-ajax-form').on 'submit', (e) ->
     e.preventDefault()
     TypeRocket.lastSubmittedForm = $(this)
-    $.typerocketHttp.send 'POST', $(this).data('api'), $(this).serialize()
+    $.typerocketHttp.send 'POST', $(this).attr('action'), $(this).serialize()
     return
 
   $('.tr-delete-row-rest-button').on 'click', (e) ->
