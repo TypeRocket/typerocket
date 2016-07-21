@@ -20,13 +20,10 @@ class ResourceResponder extends Responder
      */
     public function respond( $id )
     {
-        $method = isset( $_SERVER['REQUEST_METHOD'] ) ? $_SERVER['REQUEST_METHOD'] : 'GET';
-        $method = ( isset( $_POST['_method'] ) ) ? $_POST['_method'] : $method;
-
-        $request  = new Request( $this->resource, $method, $id, $this->action );
+        $request  = new Request( $this->resource, null, $id, $this->action );
         $response = new Response();
 
-        $this->runKernel($request, $response, 'pageGlobal');
+        $this->runKernel($request, $response, 'resourceGlobal');
         $returned = $this->kernel->router->returned;
 
         if( $returned && empty($_POST['_tr_ajax_request']) ) {

@@ -156,6 +156,9 @@ class Form
             case 'update' :
                 $action = 'edit';
                 break;
+            case 'destroy' :
+                $action = 'delete';
+                break;
         }
 
         $query = http_build_query( array_merge(
@@ -226,6 +229,9 @@ class Form
                 break;
             case 'create' :
                 $method = 'POST';
+                break;
+            case 'destroy' :
+                $method = 'DELETE';
                 break;
             default :
                 $method = 'PUT';

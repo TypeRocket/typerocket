@@ -15,7 +15,7 @@ abstract class Field
 
     /** @var Form */
     private $form = null;
-    private $prefix = null;
+    private $prefix = 'tr';
     private $helper = null;
     private $label = false;
 
@@ -277,11 +277,6 @@ abstract class Field
      */
     public function getNameAttributeString()
     {
-
-        if (empty( $this->prefix )) {
-            $this->setPrefix();
-        }
-
         return $this->prefix .$this->getBrackets();
     }
 
@@ -393,21 +388,6 @@ abstract class Field
     function getLabelOption()
     {
         return $this->label;
-    }
-
-    /**
-     * Set the prefix that goes before the brackets when setting
-     * the initial name attribute.
-     *
-     * @param string $prefix set to tr by default
-     *
-     * @return $this
-     */
-    public function setPrefix( $prefix = 'tr' )
-    {
-        $this->prefix = (string) $prefix;
-
-        return $this;
     }
 
     /**

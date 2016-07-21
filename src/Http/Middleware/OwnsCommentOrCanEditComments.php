@@ -15,9 +15,10 @@ class OwnsCommentOrCanEditComments extends Middleware
     public function handle() {
 
         $currentUser = wp_get_current_user();
-        $comment = get_comment( $this->request->getResourceId() );
+        $item_id = $this->request->getResourceId();
+        $comment = get_comment( $item_id );
 
-        if ($comment->user_id != $currentUser->ID && ! current_user_can( 'edit_comment' )) {
+        if ( empty($comment->user_id) || ( ! empty($comment->user_id) && $comment->user_id != $currentUser->ID && ! current_user_can( 'edit_comment' ) ) ) {
             $this->response->setError( 'auth', false );
             $this->response->flashNotice( "Sorry, you don't have enough rights.", 'error' );
             $this->response->exit(401);

@@ -295,7 +295,7 @@ class Response {
             $cookie = new Cookie();
             $data = [
                 'type' => $this->message_type,
-                'message' => $message,
+                'message' => $this->message,
             ];
 
             if(empty($_POST['_tr_ajax_request'])) {

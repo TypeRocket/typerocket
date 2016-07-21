@@ -38,7 +38,7 @@ abstract class ResourceController extends Controller
     abstract function index();
 
     /**
-     * Delete
+     * The delete page
      *
      * @param $id
      *
@@ -47,7 +47,9 @@ abstract class ResourceController extends Controller
     abstract function delete($id);
 
     /**
-     * Delete
+     * Destroy item
+     *
+     * AJAX requests and normal requests can be made to this action
      *
      * @param $id
      *

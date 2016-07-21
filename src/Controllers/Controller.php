@@ -78,8 +78,24 @@ abstract class Controller
         return $this;
     }
 
+    /**
+     * Update item
+     *
+     * AJAX requests and normal requests can be made to this action
+     *
+     * @param $id
+     *
+     * @return mixed
+     */
     abstract function update( $id );
 
+    /**
+     * Create item
+     *
+     * AJAX requests and normal requests can be made to this action
+     *
+     * @return mixed
+     */
     abstract function create();
 
 }

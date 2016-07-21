@@ -23,33 +23,18 @@ class Request
      * @param int $id the resource ID
      * @param string $action
      */
-    public function __construct( $resource, $method, $id, $action = 'auto' )
+    public function __construct( $resource = null, $method = null, $id = null, $action = 'auto' )
     {
-        $this->setResource( $resource );
-        $this->setMethod( $method );
-        $this->setResourceId( $id );
-        $this->setAction( $action );
+        $this->resource = $resource;
+        $this->method = $method ? $method : $this->getFormMethod();
+        $this->id = $id;
+        $this->action = $action;
         $this->uri    = $_SERVER['REQUEST_URI'];
         $this->host   = $_SERVER['HTTP_HOST'];
         $this->fields = ! empty ( $_POST['tr'] ) ? $_POST['tr'] : [];
         $this->post   = ! empty ( $_POST ) ? $_POST : null;
         $this->get    = ! empty ( $_GET ) ? $_GET : null;
         $this->files  = ! empty ( $_FILES ) ? $_FILES : null;
-
-    }
-
-    /**
-     * Set the method
-     *
-     * @param $action
-     *
-     * @return $this
-     */
-    private function setAction( $action )
-    {
-        $this->action = strtolower( $action );
-
-        return $this;
     }
 
     /**
@@ -63,20 +48,6 @@ class Request
     }
 
     /**
-     * Set the method
-     *
-     * @param $method
-     *
-     * @return $this
-     */
-    private function setMethod( $method )
-    {
-        $this->method = strtoupper( $method );
-
-        return $this;
-    }
-
-    /**
      * Get the method
      *
      * @return null
@@ -87,17 +58,14 @@ class Request
     }
 
     /**
-     * Set the resource
+     * Get the form method
      *
-     * @param $resource
-     *
-     * @return $this
+     * @return string POST|DELETE|PUT|GET
      */
-    private function setResource( $resource )
+    public function getFormMethod()
     {
-        $this->resource = ucfirst( $resource );
-
-        return $this;
+        $method = isset( $_SERVER['REQUEST_METHOD'] ) ? $_SERVER['REQUEST_METHOD'] : 'GET';
+        return ( isset( $_POST['_method'] ) ) ? $_POST['_method'] : $method;
     }
 
     /**
@@ -108,20 +76,6 @@ class Request
     public function getResource()
     {
         return $this->resource;
-    }
-
-    /**
-     * Set the resource ID
-     *
-     * @param $id
-     *
-     * @return $this
-     */
-    private function setResourceId( $id )
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**

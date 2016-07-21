@@ -16,12 +16,7 @@ class Kernel
     protected $middleware = [
         'hookGlobal' =>
             [ Middleware\AuthRead::class ],
-        'apiGlobal' =>
-            [
-                Middleware\AuthRead::class,
-                Middleware\ValidateCsrf::class
-            ],
-        'pageGlobal' =>
+        'resourceGlobal' =>
             [
                 Middleware\AuthRead::class,
                 Middleware\ValidateCsrf::class
@@ -93,6 +88,10 @@ class Kernel
         $groups = $this->router->getMiddlewareGroups();
         foreach( $groups as $group ) {
             $routerWare[] = $this->middleware[$group];
+        }
+
+        if( !empty($routerWare) ) {
+            $routerWare = call_user_func_array('array_merge', $routerWare);
         }
 
         $middleware = array_merge( $middleware, $this->middleware[$this->group], $routerWare);

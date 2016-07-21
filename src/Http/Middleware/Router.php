@@ -34,8 +34,7 @@ class Router extends Middleware
 
             if ( ! $controller instanceof Controller || ! method_exists( $controller, $this->action ) ) {
                 $this->response->setError( 'controller', 'Routing error');
-                $this->response->setStatus(405);
-                $this->response->setInvalid();
+                $this->response->exit(405);
             } else {
                 $this->item_id    = $this->request->getResourceId();
                 $this->middleware = $this->controller->getMiddleware();
@@ -58,6 +57,10 @@ class Router extends Middleware
             if (array_key_exists('group', $group)) {
                 $use = null;
 
+                if( ! array_key_exists('except', $group) && ! array_key_exists('only', $group) ) {
+                    $use = $group['group'];
+                }
+
                 if (array_key_exists('except', $group) && ! in_array($this->action, $group['except'])) {
                     $use = $group['group'];
                 }
@@ -66,7 +69,9 @@ class Router extends Middleware
                     $use = $group['group'];
                 }
 
-                $groups[] = $use;
+                if($use) {
+                    $groups[] = $use;
+                }
             }
         }
 
