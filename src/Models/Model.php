@@ -433,10 +433,10 @@ abstract class Model
 
         if(!isset($indies)) {
             if( is_callable($fn) ) {
-                $loc = $fn($loc);
+                $loc = call_user_func($fn, $loc);
             } elseif( is_callable('\\TypeRocket\\Sanitize::' . $fn ) ) {
                 $fn = '\\TypeRocket\\Sanitize::' . $fn;
-                $loc = $fn($loc);
+                $loc = call_user_func($fn, $loc);
             }
         }
 
