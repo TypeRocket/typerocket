@@ -13,7 +13,7 @@ abstract class PostTypesController extends Controller
     /**
      * Dynamically load proper Model based on post type
      */
-    protected function config()
+    protected function init()
     {
         $reflect    = new \ReflectionClass( $this );
         $type       = substr( $reflect->getShortName(), 0, - 10 );
@@ -40,10 +40,10 @@ abstract class PostTypesController extends Controller
         $errors = $this->model->findById( $id )->update( $this->request->getFields() )->getErrors();
 
         if ( ! empty ( $errors )) {
-            $this->response->flashNotice( $this->type . ' not updated', 'success' );
+            $this->response->flashNext($this->type . ' not updated', 'success' );
             $this->response->setError( 'model', $errors );
         } else {
-            $this->response->flashNotice( $this->type . ' updated', 'success' );
+            $this->response->flashNext($this->type . ' updated', 'success' );
             $this->response->setData('resourceId', $this->model->getId());
         }
 
@@ -57,10 +57,10 @@ abstract class PostTypesController extends Controller
         $errors = $this->model->create( $this->request->getFields() )->getErrors();
 
         if ( ! empty ( $errors ) ) {
-            $this->response->flashNotice( $this->type . ' not created', 'error' );
+            $this->response->flashNext($this->type . ' not created', 'error' );
             $this->response->setError( 'model', $errors );
         } else {
-            $this->response->flashNotice( $this->type . ' created', 'success' );
+            $this->response->flashNext($this->type . ' created', 'success' );
             $this->response->setStatus(201);
             $this->response->setData('resourceId', $this->model->getId());
         }

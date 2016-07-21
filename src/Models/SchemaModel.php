@@ -220,6 +220,18 @@ class SchemaModel extends Model
     }
 
     /**
+     * Count results
+     *
+     * @return array|bool|false|int|null|object
+     */
+    public function count()
+    {
+        $this->query['count'] = true;
+
+        return $this->runQuery();
+    }
+
+    /**
      * Get base field value
      *
      * Some fields need to be saved as serialized arrays. Getting
@@ -325,8 +337,10 @@ class SchemaModel extends Model
             $order_direction = $query['order_by']['direction'] == 'ASC' ? 'ASC' : 'DESC';
             $sql_order .= " ORDER BY {$order_column} {$order_direction}";
         }
-
-        if( array_key_exists('select', $query) ) {
+        if( array_key_exists('count', $query) ) {
+            $sql = 'SELECT COUNT(*) FROM '. $table . $sql_where . $sql_order . $sql_limit;
+            $result = $wpdb->get_var( $sql );
+        } elseif( array_key_exists('select', $query) ) {
             $sql = 'SELECT * FROM '. $table . $sql_where . $sql_order . $sql_limit;
             $result = $wpdb->get_results( $sql );
 

@@ -1,6 +1,8 @@
 <?php
 namespace TypeRocket\Http;
 
+use TypeRocket\Layout\Notice;
+
 /**
  * Class Response
  *
@@ -285,7 +287,7 @@ class Response {
      *
      * @return \TypeRocket\Http\Response $this
      */
-    public function flashNotice($message, $type = 'success')
+    public function flashNext($message, $type = 'success')
     {
         if( ! $this->block_flash ) {
             $this->flash = true;
@@ -301,6 +303,26 @@ class Response {
             if(empty($_POST['_tr_ajax_request'])) {
                 $cookie->setTransient('tr_admin_flash', $data);
             }
+        }
+
+        return $this;
+    }
+
+    public function flashNow($message, $type)
+    {
+        if( ! $this->block_flash ) {
+            $this->flash = true;
+            $this->message = $message;
+            $this->message_type = strtolower($type);
+
+            $data = [
+                'type' => $this->message_type,
+                'message' => $this->message,
+            ];
+
+            add_action( 'admin_notices', \Closure::bind(function() use ($data) {
+                Notice::dismissible($data);
+            }, $this));
         }
 
         return $this;

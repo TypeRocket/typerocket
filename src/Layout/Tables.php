@@ -11,13 +11,37 @@ class Tables
 {
     public $results;
     public $columns;
+    public $count;
     public $model;
+
+    /** @var null|Page  */
     public $page = null;
+    public $paged = 1;
+    public $limit = 2;
+    public $offset = 0;
     public $settings = ['update_column' => 'id'];
 
     public function __construct( SchemaModel $model )
     {
-        $this->model = $model;
+        $this->model = clone $model;
+        $this->count = $model->findAll()->count();
+        $this->paged = !empty($_GET['paged']) ? (int) $_GET['paged'] : 1;
+
+        $this->offset = ( $this->paged - 1 ) * $this->limit;
+    }
+
+    /**
+     * Set table limit
+     *
+     * @param $limit
+     *
+     * @return $this
+     */
+    public function setLimit( $limit ) {
+        $this->limit = (int) $limit;
+        $this->offset = ( $this->paged - 1 ) * $this->limit;
+
+        return $this;
     }
 
     /**
@@ -46,9 +70,9 @@ class Tables
     /**
      * Render table
      */
-    public function render()
+    public function table()
     {
-        $results = $this->model->findAll()->get();
+        $results = $this->model->findAll()->take($this->limit, $this->offset)->get();
         $columns = $this->columns;
         $table = new Generator();
         $head = new Generator();
@@ -155,6 +179,40 @@ class Tables
 
         echo $table;
 
+    }
+
+    public function pagination()
+    {
+        $pages = ceil($this->count / $this->limit);
+        $item_word = 'items';
+
+        if($this->count < 2) {
+            $item_word = 'item';
+        }
+
+        $page = $this->paged;
+        $previous_page = $this->paged - 1;
+        $next_page = $this->paged + 1;
+
+        $next = $this->page->getUrl(['paged' => (int) $next_page]);
+        $prev = $this->page->getUrl(['paged' => (int) $previous_page]);
+
+        echo "<div class=\"tablenav bottom\">";
+        echo "<div class=\"tablenav-pages\">
+        <span class=\"displaying-num\">{$this->count} {$item_word}</span>
+        <span class=\"pagination-links\">";
+        if( $page < 2 ) {
+            echo "<span class=\"tablenav-pages-navspan\" aria-hidden=\"true\">&lsaquo;</span>";
+        } else {
+            echo "<a class=\"prev-page\" href=\"{$prev}\" aria-hidden=\"true\">&lsaquo;</a>";
+        }
+        echo " <span id=\"table-paging\" class=\"paging-input\">{$page} of <span class=\"total-pages\">{$pages}</span></span> ";
+        if( $page < $pages ) {
+            echo "<a class=\"next-page\" href=\"{$next}\"><span class=\"screen-reader-text\">Next page</span><span aria-hidden=\"true\">&rsaquo;</span></a>";
+        } else {
+            echo "<span class=\"tablenav-pages-navspan\" aria-hidden=\"true\">&rsaquo;</span>";
+        }
+        echo "</span></div></div>";
     }
 
 }

@@ -28,14 +28,14 @@ abstract class Controller
     {
         $this->response = $response;
         $this->request  = $request;
-        $this->config();
         $this->init();
+        $this->routing();
     }
 
     /**
      * @return $this
      */
-    protected function config()
+    protected function init()
     {
         return $this;
     }
@@ -43,7 +43,7 @@ abstract class Controller
     /**
      * @return $this
      */
-    protected function init()
+    protected function routing()
     {
         return $this;
     }

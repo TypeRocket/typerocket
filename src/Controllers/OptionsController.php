@@ -10,6 +10,8 @@ class OptionsController extends Controller
      * Update option
      *
      * @param $id
+     *
+     * @return mixed|void
      */
     public function update( $id )
     {
@@ -17,10 +19,10 @@ class OptionsController extends Controller
         $errors  = $options->create( $this->request->getFields() )->getErrors();
 
         if ( ! empty ( $errors )) {
-            $this->response->flashNotice( 'Options not updated', 'error' );
+            $this->response->flashNext( 'Options not updated', 'error' );
             $this->response->setError( 'model', $errors );
         } else {
-            $this->response->flashNotice( 'Updated', 'success' );
+            $this->response->flashNext( 'Updated', 'success' );
         }
 
     }
@@ -34,10 +36,10 @@ class OptionsController extends Controller
         $errors  = $options->create( $this->request->getFields() )->getErrors();
 
         if ( ! empty( $errors ) ) {
-            $this->response->flashNotice( 'Options not created', 'error' );
+            $this->response->flashNext( 'Options not created', 'error' );
             $this->response->setError( 'model', $errors );
         } else {
-            $this->response->flashNotice( 'Options created', 'success' );
+            $this->response->flashNext( 'Options created', 'success' );
         }
 
     }

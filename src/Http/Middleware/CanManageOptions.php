@@ -16,7 +16,7 @@ class CanManageOptions extends Middleware
 
         if ( ! current_user_can( 'manage_options' )) {
             $this->response->setError( 'auth', false );
-            $this->response->flashNotice( "Sorry, you don't have enough rights.", 'error' );
+            $this->response->flashNow( "Sorry, you don't have enough rights.", 'error' );
             $this->response->exit(401);
         }
 

@@ -2,6 +2,7 @@
 namespace TypeRocket;
 
 use TypeRocket\Http\Cookie;
+use TypeRocket\Layout\Notice;
 
 class Core
 {
@@ -154,14 +155,7 @@ class Core
         if( !empty($_COOKIE['tr_admin_flash']) ) {
             $cookie = new Cookie();
             $data = $cookie->getTransient('tr_admin_flash');
-            $classes = 'notice-' . $data['type'];
-            if( !empty($data) ) {
-                ?>
-                <div class="notice tr-admin-notice <?php echo $classes; ?> is-dismissible">
-                    <p><?php echo $data['message']; ?></p>
-                </div>
-                <?php
-            }
+            Notice::dismissible($data);
         }
     }
 

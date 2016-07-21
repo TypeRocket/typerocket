@@ -10,6 +10,8 @@ class UsersController extends Controller
      * Update user by ID
      *
      * @param null $id
+     *
+     * @return mixed|void
      */
     public function update( $id = null )
     {
@@ -17,10 +19,10 @@ class UsersController extends Controller
         $errors = $user->findById( $id )->update( $this->request->getFields() )->getErrors();
 
         if ( ! empty ( $errors )) {
-            $this->response->flashNotice( 'User not updated', 'error' );
+            $this->response->flashNext( 'User not updated', 'error' );
             $this->response->setError( 'model', $errors );
         } else {
-            $this->response->flashNotice( 'User updated', 'success' );
+            $this->response->flashNext( 'User updated', 'success' );
             $this->response->setData('resourceId', $user->getId());
         }
     }
@@ -34,10 +36,10 @@ class UsersController extends Controller
         $errors = $user->create( $this->request->getFields() )->getErrors();
 
         if ( ! empty ( $errors )) {
-            $this->response->flashNotice( 'User not created', 'error' );
+            $this->response->flashNext( 'User not created', 'error' );
             $this->response->setError( 'model', $errors );
         } else {
-            $this->response->flashNotice( 'User created', 'success' );
+            $this->response->flashNext( 'User created', 'success' );
             $this->response->setStatus(201);
             $this->response->setData('resourceId', $user->getId());
         }

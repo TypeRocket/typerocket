@@ -19,7 +19,7 @@ class OwnsPostOrCanEditPosts extends Middleware
 
         if ($post->post_author != $currentUser->ID && ! current_user_can( 'edit_posts' )) {
             $this->response->setError( 'auth', false );
-            $this->response->flashNotice( "Sorry, you don't have enough rights.", 'error' );
+            $this->response->flashNow( "Sorry, you don't have enough rights.", 'error' );
             $this->response->exit(401);
         }
 
