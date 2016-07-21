@@ -13,6 +13,7 @@ class Tables
     public $columns;
     public $count;
     public $model;
+    public $primary = 'id';
 
     /** @var null|Page  */
     public $page = null;
@@ -46,12 +47,14 @@ class Tables
     }
 
     /**
+     * @param $primary
      * @param array $columns
      *
-     * @return Tables
+     * @return \TypeRocket\Layout\Tables
      */
-    public function setColumns( array $columns)
+    public function setColumns( $primary, array $columns)
     {
+        $this->primary = $primary;
         $this->columns = $columns;
 
         return $this;
@@ -93,11 +96,15 @@ class Tables
         $th_row->newElement('tr', ['class' => 'manage-column']);
         foreach ( $columns as $column => $data ) {
             $th = new Generator();
+            $classes = null;
+            if($this->primary == $column) {
+                $classes = 'column-primary';
+            }
 
             if( ! is_string($column) ) {
-                $th->newElement('th', [], ucfirst($data));
+                $th->newElement('th', ['class' => $classes], ucfirst($data));
             } else {
-                $th->newElement('th', [], $data['label']);
+                $th->newElement('th', ['class' => $classes], $data['label']);
             }
 
             $th_row->appendInside($th);
@@ -162,8 +169,13 @@ class Tables
                         }
                     }
 
+                    $classes = null;
+                    if($this->primary == $column) {
+                        $classes = 'column-primary';
+                    }
+
                     $td = new Generator();
-                    $td->newElement('td', [], $text);
+                    $td->newElement('td', ['class' => $classes], $text);
                     $td_row->appendInside($td);
                 }
                 $body->appendInside($td_row);
