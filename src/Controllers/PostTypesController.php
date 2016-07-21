@@ -32,6 +32,8 @@ abstract class PostTypesController extends Controller
      * Update Post by ID
      *
      * @param null $id
+     *
+     * @return mixed|void
      */
     public function update( $id = null )
     {

@@ -57,7 +57,7 @@ jQuery.typerocketHttp =
       type = data.message_type
 
       if data.flash == true
-        jQuery('body').prepend jQuery('<div class="typerocket-ajax-alert tr-alert-' + type + ' ">' + data.message + '</div>').delay(2000).fadeOut( 100, ->
+        jQuery('body').prepend jQuery('<div class="typerocket-ajax-alert tr-alert-' + type + ' ">' + data.message + '</div>').fadeIn(200).delay(2000).fadeOut( 200, ->
           jQuery(this).remove()
           return
         )

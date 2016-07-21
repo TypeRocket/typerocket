@@ -20,30 +20,33 @@
 
 .typerocket-ajax-alert {
     position: fixed;
-    top: 32px;
-    left: 0;
+    top: 42px;
+    right: 10px;
     z-index: 100000;
-    padding: 20px 20px;
+    padding: 15px 15px;
     line-height: 1.4em;
+    max-width: 300px;
     width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     text-align: center;
-    background: #dff0d8;
-    color: #468847;
+    background: #fff;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    border-left: solid 4px;
+    border-color: #46b450;
 }
 
 .typerocket-ajax-alert.tr-alert-error {
-    color: #a94442;
-    background-color: #f2dede;
+    border-color: #dc3232;
 }
 
 .typerocket-ajax-alert.tr-alert-warning {
-    color: #8a6d3b;
-    background-color: #fcf8e3;
+    border-color: #ffb900;
 }
 
 .typerocket-ajax-alert.tr-alert-info {
-    color: #31708f;
-    background-color: #d9edf7;
+    border-color: #00a0d2;
 }
 
 @media screen and (max-width: 782px) {
