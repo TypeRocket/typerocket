@@ -172,6 +172,7 @@ class Tables
                     $classes = null;
                     if($this->primary == $column) {
                         $classes = 'column-primary';
+                        $text .= "<button type=\"button\" class=\"toggle-row\"><span class=\"screen-reader-text\">Show more details</span></button>";
                     }
 
                     $td = new Generator();
