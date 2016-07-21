@@ -208,8 +208,16 @@ class Tables
         $previous_page = $this->paged - 1;
         $next_page = $this->paged + 1;
 
-        $next = $this->page->getUrl(['paged' => (int) $next_page]);
-        $prev = $this->page->getUrl(['paged' => (int) $previous_page]);
+        if($this->page instanceof Page) {
+            $next = $this->page->getUrl(['paged' => (int) $next_page]);
+            $prev = $this->page->getUrl(['paged' => (int) $previous_page]);
+        } else {
+            parse_str(parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY), $query);
+            $query_next = array_merge($query, ['paged' => (int) $next_page]);
+            $query_prev = array_merge($query, ['paged' => (int) $previous_page]);
+            $next = $_SERVER['PHP_SELF'] . '?' . http_build_query($query_next);
+            $prev = $_SERVER['PHP_SELF'] . '?' . http_build_query($query_prev);
+        }
 
         echo "<div class=\"tablenav bottom\">";
         echo "<div class=\"tablenav-pages\">
