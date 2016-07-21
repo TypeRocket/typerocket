@@ -17,12 +17,13 @@ class Tables
     /** @var null|Page  */
     public $page = null;
     public $paged = 1;
-    public $limit = 2;
+    public $limit;
     public $offset = 0;
     public $settings = ['update_column' => 'id'];
 
-    public function __construct( SchemaModel $model )
+    public function __construct( SchemaModel $model, $limit = 25 )
     {
+        $this->limit = $limit;
         $this->model = clone $model;
         $this->count = $model->findAll()->count();
         $this->paged = !empty($_GET['paged']) ? (int) $_GET['paged'] : 1;
