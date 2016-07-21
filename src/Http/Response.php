@@ -333,7 +333,7 @@ class Response {
      *
      * @param int $code
      */
-    public function exit( $code = 500 ) {
+    public function exitAny( $code = 500 ) {
         if( ! empty($_POST['_tr_ajax_request']) ) {
             $this->exitJson($code);
         } else {

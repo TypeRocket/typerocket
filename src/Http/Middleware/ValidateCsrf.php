@@ -19,7 +19,7 @@ class ValidateCsrf extends Middleware  {
             if ( ! $token ) {
                 $this->response->setError( 'csrf', true );
                 $this->response->flashNow( 'Invalid CSRF Token', 'error' );
-                $this->response->exit( 403 );
+                $this->response->exitAny( 403 );
             }
         }
 

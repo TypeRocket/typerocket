@@ -34,7 +34,7 @@ class Router extends Middleware
 
             if ( ! $controller instanceof Controller || ! method_exists( $controller, $this->action ) ) {
                 $this->response->setError( 'controller', 'Routing error');
-                $this->response->exit(405);
+                $this->response->exitAny(405);
             } else {
                 $this->item_id    = $this->request->getResourceId();
                 $this->middleware = $this->controller->getMiddleware();
