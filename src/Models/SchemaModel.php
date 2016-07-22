@@ -6,6 +6,7 @@ class SchemaModel extends Model
 {
     public $resource = null;
     public $table = null;
+    public $id_column = 'id';
 
     protected $query = [];
     public $lastCompiledSQL = null;
@@ -27,7 +28,7 @@ class SchemaModel extends Model
         $this->query['select'] = true;
 
         if(!empty($ids)) {
-            $this->where('id', 'IN', $ids);
+            $this->where( $this->id_column , 'IN', $ids);
         }
 
         return $this;
@@ -183,7 +184,7 @@ class SchemaModel extends Model
     {
         $this->return_one = true;
         $this->id = (int) $id;
-        return $this->where('id', $id)->take(1)->findAll();
+        return $this->where( $this->id_column , $id)->take(1)->findAll();
     }
 
     /**
@@ -213,7 +214,7 @@ class SchemaModel extends Model
         unset($this->query['select']);
 
         if(!empty($ids)) {
-            $this->where('id', 'IN', $ids);
+            $this->where( $this->id_column , 'IN', $ids);
         }
 
         return $this->runQuery();
@@ -337,18 +338,8 @@ class SchemaModel extends Model
             $order_direction = $query['order_by']['direction'] == 'ASC' ? 'ASC' : 'DESC';
             $sql_order .= " ORDER BY {$order_column} {$order_direction}";
         }
-        if( array_key_exists('count', $query) ) {
-            $sql = 'SELECT COUNT(*) FROM '. $table . $sql_where . $sql_order . $sql_limit;
-            $result = $wpdb->get_var( $sql );
-        } elseif( array_key_exists('select', $query) ) {
-            $sql = 'SELECT * FROM '. $table . $sql_where . $sql_order . $sql_limit;
-            $result = $wpdb->get_results( $sql );
 
-            if($result && $this->return_one) {
-                $result = $result[0];
-            }
-
-        } elseif( array_key_exists('delete', $query) ) {
+        if( array_key_exists('delete', $query) ) {
             $sql = 'DELETE FROM ' . $table . $sql_where;
             $result = $wpdb->query( $sql );
         } elseif( array_key_exists('create', $query) ) {
@@ -360,6 +351,16 @@ class SchemaModel extends Model
         } elseif( array_key_exists('update', $query) ) {
             $sql = 'UPDATE ' . $table . ' SET ' . $sql_update . $sql_where;
             $result = $wpdb->query( $sql );
+        } elseif( array_key_exists('count', $query) ) {
+            $sql = 'SELECT COUNT(*) FROM '. $table . $sql_where . $sql_order . $sql_limit;
+            $result = $wpdb->get_var( $sql );
+        } else {
+            $sql = 'SELECT * FROM '. $table . $sql_where . $sql_order . $sql_limit;
+            $result = $wpdb->get_results( $sql );
+
+            if($result && $this->return_one) {
+                $result = $result[0];
+            }
         }
 
         $this->lastCompiledSQL = $sql;
