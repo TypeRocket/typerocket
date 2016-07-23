@@ -36,6 +36,17 @@ class Router
         if ( class_exists( $controller ) ) {
             $this->controller = $controller = new $controller( $this->request, $this->response);
 
+            try {
+                $param = new \ReflectionParameter(array($controller, $this->action), 0);
+            } catch( \Exception $e) {
+                $param = null;
+            }
+
+            if( $this->request->getResourceId() && ! $param ) {
+                $this->response->setMessage('Something went wrong with item');
+                $this->response->exitAny(405);
+            }
+
             if ( ! $controller instanceof Controller || ! method_exists( $controller, $this->action ) ) {
                 $this->response->setMessage('Something went wrong');
                 $this->response->exitAny(405);
