@@ -21,6 +21,7 @@ class Form
     private $debugStatus = null;
     private $useAjax = false;
     private $form_url;
+    private $method;
 
     /**
      * Instance the From
@@ -138,15 +139,17 @@ class Form
     /**
      * Use a TypeRocket route
      *
+     * @param $method
      * @param $dots
      *
-     * @return Form $this
+     * @return \TypeRocket\Form $this
      */
-    public function useRoute($dots)
+    public function useRoute($method, $dots)
     {
         $dots = explode('.', $dots);
         $scheme = is_ssl() ? 'https' : 'http';
-        $this->form_url = home_url( implode('/', $dots ), $scheme);
+        $this->form_url = home_url( implode('/', $dots ) . '/', $scheme);
+        $this->method = $method;
 
         return $this;
     }
@@ -239,19 +242,21 @@ class Form
     {
         $r = '';
 
-        switch ($this->action) {
-            case 'update' :
-                $method = 'PUT';
-                break;
-            case 'create' :
-                $method = 'POST';
-                break;
-            case 'destroy' :
-                $method = 'DELETE';
-                break;
-            default :
-                $method = 'PUT';
-                break;
+        if( ! $this->method ) {
+            switch ($this->action) {
+                case 'update' :
+                    $method = 'PUT';
+                    break;
+                case 'create' :
+                    $method = 'POST';
+                    break;
+                case 'destroy' :
+                    $method = 'DELETE';
+                    break;
+                default :
+                    $method = 'PUT';
+                    break;
+            }
         }
 
         $ajax     = [];
