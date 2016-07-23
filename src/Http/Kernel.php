@@ -1,8 +1,6 @@
 <?php
 namespace TypeRocket\Http;
 
-use TypeRocket\Http\Middleware\Router;
-
 class Kernel
 {
 
@@ -49,8 +47,9 @@ class Kernel
      * @param Request $request
      * @param Response $response
      * @param string $group selected middleware group
+     * @param string $action_method
      */
-    public function __construct(Request $request, Response $response, $group = 'hookGlobal') {
+    public function __construct(Request $request, Response $response, $group = 'hookGlobal', $action_method = 'GET' ) {
 
         $this->response = $response;
         $this->request = $request;
@@ -64,7 +63,7 @@ class Kernel
             $resourceMiddleware = $this->middleware['noResource'];
         }
 
-        $client = $this->router = new Router($request, $response);
+        $client = $this->router = new Router($request, $response, $action_method);
         $middleware = $this->compileMiddleware($resourceMiddleware);
 
         foreach($middleware as $class) {

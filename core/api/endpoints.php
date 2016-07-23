@@ -6,7 +6,6 @@ add_action('admin_init', function() {
     $location = 'index.php?typerocket_rest_controller=$matches[1]';
     add_rewrite_rule( $regex, $location, 'top' );
 
-    // Rest API
     $regex = 'typerocket_rest_api/v1/([^/]*)/([^/]*)/?$';
     $location = 'index.php?typerocket_rest_controller=$matches[1]&typerocket_rest_item=$matches[2]';
     add_rewrite_rule( $regex, $location, 'top' );
@@ -23,6 +22,13 @@ add_action('admin_init', function() {
 
 });
 
+add_action('init', function() {
+    // Routes API
+    if( !empty( \TypeRocket\Http\Routes::$routes ) ) {
+        (new \TypeRocket\Http\Routes)->register();
+    }
+});
+
 add_filter( 'query_vars', function($vars) {
     $vars[] = 'typerocket_rest_controller';
     $vars[] = 'typerocket_rest_item';
@@ -32,6 +38,8 @@ add_filter( 'query_vars', function($vars) {
     $vars[] = 'typerocket_builder_group';
     $vars[] = 'typerocket_builder_folder';
     $vars[] = 'typerocket_builder_type';
+    $vars = array_merge($vars, \TypeRocket\Http\Routes::$vars );
+
     return $vars;
 } );
 

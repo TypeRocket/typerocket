@@ -7,12 +7,18 @@ class View
     static public $data = [];
     static public $file = null;
 
-    public function __construct( $dots , array $data = [] )
+    public function __construct( $file , array $data = [] )
     {
-        $dots = explode('.', $dots);
+        if( file_exists($file) ) {
+            self::$file = $file;
+        } else {
+            $dots = explode('.', $file);
+            self::$file = Config::getPaths()['views'] . '/' . implode('/', $dots) . '.php';
+        }
 
-        self::$file = Config::getPaths()['views'] . '/' . implode('/', $dots) . '.php';
-        self::$data = $data;
+        if( !empty( $data ) ) {
+            self::$data = $data;
+        }
     }
 
     public function file() {

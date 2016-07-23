@@ -6,7 +6,7 @@ class Config
 
     static private $paths = null;
     static private $debug = false;
-    static private $views = false;
+    static private $routes = [];
     static private $seed = null;
     static private $icons = null;
     static private $plugins = null;

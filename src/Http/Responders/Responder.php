@@ -20,15 +20,16 @@ abstract class Responder
      * @param Request $request
      * @param Response $response
      * @param string $type
+     * @param null $action_method
      */
-    public function runKernel(Request $request, Response $response, $type = 'hookGlobal')
+    public function runKernel(Request $request, Response $response, $type = 'hookGlobal', $action_method = null )
     {
         $XKernel = "\\" . TR_APP_NAMESPACE . "\\Http\\XKernel";
 
         if ( class_exists( $XKernel ) ) {
-            $this->kernel = new $XKernel( $request, $response, $type);
+            $this->kernel = new $XKernel( $request, $response, $type, $action_method);
         } else {
-            $this->kernel =  new Kernel($request, $response, $type);
+            $this->kernel =  new Kernel($request, $response, $type, $action_method);
         }
     }
 }

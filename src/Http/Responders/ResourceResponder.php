@@ -1,8 +1,8 @@
 <?php
 namespace TypeRocket\Http\Responders;
 
-use TypeRocket\Http\Redirect;
-use \TypeRocket\Http\Request,
+use \TypeRocket\Http\Redirect,
+    \TypeRocket\Http\Request,
     \TypeRocket\Http\Response;
 
 class ResourceResponder extends Responder
@@ -10,6 +10,7 @@ class ResourceResponder extends Responder
 
     private $resource = null;
     private $action = null;
+    private $actionMethod = null;
 
     /**
      * Respond to REST requests
@@ -23,7 +24,7 @@ class ResourceResponder extends Responder
         $request  = new Request( $this->resource, null, $id, $this->action );
         $response = new Response();
 
-        $this->runKernel($request, $response, 'resourceGlobal');
+        $this->runKernel($request, $response, 'resourceGlobal', $this->actionMethod);
         $returned = $this->kernel->router->returned;
 
         if( $returned && empty($_POST['_tr_ajax_request']) ) {
@@ -68,6 +69,19 @@ class ResourceResponder extends Responder
      */
     public function setAction( $action ) {
         $this->action = $action;
+
+        return $this;
+    }
+
+    /**
+     * Set the action method
+     *
+     * @param $action_method
+     *
+     * @return $this
+     */
+    public function setActionMethod( $action_method ) {
+        $this->actionMethod = $action_method;
 
         return $this;
     }

@@ -140,7 +140,7 @@ class Form
      *
      * @return $this
      */
-    public function useResource()
+    public function useAdmin()
     {
         $params = [];
 

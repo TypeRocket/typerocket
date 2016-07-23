@@ -117,6 +117,20 @@ add_action( 'after_setup_theme', function () {
 
 /*
 |--------------------------------------------------------------------------
+| Router
+|--------------------------------------------------------------------------
+|
+| Load TypeRocket Router
+|
+*/
+$tr_routes_file = realpath( __DIR__ . '/../routes.php' );
+if( file_exists($tr_routes_file) ) {
+    $tr_routes_vars = require( $tr_routes_file );
+    new \TypeRocket\Http\Routes( $tr_routes_vars );
+}
+
+/*
+|--------------------------------------------------------------------------
 | Add APIs
 |--------------------------------------------------------------------------
 |

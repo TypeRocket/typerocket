@@ -1,5 +1,5 @@
 <?php
-namespace TypeRocket\Http\Middleware;
+namespace TypeRocket\Http;
 
 use TypeRocket\Controllers\Controller;
 
@@ -10,18 +10,22 @@ use TypeRocket\Controllers\Controller;
  *
  * @package TypeRocket\Http\Middleware
  */
-class Router extends Middleware
+class Router
 {
     public $returned = [];
+    protected $request = null;
+    protected $response = null;
     /** @var Controller  */
     protected $controller;
     public $middleware = [];
     public $action;
     public $item_id;
 
-    public function init()
+    public function __construct( Request $request, Response $response, $action_method = 'GET' )
     {
-        $this->action = $this->getAction();
+        $this->request = $request;
+        $this->response = $response;
+        $this->action = $this->getAction( $action_method );
         $resource = ucfirst( $this->request->getResource() );
         $controller  = "\\TypeRocket\\Controllers\\{$resource}Controller";
 
@@ -33,7 +37,7 @@ class Router extends Middleware
             $this->controller = $controller = new $controller( $this->request, $this->response);
 
             if ( ! $controller instanceof Controller || ! method_exists( $controller, $this->action ) ) {
-                $this->response->setError( 'controller', 'Routing error');
+                $this->response->setMessage('Something went wrong');
                 $this->response->exitAny(405);
             } else {
                 $this->item_id    = $this->request->getResourceId();
@@ -78,7 +82,7 @@ class Router extends Middleware
         return $groups;
     }
 
-    protected function getAction() {
+    protected function getAction( $action_method = 'GET' ) {
         $request = $this->request;
 
         $method = $request->getMethod();
@@ -91,11 +95,21 @@ class Router extends Middleware
                     $action = 'add';
                 }
                 break;
+            case 'create' :
+                if( $method == 'POST' ) {
+                    $action = 'create';
+                }
+                break;
             case 'edit' :
                 if( $method == 'PUT' ) {
                     $action = 'update';
                 } else {
                     $action = 'edit';
+                }
+                break;
+            case 'update' :
+                if( $method == 'PUT' ) {
+                    $action = 'update';
                 }
                 break;
             case 'delete' :
@@ -116,7 +130,9 @@ class Router extends Middleware
                 }
                 break;
             default :
-                $action = $request->getAction();
+                if($action_method == $method ) {
+                    $action = $request->getAction();
+                }
                 break;
         }
 
