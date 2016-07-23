@@ -21,7 +21,7 @@ class Form
     private $debugStatus = null;
     private $useAjax = false;
     private $form_url;
-    private $method;
+    private $method = null;
 
     /**
      * Instance the From
@@ -149,7 +149,7 @@ class Form
         $dots = explode('.', $dots);
         $scheme = is_ssl() ? 'https' : 'http';
         $this->form_url = home_url( implode('/', $dots ) . '/', $scheme);
-        $this->method = $method;
+        $this->method = strtoupper($method);
 
         return $this;
     }
