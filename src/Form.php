@@ -245,16 +245,16 @@ class Form
         if( ! $this->method ) {
             switch ($this->action) {
                 case 'update' :
-                    $method = 'PUT';
+                    $this->method = 'PUT';
                     break;
                 case 'create' :
-                    $method = 'POST';
+                    $this->method = 'POST';
                     break;
                 case 'destroy' :
-                    $method = 'DELETE';
+                    $this->method = 'DELETE';
                     break;
                 default :
-                    $method = 'PUT';
+                    $this->method = 'PUT';
                     break;
             }
         }
@@ -281,7 +281,7 @@ class Form
             $r .= $generator->newInput( 'hidden', '_tr_ajax_request', '1' )->getString();
         }
 
-        $r .= $generator->newInput( 'hidden', '_method', $method )->getString();
+        $r .= $generator->newInput( 'hidden', '_method', $this->method )->getString();
         $r .= wp_nonce_field( 'form_' .  Config::getSeed() , '_tr_nonce_form', false, false );
 
         return $r;
