@@ -36,6 +36,21 @@ class Redirect
     }
 
     /**
+     * Redirect to route or resource
+     *
+     * @param $dots
+     *
+     * @return Redirect $this
+     */
+    public function toRoute( $dots )
+    {
+        $dots = explode('.', $dots);
+        $this->url = esc_url( home_url( implode('/', $dots ) ) );
+
+        return $this;
+    }
+
+    /**
      * @param $resource
      * @param $action
      * @param null $item_id
@@ -52,6 +67,19 @@ class Redirect
         }
 
         $this->url = admin_url() . 'admin.php?' . http_build_query($query);
+
+        return $this;
+    }
+
+    /**
+     * Redirect to URL
+     *
+     * @param $url
+     *
+     * @return Redirect $this
+     */
+    public function toUrl( $url ) {
+        $this->url = esc_url($url);
 
         return $this;
     }

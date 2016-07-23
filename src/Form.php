@@ -114,7 +114,7 @@ class Form
     /**
      * Use Ajax
      *
-     * @return $this
+     * @return Form $this
      */
     public function useAjax() {
         $this->useAjax = true;
@@ -125,7 +125,7 @@ class Form
     /**
      * Use TypeRocket Rest to submit form
      *
-     * @return $this
+     * @return Form $this
      */
     public function useRest()
     {
@@ -136,9 +136,25 @@ class Form
     }
 
     /**
+     * Use a TypeRocket route
+     *
+     * @param $dots
+     *
+     * @return Form $this
+     */
+    public function useRoute($dots)
+    {
+        $dots = explode('.', $dots);
+        $scheme = is_ssl() ? 'https' : 'http';
+        $this->form_url = home_url( implode('/', $dots ), $scheme);
+
+        return $this;
+    }
+
+    /**
      * Use TypeRocket Rest to submit form
      *
-     * @return $this
+     * @return Form $this
      */
     public function useAdmin()
     {
