@@ -105,5 +105,6 @@ class Redirect
      */
     public function now() {
         wp_redirect( $this->url );
+        exit();
     }
 }
