@@ -24,12 +24,15 @@ class Redirect
     /**
      * @param $fields
      *
-     * @return Redirect $this
+     * @param array $notFields
+     *
+     * @return \TypeRocket\Http\Redirect $this
      */
-    public function withFields( $fields ) {
+    public function withFields( $fields, $notFields = [] ) {
         if( !empty( $fields ) ) {
             $cookie = new Cookie();
-            $cookie->setTransient('tr_old_fields', $fields);
+            $send = array_diff_key($fields, array_flip($notFields));
+            $cookie->setTransient('tr_old_fields', $send);
         }
 
         return $this;
