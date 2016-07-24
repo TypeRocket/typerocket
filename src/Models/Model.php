@@ -155,6 +155,60 @@ abstract class Model
     }
 
     /**
+     * Remove Guard
+     *
+     * Add a field to guard if not set to fillable.
+     *
+     * @param $field_name
+     *
+     * @return $this
+     */
+    public function removeGuardField( $field_name )
+    {
+        if ( in_array( $field_name, $this->guard ) ) {
+            unset($this->guard[array_search($field_name, $this->guard)]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove Fillable
+     *
+     * Add a field to guard if not set to fillable.
+     *
+     * @param $field_name
+     *
+     * @return $this
+     */
+    public function removeFillableField( $field_name )
+    {
+        if ( in_array( $field_name, $this->fillable ) ) {
+            unset($this->fillable[array_search($field_name, $this->fillable)]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove Format
+     *
+     * Add a field to guard if not set to fillable.
+     *
+     * @param $field_name
+     *
+     * @return $this
+     */
+    public function removeFormatField( $field_name )
+    {
+        if ( in_array( $field_name, $this->format ) ) {
+            unset($this->format[array_search($field_name, $this->format)]);
+        }
+
+        return $this;
+    }
+
+    /**
      * Resource ID
      *
      * The ID of the resource being used.
