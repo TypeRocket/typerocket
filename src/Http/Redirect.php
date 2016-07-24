@@ -84,6 +84,19 @@ class Redirect
         return $this;
     }
 
+
+    /**
+     * Redirect back to referrer
+     *
+     * @return Redirect $this
+     */
+    public function back()
+    {
+        $this->url = esc_url($_SERVER['HTTP_REFERER']);
+
+        return $this;
+    }
+
     /**
      * Run the redirect
      */
