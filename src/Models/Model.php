@@ -255,7 +255,7 @@ abstract class Model
             unset($this->guard[array_search($field_name, $this->guard)]);
         }
 
-        if ( ! in_array( $field_name, $this->fillable ) && ! in_array( $field_name, $this->guard ) ) {
+        if ( !empty($this->fillable) && ! in_array( $field_name, $this->fillable ) && ! in_array( $field_name, $this->guard ) ) {
             $this->fillable[] = $field_name;
         }
 
