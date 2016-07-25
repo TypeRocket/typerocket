@@ -91,11 +91,19 @@ class Redirect
     /**
      * Redirect back to referrer
      *
+     * Must be the same host
+     *
      * @return Redirect $this
      */
     public function back()
     {
-        $this->url = esc_url($_SERVER['HTTP_REFERER']);
+        $ref = $_SERVER['HTTP_REFERER'];
+        $same_host = home_url();
+        if( substr($ref, 0, strlen($same_host)) === $same_host ) {
+            $this->url = $ref;
+        } else {
+            $this->url = home_url();
+        }
 
         return $this;
     }

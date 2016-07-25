@@ -52,6 +52,38 @@ abstract class Model
     }
 
     /**
+     * Set Static Fields
+     *
+     * Fields that are write protected by default unless fillable
+     *
+     * @param array $static
+     *
+     * @return $this
+     */
+    public function setStaticFields( array $static )
+    {
+        $this->static = $static;
+
+        return $this;
+    }
+
+    /**
+     * Set Default Fields
+     *
+     * Fields that are write protected by default unless fillable
+     *
+     * @param array $default
+     *
+     * @return $this
+     */
+    public function setDefaultFields( array $default )
+    {
+        $this->static = $default;
+
+        return $this;
+    }
+
+    /**
      * Set Fillable
      *
      * Fields that are write protected by default unless fillable
