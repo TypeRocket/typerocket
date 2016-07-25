@@ -189,7 +189,7 @@ abstract class Model
     /**
      * Remove Guard
      *
-     * Add a field to guard if not set to fillable.
+     * Remove field from guard.
      *
      * @param $field_name
      *
@@ -207,7 +207,7 @@ abstract class Model
     /**
      * Remove Fillable
      *
-     * Add a field to guard if not set to fillable.
+     * Remove field from fillable.
      *
      * @param $field_name
      *
@@ -225,7 +225,7 @@ abstract class Model
     /**
      * Remove Format
      *
-     * Add a field to guard if not set to fillable.
+     * Remove field from format.
      *
      * @param $field_name
      *
@@ -235,6 +235,28 @@ abstract class Model
     {
         if ( in_array( $field_name, $this->format ) ) {
             unset($this->format[array_search($field_name, $this->format)]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Unlock Field
+     *
+     * Unlock field by adding it to fillable and removing it from guard.
+     *
+     * @param $field_name
+     *
+     * @return $this
+     */
+    public function unlockField( $field_name )
+    {
+        if ( in_array( $field_name, $this->guard ) ) {
+            unset($this->guard[array_search($field_name, $this->guard)]);
+        }
+
+        if ( ! in_array( $field_name, $this->fillable ) && ! in_array( $field_name, $this->guard ) ) {
+            $this->fillable[] = $field_name;
         }
 
         return $this;
