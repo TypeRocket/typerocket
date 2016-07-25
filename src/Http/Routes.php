@@ -70,7 +70,11 @@ class Routes
                         if( $request_method != $method || $var_page != $page && $is_page ) {
 
                             if($end) {
-                                wp_die('Invalid route');
+                                global $wp_query;
+                                $wp_query->set_404();
+                                status_header( 404 );
+                                get_template_part( 404 );
+                                exit();
                             }
 
                             return $template;
@@ -101,7 +105,11 @@ class Routes
                             }
                             $this->getTemplate($template);
                         } else {
-                            wp_die('Invalid route');
+                            global $wp_query;
+                            $wp_query->set_404();
+                            status_header( 404 );
+                            get_template_part( 404 );
+                            exit();
                         }
                     }
 
