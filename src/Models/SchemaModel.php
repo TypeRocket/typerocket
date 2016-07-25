@@ -202,7 +202,7 @@ class SchemaModel extends Model
      *
      * @param $id
      *
-     * @return \TypeRocket\Models\SchemaModel
+     * @return object
      */
     public function findOrDie($id) {
         if( ! $data = $this->findById($id)->get() ) {
