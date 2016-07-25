@@ -29,6 +29,10 @@ class Tables
         $this->count = $model->findAll()->count();
         $this->paged = !empty($_GET['paged']) ? (int) $_GET['paged'] : 1;
 
+        if( !empty( $_GET['order'] ) && !empty( $_GET['orderby'] ) ) {
+            $this->model->orderBy($_GET['orderby'], $_GET['order']);
+        }
+
         $this->offset = ( $this->paged - 1 ) * $this->limit;
     }
 
@@ -120,7 +124,14 @@ class Tables
             if( ! is_string($column) ) {
                 $th->newElement('th', ['class' => $classes], ucfirst($data));
             } else {
-                $th->newElement('th', ['class' => $classes], $data['label']);
+                $label = $data['label'];
+                if( !empty($data['sort']) && $this->page ) {
+                    $order_direction = !empty( $_GET['order'] ) && $_GET['order'] == 'ASC' ? 'DESC' : 'ASC';
+                    $order_link = $this->page->getUrl(['orderby' => $column, 'order' => $order_direction]);
+                    $label = "<a href=\"{$order_link}\">$label</a>";
+                }
+
+                $th->newElement('th', ['class' => $classes],$label);
             }
 
             $th_row->appendInside($th);
@@ -229,8 +240,8 @@ class Tables
         $next_page = $this->paged + 1;
 
         if($this->page instanceof Page) {
-            $next = $this->page->getUrl(['paged' => (int) $next_page]);
-            $prev = $this->page->getUrl(['paged' => (int) $previous_page]);
+            $next = $this->page->getUrlWithParams(['paged' => (int) $next_page]);
+            $prev = $this->page->getUrlWithParams(['paged' => (int) $previous_page]);
         } else {
             parse_str(parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY), $query);
             $query_next = array_merge($query, ['paged' => (int) $next_page]);
