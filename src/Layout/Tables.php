@@ -47,6 +47,22 @@ class Tables
     }
 
     /**
+     * Set table sorting
+     *
+     * @param $column
+     * @param string $direction
+     *
+     * @return $this
+     * @internal param $ $
+     *
+     */
+    public function setOrder( $column, $direction = 'ASC' ) {
+        $this->model->orderBy($column, $direction);
+
+        return $this;
+    }
+
+    /**
      * @param $primary
      * @param array $columns
      *
@@ -74,7 +90,7 @@ class Tables
     /**
      * Render table
      */
-    public function table()
+    public function render()
     {
         $results = $this->model->findAll()->take($this->limit, $this->offset)->get();
         $columns = $this->columns;
@@ -196,10 +212,10 @@ class Tables
         $table->appendInside('tfoot', [], $foot );
 
         echo $table;
-
+        $this->pagination();
     }
 
-    public function pagination()
+    protected function pagination()
     {
         $pages = ceil($this->count / $this->limit);
         $item_word = 'items';
