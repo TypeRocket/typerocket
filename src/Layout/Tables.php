@@ -127,6 +127,10 @@ class Tables
 
                     $text = $result->$column;
 
+                    if( !empty($data['callback']) ) {
+                        $text = call_user_func($data['callback'], $text);
+                    }
+
                     if ($this->page instanceof Page && ! empty($this->page->pages)) {
                         foreach ($this->page->pages as $page) {
                             /** @var Page $page */
