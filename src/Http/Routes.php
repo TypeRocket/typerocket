@@ -70,11 +70,7 @@ class Routes
                         if( $request_method != $method || $var_page != $page && $is_page ) {
 
                             if($end) {
-                                global $wp_query;
-                                $wp_query->set_404();
-                                status_header( 404 );
-                                get_template_part( 404 );
-                                exit();
+                                (new Response())->exitNotFound();
                             }
 
                             return $template;
@@ -93,7 +89,7 @@ class Routes
                             } else {
                                 $template = get_template_directory() . '/resource-' . $resource . '-' . $page . '.php';
                             }
-                            $this->getTemplate($template);
+                            $this->getTemplate();
                         } elseif ($resource && $is_root ) {
                             $respond->setAction( 'index' );
                             $respond->respond($item_id);
@@ -103,13 +99,9 @@ class Routes
                             } else {
                                 $template = get_template_directory() . '/resource-' . $resource . '.php';
                             }
-                            $this->getTemplate($template);
+                            $this->getTemplate();
                         } else {
-                            global $wp_query;
-                            $wp_query->set_404();
-                            status_header( 404 );
-                            get_template_part( 404 );
-                            exit();
+                            (new Response())->exitNotFound();
                         }
                     }
 
@@ -119,11 +111,9 @@ class Routes
         }
     }
 
-    private function getTemplate($template) {
-        new View( $template );
-        unset($template);
+    private function getTemplate() {
         extract(View::$data);
-        include ( View::$file );
+        include ( View::$template );
         die();
     }
 

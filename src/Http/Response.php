@@ -364,4 +364,16 @@ class Response {
         wp_die($this->message);
     }
 
+    /**
+     * Exit with 404 Page
+     */
+    public function exitNotFound()
+    {
+        global $wp_query;
+        $wp_query->set_404();
+        status_header( 404 );
+        get_template_part( 404 );
+        exit();
+    }
+
 }
