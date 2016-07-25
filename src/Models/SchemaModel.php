@@ -17,6 +17,16 @@ class SchemaModel extends Model
     ];
 
     /**
+     * Get Date Time
+     *
+     * @return bool|string
+     */
+    public function getDateTime()
+    {
+        return date('Y-m-d H:i:s', time());
+    }
+
+    /**
      * Find all
      *
      * @param array $ids

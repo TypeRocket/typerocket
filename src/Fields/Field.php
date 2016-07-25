@@ -182,7 +182,7 @@ abstract class Field
      * @param $key
      * @param $value
      *
-     * @return $this
+     * @return Field $this
      */
     public function setAttribute( $key, $value )
     {
@@ -211,7 +211,7 @@ abstract class Field
      *
      * @param string $value help text
      *
-     * @return $this
+     * @return Field $this
      */
     public function setHelp( $value )
     {
