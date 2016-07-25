@@ -94,10 +94,11 @@ define('TR_ICONS', "\\TypeRocket\\Icons");
 
 /*
 |--------------------------------------------------------------------------
-| Admin Page Views
+| Admin Pages and Frontend Views
 |--------------------------------------------------------------------------
 |
-| Set the admin pages location. This is for the admin pages views.
+| Set the admin pages location. This is for the admin pages and frontend views.
 |
 */
 define('TR_VIEWS',  __DIR__ . '/../views');
+define('TR_PAGES',  __DIR__ . '/../pages');

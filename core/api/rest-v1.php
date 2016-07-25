@@ -11,6 +11,8 @@ if ($tr_loaded) {
         $method = $request->getFormMethod();
         if( $method == 'PUT' ) {
             $action = 'update';
+        } elseif( $method == 'DELETE' ) {
+            $action = 'destroy';
         } else {
             $action = 'create';
         }

@@ -83,12 +83,22 @@ class Routes
 
                         if ($resource && $is_page ) {
                             $respond->respond($item_id);
-                            $template = get_template_directory() . '/resource-' . $resource . '-' . $page . '.php';
+                            $returned = $respond->kernel->router->returned;
+                            if( $returned instanceof View ) {
+                                $template = $returned->template();
+                            } else {
+                                $template = get_template_directory() . '/resource-' . $resource . '-' . $page . '.php';
+                            }
                             $this->getTemplate($template);
                         } elseif ($resource && $is_root ) {
                             $respond->setAction( 'index' );
                             $respond->respond($item_id);
-                            $template = get_template_directory() . '/resource-' . $resource . '.php';
+                            $returned = $respond->kernel->router->returned;
+                            if( $returned instanceof View ) {
+                                $template = $returned->template();
+                            } else {
+                                $template = get_template_directory() . '/resource-' . $resource . '.php';
+                            }
                             $this->getTemplate($template);
                         } else {
                             wp_die('Invalid route');
