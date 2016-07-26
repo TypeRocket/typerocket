@@ -11,6 +11,7 @@ abstract class Field
 
     private $name = null;
     private $type = null;
+    private $required = false;
     private $attr = [];
 
     /** @var Form */
@@ -435,6 +436,28 @@ abstract class Field
         }
 
         return $value;
+    }
+
+    /**
+     * Make field required
+     *
+     * @return $this
+     */
+    public function required()
+    {
+        $this->required = true;
+
+        return $this;
+    }
+
+    /**
+     * Get Required
+     *
+     * @return bool
+     */
+    public function getRequired()
+    {
+        return $this->required;
     }
 
     /**

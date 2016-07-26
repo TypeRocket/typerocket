@@ -320,10 +320,11 @@ class Form
         $debug      = $this->getDebug();
         $html       = '';
         $label      = $this->currentField->getLabelOption();
+        $required   = $this->currentField->getRequired() ? '<span class="tr-required">*</span>' : '';
 
         if ($label) {
             $label = $this->currentField->getSetting( 'label' );
-            $html  = "{$open_html}{$label} {$debug}{$close_html}";
+            $html  = "{$open_html}{$label} {$required} {$debug}{$close_html}";
         } elseif ($debug !== '') {
             $html = "{$open_html}{$debug}{$close_html}";
         }
