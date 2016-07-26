@@ -392,7 +392,7 @@ abstract class Model
      *
      * @return mixed|void
      */
-    protected function secureFields( array $fields )
+    public function secureFields( array $fields )
     {
         // Fillable
         $fillable = [];
