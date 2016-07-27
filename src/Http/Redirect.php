@@ -98,11 +98,12 @@ class Redirect
     public function back()
     {
         $ref = $_SERVER['HTTP_REFERER'];
-        $same_host = home_url();
+        $scheme = is_ssl() ? 'https' : 'http';
+        $same_host = home_url( '/', $scheme );
         if( substr($ref, 0, strlen($same_host)) === $same_host ) {
             $this->url = $ref;
         } else {
-            $this->url = home_url();
+            $this->url = home_url('/', $scheme);
         }
 
         return $this;
