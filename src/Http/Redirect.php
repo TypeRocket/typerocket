@@ -48,7 +48,8 @@ class Redirect
     public function toRoute( $dots )
     {
         $dots = explode('.', $dots);
-        $this->url = esc_url( home_url( implode('/', $dots ) ) );
+        $scheme = is_ssl() ? 'https' : 'http';
+        $this->url = esc_url( home_url( implode('/', $dots ), $scheme ) );
 
         return $this;
     }
@@ -69,7 +70,8 @@ class Redirect
             $query['item_id'] = (int) $item_id;
         }
 
-        $this->url = admin_url() . 'admin.php?' . http_build_query($query);
+        $scheme = is_ssl() ? 'https' : 'http';
+        $this->url = admin_url('/', $scheme) . 'admin.php?' . http_build_query($query);
 
         return $this;
     }
