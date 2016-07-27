@@ -89,7 +89,6 @@ class Redirect
         return $this;
     }
 
-
     /**
      * Redirect back to referrer
      *
