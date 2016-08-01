@@ -31,7 +31,7 @@ class SchemaModel extends Model
      *
      * @param array $ids
      *
-     * @return $this
+     * @return SchemaModel $this
      */
     public function findAll( array $ids = [] )
     {
@@ -259,7 +259,7 @@ class SchemaModel extends Model
     protected function getBaseFieldValue($field_name)
     {
         $data = $this->findById($this->id)->get();
-        return $this->getValueOrNull( $data->$field_name );
+        return $this->getValueOrNull( wp_unslash($data->$field_name) );
     }
 
     /**
