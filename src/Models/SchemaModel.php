@@ -35,8 +35,6 @@ class SchemaModel extends Model
      */
     public function findAll( array $ids = [] )
     {
-        $this->query['select'] = true;
-
         if(!empty($ids)) {
             $this->where( $this->id_column , 'IN', $ids);
         }
@@ -243,6 +241,24 @@ class SchemaModel extends Model
     }
 
     /**
+     * Select only specific columns
+     *
+     * @param $args
+     *
+     * @return $this
+     */
+    public function select($args)
+    {
+        if( is_array($args) ) {
+            $this->query['select'] = $args;
+        } else {
+            $this->query['select'] = func_get_args();
+        }
+
+        return $this;
+    }
+
+    /**
      * Get base field value
      *
      * Some fields need to be saved as serialized arrays. Getting
@@ -275,7 +291,8 @@ class SchemaModel extends Model
 
         $table = $this->table ? $this->table : $wpdb->prefix . $this->resource;
         $result = [];
-        $sql_where = $sql_limit = $sql_values = $sql_columns = $sql_update = $sql = $sql_order = '';
+        $sql_select_columns = '*';
+        $sql_where = $sql_limit = $sql_values = $sql_columns = $sql_update = $sql = $sql_order ='';
 
         if( empty($query) ) {
             $query = $this->query;
@@ -337,6 +354,13 @@ class SchemaModel extends Model
             ));
         }
 
+        // compile columns to select
+        if( !empty($query['select']) && is_array($query['select']) ) {
+            $sql_select_columns = trim(array_reduce($query['select'], function( $carry = '', $value ) use ( $table ) {
+                return $carry . ',`' . preg_replace("/[^a-z0-9\\\\_]+/", '', $value) . '`';
+            }), ',');
+        }
+
         // compile take
         if( !empty($query['take']) ) {
             $sql_limit .= ' ' . $wpdb->prepare( 'LIMIT %d OFFSET %d', $query['take'] );
@@ -365,7 +389,7 @@ class SchemaModel extends Model
             $sql = 'SELECT COUNT(*) FROM '. $table . $sql_where . $sql_order . $sql_limit;
             $result = $wpdb->get_var( $sql );
         } else {
-            $sql = 'SELECT * FROM '. $table . $sql_where . $sql_order . $sql_limit;
+            $sql = 'SELECT ' . $sql_select_columns .' FROM '. $table . $sql_where . $sql_order . $sql_limit;
             $result = $wpdb->get_results( $sql );
 
             if($result && $this->return_one) {
