@@ -1,7 +1,7 @@
-## TypeRocket 3.0 - RC 1
+## TypeRocket 3.0 - RC 2
 Coding advanced WordPress themes became a blast. Be good looking and do cool stuff with less code.
 
-See [http://typerocket.com](http://typerocket.com) for version 2. Version 3.0 is waiting official release and is in RC 1.
+See [http://typerocket.com](http://typerocket.com) for version 2. Version 3.0 is waiting official release and is in RC 2.
 
 ### Requirements
 
