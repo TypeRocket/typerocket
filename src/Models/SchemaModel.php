@@ -77,8 +77,8 @@ class SchemaModel extends Model
         $whereQuery['operator'] = '=';
         $whereQuery['value'] = $arg1;
 
-        if( !empty($arg2) ) {
-            $whereQuery['operator'] = strtoupper($arg1);
+        if( isset($arg2) ) {
+            $whereQuery['operator'] = $arg1;
             $whereQuery['value'] = $arg2;
         }
 
