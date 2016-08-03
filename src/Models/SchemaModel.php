@@ -169,7 +169,7 @@ class SchemaModel extends Model
      *
      * @return mixed
      */
-    public function update(array $fields)
+    public function update(array $fields = [])
     {
         $fields = $this->secureFields($fields);
         $fields = array_merge($this->default, $fields, $this->static);

@@ -4,7 +4,7 @@
 | TypeRocket by Robojuice
 |--------------------------------------------------------------------------
 |
-| TypeRocket is designed to work with WordPress 4.5+ and PHP 5.4+. You
+| TypeRocket is designed to work with WordPress 4.5+ and PHP 5.5+. You
 | must initialize it exactly once. We suggest including TypeRocket
 | from your theme and let plugins access TypeRocket from there.
 |
@@ -17,7 +17,7 @@
 | Require TypeRocket
 |--------------------------------------------------------------------------
 |
-| Try to start the TypeRocket. Need WordPress 4.5+ and PHP 5.4+
+| Try to start the TypeRocket. Need WordPress 4.5+ and PHP 5.5+
 |
 */
 global $wp_version;
