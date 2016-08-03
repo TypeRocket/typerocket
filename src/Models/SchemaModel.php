@@ -10,7 +10,7 @@ class SchemaModel extends Model
 
     protected $query = [];
     public $lastCompiledSQL = null;
-    public $return_one = false;
+    public $returnOne = false;
 
     protected $guard = [
         'id'
@@ -135,7 +135,7 @@ class SchemaModel extends Model
      * @return array|bool|false|int|null|object
      */
     public function first() {
-        $this->return_one = true;
+        $this->returnOne = true;
         $this->take(1);
         return $this->runQuery();
     }
@@ -190,8 +190,8 @@ class SchemaModel extends Model
      */
     public function findById($id)
     {
-        $this->return_one = true;
-        $this->id = (int) $id;
+        $this->returnOne = true;
+        $this->id        = (int) $id;
         return $this->where( $this->idColumn , $id)->take(1)->findAll();
     }
 
@@ -392,7 +392,7 @@ class SchemaModel extends Model
             $sql = 'SELECT ' . $sql_select_columns .' FROM '. $table . $sql_where . $sql_order . $sql_limit;
             $result = $wpdb->get_results( $sql );
 
-            if($result && $this->return_one) {
+            if($result && $this->returnOne) {
                 $result = $result[0];
             }
         }
