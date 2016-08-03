@@ -450,6 +450,9 @@ abstract class Model
         return $this->parseValueData( $data, $keys );
     }
 
+    /**
+     * Get old stored fields
+     */
     public function oldStore() {
         if( !empty($_COOKIE['tr_old_fields']) ) {
             $cookie = new Cookie();

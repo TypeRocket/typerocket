@@ -22,6 +22,12 @@ class Tables
     public $offset = 0;
     public $settings = ['update_column' => 'id'];
 
+    /**
+     * Tables constructor.
+     *
+     * @param \TypeRocket\Models\SchemaModel $model
+     * @param int $limit
+     */
     public function __construct( SchemaModel $model, $limit = 25 )
     {
         $this->limit = $limit;
@@ -67,7 +73,9 @@ class Tables
     }
 
     /**
-     * @param $primary
+     * Set the tables columns
+     *
+     * @param string $primary set the main column
      * @param array $columns
      *
      * @return \TypeRocket\Layout\Tables
@@ -81,6 +89,8 @@ class Tables
     }
 
     /**
+     * Set the page the table is connected to.
+     *
      * @param \TypeRocket\Page $page
      *
      * @return $this
@@ -226,6 +236,9 @@ class Tables
         $this->pagination();
     }
 
+    /**
+     * Table pagination
+     */
     protected function pagination()
     {
         $pages = ceil($this->count / $this->limit);

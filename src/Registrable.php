@@ -89,14 +89,6 @@ abstract class Registrable
         'year'
     ];
 
-    public function __get($property)
-    {
-    }
-
-    public function __set($property, $value)
-    {
-    }
-
     /**
      * Set the Registrable ID for WordPress to use. Don't use reserved names.
      *

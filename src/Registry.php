@@ -134,6 +134,11 @@ class Registry
         }
     }
 
+    /**
+     * Add taxonomy form hooks
+     *
+     * @param \TypeRocket\Taxonomy $obj
+     */
     private static function taxonomyFormContent( Taxonomy $obj ) {
 
         $callback = function( $term, $type, $obj )

@@ -1,14 +1,14 @@
 <?php
 namespace TypeRocket;
 
-use TypeRocket\Fields\Submit;
-use TypeRocket\Html\Generator,
+use TypeRocket\Fields\Submit,
+    TypeRocket\Html\Generator,
     TypeRocket\Html\Tag,
     TypeRocket\Fields\Field,
-    TypeRocket\Models\PostTypesModel;
-use TypeRocket\Models\SchemaModel;
-use TypeRocket\Models\TaxonomiesModel;
-use TypeRocket\Traits\FormConnectorTrait;
+    TypeRocket\Models\PostTypesModel,
+    TypeRocket\Models\SchemaModel,
+    TypeRocket\Models\TaxonomiesModel,
+    TypeRocket\Traits\FormConnectorTrait;
 
 class Form
 {
@@ -17,10 +17,9 @@ class Form
 
     /** @var \TypeRocket\Fields\Field $currentField */
     private $currentField = '';
-
     private $debugStatus = null;
     private $useAjax = false;
-    private $form_url;
+    private $formUrl;
     private $method = null;
 
     /**
@@ -51,14 +50,6 @@ class Form
                 $this->model->findById($this->itemId);
             }
         }
-    }
-
-    public function __get( $property )
-    {
-    }
-
-    public function __set( $property, $value )
-    {
     }
 
     /**
@@ -130,8 +121,8 @@ class Form
      */
     public function useRest()
     {
-        $scheme = is_ssl() ? 'https' : 'http';
-        $this->form_url = home_url('/', $scheme ) . 'typerocket_rest_api/v1/' . $this->resource . '/' . $this->itemId;
+        $scheme        = is_ssl() ? 'https' : 'http';
+        $this->formUrl = home_url('/', $scheme ) . 'typerocket_rest_api/v1/' . $this->resource . '/' . $this->itemId;
 
         return $this;
     }
@@ -146,10 +137,10 @@ class Form
      */
     public function useRoute($method, $dots)
     {
-        $dots = explode('.', $dots);
-        $scheme = is_ssl() ? 'https' : 'http';
-        $this->form_url = home_url( implode('/', $dots ) . '/', $scheme);
-        $this->method = strtoupper($method);
+        $dots          = explode('.', $dots);
+        $scheme        = is_ssl() ? 'https' : 'http';
+        $this->formUrl = home_url(implode('/', $dots ) . '/', $scheme);
+        $this->method  = strtoupper($method);
 
         return $this;
     }
@@ -180,11 +171,11 @@ class Form
                 break;
         }
 
-        $query = http_build_query( array_merge(
+        $query         = http_build_query( array_merge(
             [ 'page' => $this->resource . '_' . $action ],
             $params
         ) );
-        $this->form_url = admin_url() . 'admin.php?' . $query;
+        $this->formUrl = admin_url() . 'admin.php?' . $query;
 
         return $this;
     }
@@ -261,7 +252,7 @@ class Form
 
         $ajax     = [];
         $defaults = [
-            'action'      => $this->form_url ? $this->form_url : $_SERVER['REQUEST_URI'],
+            'action'      => $this->formUrl ? $this->formUrl : $_SERVER['REQUEST_URI'],
             'method'      => 'POST'
         ];
 

@@ -17,11 +17,11 @@ use TypeRocket\Layout\Notice;
 class Response {
 
     private $message = 'No Message Set';
-    private $message_type = 'success';
+    private $messageType = 'success';
     private $redirect = false;
     private $status = 200;
     private $flash = true;
-    private $block_flash = false;
+    private $blockFlash = false;
     private $errors = [];
     private $data = [];
 
@@ -237,7 +237,7 @@ class Response {
      * @return bool
      */
     public function blockFlash() {
-        return $this->block_flash = true;
+        return $this->blockFlash = true;
     }
 
     /**
@@ -289,14 +289,14 @@ class Response {
      */
     public function flashNext($message, $type = 'success')
     {
-        if( ! $this->block_flash ) {
-            $this->flash = true;
-            $this->message = $message;
-            $this->message_type = strtolower($type);
+        if( ! $this->blockFlash ) {
+            $this->flash       = true;
+            $this->message     = $message;
+            $this->messageType = strtolower($type);
 
             $cookie = new Cookie();
             $data = [
-                'type' => $this->message_type,
+                'type' => $this->messageType,
                 'message' => $this->message,
             ];
 
@@ -310,13 +310,13 @@ class Response {
 
     public function flashNow($message, $type)
     {
-        if( ! $this->block_flash ) {
-            $this->flash = true;
-            $this->message = $message;
-            $this->message_type = strtolower($type);
+        if( ! $this->blockFlash ) {
+            $this->flash       = true;
+            $this->message     = $message;
+            $this->messageType = strtolower($type);
 
             $data = [
-                'type' => $this->message_type,
+                'type' => $this->messageType,
                 'message' => $this->message,
             ];
 

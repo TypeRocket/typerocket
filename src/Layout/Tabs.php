@@ -9,14 +9,6 @@ class Tabs
     private $tabs = [];
     private $sidebar = null;
 
-    public function __get( $property )
-    {
-    }
-
-    public function __set( $property, $value )
-    {
-    }
-
     /**
      * Gets the help tabs registered for the screen.
      *

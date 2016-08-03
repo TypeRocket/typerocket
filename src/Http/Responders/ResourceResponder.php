@@ -13,7 +13,7 @@ class ResourceResponder extends Responder
     private $actionMethod = null;
 
     /**
-     * Respond to REST requests
+     * Respond to custom requests
      *
      * Create proper request and run through Kernel
      *

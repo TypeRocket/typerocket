@@ -258,6 +258,11 @@ class Page extends Registrable
         return $this;
     }
 
+    /**
+     * Make the page use a TypeRocket controller and routing
+     *
+     * @return $this
+     */
     public function useController()
     {
         $this->useController = true;
@@ -344,6 +349,9 @@ class Page extends Registrable
         return $this;
     }
 
+    /**
+     * Invoked if $useController is true
+     */
     public function respond()
     {
         parse_str(parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY), $request_params);

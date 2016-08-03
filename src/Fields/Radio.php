@@ -22,9 +22,9 @@ class Radio extends Field
      */
     public function getString()
     {
-        $name       = $this->getNameAttributeString();
+        $name    = $this->getNameAttributeString();
         $default = $this->getSetting('default');
-        $option = $this->getValue();
+        $option  = $this->getValue();
         $option     = ! is_null($option) ? $this->getValue() : $default;
         $this->removeAttribute('name');
         $id = $this->getAttribute('id', '');

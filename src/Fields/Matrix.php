@@ -12,7 +12,7 @@ class Matrix extends Field implements ScriptField {
     use OptionsTrait;
 
     protected $mxid = null;
-    protected $component_folder = null;
+    protected $componentFolder = null;
 
     /**
      * Run on construction
@@ -265,11 +265,11 @@ class Matrix extends Field implements ScriptField {
      */
     public function getComponentFolder() {
 
-        if( ! $this->component_folder ) {
-            $this->component_folder = $this->getName();
+        if( ! $this->componentFolder ) {
+            $this->componentFolder = $this->getName();
         }
 
-        return $this->component_folder;
+        return $this->componentFolder;
     }
 
     /**
@@ -285,7 +285,7 @@ class Matrix extends Field implements ScriptField {
         $dir = $paths['components'] . '/' . $folder_name;
 
         if(file_exists($dir)) {
-            $this->component_folder = $folder_name;
+            $this->componentFolder = $folder_name;
         }
 
         return $this;

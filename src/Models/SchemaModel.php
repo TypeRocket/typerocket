@@ -6,7 +6,7 @@ class SchemaModel extends Model
 {
     public $resource = null;
     public $table = null;
-    public $id_column = 'id';
+    public $idColumn = 'id';
 
     protected $query = [];
     public $lastCompiledSQL = null;
@@ -36,7 +36,7 @@ class SchemaModel extends Model
     public function findAll( array $ids = [] )
     {
         if(!empty($ids)) {
-            $this->where( $this->id_column , 'IN', $ids);
+            $this->where( $this->idColumn , 'IN', $ids);
         }
 
         return $this;
@@ -192,7 +192,7 @@ class SchemaModel extends Model
     {
         $this->return_one = true;
         $this->id = (int) $id;
-        return $this->where( $this->id_column , $id)->take(1)->findAll();
+        return $this->where( $this->idColumn , $id)->take(1)->findAll();
     }
 
     /**
@@ -222,7 +222,7 @@ class SchemaModel extends Model
         unset($this->query['select']);
 
         if(!empty($ids)) {
-            $this->where( $this->id_column , 'IN', $ids);
+            $this->where( $this->idColumn , 'IN', $ids);
         }
 
         return $this->runQuery();

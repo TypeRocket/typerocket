@@ -21,6 +21,13 @@ class Router
     public $action;
     public $item_id;
 
+    /**
+     * Router constructor.
+     *
+     * @param \TypeRocket\Http\Request $request
+     * @param \TypeRocket\Http\Response $response
+     * @param string $action_method
+     */
     public function __construct( Request $request, Response $response, $action_method = 'GET' )
     {
         $this->request = $request;
@@ -59,12 +66,20 @@ class Router
         }
     }
 
+    /**
+     * Handle routing to controller
+     */
     public function handle() {
         $action = $this->action;
         $controller = $this->controller;
         $this->returned = $controller->$action( $this->item_id );
     }
 
+    /**
+     * Get the middleware group
+     *
+     * @return array
+     */
     public function getMiddlewareGroups() {
         $groups = [];
 
@@ -93,6 +108,13 @@ class Router
         return $groups;
     }
 
+    /**
+     * Get the controller action to call
+     *
+     * @param string $action_method
+     *
+     * @return null|string
+     */
     protected function getAction( $action_method = 'GET' ) {
         $request = $this->request;
 

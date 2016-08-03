@@ -20,14 +20,6 @@ class Core
         }
     }
 
-    public function __get( $property )
-    {
-    }
-
-    public function __set( $property, $value )
-    {
-    }
-
     /**
      * Core Init
      */
@@ -151,6 +143,9 @@ class Core
         return $messages;
     }
 
+    /**
+     *  Set flashing for admin notices
+     */
     public function setFlash() {
         if( !empty($_COOKIE['tr_admin_flash']) ) {
             $cookie = new Cookie();

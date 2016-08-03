@@ -17,6 +17,11 @@ class Routes
     public static $routes = [];
     public static $vars = [];
 
+    /**
+     * Routes constructor.
+     *
+     * @param array $routes
+     */
     public function __construct( array $routes = [] )
     {
         if( !empty($routes) ) {
@@ -111,6 +116,9 @@ class Routes
         }
     }
 
+    /**
+     *  Load the template for the front-end without globals
+     */
     private function getTemplate() {
         extract(View::$data);
         include ( View::$template );
