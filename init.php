@@ -34,6 +34,7 @@ define( 'TR_VERSION', '3.0.0' );
 define( 'TR_START', microtime( true ) );
 
 require __DIR__ . '/config.php';
+require __DIR__ . '/functions.php';
 
 /*
 |--------------------------------------------------------------------------

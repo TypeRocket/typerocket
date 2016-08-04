@@ -10,7 +10,6 @@ use TypeRocket\Http\Cookie,
 
 class Core
 {
-
     /**
      * Core
      *
@@ -21,7 +20,6 @@ class Core
     public function __construct($init = false) {
         if($init) {
             new Config();
-            require __DIR__ . '/../functions.php';
             $this->initCore();
         }
     }
