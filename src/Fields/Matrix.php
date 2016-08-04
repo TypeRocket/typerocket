@@ -13,6 +13,7 @@ class Matrix extends Field implements ScriptField {
 
     protected $mxid = null;
     protected $componentFolder = null;
+    protected $paths;
 
     /**
      * Run on construction
@@ -27,8 +28,8 @@ class Matrix extends Field implements ScriptField {
      * Get the scripts
      */
     public function enqueueScripts() {
-        $paths = Config::getPaths();
-        $assets = $paths['urls']['assets'];
+        $this->paths = Config::getPaths();
+        $assets = $this->paths['urls']['assets'];
         wp_enqueue_script( 'jquery-ui-sortable', [ 'jquery' ], '1.0', true );
         wp_enqueue_script( 'jquery-ui-datepicker', [ 'jquery' ], '1.0', true );
         wp_enqueue_script( 'wp-color-picker' );
@@ -134,11 +135,8 @@ class Matrix extends Field implements ScriptField {
             $select = $generator->getString();
 
         } else {
-
-            $paths = Config::getPaths();
-            $dir = $paths['components'] . '/' . $folder;
-
-            $select = "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add a files for Matrix <code>{$dir}</code> and add your matrix files to it.</div>";
+            $dir = realpath($this->paths['components'] . '/' . $folder);
+            $select = "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add a component folder at <code>{$dir}</code> and add your component files to it.</div>";
         }
 
         return $select;

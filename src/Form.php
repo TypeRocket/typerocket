@@ -773,7 +773,7 @@ class Form
     }
 
     /**
-     * Matrix Input
+     * Builder Input
      *
      * @param string $name
      * @param array $attr

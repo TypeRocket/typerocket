@@ -133,9 +133,8 @@ class Builder extends Matrix
             $select = $generator->getString();
 
         } else {
-            $dir = $this->paths['components'] . '/' . $folder;
-
-            $select = "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add a files for Matrix <code>{$dir}</code> and add your matrix files to it.</div>";
+            $dir = realpath($this->paths['components'] . '/' . $folder);
+            $select = "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add a component folder at <code>{$dir}</code> and add your component files to it.</div>";
         }
 
         return $select;
