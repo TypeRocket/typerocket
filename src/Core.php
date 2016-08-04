@@ -327,7 +327,8 @@ class Core
         add_action( 'rest_api_init', function () {
             register_rest_route( 'typerocket/v1', '/search', [
                 'methods' => 'GET',
-                'callback' => '\\TypeRocket\\WpRestApi::search'
+                'callback' => '\\TypeRocket\\Http\\Rewrites\\WpRestApi::search',
+                'permission_callback' => '\\TypeRocket\\Http\\Rewrites\\WpRestApi::permission'
             ]);
         } );
     }

@@ -714,7 +714,7 @@ class Form
     }
 
     /**
-     * File Input
+     * Search Input
      *
      * @param string $name
      * @param array $attr

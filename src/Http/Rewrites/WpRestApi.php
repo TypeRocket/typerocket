@@ -1,6 +1,6 @@
 <?php
 
-namespace TypeRocket;
+namespace TypeRocket\Http\Rewrites;
 
 class WpRestApi
 {
@@ -25,7 +25,7 @@ class WpRestApi
                 'number' => $limit
             ] );
         } else {
-            add_filter( 'posts_search', '\TypeRocket\WpRestApi::posts_search', 500, 2 );
+            add_filter( 'posts_search', '\TypeRocket\Http\Rewrites\WpRestApi::posts_search', 500, 2 );
             $query = new \WP_Query( [
                 'post_type' => $params['post_type'],
                 's' => $params['s'],
@@ -69,6 +69,25 @@ class WpRestApi
         }
 
         return $search;
+    }
+
+    /**
+     * Decide is a user can access the search API
+     *
+     * @param \WP_REST_Request $request
+     *
+     * @return mixed|void
+     */
+    public static function permission( \WP_REST_Request $request )
+    {
+        $permissions = false;
+        $logged_in = wp_validate_auth_cookie( $_COOKIE[LOGGED_IN_COOKIE], 'logged_in' );
+        if( $logged_in ) {
+            list($username, $time, $token) = explode('|',$_COOKIE[LOGGED_IN_COOKIE], 3);
+            $user = get_user_by('login', $username);
+            $permissions = user_can( $user, 'edit_others_posts' );
+        }
+        return apply_filters('tr_rest_search', $permissions);
     }
 
 }
