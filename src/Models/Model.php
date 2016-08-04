@@ -1,9 +1,8 @@
 <?php
 namespace TypeRocket\Models;
 
-use TypeRocket\Fields\Field;
-use TypeRocket\Http\Cookie;
-use TypeRocket\Sanitize;
+use TypeRocket\Fields\Field,
+    TypeRocket\Http\Cookie;
 
 abstract class Model
 {

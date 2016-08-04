@@ -2,10 +2,10 @@
 
 namespace TypeRocket\Layout;
 
-use TypeRocket\Config;
-use TypeRocket\Html\Generator;
-use TypeRocket\Models\SchemaModel;
-use TypeRocket\Page;
+use TypeRocket\Config,
+    TypeRocket\Html\Generator,
+    TypeRocket\Models\SchemaModel,
+    TypeRocket\Page;
 
 class Tables
 {

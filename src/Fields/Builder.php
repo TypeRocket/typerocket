@@ -10,7 +10,6 @@ class Builder extends Matrix
 {
 
     protected $components = [];
-    protected $paths;
 
     /**
      * Get the scripts
