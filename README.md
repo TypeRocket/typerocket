@@ -1,11 +1,10 @@
 ## TypeRocket
 
-Code advanced WordPress sites quickly and easily with TypeRocket.
+The WordPress Framework Designed for Developers.
 
-- You can make make post types, taxonomies and meta boxes with one line of code.
-- Add fields to post types, comments, meta boxes, option pages, user profiles and even on the front-end inside theme template files with minimal effort.
-- You can access a number of pre-made TypeRocket plugins for features like SEO and Theme Options installed directly into your theme.
-- Add custom admin pages, models, controllers, middleware, views and routes.
+- Register post types, taxonomies and meta boxes with one line of code.
+- Add fields to post types, comments, meta boxes, option pages, user profiles... everywhere.
+- Create custom admin pages, models, controllers, middleware, views and routes.
 - And so much more...
 
 See [http://typerocket.com](http://typerocket.com)
@@ -30,8 +29,6 @@ $bookDetails->setCallback( function() {
 
 $book->apply($bookDetails);
 ```
-
-[View the Advanced Tutorial](https://typerocket.com/making-a-book-post-type-in-wordpress-with-typerocket/)
 
 ### Requirements
 
