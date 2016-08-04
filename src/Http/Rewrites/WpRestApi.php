@@ -74,6 +74,8 @@ class WpRestApi
     /**
      * Decide is a user can access the search API
      *
+     * Only users who can edit others posts.
+     *
      * @param \WP_REST_Request $request
      *
      * @return mixed|void
