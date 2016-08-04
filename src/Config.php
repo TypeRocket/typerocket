@@ -18,7 +18,7 @@ class Config
     {
         if (self::$paths === null) {
             self::$debug   = defined( 'TR_DEBUG' ) ? TR_DEBUG : false;
-            self::$seed    = defined( 'TR_SEED' ) ? TR_SEED : NONCE_KEY;
+            self::$seed    = defined( 'TR_SEED' ) ? TR_SEED : md5(NONCE_KEY);
             self::$plugins = defined( 'TR_PLUGINS' ) ? TR_PLUGINS : '';
             self::$icons   = defined( 'TR_ICONS' ) ? TR_ICONS : Icons::class;
             self::$paths   = $this->defaultPaths();
