@@ -100,9 +100,11 @@ jQuery(document).ready ($) ->
           data: form_group: form_group
           success: (data) ->
             data = $(data)
+            $active_fields = $fields.children('.active')
+            $active_components = $components.children('.active')
             $fields.children().removeClass 'active'
             $components.children().removeClass 'active'
-            data.prependTo($fields).addClass 'active'
+            data.insertAfter($active_fields).addClass 'active'
 
             if img
               img = '<img src="'+img+'" />'
@@ -110,7 +112,7 @@ jQuery(document).ready ($) ->
             html = '
   <li class="active tr-builder-component-control">'+img+'<span class="tr-builder-component-title">'+$that.text()+'</span><span class="remove tr-remove-builder-component"></span>
   '
-            $components.prepend html
+            $active_components.after html
             initComponent data, $fields
             $that.removeClass 'disabled'
           error: (jqXHR) ->
