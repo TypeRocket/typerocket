@@ -27,7 +27,10 @@ if( defined('TR_START') ) {
 define( 'TR_VERSION', '3.0.0' );
 define( 'TR_START', microtime( true ) );
 
-require __DIR__ . '/config.php';
+if( file_exists(__DIR__ . '/config.php') ) {
+    require __DIR__ . '/config.php';
+}
+
 require __DIR__ . '/functions.php';
 
 /*
