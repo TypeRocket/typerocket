@@ -741,12 +741,17 @@
               $active_components = $components.children('.active');
               $fields.children().removeClass('active');
               $components.children().removeClass('active');
-              data.insertAfter($active_fields).addClass('active');
               if (img) {
                 img = '<img src="' + img + '" />';
               }
               html = '<li class="active tr-builder-component-control">' + img + '<span class="tr-builder-component-title">' + $that.text() + '</span><span class="remove tr-remove-builder-component"></span>';
-              $active_components.after(html);
+              if ($active_components.length > 0 && $active_fields.length > 0) {
+                data.insertAfter($active_fields).addClass('active');
+                $active_components.after(html);
+              } else {
+                data.prependTo($fields).addClass('active');
+                $components.prepend(html);
+              }
               initComponent(data, $fields);
               return $that.removeClass('disabled');
             },
