@@ -17,7 +17,7 @@ class Config
     public function __construct()
     {
         if (self::$paths === null) {
-            self::$debug   = defined( 'TR_DEBUG' ) ? TR_DEBUG : false;
+            self::$debug   = defined( 'TR_DEBUG' ) ? TR_DEBUG : true;
             self::$seed    = defined( 'TR_SEED' ) ? TR_SEED : NONCE_KEY;
             self::$plugins = defined( 'TR_PLUGINS' ) ? TR_PLUGINS : '';
             self::$icons   = defined( 'TR_ICONS' ) ? TR_ICONS : Icons::class;
