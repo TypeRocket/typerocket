@@ -21,7 +21,7 @@ class Core
     public function __construct($init = false) {
         if($init) {
             new Config();
-            require __DIR__ . '/../core/functions.php';
+            require __DIR__ . '/../functions.php';
             $this->initCore();
         }
     }
