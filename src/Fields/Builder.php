@@ -58,7 +58,7 @@ class Builder extends Matrix
                     <input type="button" value="Add New" class="button tr-builder-add-button">
                     <?php echo $this->getSelectHtml(); ?>
                 </div>
-                <ul data-thumbnails="<?php echo TR_COMPONENTS_THUMBNAIL_URL; ?>" class="tr-components" data-id="<?php echo $this->mxid; ?>" id="components-<?php echo $this->mxid; ?>">
+                <ul data-thumbnails="<?php echo $this->paths['urls']['thumbnails']; ?>" class="tr-components" data-id="<?php echo $this->mxid; ?>" id="components-<?php echo $this->mxid; ?>">
                     <?php foreach($this->components as $option):
                         $count++;
                         $type = $option[0];
