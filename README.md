@@ -2,12 +2,12 @@
 
 The WordPress Framework Designed for Developers.
 
+[http://typerocket.com](http://typerocket.com)
+
 - Register post types, taxonomies and meta boxes with one line of code.
 - Add fields to post types, comments, meta boxes, option pages, user profiles... everywhere.
 - Create custom admin pages, models, controllers, middleware, views and routes.
 - And so much more...
-
-See [http://typerocket.com](http://typerocket.com)
 
 ### Code Example
 
