@@ -10,13 +10,14 @@ class Builder extends Matrix
 {
 
     protected $components = [];
+    protected $paths;
 
     /**
      * Get the scripts
      */
     public function enqueueScripts() {
-        $paths = Config::getPaths();
-        $assets = $paths['urls']['assets'];
+        $this->paths = Config::getPaths();
+        $assets = $this->paths['urls']['assets'];
         wp_enqueue_script( 'jquery-ui-sortable', [ 'jquery' ], '1.0', true );
         wp_enqueue_script( 'jquery-ui-datepicker', [ 'jquery' ], '1.0', true );
         wp_enqueue_script( 'wp-color-picker' );
@@ -132,9 +133,7 @@ class Builder extends Matrix
             $select = $generator->getString();
 
         } else {
-
-            $paths = Config::getPaths();
-            $dir = $paths['components'] . '/' . $folder;
+            $dir = $this->paths['components'] . '/' . $folder;
 
             $select = "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add a files for Matrix <code>{$dir}</code> and add your matrix files to it.</div>";
         }
@@ -154,8 +153,8 @@ class Builder extends Matrix
     private function getComponentThumbnail($name, $type) {
         $path = '/' .$name . '/' . $type . '.png';
         $thumbnail = '';
-        if(file_exists(TR_COMPONENTS_THUMBNAIL_FOLDER_PATH . $path)) {
-            $thumbnail = TR_COMPONENTS_THUMBNAIL_URL . $path;
+        if(file_exists( $this->paths['thumbnails'] . $path)) {
+            $thumbnail = $this->paths['urls']['thumbnails'] . $path;
         }
         return $thumbnail;
     }
@@ -172,7 +171,7 @@ class Builder extends Matrix
         $utility = new Buffer();
         $blocks = '';
         $form = $this->getForm();
-        $paths = Config::getPaths();
+        $paths = $this->paths;
         $folder = $this->getComponentFolder();
 
         if (is_array( $val )) {

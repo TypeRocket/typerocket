@@ -1,3 +1,5 @@
+$blue: #3182bd;
+
 .typerocket-container {
     box-sizing: border-box;
     clear: both;
@@ -65,14 +67,18 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     background: #fff;
-    border: 1px solid #b8d85d;
-    color: #68823e;
+    border: 1px solid $blue;
+    color: #23282d;
     margin: 10px auto;
 }
 
 .tr-dev-alert-helper code {
-    background: #ddff64;
-    color: #333;
+    background: rgba(238, 238, 238, 0.35);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
+    color: #3182bd;
+    padding: 4px;
+    display: inline-block;
+    border-radius: 4px;
 }
 
 .typerocket-container .control-section + .control-section {
