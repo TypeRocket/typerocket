@@ -20,13 +20,7 @@
 | Try to start the TypeRocket. Need WordPress 4.5+ and PHP 5.5+
 |
 */
-global $wp_version;
-
-if(empty($wp_version) || $wp_version < '4.5'  ) {
-    die("You need version 4.5+ of WordPress. Using " . $wp_version);
-} elseif(PHP_VERSION < '5.5') {
-    die("You need version 5.5+ of PHP. Using " . PHP_VERSION);
-} elseif( defined('TR_START') ) {
+if( defined('TR_START') ) {
     die("TypeRocket was installed twice.");
 }
 
