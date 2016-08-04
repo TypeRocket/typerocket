@@ -100,43 +100,4 @@ new \TypeRocket\Config();
 require __DIR__ . '/functions.php';
 new \TypeRocket\Core(true);
 
-/*
-|--------------------------------------------------------------------------
-| Run Registry
-|--------------------------------------------------------------------------
-|
-| Runs after hooks muplugins_loaded, plugins_loaded and setup_theme
-| This allows the registry to work outside of the themes folder. Use
-| the typerocket_loaded hook to access TypeRocket from your WP plugins.
-|
-*/
-add_action( 'after_setup_theme', function () {
-    do_action( 'typerocket_loaded' );
-    \TypeRocket\Registry::initHooks();
-} );
-
-/*
-|--------------------------------------------------------------------------
-| Router
-|--------------------------------------------------------------------------
-|
-| Load TypeRocket Router
-|
-*/
-$tr_routes_file = realpath( TR_APP_FOLDER_PATH . '/Http/routes.php' );
-if( file_exists($tr_routes_file) ) {
-    $tr_routes_vars = require( $tr_routes_file );
-    new \TypeRocket\Http\Routes( $tr_routes_vars );
-}
-
-/*
-|--------------------------------------------------------------------------
-| Add APIs
-|--------------------------------------------------------------------------
-|
-| Add slim REST and Matrix APIs.
-|
-*/
-require __DIR__ . '/api/endpoints.php';
-
 define( 'TR_END', microtime( true ) );

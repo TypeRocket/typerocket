@@ -1,8 +1,12 @@
 <?php
 namespace TypeRocket;
 
-use TypeRocket\Http\Cookie;
-use TypeRocket\Layout\Notice;
+use TypeRocket\Http\Cookie,
+    TypeRocket\Http\Rewrites\Builder,
+    TypeRocket\Http\Rewrites\Matrix,
+    TypeRocket\Http\Rewrites\Rest,
+    TypeRocket\Http\Routes,
+    TypeRocket\Layout\Notice;
 
 class Core
 {
@@ -28,6 +32,37 @@ class Core
         $this->initHooks();
         $this->loadPlugins( new Plugin\PluginCollection() );
         $this->loadResponders();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Run Registry
+        |--------------------------------------------------------------------------
+        |
+        | Runs after hooks muplugins_loaded, plugins_loaded and setup_theme
+        | This allows the registry to work outside of the themes folder. Use
+        | the typerocket_loaded hook to access TypeRocket from your WP plugins.
+        |
+        */
+        add_action( 'after_setup_theme', function () {
+            do_action( 'typerocket_loaded' );
+            Registry::initHooks();
+        } );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Router
+        |--------------------------------------------------------------------------
+        |
+        | Load TypeRocket Router
+        |
+        */
+        $tr_routes_file = realpath( TR_APP_FOLDER_PATH . '/Http/routes.php' );
+        if( file_exists($tr_routes_file) ) {
+            $tr_routes_vars = require( $tr_routes_file );
+            new Http\Routes( $tr_routes_vars );
+        }
+
+        $this->initEndpoints();
     }
 
     /**
@@ -192,6 +227,109 @@ class Core
         $assets = $paths['urls']['assets'];
 
         wp_enqueue_script( 'typerocket-scripts', $assets . '/js/typerocket.js', [ 'jquery' ], '1.0', true );
+    }
+
+    /**
+     * Endpoints Init
+     */
+    public function initEndpoints()
+    {
+        add_action('admin_init', function() {
+            // Controller API
+            $regex = 'typerocket_rest_api/v1/([^/]*)/?$';
+            $location = 'index.php?typerocket_rest_controller=$matches[1]';
+            add_rewrite_rule( $regex, $location, 'top' );
+
+            $regex = 'typerocket_rest_api/v1/([^/]*)/([^/]*)/?$';
+            $location = 'index.php?typerocket_rest_controller=$matches[1]&typerocket_rest_item=$matches[2]';
+            add_rewrite_rule( $regex, $location, 'top' );
+
+            // Matrix API
+            $regex = 'typerocket_matrix_api/v1/([^/]*)/([^/]*)/([^/]*)/?$';
+            $location = 'index.php?typerocket_matrix_group=$matches[1]&typerocket_matrix_type=$matches[2]&typerocket_matrix_folder=$matches[3]';
+            add_rewrite_rule( $regex, $location, 'top' );
+
+            // Builder API
+            $regex = 'typerocket_builder_api/v1/([^/]*)/([^/]*)/([^/]*)/?$';
+            $location = 'index.php?typerocket_builder_group=$matches[1]&typerocket_builder_type=$matches[2]&typerocket_builder_folder=$matches[3]';
+            add_rewrite_rule( $regex, $location, 'top' );
+        });
+
+        add_action('init', function() {
+            // Routes API
+            if( !empty( Routes::$routes ) ) {
+                (new Routes)->register();
+            }
+        });
+
+        add_filter( 'query_vars', function($vars) {
+            $vars[] = 'typerocket_rest_controller';
+            $vars[] = 'typerocket_rest_item';
+            $vars[] = 'typerocket_matrix_group';
+            $vars[] = 'typerocket_matrix_folder';
+            $vars[] = 'typerocket_matrix_type';
+            $vars[] = 'typerocket_builder_group';
+            $vars[] = 'typerocket_builder_folder';
+            $vars[] = 'typerocket_builder_type';
+            $vars = array_merge($vars, Routes::$vars );
+
+            return $vars;
+        } );
+
+        add_filter( 'template_include', function($template) {
+
+            $resource = get_query_var('typerocket_rest_controller', null);
+
+            $load_template = ($resource);
+            $load_template = apply_filters('tr_rest_api_template', $load_template);
+
+            if($load_template) {
+                new Rest();
+            }
+
+            return $template;
+        }, 99 );
+
+        add_filter( 'template_include', function($template) {
+
+            $matrix_group = get_query_var('typerocket_matrix_group', null);
+            $matrix_type = get_query_var('typerocket_matrix_type', null);
+            $matrix_folder = get_query_var('typerocket_matrix_folder', null);
+
+            $load_template = ($matrix_group && $matrix_type && $matrix_folder);
+            $load_template = apply_filters('tr_matrix_api_template', $load_template);
+
+            if($load_template) {
+                new Matrix();
+                die();
+            }
+
+            return $template;
+        }, 99 );
+
+        add_filter( 'template_include', function($template) {
+
+            $builder_group = get_query_var('typerocket_builder_group', null);
+            $builder_type = get_query_var('typerocket_builder_type', null);
+            $builder_folder = get_query_var('typerocket_builder_folder', null);
+
+            $load_template = ($builder_group && $builder_type && $builder_folder );
+            $load_template = apply_filters('tr_builder_api_template', $load_template);
+
+            if($load_template) {
+                new Builder();
+                die();
+            }
+
+            return $template;
+        }, 99 );
+
+        add_action( 'rest_api_init', function () {
+            register_rest_route( 'typerocket/v1', '/search', [
+                'methods' => 'GET',
+                'callback' => '\\TypeRocket\\WpRestApi::search'
+            ]);
+        } );
     }
 
 }
