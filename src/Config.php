@@ -84,12 +84,12 @@ class Config
     {
         return [
             'assets'  => __DIR__ . '/../assets',
-            'views'  => defined( 'TR_VIEWS' ) ? TR_VIEWS : __DIR__ . '/../../views',
-            'pages'  => defined( 'TR_PAGES' ) ? TR_PAGES : __DIR__ . '/../../pages',
-            'plugins' => defined( 'TR_PLUGINS_FOLDER_PATH' ) ? TR_PLUGINS_FOLDER_PATH : __DIR__ . '/../../plugins',
-            'components'  => defined( 'TR_COMPONENTS_FOLDER_PATH' ) ? TR_COMPONENTS_FOLDER_PATH : __DIR__ . '/../../components',
-            'thumbnails'  => defined( 'TR_COMPONENTS_THUMBNAIL_FOLDER_PATH' ) ? TR_COMPONENTS_THUMBNAIL_FOLDER_PATH : __DIR__ . '/../../components',
-            'extend'  => defined( 'TR_APP_FOLDER_PATH' ) ? TR_APP_FOLDER_PATH : __DIR__ . '/../../app',
+            'views'  => defined( 'TR_VIEWS' ) ? TR_VIEWS : get_stylesheet_directory() . '/../../views',
+            'pages'  => defined( 'TR_PAGES' ) ? TR_PAGES : get_stylesheet_directory() . '/pages',
+            'plugins' => defined( 'TR_PLUGINS_FOLDER_PATH' ) ? TR_PLUGINS_FOLDER_PATH : get_stylesheet_directory() . '/plugins',
+            'components'  => defined( 'TR_COMPONENTS_FOLDER_PATH' ) ? TR_COMPONENTS_FOLDER_PATH : get_stylesheet_directory() . '/components',
+            'thumbnails'  => defined( 'TR_COMPONENTS_THUMBNAIL_FOLDER_PATH' ) ? TR_COMPONENTS_THUMBNAIL_FOLDER_PATH : get_stylesheet_directory() . '/components',
+            'extend'  => defined( 'TR_APP_FOLDER_PATH' ) ? TR_APP_FOLDER_PATH : get_stylesheet_directory() . '/app',
             'urls'    => [
                 'theme'   => get_stylesheet_directory_uri(),
                 'assets'  => defined( 'TR_ASSETS_URL' ) ? TR_ASSETS_URL : get_stylesheet_directory_uri() . '/typerocket/assets',
