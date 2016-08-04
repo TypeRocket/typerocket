@@ -135,7 +135,7 @@ class Matrix extends Field implements ScriptField {
             $select = $generator->getString();
 
         } else {
-            $dir = realpath($this->paths['components'] . '/' . $folder);
+            $dir = $this->paths['components'] . '/' . $folder;
             $select = "<div class=\"tr-dev-alert-helper\"><i class=\"icon tr-icon-bug\"></i> Add a component folder at <code>{$dir}</code> and add your component files to it.</div>";
         }
 
