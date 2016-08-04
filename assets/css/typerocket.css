@@ -3094,7 +3094,7 @@ body .redactor-box-fullscreen {
     display: none;
     position: absolute;
     border-radius: 3px;
-    z-index: 1000;
+    z-index: 10000;
     top: 35px;
     left: 0;
     padding: 5px;
