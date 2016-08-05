@@ -1,0 +1,72 @@
+#tr-seo-preview h4 {
+    margin: 0;
+}
+
+#tr-seo-preview p {
+    margin-top: 0;
+}
+
+.tr-seo-preview-google {
+    max-width: 512px;
+    display: block;
+}
+
+#tr-seo-preview-google-title-orig,
+#tr-seo-preview-google-desc-orig {
+    display: none;
+}
+
+#tr-seo-preview-google-title {
+    display: block;
+    color: #2518B5;
+    cursor: pointer;
+    font-family: arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    height: auto;
+    line-height: 19px;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    text-align: left;
+    text-decoration: underline;
+    visibility: visible;
+    white-space: nowrap;
+    width: auto;
+    zoom: 1;
+}
+
+#tr-seo-preview-google-url {
+    color: #00802A;
+    font-family: arial, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+    height: 16px;
+    line-height: 16px;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    margin-bottom: 1px;
+    text-align: left;
+    visibility: visible;
+    white-space: nowrap;
+    zoom: 1;
+}
+
+#tr-seo-preview-google-desc {
+    color: #444;
+    display: inline;
+    font-family: arial, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    height: auto;
+    line-height: 16px;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    text-align: left;
+    visibility: visible;
+    width: auto;
+    zoom: 1;
+}
