@@ -9,7 +9,15 @@ The WordPress Framework Designed for Developers.
 - Create custom admin pages, models, controllers, middleware, views and routes.
 - And so much more...
 
-### Code Example
+## Install Composer Dependencies
+
+Install packages using [Composer](https://getcomposer.org/).
+
+```
+composer install
+```
+
+## Code Example
 
 Touch the tip of the iceberg. This short snippet of code creates custom fields, saves the data and registers a custom post type. 
 
