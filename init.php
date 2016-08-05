@@ -23,6 +23,7 @@ if( file_exists(__DIR__ . '/vendor/autoload.php') ) {
 
 require __DIR__ . '/config.php';
 
-new \TypeRocket\Core(true);
+new \TypeRocket\Config();
+( new \TypeRocket\Core() )->initCore();
 
 define( 'TR_END', microtime( true ) );

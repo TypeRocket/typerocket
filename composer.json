@@ -12,11 +12,11 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "typerocket/core": "~3.0"
+        "typerocket/core": "master-dev"
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "app/"
         }
     },
     "minimum-stability": "dev"
