@@ -31,32 +31,9 @@ if( file_exists(__DIR__ . '/config.php') ) {
     require __DIR__ . '/config.php';
 }
 
-require __DIR__ . '/functions.php';
-
-/*
-|--------------------------------------------------------------------------
-| Require Core Classes
-|--------------------------------------------------------------------------
-|
-| Autoload the core classes of TypeRocket.
-|
-*/
-spl_autoload_register( function ( $class ) {
-    $prefix   = 'TypeRocket\\';
-    $base_dir = __DIR__ . '/src/';
-
-    $len = strlen( $prefix );
-    if (strncmp( $prefix, $class, $len ) !== 0) {
-        return;
-    }
-
-    $relative_class = substr( $class, $len );
-
-    $file = str_replace( '\\', '/', $relative_class ) . '.php';
-    if (file_exists( $base_dir . $file )) {
-        require $base_dir . $file;
-    }
-} );
+if( file_exists(__DIR__ . '/vendor/autoload.php') ) {
+    require __DIR__ . '/vendor/autoload.php';
+}
 
 /*
 |--------------------------------------------------------------------------
