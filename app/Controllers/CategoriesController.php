@@ -1,8 +1,8 @@
 <?php
 namespace App\Controllers;
 
-use \TypeRocket\Controllers\TaxonomiesBaseController,
-    \App\Models\Categories;
+use \TypeRocket\Controllers\TaxonomiesBaseController;
+use \App\Models\Categories;
 
 class CategoriesController extends TaxonomiesBaseController
 {

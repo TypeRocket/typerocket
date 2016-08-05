@@ -1,8 +1,8 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\Pages,
-    TypeRocket\Controllers\PostTypesBaseController;
+use App\Models\Pages;
+use TypeRocket\Controllers\PostTypesBaseController;
 
 class PagesController extends PostTypesBaseController
 {
