@@ -1,5 +1,7 @@
 ## TypeRocket
 
+[![Total Downloads](https://poser.pugx.org/TypeRocket/typerocket/d/total.svg)](https://packagist.org/packages/TypeRocket/typerocket)
+
 The WordPress Framework Designed for Developers.
 
 [http://typerocket.com](http://typerocket.com)
