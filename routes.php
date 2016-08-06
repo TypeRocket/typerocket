@@ -7,4 +7,3 @@
 | Manage your web routes here.
 |
 */
-add_rewrite_rule();
