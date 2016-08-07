@@ -13,7 +13,7 @@ The WordPress Framework Designed for Developers.
 
 ## Install Composer Dependencies
 
-To install TypeRocket use [composer](https://getcomposer.org/). Go to your theme folder in the command line and run the composer command:
+To install TypeRocket use [composer](https://getcomposer.org/). Go to your custom theme folder, not the WordPress themes folder. Then in the command line and run the composer command:
 
 ```sh
 composer create-project --prefer-dist typerocket/typerocket
