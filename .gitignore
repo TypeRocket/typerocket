@@ -1,6 +1,5 @@
 # TypeRocket #
 #########################
-/config.php
 /vendor
 .htaccess
 node_modules
