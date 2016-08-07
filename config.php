@@ -1,13 +1,14 @@
 <?php
 /*
 |--------------------------------------------------------------------------
-| TypeRocket URL
+| Enabled Plugins
 |--------------------------------------------------------------------------
 |
-| The URL where TypeRocket can be found.
+| The folder names of the TypeRocket plugins you wish to enable separated
+| by pipes: seo|dev|theme-options|builder
 |
 */
-define('TR_URL', get_stylesheet_directory_uri() . '/typerocket');
+define('TR_PLUGINS', 'seo|dev|theme-options|builder');
 
 /*
 |--------------------------------------------------------------------------
@@ -21,14 +22,13 @@ define('TR_DEBUG', true);
 
 /*
 |--------------------------------------------------------------------------
-| Enabled Plugins
+| TypeRocket Assets URL
 |--------------------------------------------------------------------------
 |
-| The folder names of the TypeRocket plugins you wish to enable separated
-| by pipes: seo|dev|theme-options|builder
+| The URL where TypeRocket assets can be found.
 |
 */
-define('TR_PLUGINS', 'theme-options|seo');
+define('TR_ASSETS_URL', get_stylesheet_directory_uri() . '/typerocket/assets');
 
 /*
 |--------------------------------------------------------------------------

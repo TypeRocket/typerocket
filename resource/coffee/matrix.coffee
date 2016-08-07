@@ -11,7 +11,7 @@ jQuery(document).ready ($) ->
       type = $select.val()
       callbacks = TypeRocket.repeaterCallbacks
       $that.attr('disabled', 'disabled').val 'Adding...'
-      url = '/typerocket_matrix_api/v1/' + group + '/' + type + '/' + folder
+      url = '/tr_matrix_api/v1/' + group + '/' + type + '/' + folder
       form_group = $select.data('group')
       $.ajax
         url: url

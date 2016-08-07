@@ -12,15 +12,6 @@ class BuilderPlugin
 
         add_action( 'edit_form_after_title', [ $this, 'edit_form_after_title' ], 9999999999999 );
         add_action( 'edit_form_after_editor', [ $this, 'edit_form_after_editor' ], 0 );
-
-        add_action( 'admin_enqueue_scripts', function() {
-            $paths = Config::getPaths();
-            $path = $paths['urls']['plugins'] . '/builder/';
-
-            wp_enqueue_style( 'tr-builder-plugin-css', $path . 'builder.css' );
-            wp_enqueue_script( 'tr-builder-plugin-script', $path . 'builder.js', [ 'jquery' ], '1.0', true );
-        } );
-
         do_action('tr_builder_plugin_init', $this);
     }
 

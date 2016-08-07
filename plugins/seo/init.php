@@ -27,7 +27,6 @@ class TypeRocketSeoPlugin
 
 
             if ( is_admin() ) {
-                add_action( 'admin_init', [$this, 'css']);
                 add_action( 'add_meta_boxes', [$this, 'seo_meta']);
             }
         }
@@ -184,15 +183,6 @@ class TypeRocketSeoPlugin
                 exit;
             }
         }
-    }
-
-    // CSS
-    public function css()
-    {
-        $paths = \TypeRocket\Config::getPaths();
-        $path  = $paths['urls']['plugins'] . '/seo/';
-        wp_enqueue_style( 'tr-seo', $path . 'style.css' );
-        wp_enqueue_script( 'tr-seo', $path . 'script.js', ['jquery'], '1.0', true );
     }
 
     public function meta()

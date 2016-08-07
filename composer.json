@@ -12,7 +12,7 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "typerocket/core": "master-dev"
+        "typerocket/core": "3.0.0rc5"
     },
     "autoload": {
         "psr-4": {
