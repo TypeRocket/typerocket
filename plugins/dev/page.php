@@ -7,7 +7,7 @@ if ( !function_exists( 'add_action' ) ) {
 
 function tr_dev_icons()
 {
-    $icons = new TypeRocket\Icons;
+    $icons = new TypeRocket\Elements\Icons;
 
     $generator = new \TypeRocket\Html\Generator();
 

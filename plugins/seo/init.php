@@ -1,6 +1,4 @@
 <?php
-use TypeRocket\Layout\Tabs;
-
 class TypeRocketSeoPlugin
 {
 
@@ -62,12 +60,12 @@ class TypeRocketSeoPlugin
             'priority' => 'low',
             'callback' => [$this, 'meta']
         ];
-        $obj         = new \TypeRocket\MetaBox( 'tr_seo', null, $args );
+        $obj         = new \TypeRocket\Register\MetaBox( 'tr_seo', null, $args );
         $obj->addPostType( $publicTypes )->register();
     }
 
     // Page Title
-    public function title( $title )
+    public function title( $title, $arg2 = null, $arg3 = null )
     {
         $newTitle = tr_posts_field( 'seo.meta.title', $this->itemId );
 
@@ -200,7 +198,7 @@ class TypeRocketSeoPlugin
     public function meta()
     {
         echo '<div class="typerocket-container">';
-        $buffer = new \TypeRocket\Buffer();
+        $buffer = new \TypeRocket\Utility\Buffer();
 
         // field settings
         $title = [
@@ -275,8 +273,7 @@ class TypeRocketSeoPlugin
         ];
 
         // build form
-        /** @var \TypeRocket\Form $form */
-        $form = new \TypeRocket\Form();
+        $form = new \TypeRocket\Elements\Form();
         $form->setDebugStatus( false );
         $form->setGroup( 'seo.meta' );
         $buffer->startBuffer();
@@ -302,7 +299,7 @@ class TypeRocketSeoPlugin
         echo $form->select( 'index', [], $help )->setOptions($index_opts);
         $buffer->indexBuffer( 'advanced' ); // index buffer
 
-        $tabs = new Tabs();
+        $tabs = new \TypeRocket\Elements\Tabs();
         $tabs->addTab( [
                 'id'       => 'seo-general',
                 'title'    => "Basic",

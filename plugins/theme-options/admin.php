@@ -7,7 +7,7 @@ if ( ! function_exists( 'add_action' )) {
 <h1>Theme Options</h1>
 
 <?php
-$form = new \TypeRocket\Form();
+$form = new \TypeRocket\Elements\Form();
 $form->useRest();
 $form->useAjax();
 $form->setGroup( $this->getName() );

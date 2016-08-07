@@ -1,6 +1,4 @@
 <?php
-namespace TypeRocket;
-
 class ThemeOptionsPlugin
 {
 
@@ -44,7 +42,7 @@ class ThemeOptionsPlugin
     public function fillable( $model )
     {
 
-        if ($model instanceof Models\OptionsModel) {
+        if ($model instanceof \TypeRocket\Models\OptionsModel) {
             $fillable = $model->getFillableFields();
 
             if ( ! empty( $fillable )) {
@@ -65,6 +63,7 @@ class ThemeOptionsPlugin
         echo '<div class="wrap">';
         $file = apply_filters( 'tr_theme_options_page', __DIR__ . '/admin.php' );
         if (file_exists( $file )) {
+            /** @noinspection PhpIncludeInspection */
             include( $file );
         }
 
