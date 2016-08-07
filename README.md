@@ -13,10 +13,18 @@ The WordPress Framework Designed for Developers.
 
 ## Install Composer Dependencies
 
-Install packages using [Composer](https://getcomposer.org/).
+To install TypeRocket use [composer](https://getcomposer.org/). Go to your theme folder in the command line and run the composer command:
 
+```sh
+composer create-project --prefer-dist typerocket/typerocket
 ```
-composer install
+
+At the top of your themes `functions.php` file require `typerocket/init.php`. This will initialize TypeRocket.
+
+```php
+<?php // functions.php
+
+require ('typerocket/init.php');
 ```
 
 ## Code Example
@@ -25,8 +33,6 @@ Touch the tip of the iceberg. This short snippet of code creates custom fields, 
 
 ```php
 <?php // functions.php
-include 'typerocket/init.php';
-
 $book = tr_post_type('Book')->setIcon('Book');
 $bookDetails = tr_meta_box('Book Details');
 $bookDetails->setCallback( function() {
