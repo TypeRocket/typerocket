@@ -9,4 +9,4 @@ define( 'TR_APP_NAMESPACE', 'App' );
 
 require __DIR__ . '/vendor/autoload.php';
 
-new \TypeRocket\Console\Launcher;
+new \TypeRocket\Console\Launcher();
