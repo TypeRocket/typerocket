@@ -10,6 +10,6 @@ TypeRocket makes it easy to do so much. Build component based designs. Add post 
 
 Documentation and examples can be found at [http://typerocket.com](http://typerocket.com)
 
-### License
+## License
 
 TypeRocket is open-sourced software licenced under the [GNU General Public License 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
