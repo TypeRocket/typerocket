@@ -1,11 +1,12 @@
 var elixir = require('laravel-elixir');
 
 elixir.config.assetsPath = './resource';
-elixir.config.typeRocketPublicAssetsPath = './assets';
+elixir.config.publicPath = './wordpress/assets';
 elixir.config.sourcemaps = false;
 
 elixir(function(mix) {
-    var coffee_items = [
+
+    mix.coffee( [
         'http.coffee',
         'booyah.coffee',
         'typerocket.coffee',
@@ -16,8 +17,9 @@ elixir(function(mix) {
         'seo.coffee',
         'link.coffee',
         'dev.coffee'
-    ];
-
-    mix.coffee( coffee_items , elixir.config.typeRocketPublicAssetsPath + '/js/typerocket.js', 'coffee');
-    mix.sass( ['typerocket.scss'] , elixir.config.typeRocketPublicAssetsPath + '/css/typerocket.css');
+    ] );
+    mix.sass( [
+        'typerocket/typerocket.scss',
+        'app.scss'
+    ] );
 });

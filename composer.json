@@ -19,5 +19,10 @@
             "App\\": "app/"
         }
     },
+    "scripts": {
+        "post-create-project-cmd": [
+            "php galaxy seed"
+        ]
+    },
     "minimum-stability": "dev"
 }
