@@ -43,5 +43,29 @@ return [
     | The icon class to use for the admin.
     |
     */
-    'icons' => \TypeRocket\Elements\Icons::class
+    'icons' => \TypeRocket\Elements\Icons::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Templates
+    |--------------------------------------------------------------------------
+    |
+    | The templates to use for the TypeRocket theme. Set to false if using
+    | a theme or `templates` if using core for templates.
+    |
+    */
+    'templates' => 'templates',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Configurations
+    |--------------------------------------------------------------------------
+    |
+    | Load other configurations
+    |
+    */
+    'configurations' => [
+        'paths'
+    ]
+
 ];

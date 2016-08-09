@@ -9,8 +9,8 @@ return [
     |
     */
     'urls' => [
-        'assets' => get_stylesheet_directory_uri() . '/typerocket/wordpress/assets',
-        'components' => get_stylesheet_directory_uri() . '/typerocket/wordpress/assets/components',
+        'assets' => home_url() . '/typerocket/wordpress/assets',
+        'components' => home_url() . '/typerocket/wordpress/assets/components',
     ],
 
     /*
@@ -52,6 +52,16 @@ return [
     |
     */
     'pages'  => TR_PATH . '/resources/pages',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Templates
+    |--------------------------------------------------------------------------
+    |
+    | The PATH were theme templates can be found.
+    |
+    */
+    'themes'  => TR_PATH . '/resources/themes',
 
     /*
     |--------------------------------------------------------------------------

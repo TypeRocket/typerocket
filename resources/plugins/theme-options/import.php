@@ -1,4 +1,4 @@
-<?php if(TR_DEBUG == true) : ?>
+<?php if( \TypeRocket\Core\Config::getDebugStatus() == true) : ?>
 <div id="export-theme-options">
     <h2>Export</h2>
     <p><a class="button button-primary" href="<?php echo admin_url(); ?>themes.php?page=theme_options&theme-options=export">Export Theme Options as JSON</a></p>
