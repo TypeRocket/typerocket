@@ -54,7 +54,7 @@ return [
     | a theme or `templates` if using core for templates.
     |
     */
-    'templates' => 'templates',
+    'templates' => false,
 
     /*
     |--------------------------------------------------------------------------
