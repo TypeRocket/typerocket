@@ -20,6 +20,16 @@ elixir(function(mix) {
     mix.sass('theme.scss');
     mix.sass('admin.scss');
 
+    mix.scripts([
+        'plugins.js',
+        'theme.js'
+    ], elixir.config.publicPath + '/js/theme.js');
+
+    mix.scripts([
+        'plugins.js',
+        'admin.js'
+    ], elixir.config.publicPath + '/js/admin.js');
+
     // TypeRocket Core Assets
     mix.coffee([
         'typerocket/http.coffee',
