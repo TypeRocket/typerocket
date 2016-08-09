@@ -27,7 +27,7 @@ elixir(function(mix) {
 
     mix.scripts([
         'plugins.js',
-        'theme.js'
+        'admin.js'
     ], elixir.config.publicPath + '/js/admin.js');
 
     // TypeRocket Core Assets
