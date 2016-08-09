@@ -51,7 +51,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | The templates to use for the TypeRocket theme. Set to false if using
-    | a theme or `templates` if using core for templates.
+    | a theme or `templates` if using core for templates. Must be using
+    | TypeRocket as root.
     |
     */
     'templates' => false,
