@@ -9,8 +9,8 @@ return [
     |
     */
     'urls' => [
-        'assets' => home_url() . '/typerocket/wordpress/assets',
-        'components' => home_url() . '/typerocket/wordpress/assets/components',
+        'assets' => get_template_directory_uri() . '/typerocket/wordpress/assets',
+        'components' => get_template_directory_uri() . '/typerocket/wordpress/assets/components',
     ],
 
     /*
