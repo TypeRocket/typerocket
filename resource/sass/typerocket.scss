@@ -100,6 +100,10 @@ $blue: #3182bd;
     top: 0;
 }
 
+.tr-frame-fields .control-section + .control-section:after {
+    padding: 0 10px 0;
+}
+
 #addtag .typerocket-container {
     margin-bottom: 20px;
 }
@@ -761,4 +765,5 @@ body .tr-builder .controls .tr-components li,
 @import 'tabs';
 @import 'ui-datepicker';
 @import 'builder';
+@import 'forms';
 @import 'seo';
