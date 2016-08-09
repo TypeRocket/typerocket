@@ -1,60 +1,15 @@
-## TypeRocket
+## TypeRocket WordPress Framework
 
 [![Total Downloads](https://poser.pugx.org/TypeRocket/typerocket/d/total.svg)](https://packagist.org/packages/TypeRocket/typerocket)
 
-The WordPress Framework Designed for Developers.
+TypeRocket is a powerful framework for WordPress developers. We set out to make a framework designed to be beautiful within WordPress and deliver the tools needed to build a modern website or application.
+  
+TypeRocket makes it easy to do so much. Build component based designs. Add post types, taxonomies, meta boxes, pages, forms and fields. Create custom routes, models, controller, middleware and views.
 
-[http://typerocket.com](http://typerocket.com)
+## Documentation
 
-- Register post types, taxonomies and meta boxes with one line of code.
-- Add fields to post types, comments, meta boxes, option pages, user profiles... everywhere.
-- Create custom admin pages, models, controllers, middleware, views and routes.
-- And so much more...
+Documentation and examples can be found at [http://typerocket.com](http://typerocket.com)
 
-## Install Composer Dependencies
+### License
 
-To install TypeRocket use [composer](https://getcomposer.org/). Go to your custom theme folder, not the WordPress themes folder. Then in the command line and run the composer command:
-
-```sh
-composer create-project --prefer-dist typerocket/typerocket
-```
-
-At the top of your themes `functions.php` file require `typerocket/init.php`. This will initialize TypeRocket.
-
-```php
-<?php // functions.php
-
-require ('typerocket/init.php');
-```
-
-## Code Example
-
-Touch the tip of the iceberg. This short snippet of code creates custom fields, saves the data and registers a custom post type. 
-
-```php
-<?php // functions.php
-$book = tr_post_type('Book')->setIcon('Book');
-$bookDetails = tr_meta_box('Book Details');
-$bookDetails->setCallback( function() {
-  $form = tr_form();
-  echo $form->text('Author');
-  echo $form->text('Publisher');
-  echo $form->text('ISBN');
-  echo $form->image('Book Cover');
-});
-
-$book->apply($bookDetails);
-```
-
-### Requirements
-
-- WordPress 4.5+
-- PHP 5.5+
-
-### Languages
-
-- English only
-
-### Icons
-
-http://icomoon.io/#preview-free licensed under the GPL.
+TypeRocket is open-sourced software licenced under the [GNU General Public License 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
