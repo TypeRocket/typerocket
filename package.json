@@ -4,11 +4,7 @@
         "prod": "gulp --production",
         "dev": "gulp watch"
     },
-    "devDependencies": {
-        "gulp": "~3.9",
-        "laravel-elixir-coffeescript": "^1.0.2"
-    },
     "dependencies": {
-        "laravel-elixir": "^6.0.0-9"
+        "typerocket-assets": "^3.0.0-3"
     }
 }

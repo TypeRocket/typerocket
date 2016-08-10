@@ -6,22 +6,22 @@ var elixir = require('laravel-elixir');
  |--------------------------------------------------------------------------
  |
  | Elixir provides a clean, fluent API for defining some basic Gulp tasks
- | for your TypeRocket application. By default, we are compiling the Sass
- | file for our application, as well as publishing vendor resources.
+ | for your TypeRocket application. By default, we are compiling the
+ | Theme and Admin files for our application, as well as publishing
+ | vendor resources.
  |
  */
 elixir.config.assetsPath = './resources/assets';
-elixir.config.publicPath = './wordpress/assets';
+elixir.config.publicPath = './wordpress/assets/templates';
 elixir.config.sourcemaps = false;
 
 elixir(function(mix) {
     // Directories
-    var assets = elixir.config.publicPath;
-    var templates = elixir.config.publicPath + '/templates';
+    var templates = elixir.config.publicPath;
 
     // Your WordPress Templates SASS
-    mix.sass('theme.scss', templates + '/css/theme.css');
-    mix.sass('admin.scss', templates + '/css/admin.css' );
+    mix.sass('theme.scss');
+    mix.sass('admin.scss');
 
     // Your WordPress Templates JS
     mix.scripts([
@@ -33,19 +33,18 @@ elixir(function(mix) {
         'admin.js'
     ], templates + '/js/admin.js');
 
-    // TypeRocket Core Assets
-    mix.coffee([
-        'typerocket/http.coffee',
-        'typerocket/booyah.coffee',
-        'typerocket/typerocket.coffee',
-        'typerocket/items.coffee',
-        'typerocket/media.coffee',
-        'typerocket/matrix.coffee',
-        'typerocket/builder.coffee',
-        'typerocket/seo.coffee',
-        'typerocket/link.coffee',
-        'typerocket/dev.coffee'
-    ], assets + '/typerocket/js/core.js' );
-    mix.sass('typerocket/typerocket.scss', assets + '/typerocket/css/core.css' );
-
 });
+
+/*
+ |--------------------------------------------------------------------------
+ | Update TypeRocket Assets
+ |--------------------------------------------------------------------------
+ |
+ | Uncomment this section if you want to update the TypeRocket assets each
+ | time you compile your resources. Run ` npm update typerocket-assets`
+ | to check for new versions.
+ |
+ */
+
+// var typerocket = require('typerocket-assets');
+// typerocket.compileTypeRocketAssets( './wordpress/assets' );
