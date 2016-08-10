@@ -15,20 +15,23 @@ elixir.config.publicPath = './wordpress/assets';
 elixir.config.sourcemaps = false;
 
 elixir(function(mix) {
+    // Directories
+    var assets = elixir.config.publicPath;
+    var templates = elixir.config.publicPath + '/templates';
 
-    // Your WordPress App
-    mix.sass('theme.scss');
-    mix.sass('admin.scss');
+    // Your WordPress Templates SASS
+    mix.sass('theme.scss', templates + '/css/theme.css');
+    mix.sass('admin.scss', templates + '/css/admin.css' );
 
+    // Your WordPress Templates JS
     mix.scripts([
         'plugins.js',
         'theme.js'
-    ], elixir.config.publicPath + '/js/theme.js');
+    ], templates + '/js/theme.js');
 
     mix.scripts([
-        'plugins.js',
         'admin.js'
-    ], elixir.config.publicPath + '/js/admin.js');
+    ], templates + '/js/admin.js');
 
     // TypeRocket Core Assets
     mix.coffee([
@@ -42,7 +45,7 @@ elixir(function(mix) {
         'typerocket/seo.coffee',
         'typerocket/link.coffee',
         'typerocket/dev.coffee'
-    ], elixir.config.publicPath + '/js/typerocket.js' );
-    mix.sass('typerocket/typerocket.scss');
+    ], assets + '/typerocket/js/core.js' );
+    mix.sass('typerocket/typerocket.scss', assets + '/typerocket/css/core.css' );
 
 });
