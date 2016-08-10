@@ -41,7 +41,7 @@ elixir(function(mix) {
  |--------------------------------------------------------------------------
  |
  | Uncomment this section if you want to update the TypeRocket assets each
- | time you compile your resources. Run ` npm update typerocket-assets`
+ | time you compile your resources. Run `npm update typerocket-assets`
  | to check for new versions.
  |
  */
