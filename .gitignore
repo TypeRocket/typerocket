@@ -3,6 +3,8 @@ node_modules
 /vendor
 /tests
 composer.lock
+.env
+/wp-config.php
 
 ### Vagrant
 .vagrant
@@ -10,7 +12,7 @@ Vagrantfile
 bootstrap.sh
 
 ### WordPress Specific
-/wp-config.php
+/wordpress/wp-config.php
 /wordpress/.htaccess
 /wordpress/robots.txt
 /wordpress/wp-admin
@@ -53,7 +55,7 @@ Thumbs.db
 .project
 .build
 
-### Large/disallowed file types
+### Large/disallowed File Types
 .svn
 .cvs
 *.hqx
