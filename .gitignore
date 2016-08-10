@@ -1,55 +1,107 @@
-# TypeRocket #
-#########################
-/vendor
-.htaccess
+### TypeRocket Project Specific
 node_modules
+/vendor
+/tests
 composer.lock
 
-# Compiled source #
-###################
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.so
-*.css.map
-*.js.map
+### Vagrant
+.vagrant
+Vagrantfile
+bootstrap.sh
 
-# Packages #
-############
-# it's better to unpack these files and commit the raw source
-# git has its own built in compression methods
-*.7z
-*.dmg
-*.gz
-*.iso
-*.jar
-*.rar
-*.tar
-*.zip
+### WordPress Specific
+/wp-config.php
+/wordpress/.htaccess
+/wordpress/robots.txt
+/wordpress/wp-admin
+/wordpress/wp-includes
+/wordpress/wp-content/upgrade
+/wordpress/wp-content/uploads
+/wordpress/wp-content/themes
+/wordpress/wp-content/plugins
+/wordpress/wp-content/index.php
+/wordpress/wp-*.php
+/wordpress/index.php
+/wordpress/xmlrpc.php
+/wordpress/wp-content/blogs.dir/
+/wordpress/wp-content/upgrade/*
+/wordpress/wp-content/backup-db/*
+/wordpress/wp-content/advanced-cache.php
+/wordpress/wp-content/wp-cache-config.php
+/wordpress/wp-content/cache/*
+/wordpress/wp-content/cache/supercache/*
 
-# Logs and databases #
-######################
-*.log
-*.sql
-*.sqlite
+### WP Engine Specific
+.smushit-status
+.gitattributes
+_wpeprivate
+/wordpress/wp-content/object-cache.php
+/wordpress/wp-content/mu-plugins/mu-plugin.php
+/wordpress/wp-content/mu-plugins/slt-force-strong-passwords.php
+/wordpress/wp-content/mu-plugins/limit-login-attempts
+/wordpress/wp-content/mu-plugins/wpengine-common
+/wordpress/wp-content/mysql.sql
 
-# OS generated files #
-######################
+### OS and IDE
+*~
+.idea
+.settings
 .DS_Store*
 ehthumbs.db
 Icon?
 Thumbs.db
-
-# Eclipse files #
-#################
-
-.settings
 .project
 .build
 
-#PHPStorm files #
-#################
+### Large/disallowed file types
+.svn
+.cvs
+*.hqx
+*.bak
+*.swp
+*.bin
+*.exe
+*.dll
+*.deb
+*.dmg
+*.iso
+*.img
+*.msi
+*.msp
+*.msm
+*.mid
+*.midi
+*.kar
+*.mp3
+*.ogg
+*.m4a
+*.ra
+*.3gpp
+*.3gp
+*.mp4
+*.mpeg
+*.mpg
+*.mov
+*.webm
+*.flv
+*.m4v
+*.mng
+*.asx
+*.asf
+*.wmv
+*.avi
+*.zip
+*.7z
+*.jar
+*.rar
+*.log
+*.sql
+*.sqlite
 
-.idea
+### Compiled Source
+*.com
+*.class
+*.o
+*.so
+*.css.map
+*.js.map
