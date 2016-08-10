@@ -81,7 +81,7 @@ return [
     | The PATH were plugins can be found.
     |
     */
-    'plugins' => TR_PATH . '/resources/plugins',
+    'plugins' => TR_PATH . '/plugins',
 
     /*
     |--------------------------------------------------------------------------
