@@ -25,10 +25,12 @@ if( ! defined('TR_GALAXY') ) {
     }
 
 } else {
-    if(! $db = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)) {
-        die("WP Error: No connection. Run Galaxy on development server." . PHP_EOL );
+    try {
+        $pdo = new \PDO('mysql:host='.DB_HOST.';dbname=' .DB_NAME , DB_USER, DB_PASSWORD);
+        $pdo = null;
+    } catch ( \Exception $e ) {
+        die("WP Error: No connection. Run 'galaxy' cli on development server." . PHP_EOL );
     }
-    $connection = null;
 }
 
 if( defined('WPINC') ) {
