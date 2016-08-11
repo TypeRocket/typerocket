@@ -29,4 +29,12 @@ if( ! defined('TR_GALAXY') ) {
         define( 'TR_END', microtime( true ) );
     }
 
+} else {
+    try {
+        $pdo = new \PDO('mysql:host='.DB_HOST.';dbname=' .DB_NAME , DB_USER, DB_PASSWORD);
+        $dbh = null;
+    } catch ( \Exception $e ) {
+        echo $e->getMessage() . PHP_EOL;
+        die("WP DB Error: Bad connection, try the command another correct environment." . PHP_EOL );
+    }
 }
