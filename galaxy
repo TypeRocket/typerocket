@@ -4,9 +4,15 @@ if( php_sapi_name() !== 'cli' ) {
     die("Meant to be run from command line" . PHP_EOL);
 }
 
+define( 'TR_GALAXY', true );
 define( 'TR_PATH', __DIR__ );
 define( 'TR_APP_NAMESPACE', 'App' );
 
-require __DIR__ . '/vendor/autoload.php';
+if( file_exists(__DIR__ . '/vendor/autoload.php') ) {
+    require __DIR__ . '/vendor/autoload.php';
+} else {
+    die('Run composer install first');
+}
 
+new \TypeRocket\Console\Config( require( __DIR__ . '/config/galaxy.php' ) );
 new \TypeRocket\Console\Launcher();

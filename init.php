@@ -13,16 +13,20 @@
 | http://typerocket.com
 |
 */
-define( 'TR_PATH', __DIR__ );
-define( 'TR_APP_NAMESPACE', 'App' );
+if( ! defined('TR_GALAXY') ) {
 
-if( file_exists(__DIR__ . '/vendor/autoload.php') ) {
-    require __DIR__ . '/vendor/autoload.php';
-}
+    define( 'TR_PATH', __DIR__ );
+    define( 'TR_APP_NAMESPACE', 'App' );
 
-if( defined('WPINC') ) {
-    define( 'TR_START', microtime( true ) );
-    new \TypeRocket\Core\Config( require TR_PATH . '/config/app.php' );
-    ( new \TypeRocket\Core\Launcher() )->initCore();
-    define( 'TR_END', microtime( true ) );
+    if( file_exists(__DIR__ . '/vendor/autoload.php') ) {
+        require __DIR__ . '/vendor/autoload.php';
+    }
+
+    if( defined('WPINC') ) {
+        define( 'TR_START', microtime( true ) );
+        new \TypeRocket\Core\Config( require TR_PATH . '/config/app.php' );
+        ( new \TypeRocket\Core\Launcher() )->initCore();
+        define( 'TR_END', microtime( true ) );
+    }
+
 }
