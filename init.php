@@ -20,21 +20,20 @@ if( ! defined('TR_GALAXY') ) {
 
     if( file_exists(__DIR__ . '/vendor/autoload.php') ) {
         require __DIR__ . '/vendor/autoload.php';
-    }
-
-    if( defined('WPINC') ) {
-        define( 'TR_START', microtime( true ) );
-        new \TypeRocket\Core\Config( require TR_PATH . '/config/app.php' );
-        ( new \TypeRocket\Core\Launcher() )->initCore();
-        define( 'TR_END', microtime( true ) );
+    } else {
+        die('Run composer install first');
     }
 
 } else {
-    try {
-        $pdo = new \PDO('mysql:host='.DB_HOST.';dbname=' .DB_NAME , DB_USER, DB_PASSWORD);
-        $dbh = null;
-    } catch ( \Exception $e ) {
-        echo $e->getMessage() . PHP_EOL;
-        die("WP DB Error: Bad connection, try the command another correct environment." . PHP_EOL );
+    if(! $db = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)) {
+        die("WP Error: No connection. Run Galaxy on development server." . PHP_EOL );
     }
+    $connection = null;
+}
+
+if( defined('WPINC') ) {
+    define( 'TR_START', microtime( true ) );
+    new \TypeRocket\Core\Config( require TR_PATH . '/config/app.php' );
+    ( new \TypeRocket\Core\Launcher() )->initCore();
+    define( 'TR_END', microtime( true ) );
 }
