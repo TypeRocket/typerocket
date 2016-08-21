@@ -36,7 +36,7 @@ class TypeRocketSeoPlugin
     {
         global $post;
 
-        if($model instanceof \TypeRocket\Models\PostTypesModel) {
+        if($model instanceof \TypeRocket\Models\WPPost) {
             $fillable = $model->getFillableFields();
             /** @var \WP_Post $data */
             $types = get_post_types(['public' => true]);
@@ -296,7 +296,7 @@ class TypeRocketSeoPlugin
                 'content'  => $buffer->getBuffer( 'general' ),
                 'callback' => [$this, 'general']
             ])
-             ->addTab( [
+            ->addTab( [
                  'id'      => 'seo-social',
                  'title'   => "Social",
                  'content' => $buffer->getBuffer( 'social' )
@@ -306,12 +306,12 @@ class TypeRocketSeoPlugin
                 'title'   => "Twitter Cards",
                 'content' => $buffer->getBuffer( 'twitter' )
             ])
-             ->addTab( [
+            ->addTab( [
                  'id'      => 'seo-advanced',
                  'title'   => "Advanced",
                  'content' => $buffer->getBuffer( 'advanced' )
              ])
-             ->render();
+            ->render();
 
         echo '</div>';
 
@@ -361,11 +361,11 @@ class TypeRocketSeoPlugin
           $desc = tr_posts_field( 'seo.meta.description' );
           if ( ! empty( $desc ) ) {
               $s  = strip_tags( $desc );
-              $dl = strlen( $s );
+              $dl = mb_strlen( $s );
               echo mb_substr( $s, 0, 150 );
           } else {
               $s  = strip_tags( $post->post_content );
-              $dl = strlen( $s );
+              $dl = mb_strlen( $s );
               echo mb_substr( $s, 0, 150 );
           }
 

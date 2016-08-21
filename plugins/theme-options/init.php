@@ -42,7 +42,7 @@ class ThemeOptionsPlugin
     public function fillable( $model )
     {
 
-        if ($model instanceof \TypeRocket\Models\OptionsModel) {
+        if ($model instanceof \TypeRocket\Models\WPOption) {
             $fillable = $model->getFillableFields();
 
             if ( ! empty( $fillable )) {

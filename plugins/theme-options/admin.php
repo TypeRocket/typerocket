@@ -8,8 +8,7 @@ if ( ! function_exists( 'add_action' )) {
 
 <?php
 $form = new \TypeRocket\Elements\Form();
-$form->useRest();
-$form->useAjax();
+$form->useJson();
 $form->setGroup( $this->getName() );
 ?>
 

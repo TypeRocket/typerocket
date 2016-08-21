@@ -26,7 +26,7 @@ if( ! defined('TR_GALAXY') ) {
 
 } else {
     try {
-        $pdo = new \PDO('mysql:host='.DB_HOST.';dbname=' .DB_NAME , DB_USER, DB_PASSWORD);
+        $pdo = new \PDO('mysql:host='.DB_HOST.';dbname=' .DB_NAME. ';charset='.DB_CHARSET , DB_USER, DB_PASSWORD);
         $pdo = null;
     } catch ( \Exception $e ) {
         die("WP Error: No connection. Run 'galaxy' cli on development server." . PHP_EOL );

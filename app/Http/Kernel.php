@@ -22,19 +22,19 @@ class Kernel extends \TypeRocket\Http\Kernel
             ],
         'noResource' =>
             [ AuthAdmin::class ],
-        'users' =>
+        'user' =>
             [ IsUserOrCanEditUsers::class ],
-        'posts' =>
+        'post' =>
             [ OwnsPostOrCanEditPosts::class ],
-        'pages' =>
+        'page' =>
             [ OwnsPostOrCanEditPosts::class ],
-        'comments' =>
+        'comment' =>
             [ OwnsCommentOrCanEditComments::class ],
-        'options' =>
+        'option' =>
             [ CanManageOptions::class ],
-        'categories' =>
+        'category' =>
             [ CanManageCategories::class ],
-        'tags' =>
+        'tag' =>
             [ CanManageCategories::class ]
     ];
 }

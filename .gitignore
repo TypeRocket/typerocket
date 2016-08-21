@@ -12,9 +12,10 @@ Vagrantfile
 bootstrap.sh
 
 ### WordPress Specific
-/wordpress/wp-config.php
 /wordpress/.htaccess
 /wordpress/robots.txt
+/wordpress/license.txt
+/wordpress/readme.html
 /wordpress/wp-admin
 /wordpress/wp-includes
 /wordpress/wp-content/upgrade
