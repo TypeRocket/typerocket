@@ -73,6 +73,7 @@ class ThemeOptionsPlugin
 
     public function add_sub_menu( $name, $link, $root_menu, $id, $meta = false )
     {
+         /** @var \WP_Admin_Bar $wp_admin_bar */
         global $wp_admin_bar;
         if ( ! current_user_can( 'manage_options' ) || ! is_admin_bar_showing()) {
             return;
