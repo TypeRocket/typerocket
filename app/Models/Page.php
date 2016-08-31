@@ -5,5 +5,5 @@ use TypeRocket\Models\WPPost;
 
 class Page extends WPPost
 {
-    public $postType = 'page';
+    protected $postType = 'page';
 }

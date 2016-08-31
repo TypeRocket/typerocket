@@ -5,5 +5,5 @@ use TypeRocket\Models\WPTerm;
 
 class Category extends WPTerm
 {
-    public $taxonomy = 'category';
+    protected $taxonomy = 'category';
 }
