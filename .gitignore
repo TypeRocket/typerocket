@@ -11,6 +11,9 @@ composer.lock
 Vagrantfile
 bootstrap.sh
 
+### WP Engine
+vendor/composer/autoload_static.php
+
 ### WordPress Specific
 /wordpress/.htaccess
 /wordpress/robots.txt
