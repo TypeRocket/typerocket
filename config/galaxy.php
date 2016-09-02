@@ -5,9 +5,9 @@ return [
     | WordPress
     |--------------------------------------------------------------------------
     |
-    | Set to the WordPress root directory load file wp-load.php.
+    | Set to the WordPress root directory.
     |
-    | Example: TR_PATH . '/wordpress/wp-load.php'
+    | Example: TR_PATH . '/wordpress'
     |
     */
     'wordpress' => false,
