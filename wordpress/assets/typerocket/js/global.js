@@ -1,6 +1,1 @@
-;var TypeRocket = {
-  httpCallbacks: [],
-  repeaterCallbacks: [],
-  lastSubmittedForm: false,
-  redactorSettings: {}
-};
+var TypeRocket={httpCallbacks:[],repeaterCallbacks:[],lastSubmittedForm:!1,redactorSettings:{}};
