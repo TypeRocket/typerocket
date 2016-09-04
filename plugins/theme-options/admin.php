@@ -20,12 +20,11 @@ $form->setGroup( $this->getName() );
     $contact = [
         $form->text('Company Name'),
         $form->text('Company Email'),
-        $form->matrix('Builder'),
         $form->text('Company Phone'),
         $form->search('Terms Page')->setPostType('page'),
         $form->checkbox('Company Open')->setText('Company open for business')->setLabel(false)
     ];
-    $about = $form->row($form->text('Company Name'), $form->text('Company Email')) . $form->getFromFieldsString( $contact );
+    $about = $form->getFromFieldsString( $contact );
 
     // api
     $help = '<a target="blank" href="https://developers.google.com/maps/documentation/embed/guide#api_key">Get Your Google Maps API</a> to activate maps in the theme.';
