@@ -46,5 +46,5 @@ elixir(function(mix) {
  |
  */
 
-// var typerocket = require('typerocket-assets');
-// typerocket.compileTypeRocketAssets( './wordpress/assets' );
+var typerocket = require('typerocket-assets');
+typerocket.compileTypeRocketAssets( './wordpress/assets' );

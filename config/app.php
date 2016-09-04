@@ -55,7 +55,7 @@ return [
     | TypeRocket as root.
     |
     */
-    'templates' => false,
+    'templates' => 'templates',
 
     /*
     |--------------------------------------------------------------------------
