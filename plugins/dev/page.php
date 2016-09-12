@@ -11,13 +11,12 @@ function tr_dev_icons()
 
     $generator = new \TypeRocket\Html\Generator();
 
-    echo '<h3><i class="tr-icon-tools"></i> Icons</h3><p>These can be used with custom post types.</p><ol>';
+    echo '<h3><i class="tr-icon-tools"></i> Icons</h3><p>These can be used with custom post types and admin pages.</p><ol>';
     foreach ($icons as $k => $v) {
         echo $generator->newElement( 'li', ['class' => 'tr-icon-' . $k],
             ' ' . $k . ' ( .tr-icon-' . $k . ' )' )->getString();
     }
     echo '</ol>';
-
 }
 
 function tr_dev_stats()

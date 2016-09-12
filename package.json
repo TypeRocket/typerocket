@@ -5,6 +5,6 @@
         "dev": "gulp watch"
     },
     "dependencies": {
-        "typerocket-assets": "^3.0.0-23"
+        "typerocket-assets": "^3.0.0-26"
     }
 }
