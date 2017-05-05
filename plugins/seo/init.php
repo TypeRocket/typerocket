@@ -21,10 +21,9 @@ class TypeRocketSeoPlugin
             add_action('tr_model', [$this, 'fillable'], 9999999999, 2 );
             add_action( 'wp_head', [$this, 'head_data'], 0 );
             add_action( 'template_redirect', [$this, 'loaded'], 0 );
-            add_filter( 'wp_title', [$this, 'title'], 100, 3 );
+            add_filter( 'document_title_parts', [$this, 'title'], 100, 3 );
             remove_action( 'wp_head', 'rel_canonical' );
             add_action( 'wp', [$this, 'redirect'], 99, 1 );
-
 
             if ( is_admin() ) {
                 add_action( 'add_meta_boxes', [$this, 'seo_meta']);
@@ -66,10 +65,10 @@ class TypeRocketSeoPlugin
     // Page Title
     public function title( $title, $arg2 = null, $arg3 = null )
     {
-        $newTitle = tr_posts_field( 'seo.meta.title', $this->itemId );
+        $newTitle = trim(tr_posts_field( 'seo.meta.title', $this->itemId ));
 
-        if ( $newTitle != null ) {
-            return $newTitle;
+        if ( !empty($newTitle) ) {
+            return [$newTitle];
         } else {
             return $title;
         }
