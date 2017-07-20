@@ -13,3 +13,19 @@ Documentation and examples can be found at [http://typerocket.com](http://typero
 ## License
 
 TypeRocket is open-sourced software licenced under the [GNU General Public License 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
+
+## Quick Example
+
+```php
+$team = tr_post_type('Person');
+$team->setIcon('users')->setArgument('supports', ['title'] );
+$team->setTitlePlaceholder( 'Enter full name here' );
+$team->setTitleForm( function() {
+    $form = tr_form();
+    echo $form->image('Photo');
+    $editor = $form->editor('post_content'); // Override post_content in DB
+    echo $editor->setLabel('About Person');
+} );
+
+tr_taxonomy('Department')->apply($team);
+```

@@ -17,18 +17,21 @@ $form->setGroup( $this->getName() );
     echo $form->open();
 
     // about
-    $contact = [
-        $form->text('Company Name'),
-        $form->text('Company Email'),
-        $form->text('Company Phone'),
-        $form->search('Terms Page')->setPostType('page'),
-        $form->checkbox('Company Open')->setText('Company open for business')->setLabel(false)
-    ];
-    $about = $form->getFromFieldsString( $contact );
+    $about = function() use ($form) {
+        echo $form->text('Company Name');
+        echo $form->text('Company Email');
+        echo $form->text('Company Phone');
+        echo $form->search('Terms Page')->setPostType('page');
+        echo $form->checkbox('Company Open')->setText('Company open for business')->setLabel(false);
+    };
 
     // api
-    $help = '<a target="blank" href="https://developers.google.com/maps/documentation/embed/guide#api_key">Get Your Google Maps API</a> to activate maps in the theme.';
-    $api = $form->password( 'Google Maps API Key')->setHelp($help)->setAttribute('autocomplete', 'new-password');
+    $api = function() use ($form) {
+        $help = '<a target="blank" href="https://developers.googl..com/maps/documentation/embed/guide#api_key">Get Your Google Maps API</a>.';
+        echo $form->password( 'Google Maps API Key')
+                  ->setHelp($help)
+                  ->setAttribute('autocomplete', 'new-password');
+    };
 
     // save
     $save = $form->submit( 'Save' );
