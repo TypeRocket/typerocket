@@ -17,13 +17,13 @@ class DevPlugin
             'view_file' => __DIR__ . '/page.php',
             'menu' => 'Dev'
         ];
-        (new \TypeRocket\Register\Page('TypeRocket', 'Dev', 'TypeRocket Developer Tools', $settings))
+        (new \TypeRocket\Register\Page('TypeRocket', __('Dev'), __('TypeRocket Developer Tools'), $settings))
             ->addToRegistry()->setIcon('bug');
     }
 
     public function tr_remove_footer_admin()
     {
-        echo 'TypeRocket developer mode! Run time is ' . (TR_END - TR_START);
+        echo __('TypeRocket developer mode! Run time is ') . (TR_END - TR_START);
     }
 
 }
