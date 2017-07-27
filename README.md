@@ -123,7 +123,7 @@ use \TypeRocket\Controllers\Controller;
 class MarketingController extends Controller
 {
 
-    public function routing()
+    protected function routing()
     {
         $public = [ 'only' => [ 'show', 'subscribe', 'thanks' ] ];
         $this->setMiddleware('marketing', $public );
@@ -141,7 +141,7 @@ class MarketingController extends Controller
         $mail = new \MailChimp;
         $mail->subscribeMemberToList($list, $data['email']);
         
-        return tr_redirect()->toUrl('/marketing/pdf/thanks');
+        return tr_redirect()->toUrl('/marketing/thanks');
     }
 
     public function thanks()
