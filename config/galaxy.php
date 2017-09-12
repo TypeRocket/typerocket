@@ -5,9 +5,10 @@ return [
     | WordPress
     |--------------------------------------------------------------------------
     |
-    | Set to the WordPress root directory.
+    | Set to the WordPress root directory. This will enable new WP specific
+    | Galaxy commands like: SQL, Migrations, and Flushing Permalinks
     |
-    | Example: TR_PATH . '/wordpress'
+    | Example of root installation: TR_PATH . '/wordpress'
     |
     */
     'wordpress' => false,
