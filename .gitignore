@@ -58,6 +58,7 @@ Icon?
 Thumbs.db
 .project
 .build
+.vscode
 
 ### Large/disallowed File Types
 .svn
