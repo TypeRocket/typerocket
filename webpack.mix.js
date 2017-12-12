@@ -11,5 +11,25 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-    .sass('resources/assets/sass/app.scss', 'public/css');
+// Theme
+mix.js('resources/assets/js/theme.js', 'wordpress/assets/templates/js')
+    .sass('resources/assets/sass/theme.scss', 'wordpress/assets/templates/css')
+    .options({
+        processCssUrls: false
+    });
+
+// Admin
+mix.js('resources/assets/js/admin.js', 'wordpress/assets/templates/js')
+    .sass('resources/assets/sass/admin.scss', 'wordpress/assets/templates/css')
+    .options({
+        processCssUrls: false
+    });
+
+// TypeRocket Core
+mix.js('vendor/typerocket/core/assets/js/core.js', 'wordpress/assets/typerocket/js/core.js')
+    .sass('vendor/typerocket/core/assets/sass/core.scss', 'wordpress/assets/typerocket/css/core.css')
+    .copyDirectory('vendor/typerocket/core/assets/fonts', 'wordpress/assets/typerocket/fonts')
+    .copyDirectory('vendor/typerocket/core/assets/js/lib', 'wordpress/assets/typerocket/js/lib')
+    .options({
+        processCssUrls: false
+    });
