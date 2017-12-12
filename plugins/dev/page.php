@@ -40,16 +40,7 @@ $icons = function()
     <?php
 };
 
-$stats = function() {
-?>
-<h3><?php _e('Run Time'); ?></h3>
-<p><?php _e('If you are using xDebug profiling or tracking times will be slower. Also, noted in the footer at every admin page load when debug mode is on.'); ?></p>
-<p><b><?php _e('TR Run Time'); ?></b>: <?php echo TR_END - TR_START; ?></p>
-<?php
-};
-
 $tabs = tr_tabs();
-$tabs->addTab(__('Stats'), $stats)
-    ->addTab(__('Icons'), $icons)
+$tabs->addTab(__('Icons'), $icons)
     ->render('box');
 ?>

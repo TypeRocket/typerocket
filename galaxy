@@ -4,8 +4,5 @@ if( php_sapi_name() !== 'cli' ) {
     die("Meant to be run from command line" . PHP_EOL);
 }
 
-define( 'TR_GALAXY', true );
-
 require __DIR__ . '/init.php';
-
 new \TypeRocket\Console\Launcher();

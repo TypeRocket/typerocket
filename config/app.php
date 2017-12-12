@@ -23,7 +23,7 @@ return [
     | Turn on Debugging for TypeRocket. Set to false to disable.
     |
     */
-    'debug' => true,
+    'debug' => WP_DEBUG,
 
     /*
     |--------------------------------------------------------------------------
@@ -74,17 +74,6 @@ return [
     | browser caches.
     |
     */
-    'assets' => '1.0.2',
-
-    /*
-    |--------------------------------------------------------------------------
-    | App Namespace
-    |--------------------------------------------------------------------------
-    |
-    | Set the apps namespace. If the namespace is updated you also need to be
-    | updated in the composer.json file.
-    |
-    */
-    'namespace' => 'App',
+    'assets' => '1.0.2'
 
 ];

@@ -15,25 +15,11 @@
 */
 
 define('TR_APP_NAMESPACE', 'App');
-
-if(! defined('TR_PATH') ) {
-    define( 'TR_PATH', __DIR__ );
-}
-
-if( file_exists( __DIR__ . '/vendor/autoload.php') ) {
-    require __DIR__ . '/vendor/autoload.php';
-} else {
-    die('Run composer install first');
-}
+define('TR_PATH', __DIR__ );
+require __DIR__ . '/vendor/autoload.php';
 
 new \TypeRocket\Core\Config( __DIR__ . '/config');
 
-if( defined('TR_GALAXY') ) {
-    new \TypeRocket\Console\Launcher();
-}
-
 if( defined('WPINC') ) {
-    define( 'TR_START', microtime( true ) );
     ( new \TypeRocket\Core\Launcher() )->initCore();
-    define( 'TR_END', microtime( true ) );
 }

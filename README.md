@@ -1,22 +1,26 @@
 ## TypeRocket WordPress Framework
 
-[![Total Downloads](https://poser.pugx.org/TypeRocket/typerocket/d/total.svg)](https://packagist.org/packages/TypeRocket/typerocket)
+TypeRocket is like Advanced Custom Fields + Laravel + Magic in WordPress for FREE.
 
-TypeRocket is a powerful framework for WordPress developers. We set out to make a framework designed to be beautiful within WordPress and deliver the tools needed to build a modern website or application.
-  
-TypeRocket makes it easy to do so much. Build component based designs. Add post types, taxonomies, meta boxes, pages, forms and fields. Create custom routes, models, controller, middleware and views.
+[http://typerocket.com](http://typerocket.com)
 
-## Documentation
+## Key Features
 
-Documentation and examples can be found at [http://typerocket.com](http://typerocket.com)
+TypeRocket gives you extendable and modern tools to build anything you want on WordPress.
 
-## License
-
-TypeRocket is open-sourced software licenced under the [GNU General Public License 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
+- Build component based designs
+- Register post types
+- Register taxonomies
+- Create meta boxes
+- Add pages
+- Use forms and fields
+- Use models, controllers, and views
+- Register custom routes and middleware
+- The list goes on...
 
 ## Quick Examples
 
-The short list. Let the code speak for itself. (WordPress hooks not required)
+Let the code speak for itself. (WordPress hooks not required)
 
 ### Post Type
 
@@ -26,14 +30,14 @@ $person = tr_post_type('Person');
 
 // Chain Methods with Eloquence
 $person->setIcon('users')
-     ->setTitlePlaceholder( 'Enter full name here' )
-     ->setArchivePostsPerPage(-1);
-     ->setTitleForm( function() {
-         $form = tr_form();
-         echo $form->image('Photo');
-         echo $editor->text('Company');
-         echo $editor->textarea('About Person');
-     });
+       ->setTitlePlaceholder( 'Enter full name here' )
+       ->setArchivePostsPerPage(-1);
+       ->setTitleForm( function() {
+           $form = tr_form();
+           echo $form->image('Photo');
+           echo $editor->text('Company');
+           echo $editor->textarea('About Person');
+       });
 
 // Add Sortable Columns to Admin Index View
 $person->addColumn('company', true);
@@ -77,77 +81,6 @@ echo $form->repeater('Stories')
     ->setHeadline('Story');
 ```
 
-### Front-end and MVC
+## License
 
-Build custom apps.
-
-#### Views
-
-```php
-// functons.php
-tr_frontend();
-```
-Template,
-
-```php
-<?php get_header(); ?>
-    <main class="content">
-        <?php
-        $form = tr_form('marketing', 'create');
-        $list = 14829;
-        $form->useUrl('POST', '/marketing/pdf/' . $list );
-        echo $form->open();
-        echo $form->text('Email')->setType('email');
-        echo $form->close('Subscribe');
-        ?>
-    </main>
-<?php get_footer(); ?>
-```
-
-#### Custom Routes
-
-```php
-tr_route()->get('/marketing', 'show@Marketing');
-tr_route()->post('/marketing/{list}', 'subscribe@Marketing');
-tr_route()->get('/marketing/thanks', 'thanks@Marketing');
-```
-
-#### Controllers
-
-```php
-<?php
-namespace App\Controllers;
-
-use \TypeRocket\Controllers\Controller;
-
-class MarketingController extends Controller
-{
-
-    protected function routing()
-    {
-        $public = [ 'only' => [ 'show', 'subscribe', 'thanks' ] ];
-        $this->setMiddleware('marketing', $public );
-    }
-    
-    public function show()
-    {
-        return tr_view('marketing.show');
-    }
-
-    public function subscribe($list)
-    {
-        $data = $this->request->getDataPost();
-
-        $mail = new \MailChimp;
-        $mail->subscribeMemberToList($list, $data['email']);
-        
-        return tr_redirect()->toUrl('/marketing/thanks');
-    }
-
-    public function thanks()
-    {
-        return tr_view('marketing.thanks');
-    }
-
-}
-```
+TypeRocket is open-sourced software licenced under the [GNU General Public License 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
