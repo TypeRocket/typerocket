@@ -1,4 +1,4 @@
-<?php if( \TypeRocket\Core\Config::getDebugStatus() == true) : ?>
+<?php if( \TypeRocket\Core\Config::locate('app.debug') == true) : ?>
 <div id="export-theme-options">
     <h2>Export</h2>
     <p>Export and import features are only available when debug mode is on.</p>

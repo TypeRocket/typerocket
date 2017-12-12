@@ -7,7 +7,8 @@ if ( !function_exists( 'add_action' ) ) {
 
 $icons = function()
 {
-    $icons = new TypeRocket\Elements\Icons;
+    $icons = \TypeRocket\Core\Config::locate('app.class.icons');
+    $icons = new $icons;
     $generator = new \TypeRocket\Html\Generator();
 
     echo '<h3><i class="tr-icon-tools"></i>' . __('Icons') . '</h3>';

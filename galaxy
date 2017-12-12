@@ -5,14 +5,7 @@ if( php_sapi_name() !== 'cli' ) {
 }
 
 define( 'TR_GALAXY', true );
-define( 'TR_PATH', __DIR__ );
-define( 'TR_APP_NAMESPACE', 'App' );
 
-if( file_exists(__DIR__ . '/vendor/autoload.php') ) {
-    require __DIR__ . '/vendor/autoload.php';
-} else {
-    die('Run composer install first');
-}
+require __DIR__ . '/init.php';
 
-new \TypeRocket\Console\Config( require( __DIR__ . '/config/galaxy.php' ) );
 new \TypeRocket\Console\Launcher();

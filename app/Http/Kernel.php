@@ -16,7 +16,6 @@ class Kernel extends \TypeRocket\Http\Kernel
         'hookGlobal' => [],
         'resourceGlobal' =>
             [
-                AuthRead::class,
                 Middleware\VerifyNonce::class
             ],
         'noResource' =>

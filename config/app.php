@@ -37,37 +37,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Icons
+    | Class Overrides
     |--------------------------------------------------------------------------
     |
-    | The icon class to use for the admin.
+    | Set the classes to use as the default for helper functions.
     |
     */
-    'icons' => \TypeRocket\Elements\Icons::class,
+    'class' => [
+        'icons' => \TypeRocket\Elements\Icons::class,
+        'user' => \App\Models\User::class,
+        'form' => \TypeRocket\Elements\Form::class
+    ],
+
 
     /*
     |--------------------------------------------------------------------------
-    | User
-    |--------------------------------------------------------------------------
-    |
-    | The main user class.
-    |
-    */
-    'user' => \App\Models\User::class,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Form
-    |--------------------------------------------------------------------------
-    |
-    | The main form class for the builder and matrix APIs to load.
-    |
-    */
-    'form' => \TypeRocket\Elements\Form::class,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Templates
+    | TypeRocket Rooting
     |--------------------------------------------------------------------------
     |
     | The templates to use for the TypeRocket theme. Set to false if using
@@ -75,7 +60,10 @@ return [
     | TypeRocket as root.
     |
     */
-    'templates' => false,
+    'root' => [
+        'use_root' => false,
+        'theme' => 'templates',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -90,14 +78,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Configurations
+    | App Namespace
     |--------------------------------------------------------------------------
     |
-    | Load other configurations
+    | Set the apps namespace. If the namespace is updated you also need to be
+    | updated in the composer.json file.
     |
     */
-    'configurations' => [
-        'paths'
-    ]
+    'namespace' => 'App',
 
 ];
