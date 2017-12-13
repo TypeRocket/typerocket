@@ -9,6 +9,8 @@ let mix = require('laravel-mix');
  | for your Laravel application. By default, we are compiling the Sass
  | file for the application as well as bundling up all the JS files.
  |
+ | @link https://github.com/JeffreyWay/laravel-mix/tree/master/docs#readme
+ |
  */
 
 // Theme
