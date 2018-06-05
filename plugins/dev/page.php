@@ -40,7 +40,19 @@ $icons = function()
     <?php
 };
 
+$rules = function() {
+    echo '<h3><i class="tr-icon-tools"></i>' . __('Rewrite Rules') . '</h3>';
+    $rules = get_option('rewrite_rules');
+    echo '<table class="wp-list-table widefat fixed striped">';
+    echo "<thead><tr><th>" . __('Rewrite Rule') . "</th><th>" . __('Match') . "</th></tr></thead>";
+    foreach ($rules as $rule => $match) {
+        echo "<tr><td>$rule</td><td>$match</td></tr>";
+    }
+    echo '</table>';
+};
+
 $tabs = tr_tabs();
 $tabs->addTab(__('Icons'), $icons)
+    ->addTab(__('Rewrite Rules'), $rules)
     ->render('box');
 ?>
