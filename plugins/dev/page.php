@@ -43,12 +43,18 @@ $icons = function()
 $rules = function() {
     echo '<h3><i class="tr-icon-tools"></i>' . __('Rewrite Rules') . '</h3>';
     $rules = get_option('rewrite_rules');
-    echo '<table class="wp-list-table widefat fixed striped">';
-    echo "<thead><tr><th>" . __('Rewrite Rule') . "</th><th>" . __('Match') . "</th></tr></thead>";
-    foreach ($rules as $rule => $match) {
-        echo "<tr><td>$rule</td><td>$match</td></tr>";
+    if(!empty($rules)) {
+        echo "<p>If you are using TypeRocket custom routes they will not appear in this list. TypeRocket detects custom routes on the fly.</p>";
+        echo '<table class="wp-list-table widefat fixed striped">';
+        echo "<thead><tr><th>" . __('Rewrite Rule') . "</th><th>" . __('Match') . "</th></tr></thead>";
+        foreach ($rules as $rule => $match) {
+            echo "<tr><td>$rule</td><td>$match</td></tr>";
+        }
+        echo '</table>';
+    } else {
+        echo "<p>Enable <a href=\"https://codex.wordpress.org/Using_Permalinks\">Pretty Permalinks</a> under <a href=\"/wp-admin/options-permalink.php\">Permalink Settings</a>. \"Pretty Permalinks\" are required for TypeRocket to work.</p>";
     }
-    echo '</table>';
+
 };
 
 $tabs = tr_tabs();
