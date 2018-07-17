@@ -12,7 +12,7 @@ use TypeRocket\Http\Middleware\OwnsPostOrCanEditPosts;
 
 class Kernel extends \TypeRocket\Http\Kernel
 {
-    protected $middleware = [
+    public $middleware = [
         'hookGlobal' => [],
         'resourceGlobal' =>
             [
