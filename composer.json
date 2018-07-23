@@ -2,7 +2,7 @@
     "name": "typerocket/typerocket",
     "description": "TypeRocket for WordPress.",
     "keywords": ["framework", "typerocket", "wordpress"],
-    "license": "GPL",
+    "license": "GPL-3.0-or-later",
     "homepage": "https://typerocket.com",
     "authors": [
         {
