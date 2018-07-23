@@ -3,6 +3,7 @@ node_modules
 /vendor
 /tests
 composer.lock
+package-lock.json
 .env
 /wp-config.php
 
@@ -58,6 +59,7 @@ Icon?
 Thumbs.db
 .project
 .build
+.vscode
 
 ### Large/disallowed File Types
 .svn

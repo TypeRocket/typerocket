@@ -7,7 +7,8 @@ if ( !function_exists( 'add_action' ) ) {
 
 $icons = function()
 {
-    $icons = new TypeRocket\Elements\Icons;
+    $icons = \TypeRocket\Core\Config::locate('app.class.icons');
+    $icons = new $icons;
     $generator = new \TypeRocket\Html\Generator();
 
     echo '<h3><i class="tr-icon-tools"></i>' . __('Icons') . '</h3>';
@@ -39,16 +40,25 @@ $icons = function()
     <?php
 };
 
-$stats = function() {
-?>
-<h3><?php _e('Run Time'); ?></h3>
-<p><?php _e('If you are using xDebug profiling or tracking times will be slower. Also, noted in the footer at every admin page load when debug mode is on.'); ?></p>
-<p><b><?php _e('TR Run Time'); ?></b>: <?php echo TR_END - TR_START; ?></p>
-<?php
+$rules = function() {
+    echo '<h3><i class="tr-icon-tools"></i>' . __('Rewrite Rules') . '</h3>';
+    $rules = get_option('rewrite_rules');
+    if(!empty($rules)) {
+        echo "<p>If you are using TypeRocket custom routes they will not appear in this list. TypeRocket detects custom routes on the fly.</p>";
+        echo '<table class="wp-list-table widefat fixed striped">';
+        echo "<thead><tr><th>" . __('Rewrite Rule') . "</th><th>" . __('Match') . "</th></tr></thead>";
+        foreach ($rules as $rule => $match) {
+            echo "<tr><td>$rule</td><td>$match</td></tr>";
+        }
+        echo '</table>';
+    } else {
+        echo "<p>Enable <a href=\"https://codex.wordpress.org/Using_Permalinks\">Pretty Permalinks</a> under <a href=\"/wp-admin/options-permalink.php\">Permalink Settings</a>. \"Pretty Permalinks\" are required for TypeRocket to work.</p>";
+    }
+
 };
 
 $tabs = tr_tabs();
-$tabs->addTab(__('Stats'), $stats)
-    ->addTab(__('Icons'), $icons)
+$tabs->addTab(__('Icons'), $icons)
+    ->addTab(__('Rewrite Rules'), $rules)
     ->render('box');
 ?>

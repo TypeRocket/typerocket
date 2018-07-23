@@ -186,8 +186,6 @@ class TypeRocketSeoPlugin
 
     public function meta()
     {
-        echo '<div class="typerocket-container">';
-
         // build form
         $form = new \TypeRocket\Elements\Form();
         $form->setDebugStatus( false );
@@ -324,9 +322,6 @@ class TypeRocketSeoPlugin
                  'callback' => $advanced
              ])
             ->render();
-
-        echo '</div>';
-
     }
 
     public function general()
