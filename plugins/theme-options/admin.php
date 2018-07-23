@@ -19,7 +19,7 @@ $form = tr_form()->useJson()->setGroup( $this->getName() );
         echo $form->text('Company Email');
         echo $form->text('Company Phone');
         echo $form->search('Terms Page')->setPostType('page');
-        echo $form->checkbox('Company Open')->setText('Company open for business')->setLabel(false);
+        echo $form->toggle('Company Open')->setText('Company open for business');
     };
 
     // API
