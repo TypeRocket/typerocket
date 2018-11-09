@@ -31,6 +31,7 @@ mix.js('resources/assets/js/admin.js', 'wordpress/assets/templates/js')
 mix.js('vendor/typerocket/core/assets/js/core.js', 'wordpress/assets/typerocket/js/core.js')
     .js('vendor/typerocket/core/assets/js/location.field.js', 'wordpress/assets/typerocket/js/location.field.js')
     .sass('vendor/typerocket/core/assets/sass/core.scss', 'wordpress/assets/typerocket/css/core.css')
+    .sass('vendor/typerocket/core/assets/sass/redactor.scss', 'wordpress/assets/typerocket/css/redactor.css')
     .copyDirectory('vendor/typerocket/core/assets/fonts', 'wordpress/assets/typerocket/fonts')
     .copyDirectory('vendor/typerocket/core/assets/js/lib', 'wordpress/assets/typerocket/js/lib')
     .options({
