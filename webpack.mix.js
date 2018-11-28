@@ -1,4 +1,5 @@
 let mix = require('laravel-mix');
+const GenerateJsonPlugin = require('generate-json-webpack-plugin');
 
 /*
  |--------------------------------------------------------------------------
@@ -19,6 +20,13 @@ mix.js('resources/assets/js/theme.js', 'wordpress/assets/templates/js')
     .options({
         processCssUrls: false
     });
+    // .webpackConfig({
+    //     plugins: [
+    //         new GenerateJsonPlugin('asset-version.json', {
+    //             version: Math.round((new Date()).getTime() / 1000)
+    //         })
+    //     ]
+    // });
 
 // Admin
 mix.js('resources/assets/js/admin.js', 'wordpress/assets/templates/js')

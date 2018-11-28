@@ -104,4 +104,17 @@ return [
     */
     'themes'  => TR_PATH . '/resources/themes',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Migrations
+    |--------------------------------------------------------------------------
+    |
+    | The PATHs for migrations and run migrations.
+    |
+    */
+    'migrate'  => [
+        'migrations' => TR_PATH . '/sql/migrations',
+        'run' => TR_PATH . '/sql/run',
+    ]
+
 ];

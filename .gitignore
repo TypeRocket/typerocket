@@ -6,6 +6,7 @@ composer.lock
 package-lock.json
 .env
 /wp-config.php
+/sql/run/*
 
 ### Vagrant
 .vagrant
@@ -37,6 +38,8 @@ vendor/composer/autoload_static.php
 /wordpress/wp-content/wp-cache-config.php
 /wordpress/wp-content/cache/*
 /wordpress/wp-content/cache/supercache/*
+/wordpress/wp-content/wp-rocket-config
+/wordpress/nginx.conf
 
 ### WP Engine Specific
 .smushit-status
@@ -103,7 +106,6 @@ Thumbs.db
 *.jar
 *.rar
 *.log
-*.sql
 *.sqlite
 
 ### Compiled Source
