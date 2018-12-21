@@ -4,6 +4,7 @@ node_modules
 /tests
 composer.lock
 package-lock.json
+mix-manifest.json
 .env
 /wp-config.php
 /sql/run/*
