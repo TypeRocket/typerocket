@@ -88,6 +88,6 @@ return [
     | browser caches.
     |
     */
-    'assets' => '4.0.0'
+    'assets' => '4.0.1'
 
 ];
