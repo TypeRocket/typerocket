@@ -13,7 +13,7 @@ return [
         '\TypeRocketPageBuilder\Plugin',
         '\TypeRocketThemeOptions\Plugin',
         '\TypeRocketDev\Plugin',
-        '\TypeRocketDashboard\Plugin',
+        // '\TypeRocketDashboard\Plugin',
     ],
 
     /*
