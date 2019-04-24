@@ -9,10 +9,11 @@ return [
     |
     */
     'plugins' => [
-        'seo',
-        'dev',
-        'theme-options',
-        'builder',
+        '\TypeRocketSEO\Plugin',
+        '\TypeRocketPageBuilder\Plugin',
+        '\TypeRocketThemeOptions\Plugin',
+        '\TypeRocketDev\Plugin',
+        '\TypeRocketDashboard\Plugin',
     ],
 
     /*
