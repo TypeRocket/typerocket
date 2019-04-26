@@ -113,7 +113,9 @@ return [
     |
     */
     'migrate'  => [
-        'migrations' => TR_PATH . '/sql/migrations',
+        'migrations' => [
+            TR_PATH . '/sql/migrations',
+        ],
         'run' => TR_PATH . '/sql/run',
     ]
 

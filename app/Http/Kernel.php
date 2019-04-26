@@ -15,24 +15,16 @@ class Kernel extends \TypeRocket\Http\Kernel
     public $middleware = [
         'hookGlobal' => [],
         'resourceGlobal' =>
-            [
-                Middleware\VerifyNonce::class
-            ],
-        'noResource' =>
-            [ AuthAdmin::class ],
+            [  Middleware\VerifyNonce::class ],
         'user' =>
             [ IsUserOrCanEditUsers::class ],
         'post' =>
-            [ OwnsPostOrCanEditPosts::class ],
-        'page' =>
             [ OwnsPostOrCanEditPosts::class ],
         'comment' =>
             [ OwnsCommentOrCanEditComments::class ],
         'option' =>
             [ CanManageOptions::class ],
-        'category' =>
+        'term' =>
             [ CanManageCategories::class ],
-        'tag' =>
-            [ CanManageCategories::class ]
     ];
 }

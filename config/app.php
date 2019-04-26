@@ -5,7 +5,7 @@ return [
     | Enabled Plugins
     |--------------------------------------------------------------------------
     |
-    | The folder names of the TypeRocket plugins you wish to enable.
+    | The class names of the TypeRocket plugins you wish to enable.
     |
     */
     'plugins' => [
@@ -13,7 +13,6 @@ return [
         '\TypeRocketPageBuilder\Plugin',
         '\TypeRocketThemeOptions\Plugin',
         '\TypeRocketDev\Plugin',
-        // '\TypeRocketDashboard\Plugin',
     ],
 
     /*
@@ -59,9 +58,9 @@ return [
     |
     */
     'class' => [
-        'icons' => \TypeRocket\Elements\Icons::class,
-        'user' => \App\Models\User::class,
-        'form' => \TypeRocket\Elements\Form::class
+        'icons' => '\TypeRocket\Elements\Icons',
+        'user' => '\App\Models\User',
+        'form' => '\TypeRocket\Elements\Form'
     ],
 
 
@@ -89,6 +88,6 @@ return [
     | browser caches.
     |
     */
-    'assets' => '4.0.1'
+    'assets' => '4.0.8'
 
 ];
