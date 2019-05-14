@@ -33,8 +33,10 @@ return [
     | loaded instantly set hook to _instant_. Other hook options
     | include: muplugins_loaded, plugins_loaded, or setup_theme
     |
+    | Default option: typerocket_loaded
+    |
     */
     'routes' => [
-        'hook' => 'plugins_loaded',
+        'hook' => 'typerocket_loaded',
     ],
 ];
