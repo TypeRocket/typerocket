@@ -109,10 +109,11 @@ return [
     | Migrations
     |--------------------------------------------------------------------------
     |
-    | The PATHs for migrations and run migrations.
+    | The PATHs for migrations and run migrations. Drivers include: file
     |
     */
     'migrate'  => [
+        'driver' => 'file',
         'migrations' => [
             TR_PATH . '/sql/migrations',
         ],

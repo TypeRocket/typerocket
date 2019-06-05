@@ -16,9 +16,16 @@
 
 define('TR_APP_NAMESPACE', 'App');
 define('TR_PATH', __DIR__ );
-require __DIR__ . '/vendor/autoload.php';
 
-new \TypeRocket\Core\Config( __DIR__ . '/config');
+if(!defined('TR_SKIP_AUTOLOAD')) {
+    require __DIR__ . '/vendor/autoload.php';
+}
+
+if(!defined('TR_LAUNCHER_CONFIG')) {
+    define('TR_LAUNCHER_CONFIG', __DIR__ . '/config' );
+}
+
+new \TypeRocket\Core\Config( TR_LAUNCHER_CONFIG );
 
 if( defined('WPINC') ) {
     ( new \TypeRocket\Core\Launcher() )->initCore();
