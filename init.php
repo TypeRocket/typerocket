@@ -29,11 +29,11 @@ if(!defined('TR_AUTO_LOADER')) {
 }
 
 // Define Config
-if(!defined('TR_LAUNCHER_CONFIG')) {
-    define('TR_LAUNCHER_CONFIG', __DIR__ . '/config' );
+if(!defined('TR_CORE_CONFIG_PATH')) {
+    define('TR_CORE_CONFIG_PATH', __DIR__ . '/config' );
 }
 
-new \TypeRocket\Core\Config( TR_LAUNCHER_CONFIG );
+new \TypeRocket\Core\Config( TR_CORE_CONFIG_PATH );
 
 // Load TypeRocket
 if( defined('WPINC') ) {
