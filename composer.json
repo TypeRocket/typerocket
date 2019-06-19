@@ -4,6 +4,12 @@
     "keywords": ["framework", "typerocket", "wordpress"],
     "license": "GPL-3.0-or-later",
     "homepage": "https://typerocket.com",
+    "repositories":[
+        {
+            "type":"composer",
+            "url":"https://wpackagist.org"
+        }
+    ],
     "authors": [
         {
             "name": "Kevin Dees",
