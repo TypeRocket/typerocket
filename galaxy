@@ -4,5 +4,9 @@ if( php_sapi_name() !== 'cli' ) {
     die("Meant to be run from command line" . PHP_EOL);
 }
 
+if (!defined('WPMU_PLUGIN_URL')) {
+    define('WPMU_PLUGIN_URL', '/mu-plugins');
+}
+
 require __DIR__ . '/init.php';
 new \TypeRocket\Console\Launcher();
