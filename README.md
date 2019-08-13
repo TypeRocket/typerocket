@@ -1,6 +1,6 @@
 ## TypeRocket WordPress Framework
 
-TypeRocket is like Advanced Custom Fields + Laravel + Magic in WordPress for FREE.
+TypeRocket is like Advanced Custom Fields + Laravel + Magic for WordPress.
 
 [http://typerocket.com](http://typerocket.com)
 
@@ -16,6 +16,7 @@ TypeRocket gives you extendable and modern tools to build anything you want on W
 - Use forms and fields
 - Use models, controllers, and views
 - Register custom routes and middleware
+- Migrations
 - The list goes on...
 
 ## Quick Examples
@@ -41,9 +42,6 @@ $person->setIcon('users')
 
 // Add Sortable Columns to Admin Index View
 $person->addColumn('company', true);
-
-// REST API
-$person->setRest('person');
 ```
 
 ### Repeater Field
