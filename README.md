@@ -1,5 +1,7 @@
 ## TypeRocket WordPress Framework
 
+[![Build Status](https://travis-ci.org/TypeRocket/core.svg?branch=master)](https://travis-ci.org/TypeRocket/core) [![Total Downloads](https://poser.pugx.org/TypeRocket/core/d/total.svg)](https://packagist.org/packages/TypeRocket/core) [![Latest Stable Version](https://poser.pugx.org/TypeRocket/core/v/stable.svg)](https://packagist.org/packages/TypeRocket/core)
+
 TypeRocket is like Advanced Custom Fields + Laravel + Magic for WordPress.
 
 [http://typerocket.com](http://typerocket.com)
