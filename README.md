@@ -1,84 +1,132 @@
-## TypeRocket WordPress Framework
-
 [![Build Status](https://travis-ci.org/TypeRocket/core.svg?branch=master)](https://travis-ci.org/TypeRocket/core) [![Total Downloads](https://poser.pugx.org/TypeRocket/core/d/total.svg)](https://packagist.org/packages/TypeRocket/core) [![Latest Stable Version](https://poser.pugx.org/TypeRocket/core/v/stable.svg)](https://packagist.org/packages/TypeRocket/core)
 
-TypeRocket is like Advanced Custom Fields + Laravel + Magic for WordPress.
+
+# TypeRocket WordPress Framework
+
+TypeRocket is a modern MVC and interface framework designed to empower WordPress developers. TypeRocket is like Advanced Custom Fields + Laravel MVC + Custom Post Type UI + Magic for WordPress. 
+
+Do more while writing less code, boost your WordPress sites performance, and craft elegant admin interfaces. 
 
 [http://typerocket.com](http://typerocket.com)
 
-## Key Features
+## Highlighted Features
 
-TypeRocket gives you extendable and modern tools to build anything you want on WordPress.
+TypeRocket highly integrated into WordPress giving you and your team modern tools to build anything you want on WordPress.
 
-- Build component based designs
-- Register post types
-- Register taxonomies
-- Create meta boxes
-- Add pages
-- Use forms and fields
-- Use models, controllers, and views
-- Register custom routes and middleware
-- Migrations
+- Advanced custom post types, taxonomies, and pages.
+- Custom meta boxes, forms, and 20+ input fields.
+- MVC with custom routing plus middleware.
+- DI Container.
+- Galaxy CLI.
+- Composer based TypeRocket plugin support and publishing.
+- Integrated WordPress ORM with advanced features like eager loading.
+- Database migrations.
+- Custom theme and plugin WordPress automatic updates API integrations.
+- Gutenberg support.
+- Configurable features like lazy image resizing and complete removal of comments.
+- You control your templating system, Twig or Laravel Blade.
 - The list goes on...
 
-## Quick Examples
+### Advanced Custom Post Types
 
-Let the code speak for itself. (WordPress hooks not required)
-
-### Post Type
+Fully customize your custom post types with less code and no need for WordPress action and filter hooks.   
 
 ```php
-// Register Post Type
-$person = tr_post_type('Person');
-
-// Chain Methods with Eloquence
-$person->setIcon('users')
-       ->setTitlePlaceholder( 'Enter full name here' )
-       ->setArchivePostsPerPage(-1);
-       ->setTitleForm( function() {
-           $form = tr_form();
-           echo $form->image('Photo');
-           echo $editor->text('Company');
-           echo $editor->textarea('About Person');
-       });
-
-// Add Sortable Columns to Admin Index View
-$person->addColumn('company', true);
+tr_post_type('Person')
+    ->setIcon('users')
+    ->forceDisableGutenberg()
+    ->setTitlePlaceholder( 'Enter full name here' )
+    ->setArchivePostsPerPage(-1);
+    ->setTitleForm( function() {
+        $form = tr_form();
+        echo $form->image('Photo');
+        echo $editor->text('Company');
+        echo $editor->textarea('About Person');
+    })
+    ->addColumn('company');
 ```
 
-### Repeater Field
+### Repeater Fields
+
+Add repeaters to your WordPress admin or front-end.  
 
 ```php
 $form = tr_form();
-
-// Basic
 echo $form->repeater('Speakers')->setFields([
     $form->image('Photo'),
-    $form->text('Name'),
-    $form->text('Slides URL')
+    $form->row([
+        $form->text('Given Name'),
+        $form->text('Last Name')
+    ])
 ]);
+```
 
-// With Layout Tabs
-$tabs = tr_tabs()->bindCallbacks();
+### WordPress Integrated Advanced ORM
 
-$tabs->addTab('Content')
-     ->setTabFields('Content', [
-         $form->textarea('Quote', ['maxlength' => 200]),
-         $form->row(
-             $form->text('First Name'),
-             $form->text('Last Name')
-         )
-     ]);
+Create your own models and dramatically improve your sites performance using eager loading that is integrated with the WordPress object cache.
 
-$tabs->addTab('Images')
-     ->setTabFields('Images', [
-         $form->image('Avatar'),
-         $form->gallery('Gallery'),
-     ]);
+```php
+<?php
+$symbol_model = new \App\Models\Symbol;
+$symbol_model->with('meta')->published()->whereMeta('feature', '=', '1')->get();
+```
 
-echo $form->repeater('Stories')
-    ->setFields([$tabs])
-    ->setHeadline('Story');
+Define relationships between models using familiar Laravel ORM eloquence.
+
+```php
+<?php
+namespace App\Models;
+
+use TypeRocket\Models\WPPost;
+
+class Post extends WPPost
+{
+    protected $postType = 'post';
+
+    public function categories()
+    {
+        return $this->belongsToTaxonomy(Category::class, 'category');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToTaxonomy(Tag::class, 'post_tag');
+    }
+
+}
+```
+
+### Routing 
+
+Create your application using MVC with custom routing and no need hack around WordPress rewrite rules.
+
+```php
+tr_route()->put()->match('/profile/([^\/]+)', ['id']))->do('update@Member');
+tr_route()->get()->match('/profile/([^\/]+)', ['id']))->do('profile@Member');
+```
+
+```php
+class MemberController extends Controller
+{
+    public function profile( $id ) {
+        return tr_view('profile.show', ['id' => $id]);
+    }
+
+    public function update( $id, \App\Models\Member $member ) {
+        $member->name = $this->request->getFields('name');
+        $member->save();
+        $this->response->flashNext('Profile updated!');
+        return tr_redirect()->back();
+    }
+}
+```
+
+Or, quickly create a JSON API by simply returning a model or collection as your response.
+
+```php
+tr_route()->get()->match('posts')->do(function() {
+    return (new App\Models\Post)->with('meta')->published()->get();
+});
 ```
 
 ## License
