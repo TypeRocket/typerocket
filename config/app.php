@@ -70,6 +70,10 @@ return [
     |
     | The template engine used to build views for the front-end and admin.
     |
+    | Options:
+    |    - \TypeRocket\Template\TemplateEngine
+    |    - \TypeRocket\Template\TwigTemplateEngine
+    |
     */
     'template_engine' => [
         'front' => '\TypeRocket\Template\TemplateEngine',
