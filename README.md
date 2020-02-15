@@ -7,7 +7,8 @@ TypeRocket is a modern MVC and interface framework designed to empower WordPress
 
 Do more while writing less code, boost your WordPress sites performance, and craft elegant admin interfaces. 
 
-[http://typerocket.com](http://typerocket.com)
+- [Get the free TypeRocket version 4](http://typerocket.com/docs/v4).
+- [Get TypeRocket Pro](http://typerocket.com/).
 
 ## Highlighted Features
 
