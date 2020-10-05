@@ -22,12 +22,7 @@
     },
     "require": {
         "php": ">=7",
-        "typerocket/core": "^4.0",
-        "typerocket/plugin-seo": "4.0.*",
-        "typerocket/plugin-theme-options": "^4.0",
-        "typerocket/plugin-dashboard": "^4.0",
-        "typerocket/plugin-builder": "^4.0",
-        "typerocket/plugin-dev": "^4.0"
+        "typerocket/core": "4.2.*",
     },
     "autoload": {
         "psr-4": {
