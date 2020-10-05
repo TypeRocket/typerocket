@@ -22,7 +22,7 @@
     },
     "require": {
         "php": ">=7",
-        "typerocket/core": "4.2.*",
+        "typerocket/core": "4.2.*"
     },
     "autoload": {
         "psr-4": {
