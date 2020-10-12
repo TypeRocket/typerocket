@@ -109,6 +109,7 @@ return [
         'wordpress' => 'wordpress',
         'themes' => [
             'override' => true,
+            'flush' => false,
             'theme' => 'templates',
             'stylesheet' => 'theme/theme.css',
         ]
