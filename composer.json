@@ -1,5 +1,5 @@
 {
-    "name": "typerocket/pro",
+    "name": "typerocket/typerocket",
     "description": "TypeRocket for WordPress.",
     "keywords": ["framework", "typerocket", "wordpress"],
     "license": "GPL-3.0-or-later",
@@ -36,5 +36,5 @@
             "php galaxy core:update"
         ]
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "beta"
 }
