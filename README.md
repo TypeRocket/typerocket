@@ -24,6 +24,8 @@ Build applications in less time with less maintenance.
 
 ### Advanced Pro Features
 
+[Get TypeRocket Pro](https://typerocket.com/pricing/) for even more features:
+
 - Conditional fields and contexts.
 - Automatic WordPress theme and plugin updates.
 - Integrated WYSIWYG Redactor editor.
