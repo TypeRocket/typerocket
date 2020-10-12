@@ -1,1 +1,6 @@
-{"/js/builder.ext.js":"/js/builder.ext.js?id=fdb787b2c8d8f73d1038","/js/core.js":"/js/core.js?id=bbd9a4bf35aba9497f2c","/css/core.css":"/css/core.css?id=d654d7ffffc6c905f68b","/js/global.js":"/js/global.js?id=299b31f67ab20381e7c4","/js/location.field.js":"/js/location.field.js?id=3ef16b1a16997e8ee367","/js/pro-core.js":"/js/pro-core.js?id=e10286789bdc754c791f","/css/dev.css":"/css/dev.css?id=32ccaf60c55c88ae204f","/css/redactor.css":"/css/redactor.css?id=e30202fb48f7aae8b168"}
+{
+    "/js/builder.ext.js": "/js/builder.ext.js?id=fdb787b2c8d8f73d1038",
+    "/js/core.js": "/js/core.js?id=bbd9a4bf35aba9497f2c",
+    "/css/core.css": "/css/core.css?id=d654d7ffffc6c905f68b",
+    "/js/global.js": "/js/global.js?id=299b31f67ab20381e7c4"
+}
