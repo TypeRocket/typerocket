@@ -2,8 +2,8 @@
 /*
  * PHP Server Router
  *
- * To emulate friendly URLs in the browser run from the wordpress folder:
- * |> php -S localhost:8888 ../server.php
+ * To emulate friendly URLs in the browser run:
+ * |> php -S localhost:8888 -t wordpress server.php
  */
 $uri = urldecode(
     parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
