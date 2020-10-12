@@ -6,27 +6,30 @@ use TypeRocket\Http\Middleware\AuthAdmin;
 use TypeRocket\Http\Middleware\AuthRead;
 use TypeRocket\Http\Middleware\CanManageCategories;
 use TypeRocket\Http\Middleware\CanManageOptions;
-use TypeRocket\Http\Middleware\IsUserOrCanEditUsers;
-use TypeRocket\Http\Middleware\OwnsCommentOrCanEditComments;
-use TypeRocket\Http\Middleware\OwnsPostOrCanEditPosts;
+use TypeRocket\Http\Middleware\CanEditUsers;
+use TypeRocket\Http\Middleware\CanEditComments;
+use TypeRocket\Http\Middleware\CanEditPosts;
 
 class Kernel extends \TypeRocket\Http\Kernel
 {
-    public $middleware = [
-        'hookGlobal' => [],
-        'restApiFallback' =>
-            [ AuthAdmin::class ],
-        'resourceGlobal' =>
-            [  VerifyNonce::class ],
+    protected $middleware = [
+        'hooks' =>
+            [],
+        'http' =>
+            [ VerifyNonce::class ],
         'user' =>
-            [ IsUserOrCanEditUsers::class ],
+            [ CanEditUsers::class ],
         'post' =>
-            [ OwnsPostOrCanEditPosts::class ],
+            [ CanEditPosts::class ],
         'comment' =>
-            [ OwnsCommentOrCanEditComments::class ],
+            [ CanEditComments::class ],
         'option' =>
             [ CanManageOptions::class ],
         'term' =>
             [ CanManageCategories::class ],
+        'search' =>
+            [ AuthAdmin::class ],
+        'rest' =>
+            [ AuthAdmin::class ],
     ];
 }

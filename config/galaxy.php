@@ -11,7 +11,7 @@ return [
     | Example of root installation: TR_PATH . '/wordpress'
     |
     */
-    'wordpress' => false,
+    'wordpress' => tr_wp_root(),
 
     /*
     |--------------------------------------------------------------------------
@@ -22,5 +22,6 @@ return [
     | framework see http://symfony.com/doc/current/console.html
     |
     */
-    'commands' => []
+    'commands' => [
+    ]
 ];

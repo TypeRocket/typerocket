@@ -6,4 +6,5 @@ use TypeRocket\Models\WPUser;
 
 class User extends WPUser
 {
+
 }

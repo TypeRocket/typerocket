@@ -2,32 +2,51 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Enabled Plugins
+    | Extensions
     |--------------------------------------------------------------------------
     |
-    | The class names of the TypeRocket plugins you wish to enable.
+    | The class names of the TypeRocket extensions you wish to enable.
     |
     */
-    'plugins' => [
-        '\TypeRocketSEO\Plugin',
-        '\TypeRocketPageBuilder\Plugin',
-        '\TypeRocketThemeOptions\Plugin',
-        '\TypeRocketDev\Plugin',
+    'extensions' => [
+        '\TypeRocket\Extensions\TypeRocketUI',
+        '\TypeRocket\Extensions\PostMessages',
+        '\TypeRocket\Extensions\PageBuilder',
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Enabled Features
+    | Services
     |--------------------------------------------------------------------------
     |
-    | Options to control what features you can use on the site.
+    | Services you want loaded into the container as singletons. You can also
+    | create your own services. TypeRocket some with the following builtin:
+    |
+    |    - \App\Services\AuthService
     |
     */
-    'features' => [
-        'gutenberg' => true,
-        'posts_menu' => true,
-        'comments' => true,
+    'services' => [
+        /*
+         * TypeRocket Service Providers...
+         */
+        '\TypeRocket\Services\ErrorService',
+        '\TypeRocket\Services\MailerService',
+
+        /*
+         * Application Service Providers...
+         */
+        '\App\Services\AuthService',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Front-end
+    |--------------------------------------------------------------------------
+    |
+    | Require TypeRocket on the front-end.
+    |
+    */
+    'frontend' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -58,11 +77,9 @@ return [
     |
     */
     'class' => [
-        'icons' => '\TypeRocket\Elements\Icons',
-        'user' => '\App\Models\User',
-        'form' => '\TypeRocket\Elements\Form'
+        'form' => '\App\Elements\Form',
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Template Engine
@@ -70,40 +87,73 @@ return [
     |
     | The template engine used to build views for the front-end and admin.
     |
-    | Options:
-    |    - \TypeRocket\Template\TemplateEngine
+    | Pro Only:
+    |    - \TypeRocket\Template\TachyonTemplateEngine
     |    - \TypeRocket\Template\TwigTemplateEngine
     |
     */
-    'template_engine' => [
-        'front' => '\TypeRocket\Template\TemplateEngine',
-        'admin' => '\TypeRocket\Template\TemplateEngine',
+    'templates' => [
+        'views' => '\TypeRocket\Template\TemplateEngine',
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | TypeRocket Rooting
+    | Rooting
     |--------------------------------------------------------------------------
     |
-    | The templates to use for the TypeRocket theme. Set to false if using
-    | a theme or `templates` if using core for templates. Must be using
-    | TypeRocket as root.
+    | The templates to use for the TypeRocket theme. Must be using TypeRocket
+    | as root for this feature to work.
     |
     */
     'root' => [
-        'use_root' => false,
-        'theme' => 'templates',
+        'wordpress' => 'wordpress',
+        'themes' => [
+            'override' => true,
+            'theme' => 'templates',
+            'stylesheet' => 'theme/theme.css',
+        ]
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Assets Version
+    | Reporting
     |--------------------------------------------------------------------------
-    |
-    | The version of TypeRocket core assets. Changing this can help bust
-    | browser caches.
-    |
     */
-    'assets' => '4.0.8'
+    'report' => [
+        'error' => '\TypeRocket\Utility\ExceptionReport'
+    ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Error Handling
+    |--------------------------------------------------------------------------
+    */
+    'errors' => [
+        /*
+        |--------------------------------------------------------------------------
+        | Pro Only - Whoops PHP
+        |--------------------------------------------------------------------------
+        |
+        | Use Whoops PHP when TypeRocket debugging is enabled.
+        |
+        */
+        'whoops' => true,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Throw Errors
+        |--------------------------------------------------------------------------
+        |
+        | TypeRocket defines an error handler function that throws \ErrorException.
+        | You can disable this functionality but it may impact the template error
+        | system that allows you to define 500.php theme templates.
+        |
+        | @link https://www.php.net/manual/en/function.set-error-handler.php
+        |
+        | Recommended Levels: `E_ALL` or `E_ERROR | E_PARSE`
+        |
+        */
+        'throw' => true,
+        'level' => E_ERROR | E_PARSE
+    ]
 ];

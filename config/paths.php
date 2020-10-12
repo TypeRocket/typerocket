@@ -2,26 +2,23 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Assets URL
+    | App
     |--------------------------------------------------------------------------
     |
-    | The URL where TypeRocket assets can be found.
+    | The PATH were the main app can be found.
     |
     */
-    'urls' => [
-        'assets' => get_theme_file_uri( '/typerocket/wordpress/assets' ),
-        'components' => get_theme_file_uri( '/typerocket/wordpress/assets/components' ),
-    ],
+    'app' => TR_APP_ROOT_PATH . '/app',
 
     /*
     |--------------------------------------------------------------------------
-    | TypeRocket Root
+    | Storage
     |--------------------------------------------------------------------------
     |
-    | The URL where TypeRocket assets can be found.
+    | The PATH where files are to be stored.
     |
     */
-    'base'  => TR_PATH,
+    'storage' => TR_ALT_PATH . '/storage',
 
     /*
     |--------------------------------------------------------------------------
@@ -31,7 +28,7 @@ return [
     | The PATH where files are to be cached.
     |
     */
-    'cache'  => TR_PATH . '/storage/cache',
+    'cache' => TR_ALT_PATH . '/storage/cache',
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +38,7 @@ return [
     | The PATH were resources can be found.
     |
     */
-    'resources'  => TR_PATH . '/resources',
+    'resources' => TR_ALT_PATH . '/resources',
 
     /*
     |--------------------------------------------------------------------------
@@ -51,57 +48,7 @@ return [
     | The PATH were front-end views can be found.
     |
     */
-    'views'  => TR_PATH . '/resources/views',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Pages
-    |--------------------------------------------------------------------------
-    |
-    | The PATH were admin pages can be found.
-    |
-    */
-    'pages'  => TR_PATH . '/resources/pages',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Visuals
-    |--------------------------------------------------------------------------
-    |
-    | The PATH were component visuals can be found.
-    |
-    */
-    'visuals'  => TR_PATH . '/resources/visuals',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Components
-    |--------------------------------------------------------------------------
-    |
-    | The PATH were components can be found.
-    |
-    */
-    'components'  => TR_PATH . '/resources/components',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Plugins
-    |--------------------------------------------------------------------------
-    |
-    | The PATH were plugins can be found.
-    |
-    */
-    'plugins' => TR_PATH . '/plugins',
-
-    /*
-    |--------------------------------------------------------------------------
-    | App
-    |--------------------------------------------------------------------------
-    |
-    | The PATH were the main app can be found.
-    |
-    */
-    'app'  => TR_PATH . '/app',
+    'views' => TR_ALT_PATH . '/resources/views',
 
     /*
     |--------------------------------------------------------------------------
@@ -112,22 +59,66 @@ return [
     | TypeRocket as root.
     |
     */
-    'themes'  => TR_PATH . '/resources/themes',
+    'themes' => TR_ALT_PATH . '/resources/themes',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Routes
+    |--------------------------------------------------------------------------
+    |
+    | The PATH were theme templates can be found. Used if you install
+    | TypeRocket as root.
+    |
+    */
+    'routes' => TR_ALT_PATH . '/routes',
 
     /*
     |--------------------------------------------------------------------------
     | Migrations
     |--------------------------------------------------------------------------
     |
-    | The PATHs for migrations and run migrations. Drivers include: file
+    | The PATHs for migrations and run migrations.
     |
     */
-    'migrate'  => [
-        'driver' => 'file',
-        'migrations' => [
-            TR_PATH . '/sql/migrations',
-        ],
-        'run' => TR_PATH . '/sql/run',
-    ]
+    'migrations' => TR_ALT_PATH . '/database/migrations',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Composer Vendor
+    |--------------------------------------------------------------------------
+    |
+    | The PATH were composer vendor files are located.
+    |
+    */
+    'vendor' => TR_PATH . '/vendor',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Core
+    |--------------------------------------------------------------------------
+    |
+    | The PATH were composer vendor files are located.
+    |
+    */
+    'core' => TR_PATH . '/vendor/typerocket/core',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Pro Core
+    |--------------------------------------------------------------------------
+    |
+    | The PATH were pro composer vendor files are located.
+    |
+    */
+    'pro' => TR_PATH . '/vendor/typerocket/professional',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Assets
+    |--------------------------------------------------------------------------
+    |
+    | The PATH where TypeRocket theme and build assets are located.
+    |
+    */
+    'assets' => TR_PATH . '/wordpress/assets',
 ];

@@ -1,8 +1,8 @@
 <?php
 namespace App\Controllers;
 
-use \App\Models\Category;
-use \TypeRocket\Controllers\WPTermController;
+use App\Models\Category;
+use TypeRocket\Controllers\WPTermController;
 
 class CategoryController extends WPTermController
 {

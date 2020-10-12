@@ -1,118 +1,45 @@
-### TypeRocket Project Specific
+# Your Files
+
+# Vendor
 node_modules
 /vendor
-/tests
-composer.lock
 package-lock.json
-mix-manifest.json
+
+# Environment
 .env
 /wp-config.php
 /sql/run/*
+.phpunit.result.cache
+npm-debug.log
+yarn-error.log
+/galaxy-config.php
 
-### Vagrant
-.vagrant
-Vagrantfile
-bootstrap.sh
-
-### WP Engine
-vendor/composer/autoload_static.php
-
-### WordPress Specific
-/wordpress/.htaccess
-/wordpress/robots.txt
-/wordpress/license.txt
-/wordpress/readme.html
+# WordPress
+/wordpress/*.*
+/wordpress/.maintenance
 /wordpress/wp-admin
 /wordpress/wp-includes
-/wordpress/wp-content/upgrade
-/wordpress/wp-content/uploads
-/wordpress/wp-content/themes
-/wordpress/wp-content/plugins
-/wordpress/wp-content/index.php
-/wordpress/wp-*.php
-/wordpress/index.php
-/wordpress/xmlrpc.php
-/wordpress/wp-content/blogs.dir/
-/wordpress/wp-content/upgrade/*
-/wordpress/wp-content/backup-db/*
-/wordpress/wp-content/advanced-cache.php
-/wordpress/wp-content/wp-cache-config.php
-/wordpress/wp-content/cache/*
-/wordpress/wp-content/cache/supercache/*
-/wordpress/wp-content/wp-rocket-config
-/wordpress/nginx.conf
+/wordpress/wp-content/*
+!/wordpress/wp-content/mu-plugins/
 
-### WP Engine Specific
-.smushit-status
-.gitattributes
-_wpeprivate
-/wordpress/wp-content/object-cache.php
-/wordpress/wp-content/mu-plugins/mu-plugin.php
-/wordpress/wp-content/mu-plugins/slt-force-strong-passwords.php
-/wordpress/wp-content/mu-plugins/limit-login-attempts
-/wordpress/wp-content/mu-plugins/wpengine-common
-/wordpress/wp-content/mysql.sql
+# Source Maps
+*.css.map
+*.js.map
 
-### OS and IDE
+# OS
 *~
-.idea
-.settings
 .DS_Store*
 ehthumbs.db
-Icon?
 Thumbs.db
+
+# IDE
+.idea
+.settings
 .project
 .build
 .vscode
 
-### Large/disallowed File Types
-.svn
-.cvs
-*.hqx
-*.bak
-*.swp
-*.bin
-*.exe
-*.dll
-*.deb
-*.dmg
-*.iso
-*.img
-*.msi
-*.msp
-*.msm
-*.mid
-*.midi
-*.kar
-*.mp3
-*.ogg
-*.m4a
-*.ra
-*.3gpp
-*.3gp
-*.mp4
-*.mpeg
-*.mpg
-*.mov
-*.webm
-*.flv
-*.m4v
-*.mng
-*.asx
-*.asf
-*.wmv
-*.avi
-*.zip
-*.7z
-*.jar
-*.rar
+# File Types
 *.log
-*.sqlite
-
-### Compiled Source
-*.com
-*.class
-*.o
-*.so
-*.css.map
-*.js.map
+*.zip
+.svn

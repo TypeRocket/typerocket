@@ -1,12 +1,20 @@
 #!/usr/bin/env php
 <?php
-if( php_sapi_name() !== 'cli' ) {
+if( php_sapi_name() !== 'cli' )
     die("Meant to be run from command line" . PHP_EOL);
-}
 
-if (!defined('WPMU_PLUGIN_URL')) {
-    define('WPMU_PLUGIN_URL', '/mu-plugins');
-}
+define('WPMU_PLUGIN_URL', '/mu-plugins');
+define('TR_GALAXY', true);
 
-require __DIR__ . '/init.php';
+if(is_file(__DIR__ . '/wordpress/wp-content/mu-plugins/typerocket.php'))
+    define('TR_ROOT_INSTALL', true);
+
+if(is_file(__DIR__ . '/galaxy-config.php'))
+    require __DIR__ . '/galaxy-config.php';
+
+if(!defined('TR_GALAXY_PATH'))
+    define('TR_GALAXY_PATH', __DIR__);
+
+require TR_GALAXY_PATH . '/init.php';
+
 new \TypeRocket\Console\Launcher();

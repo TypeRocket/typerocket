@@ -1,41 +1,47 @@
 <?php
-/*
-|--------------------------------------------------------------------------
-| TypeRocket by Robojuice
-|--------------------------------------------------------------------------
-|
-| TypeRocket is designed to work with WordPress 5.2+ and PHP 7+. You
-| must initialize it exactly once. We suggest including TypeRocket
-| from your theme and let plugins access TypeRocket from there.
-|
-| Happy coding!
-|
-| http://typerocket.com
-|
-*/
+namespace TypeRocket\Core;
 
+// Run TypeRocket only once
+if( defined('TR_PATH') )
+    return;
+
+// Define TypeRocket root path
 define('TR_PATH', __DIR__ );
 
+// Define TypeRocket alternate path
+if( !defined('TR_ALT_PATH') )
+    define('TR_ALT_PATH', TR_PATH);
+
+// Define TypeRocket alternate path
+if( !defined('TR_APP_ROOT_PATH') )
+    define('TR_APP_ROOT_PATH', TR_ALT_PATH);
+
 // Define App Namespace
-if(!defined('TR_APP_NAMESPACE')) {
+if( !defined('TR_APP_NAMESPACE') )
     define('TR_APP_NAMESPACE', 'App');
-}
 
-// Auto Loader Init
-if(!defined('TR_AUTO_LOADER')) {
+// Define App auto loader
+if( !defined('TR_AUTOLOAD_APP') )
+    define('TR_AUTOLOAD_APP', ['prefix' => TR_APP_NAMESPACE . '\\', 'folder' => __DIR__ . '/app/']);
+
+// Run vendor autoloader
+if( !defined('TR_AUTO_LOADER') )
     require __DIR__ . '/vendor/autoload.php';
-} else {
+else
     call_user_func(TR_AUTO_LOADER);
-}
 
-// Define Config
-if(!defined('TR_CORE_CONFIG_PATH')) {
+// Run app autoloader
+$tr_autoload_map = TR_AUTOLOAD_APP;
+tr_autoload_psr4($tr_autoload_map);
+
+// Define configuration path
+if( !defined('TR_CORE_CONFIG_PATH') )
     define('TR_CORE_CONFIG_PATH', __DIR__ . '/config' );
-}
 
-new \TypeRocket\Core\Config( TR_CORE_CONFIG_PATH );
+// Boot container
+( new Container )->boot();
 
 // Load TypeRocket
-if( defined('WPINC') ) {
-    ( new \TypeRocket\Core\Launcher() )->initCore();
+if (defined('WPINC')) {
+    (new System)->boot();
 }
