@@ -36,5 +36,5 @@
             "php galaxy core:update"
         ]
     },
-    "minimum-stability": "beta"
+    "minimum-stability": "stable"
 }
