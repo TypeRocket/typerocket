@@ -22,7 +22,7 @@ Build applications in less time with less maintenance.
 - Advanced policy, capability, and role APIs.
 - The list goes on...
 
-### Advanced Pro Features
+### Pro Only - Features
 
 [Get TypeRocket Pro](https://typerocket.com/pricing/) for even more features:
 
@@ -78,7 +78,7 @@ $form->repeater('Speakers')->setFields([
 ]);
 ```
 
-### Conditional Fields
+### Pro Only - Conditional Fields
 
 Show fields or contexts only **when** a field's conditions are true.  
 
@@ -162,7 +162,7 @@ tr_route()->get()->on('posts', function() {
 });
 ```
 
-### Pro Templating
+### Pro Only - Templating
 
 Dry up your templates using views and controllers with this Pro only feature. Views in admin and front-end.
 
