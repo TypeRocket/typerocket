@@ -368,6 +368,18 @@ function tr_components_field($name, $item_id = null, $modelClass = null)
 }
 
 /**
+ * Loop Components
+ *
+ * @param array $builder_data
+ * @param array $other be sure to pass $name, $item_id, $model
+ * @param string $group
+ */
+function tr_components_loop($builder_data, $other = [], $group = 'builder')
+{
+    \TypeRocket\Elements\Fields\Matrix::componentsLoop(...func_get_args());
+}
+
+/**
  * Get users field
  *
  * @param string $name use dot notation
