@@ -11,7 +11,7 @@ return [
     | Example of root installation: TR_PATH . '/wordpress'
     |
     */
-    'wordpress' => tr_wp_root(),
+    'wordpress' => \TypeRocket\Utility\Helper::wordPressRootPath(),
 
     /*
     |--------------------------------------------------------------------------

@@ -32,14 +32,14 @@ else
 
 // Run app autoloader
 $tr_autoload_map = TR_AUTOLOAD_APP;
-tr_autoload_psr4($tr_autoload_map);
+ApplicationKernel::autoloadPsr4($tr_autoload_map);
 
 // Define configuration path
 if( !defined('TR_CORE_CONFIG_PATH') )
     define('TR_CORE_CONFIG_PATH', __DIR__ . '/config' );
 
-// Boot container
-( new Container )->boot();
+// Boot application kernel
+( new ApplicationKernel )->boot();
 
 // Load TypeRocket
 if (defined('WPINC')) {

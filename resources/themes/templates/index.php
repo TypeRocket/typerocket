@@ -1,2 +1,2 @@
 <?php
-tr_view('master', ['title' => 'Andromeda'])->render();
+\TypeRocket\Template\View::new('master', ['title' => 'Andromeda'])->render();

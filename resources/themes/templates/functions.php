@@ -12,7 +12,10 @@
 // Define Theme Directory
 define('THEME_DIR', get_template_directory_uri() );
 
-$manifest = tr_manifest_cache( tr_config('paths.assets') . '/templates/mix-manifest.json', 'templates');
+$manifest = \TypeRocket\Utility\Manifest::cache(
+    \TypeRocket\Utility\Path::assets('/templates/mix-manifest.json'),
+    'templates'
+);
 
 // Theme Assets
 add_action('wp_enqueue_scripts', function() use ($manifest) {

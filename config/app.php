@@ -56,7 +56,7 @@ return [
     | Turn on Debugging for TypeRocket. Set to false to disable.
     |
     */
-    'debug' => immutable('WP_DEBUG', true),
+    'debug' => typerocket_env('WP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,6 +78,7 @@ return [
     */
     'class' => [
         'form' => '\App\Elements\Form',
+        'error' => '\TypeRocket\Utility\ExceptionReport'
     ],
 
     /*
@@ -113,15 +114,6 @@ return [
             'theme' => 'templates',
             'stylesheet' => 'theme/theme.css',
         ]
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Reporting
-    |--------------------------------------------------------------------------
-    */
-    'report' => [
-        'error' => '\TypeRocket\Utility\ExceptionReport'
     ],
 
     /*
