@@ -11,7 +11,7 @@ return [
     |
     */
     'google_maps' => [
-        'api_key' => typerocket_env('TR_GOOGLE_MAPS_API_KEY'),
+        'api_key' => typerocket_env('TYPEROCKET_GOOGLE_MAPS_API_KEY'),
         'map_zoom' => 15,
         'ui' => false
     ]
