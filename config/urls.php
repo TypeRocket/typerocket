@@ -8,7 +8,7 @@ return [
     | The URL where TypeRocket assets are found.
     |
     */
-    'assets' => tr_assets_url_build(),
+    'assets' => \TypeRocket\Utility\Helper::assetsUrlBuild(),
 
     /*
     |--------------------------------------------------------------------------
@@ -18,7 +18,7 @@ return [
     | The URL where TypeRocket component assets are found.
     |
     */
-    'components' => tr_assets_url_build( '/components' ),
+    'components' => \TypeRocket\Utility\Helper::assetsUrlBuild( '/components' ),
 
     /*
     |--------------------------------------------------------------------------
@@ -28,5 +28,5 @@ return [
     | The URL where TypeRocket Core assets are found.
     |
     */
-    'typerocket' => tr_assets_url_build( '/typerocket' ),
+    'typerocket' => \TypeRocket\Utility\Helper::assetsUrlBuild( '/typerocket' ),
 ];

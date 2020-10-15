@@ -192,12 +192,13 @@ function tr_views_path( $append ) {
  * Get controller by recourse
  *
  * @param string $resource use the resource name to get controller
+ * @param bool $instance
  *
  * @return null|string $controller
  */
-function tr_controller($resource)
+function tr_controller($resource, $instance = true)
 {
-    return \TypeRocket\Utility\Helper::controllerClass($resource);
+    return \TypeRocket\Utility\Helper::controllerClass($resource, $instance);
 }
 
 /**
@@ -210,7 +211,7 @@ function tr_controller($resource)
  */
 function tr_model($resource, $instance = true)
 {
-    return \TypeRocket\Utility\Helper::modelClass($resource, $instance = true);
+    return \TypeRocket\Utility\Helper::modelClass($resource, $instance);
 }
 
 /**
@@ -364,17 +365,6 @@ function tr_field($name, $item_id = null)
 function tr_components_field($name, $item_id = null, $modelClass = null)
 {
     return \TypeRocket\Utility\ModelField::components(...func_get_args());
-}
-
-/**
- * Loop Components
- *
- * @param array $builder_data
- * @param array $other be sure to pass $name, $item_id, $model
- * @param string $group
- */
-function tr_components_loop($builder_data, $other = [], $group = 'builder') {
-    \TypeRocket\Elements\Fields\Matrix::componentsLoop(...func_get_args());
 }
 
 /**
@@ -533,58 +523,11 @@ function tr_form_hidden_fields($method = 'POST', $prefix = 'tr')
 }
 
 /**
- * TypeRocket Check Field Nonce
- *
- * Works the same as check_ajax_referer but also include
- * request header checks for: X-CSRF-TOKEN and X-WP-NONCE
- *
- * @param string $action
- * @param bool $die
- *
- * @return bool|int
- */
-function tr_field_nonce_check($action = '', $die = false)
-{
-    return \TypeRocket\Http\Request::new()->checkNonce(...func_get_args());
-}
-
-/**
  * @return \TypeRocket\Http\Cookie
  */
 function tr_cookie()
 {
     return new \TypeRocket\Http\Cookie();
-}
-
-/**
- * @param string $name the name of the field
- * @param string $default a default value
- * @param bool $delete should delete old data when getting the last field
- *
- * @return string
- */
-function tr_old_field($name, $default = '', $delete = false)
-{
-    return \TypeRocket\Http\Cookie::new()->oldField(...func_get_args());
-}
-
-/**
- * @param null $default
- * @param bool $delete
- *
- * @return string
- */
-function tr_old_fields($default = null, $delete = true)
-{
-    return \TypeRocket\Http\Cookie::new()->oldFields(...func_get_args());
-}
-
-/**
- * @return bool
- */
-function tr_old_fields_remove()
-{
-    return \TypeRocket\Http\Cookie::new()->oldFieldsRemove();
 }
 
 /**
@@ -679,17 +622,6 @@ function tr_file($file) {
 }
 
 /**
- * Config URL
- *
- * @param string $path
- *
- * @return string
- */
-function tr_assets_url_build($path = '') {
-    return \TypeRocket\Utility\Helper::assetsUrlBuild(...func_get_args());
-}
-
-/**
  * Get Asset Version
  *
  * @param string $path
@@ -711,30 +643,6 @@ function tr_manifest($namespace = 'typerocket') {
 }
 
 /**
- * Get Asset Version
- *
- * @param \Throwable $exception
- * @param bool $debug
- * @return void
- */
-function tr_report(\Throwable $exception, $debug = false) {
-    \TypeRocket\Utility\Helper::reportError(...func_get_args());
-}
-
-/**
- * @param string $action
- * @param object|string $option
- * @param null|\TypeRocket\Models\AuthUser $user
- * @param \TypeRocket\Auth\Policy|string $policy
- *
- * @return mixed
- * @throws Exception
- */
-function tr_auth($action, $option, $user = null, $policy = null) {
-    return \TypeRocket\Http\Auth::action(...func_get_args());
-}
-
-/**
  * Throw HTTP Error
  *
  * @param int $code
@@ -743,16 +651,6 @@ function tr_auth($action, $option, $user = null, $policy = null) {
  */
 function tr_abort(int $code) {
     \TypeRocket\Exceptions\HttpError::abort($code);
-}
-
-/**
- * Get Routes Repo
- *
- * @return \TypeRocket\Core\System
- */
-function tr_system()
-{
-    return \TypeRocket\Core\System::getFromContainer();
 }
 
 /**
@@ -806,15 +704,4 @@ function tr_nils($value)
 function tr_cache($folder = 'app')
 {
     return \TypeRocket\Utility\PersistentCache::new($folder);
-}
-
-/**
- * @param mixed $value
- * @param string|callable $type
- *
- * @return bool|float|int|mixed|string
- */
-function tr_cast($value, $type)
-{
-    return \TypeRocket\Utility\Data::cast(...func_get_args());
 }
