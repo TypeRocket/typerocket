@@ -8,7 +8,7 @@ return [
     | The PATH were the main app can be found.
     |
     */
-    'app' => TR_APP_ROOT_PATH . '/app',
+    'app' => TYPEROCKET_APP_ROOT_PATH . '/app',
 
     /*
     |--------------------------------------------------------------------------
@@ -18,7 +18,7 @@ return [
     | The PATH where files are to be stored.
     |
     */
-    'storage' => TR_ALT_PATH . '/storage',
+    'storage' => TYPEROCKET_ALT_PATH . '/storage',
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return [
     | The PATH where files are to be cached.
     |
     */
-    'cache' => TR_ALT_PATH . '/storage/cache',
+    'cache' => TYPEROCKET_ALT_PATH . '/storage/cache',
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +38,7 @@ return [
     | The PATH were resources can be found.
     |
     */
-    'resources' => TR_ALT_PATH . '/resources',
+    'resources' => TYPEROCKET_ALT_PATH . '/resources',
 
     /*
     |--------------------------------------------------------------------------
@@ -48,7 +48,7 @@ return [
     | The PATH were front-end views can be found.
     |
     */
-    'views' => TR_ALT_PATH . '/resources/views',
+    'views' => TYPEROCKET_ALT_PATH . '/resources/views',
 
     /*
     |--------------------------------------------------------------------------
@@ -59,7 +59,7 @@ return [
     | TypeRocket as root.
     |
     */
-    'themes' => TR_ALT_PATH . '/resources/themes',
+    'themes' => TYPEROCKET_ALT_PATH . '/resources/themes',
 
     /*
     |--------------------------------------------------------------------------
@@ -70,7 +70,7 @@ return [
     | TypeRocket as root.
     |
     */
-    'routes' => TR_ALT_PATH . '/routes',
+    'routes' => TYPEROCKET_ALT_PATH . '/routes',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     | The PATHs for migrations and run migrations.
     |
     */
-    'migrations' => TR_ALT_PATH . '/database/migrations',
+    'migrations' => TYPEROCKET_ALT_PATH . '/database/migrations',
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return [
     | The PATH were composer vendor files are located.
     |
     */
-    'vendor' => TR_PATH . '/vendor',
+    'vendor' => TYPEROCKET_PATH . '/vendor',
 
     /*
     |--------------------------------------------------------------------------
@@ -100,7 +100,7 @@ return [
     | The PATH were composer vendor files are located.
     |
     */
-    'core' => TR_PATH . '/vendor/typerocket/core',
+    'core' => TYPEROCKET_PATH . '/vendor/typerocket/core',
 
     /*
     |--------------------------------------------------------------------------
@@ -110,7 +110,7 @@ return [
     | The PATH were pro composer vendor files are located.
     |
     */
-    'pro' => TR_PATH . '/vendor/typerocket/professional',
+    'pro' => TYPEROCKET_PATH . '/vendor/typerocket/professional',
 
     /*
     |--------------------------------------------------------------------------
@@ -120,5 +120,5 @@ return [
     | The PATH where TypeRocket theme and build assets are located.
     |
     */
-    'assets' => TR_PATH . '/wordpress/assets',
+    'assets' => TYPEROCKET_PATH . '/wordpress/assets',
 ];

@@ -2,41 +2,41 @@
 namespace TypeRocket\Core;
 
 // Run TypeRocket only once
-if( defined('TR_PATH') )
+if( defined('TYPEROCKET_PATH') )
     return;
 
 // Define TypeRocket root path
-define('TR_PATH', __DIR__ );
+define('TYPEROCKET_PATH', __DIR__ );
 
 // Define TypeRocket alternate path
-if( !defined('TR_ALT_PATH') )
-    define('TR_ALT_PATH', TR_PATH);
+if( !defined('TYPEROCKET_ALT_PATH') )
+    define('TYPEROCKET_ALT_PATH', TYPEROCKET_PATH);
 
 // Define TypeRocket alternate path
-if( !defined('TR_APP_ROOT_PATH') )
-    define('TR_APP_ROOT_PATH', TR_ALT_PATH);
+if( !defined('TYPEROCKET_APP_ROOT_PATH') )
+    define('TYPEROCKET_APP_ROOT_PATH', TYPEROCKET_ALT_PATH);
 
 // Define App Namespace
-if( !defined('TR_APP_NAMESPACE') )
-    define('TR_APP_NAMESPACE', 'App');
+if( !defined('TYPEROCKET_APP_NAMESPACE') )
+    define('TYPEROCKET_APP_NAMESPACE', 'App');
 
 // Define App auto loader
-if( !defined('TR_AUTOLOAD_APP') )
-    define('TR_AUTOLOAD_APP', ['prefix' => TR_APP_NAMESPACE . '\\', 'folder' => __DIR__ . '/app/']);
+if( !defined('TYPEROCKET_AUTOLOAD_APP') )
+    define('TYPEROCKET_AUTOLOAD_APP', ['prefix' => TYPEROCKET_APP_NAMESPACE . '\\', 'folder' => __DIR__ . '/app/']);
 
 // Run vendor autoloader
-if( !defined('TR_AUTO_LOADER') )
+if( !defined('TYPEROCKET_AUTO_LOADER') )
     require __DIR__ . '/vendor/autoload.php';
 else
-    call_user_func(TR_AUTO_LOADER);
+    call_user_func(TYPEROCKET_AUTO_LOADER);
 
 // Run app autoloader
-$tr_autoload_map = TR_AUTOLOAD_APP;
+$tr_autoload_map = TYPEROCKET_AUTOLOAD_APP;
 ApplicationKernel::autoloadPsr4($tr_autoload_map);
 
 // Define configuration path
-if( !defined('TR_CORE_CONFIG_PATH') )
-    define('TR_CORE_CONFIG_PATH', __DIR__ . '/config' );
+if( !defined('TYPEROCKET_CORE_CONFIG_PATH') )
+    define('TYPEROCKET_CORE_CONFIG_PATH', __DIR__ . '/config' );
 
 // Boot application kernel
 ( new ApplicationKernel )->boot();
