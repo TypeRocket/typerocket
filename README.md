@@ -1,8 +1,19 @@
-# TypeRocket
+<p align="center"><a href="https://typerocket.com" target="_blank"><img src="https://raw.githubusercontent.com/TypeRocket/art/main/wordmark/typerocket.svg" width="320"></a></p>
 
-TypeRocket is a highly integrated WordPress framework designed for the modern developer. TypeRocket brings into one place the advanced features of ACF, Laravel, Custom Post Type UI, and more. 
+<p align="center">
+<a href="https://travis-ci.org/TypeRocket/core"><img src="https://travis-ci.org/TypeRocket/core.svg?branch=main" alt="Build Status"></a>
+<a href="https://packagist.org/packages/typerocket/core"><img src="https://img.shields.io/packagist/dt/typerocket/core" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/typerocket/core"><img src="https://img.shields.io/packagist/v/typerocket/core" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/typerocket/core"><img src="https://img.shields.io/packagist/l/typerocket/core" alt="License"></a>
+</p>
 
-Enjoy a fluent syntax, refined UI, and powerfully fast APIs... [TypeRocket](http://typerocket.com).
+## About TypeRocket
+
+TypeRocket is a highly integrated WordPress framework designed for the modern developer. TypeRocket brings into one place the advanced features like those of ACF, Laravel, Custom Post Type UI, and more. 
+
+Enjoy a fluent syntax, refined UI, and powerfully fast APIs. 
+
+[Get TypeRocket](http://typerocket.com).
 
 ## Modern Features
 
