@@ -9,7 +9,7 @@
 
 ## About TypeRocket
 
-TypeRocket is a highly integrated WordPress framework designed for the modern developer. TypeRocket brings into one place the advanced features like those of ACF, Laravel, Custom Post Type UI, and more. 
+TypeRocket is a highly integrated MVC WordPress framework with beautiful UI components for the modern developer. TypeRocket brings into one place the advanced features like those of ACF, Laravel, Custom Post Type UI, and more. 
 
 Enjoy a fluent syntax, refined UI, and powerfully fast APIs. 
 
