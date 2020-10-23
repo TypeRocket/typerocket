@@ -8,10 +8,6 @@
         "wpackagist": {
             "type": "composer",
             "url": "https://wpackagist.org"
-        },
-        "pro": {
-            "type": "vcs",
-            "url": "git@github.com:typerocket/professional.git"
         }
     },
     "authors": [
