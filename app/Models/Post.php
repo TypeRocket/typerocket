@@ -5,7 +5,7 @@ use TypeRocket\Models\WPPost;
 
 class Post extends WPPost
 {
-    protected $postType = 'post';
+    public const POST_TYPE = 'post';
 
     public function categories()
     {

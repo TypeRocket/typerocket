@@ -6,5 +6,5 @@ use TypeRocket\Models\WPTerm;
 
 class Tag extends WPTerm
 {
-    protected $taxonomy = 'post_tag';
+    public const TAXONOMY = 'post_tag';
 }
