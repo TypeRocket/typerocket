@@ -1,4 +1,8 @@
 # Your Files
+/wordpress/tr_cache/rapid_cache/*
+/wordpress/wp-content/*
+!/wordpress/wp-content/mu-plugins/
+!/wordpress/wp-content/advanced-cache.php
 
 # Vendor
 node_modules
@@ -19,8 +23,6 @@ yarn-error.log
 /wordpress/.maintenance
 /wordpress/wp-admin
 /wordpress/wp-includes
-/wordpress/wp-content/*
-!/wordpress/wp-content/mu-plugins/
 
 # Source Maps
 *.css.map

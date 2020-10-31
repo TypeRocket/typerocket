@@ -17,4 +17,4 @@ if(!defined('TYPEROCKET_GALAXY_PATH'))
 
 require TYPEROCKET_GALAXY_PATH . '/init.php';
 
-new \TypeRocket\Console\Launcher();
+new \TypeRocket\Console\GalaxyConsoleLauncher();

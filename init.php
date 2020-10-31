@@ -38,10 +38,29 @@ ApplicationKernel::autoloadPsr4($tr_autoload_map);
 if( !defined('TYPEROCKET_CORE_CONFIG_PATH') )
     define('TYPEROCKET_CORE_CONFIG_PATH', __DIR__ . '/config' );
 
-// Boot application kernel
-( new ApplicationKernel )->boot();
+if( ! defined('TYPEROCKET_SKIP_BOOT') )
+    define('TYPEROCKET_SKIP_BOOT', false );
 
-// Load TypeRocket
-if (defined('WPINC')) {
-    (new System)->boot();
+if( ! TYPEROCKET_SKIP_BOOT ) {
+    // Boot application kernel
+    ( new ApplicationKernel )->boot();
+
+    // TypeRocket
+    if (defined('WPINC')) {
+        (new System)->boot();
+    }
+    else {
+        if(!defined('TYPEROCKET_ROOT_INSTALL'))
+            define('TYPEROCKET_ROOT_INSTALL', true);
+
+        // Manually WordPress Load Hook
+        $GLOBALS['wp_filter']['muplugins_loaded'][0]['callbacks'] = ['function' => function() {
+            if( file_exists(TYPEROCKET_ALT_PATH . '/rooter.php') ) {
+                include(TYPEROCKET_ALT_PATH . '/rooter.php');
+            }
+
+            (new System)->boot();
+            (new Rooter)->boot();
+        }, 'accepted_args' => 0];
+    }
 }
