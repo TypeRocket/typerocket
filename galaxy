@@ -6,9 +6,6 @@ if( php_sapi_name() !== 'cli' )
 define('WPMU_PLUGIN_URL', '/mu-plugins');
 define('TYPEROCKET_GALAXY', true);
 
-if(is_file(__DIR__ . '/wordpress/wp-content/mu-plugins/typerocket.php'))
-    define('TYPEROCKET_ROOT_INSTALL', true);
-
 if(is_file(__DIR__ . '/galaxy-config.php'))
     require __DIR__ . '/galaxy-config.php';
 
