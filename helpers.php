@@ -535,6 +535,18 @@ function tr_form_hidden_fields($method = 'POST', $prefix = 'tr')
 }
 
 /**
+ * Check Spam Honeypot
+ *
+ * @param null|string $name
+ *
+ * @return \TypeRocket\Html\Html
+ */
+function tr_honeypot_fields($name = null)
+{
+    return \TypeRocket\Elements\BaseForm::honeypotInputs(...func_get_args());
+}
+
+/**
  * @return \TypeRocket\Http\Cookie
  */
 function tr_cookie()
