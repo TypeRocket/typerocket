@@ -6,7 +6,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'registry' => [
-        'content' => \App\Components\ContentComponent::class
+        'content' => \App\Components\ContentComponent::class,
     ],
 
     /*
@@ -18,6 +18,6 @@ return [
     |
     */
     'builder' => [
-        'content'
+        'content',
     ]
 ];
