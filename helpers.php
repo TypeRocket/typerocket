@@ -569,14 +569,14 @@ function tr_view($dots, array $data = [], $ext = '.php')
 /**
  * Validate fields
  *
- * @param array $options
+ * @param array $rules
  * @param array|null $fields
  * @param null $modelClass
  * @param bool $run
  *
  * @return \TypeRocket\Utility\Validator
  */
-function tr_validator($options, $fields = null, $modelClass = null, $run = false)
+function tr_validator($rules, $fields = null, $modelClass = null, $run = false)
 {
     return \TypeRocket\Utility\Validator::new(...func_get_args());
 }
