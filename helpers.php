@@ -1,5 +1,23 @@
 <?php
 /**
+ * Dump Die
+ *
+ * @param mixed ...$args
+ */
+function tr_dd(...$args) {
+    \TypeRocket\Utility\Dump::die(...$args);
+}
+
+/**
+ * Dump
+ *
+ * @param mixed ...$args
+ */
+function tr_dump(...$args) {
+    \TypeRocket\Utility\Dump::data(...$args);
+}
+
+/**
  * Dots Walk
  *
  * Traverse array with dot notation.
