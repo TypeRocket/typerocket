@@ -1,8 +1,5 @@
 <?php
-
-
 namespace App\Auth;
-
 
 use TypeRocket\Auth\Policy;
 use TypeRocket\Models\AuthUser;
