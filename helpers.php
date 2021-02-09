@@ -252,10 +252,11 @@ function tr_taxonomy($singular, $plural = null, $settings = [])
  * @param string $singular Singular name for post type
  * @param string|null $plural Plural name for post type
  * @param array $settings The settings for the post type
+ * @param string|null $id post type ID
  *
  * @return \TypeRocket\Register\PostType
  */
-function tr_post_type($singular, $plural = null, $settings = [])
+function tr_post_type($singular, $plural = null, $settings = [], $id = null )
 {
     return \TypeRocket\Register\PostType::add(...func_get_args());
 }
