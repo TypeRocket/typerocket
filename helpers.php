@@ -748,3 +748,13 @@ function tr_cache($folder = 'app')
 {
     return \TypeRocket\Utility\PersistentCache::new($folder);
 }
+
+/**
+ * Roles
+ *
+ * @return \TypeRocket\Auth\Roles
+ */
+function tr_roles()
+{
+    return \TypeRocket\Auth\Roles::new();
+}
