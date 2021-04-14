@@ -9,6 +9,9 @@ define('TYPEROCKET_GALAXY', true);
 if(is_file(__DIR__ . '/galaxy-config.php'))
     require __DIR__ . '/galaxy-config.php';
 
+if(!defined('TYPEROCKET_GALAXY_FILE'))
+    define('TYPEROCKET_GALAXY_FILE', __FILE__);
+
 if(!defined('TYPEROCKET_GALAXY_PATH'))
     define('TYPEROCKET_GALAXY_PATH', __DIR__);
 
