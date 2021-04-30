@@ -13,6 +13,18 @@ return [
     */
     'wordpress' => \TypeRocket\Utility\Helper::wordPressRootPath(),
 
+    /**
+    |--------------------------------------------------------------------------
+    | Load WordPress
+    |--------------------------------------------------------------------------
+    |
+    | Load WordPress and run commands after_setup_theme if WordPress is found.
+    |
+    | Options: yes, no
+    |
+    */
+    'wordpress_load' => typerocket_env('TYPEROCKET_GALAXY_LOAD_WP', 'yes', true),
+
     /*
     |--------------------------------------------------------------------------
     | Commands
