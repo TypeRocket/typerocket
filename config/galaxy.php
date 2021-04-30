@@ -22,9 +22,7 @@ return [
     | You can run `TYPEROCKET_GALAXY_LOAD_WP=no php galaxy` to skip loading
     | WordPress for the current running command.
     |
-    | Options: yes, no
-    |
-    | TYPEROCKET_GALAXY_LOAD_WP=no php galaxy
+    | Options include: yes, no
     |
     */
     'wordpress_load' => typerocket_env('TYPEROCKET_GALAXY_LOAD_WP', 'yes', true),
