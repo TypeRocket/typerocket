@@ -29,7 +29,7 @@ TypeRocket is a WordPress framework that beautifully joins refined UI elements a
 
 ## Pro Version
 
-[TypeRocket Pro](https://typerocket.com/pricing/) is a paid upgrade to TypeRocket v5 Andromeda. To learn more about TypeRocket Pro [see our comparison cart](https://typerocket.com/compare-versions/).
+[TypeRocket Pro](https://typerocket.com/pricing/) is a paid upgrade to TypeRocket v5 Andromeda. To learn more about TypeRocket Pro [see our comparison chart](https://typerocket.com/compare-versions/).
 
 ## License
 
