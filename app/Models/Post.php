@@ -9,11 +9,11 @@ class Post extends WPPost
 
     public function categories()
     {
-        return $this->belongsToTaxonomy(Category::class, 'category');
+        return $this->belongsToTaxonomy(Category::class, Category::TAXONOMY);
     }
 
     public function tags()
     {
-        return $this->belongsToTaxonomy(Tag::class, 'post_tag');
+        return $this->belongsToTaxonomy(Tag::class, Tag::TAXONOMY);
     }
 }
