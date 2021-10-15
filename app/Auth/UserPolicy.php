@@ -9,7 +9,7 @@ class UserPolicy extends Policy
 {
     public function update(AuthUser $auth, WPUser $user)
     {
-        if( $auth->isCapable('edit_users') || $user->getID() != $auth->getID()) {
+        if( $auth->isCapable('edit_users') || $user->getID() === $auth->getID()) {
             return true;
         }
 
@@ -27,7 +27,7 @@ class UserPolicy extends Policy
 
     public function destroy(AuthUser $auth, WPUser $user)
     {
-        if( $auth->isCapable('delete_users') || $user->getID() != $auth->getID()) {
+        if( $auth->isCapable('delete_users') || $user->getID() === $auth->getID()) {
             return true;
         }
 

@@ -10,7 +10,7 @@ class PostPolicy extends Policy
 
     public function update(AuthUser $auth, WPPost $post)
     {
-        if( $auth->isCapable('edit_posts') || $auth->getID() == $post->getUserID()) {
+        if( $auth->isCapable('edit_posts') || $auth->getID() === $post->getUserID()) {
             return true;
         }
 
@@ -28,7 +28,7 @@ class PostPolicy extends Policy
 
     public function destroy(AuthUser $auth, WPPost $post)
     {
-        if( $auth->isCapable('edit_posts') || $post->getUserID() == $auth->getID()) {
+        if( $auth->isCapable('edit_posts') || $post->getUserID() === $auth->getID()) {
             return true;
         }
 

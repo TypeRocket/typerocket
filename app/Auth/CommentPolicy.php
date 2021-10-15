@@ -9,7 +9,7 @@ class CommentPolicy extends Policy
 {
     public function update(AuthUser $auth, WPComment $comment)
     {
-        if( $auth->isCapable('edit_posts') || $comment->getUserID() == $auth->getID()) {
+        if( $auth->isCapable('edit_posts') || $comment->getUserID() === $auth->getID()) {
             return true;
         }
 
@@ -27,7 +27,7 @@ class CommentPolicy extends Policy
 
     public function destroy(AuthUser $auth, WPComment $comment)
     {
-        if( $auth->isCapable('edit_posts') || $comment->getUserID() == $auth->getID()) {
+        if( $auth->isCapable('edit_posts') || $comment->getUserID() === $auth->getID()) {
             return true;
         }
 
