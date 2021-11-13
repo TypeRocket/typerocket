@@ -25,7 +25,7 @@ TypeRocket is a WordPress framework that beautifully joins refined UI elements a
 
 ## Getting Started
 
-**TypeRocket v5 Andromeda** is [well documented](https://typerocket.com/docs/v5/), and we have [many video tutorials](https://www.youtube.com/watch?v=wRH8R9MOO7I&list=PLh6jokL0yBPR1J7Gb4RksF3ao7r4agY9x) and [written articles](https://typerocket.com/getting-started/) to help you get started. Typerocket is easy to [install via composer project](https://typerocket.com/docs/v5/composer-install/) or [as a WordPress plugin](https://typerocket.com/docs/v5/plugin-install/).
+**TypeRocket v5 Andromeda** is [well documented](https://typerocket.com/docs/v5/), and we have [many video tutorials](https://www.youtube.com/watch?v=wRH8R9MOO7I&list=PLh6jokL0yBPR1J7Gb4RksF3ao7r4agY9x) and [written articles](https://typerocket.com/getting-started/) to help you get started. TypeRocket is easy to [install via composer project](https://typerocket.com/docs/v5/composer-install/) or [as a WordPress plugin](https://typerocket.com/docs/v5/plugin-install/).
 
 ## Pro Version
 
