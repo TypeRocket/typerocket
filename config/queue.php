@@ -5,7 +5,7 @@ return [
     | TypeRocket Job Queue - Action Scheduler
     |--------------------------------------------------------------------------
     |
-    | The TypeRocket jobs queue system used the WooCommerce Action Scheduler.
+    | The TypeRocket jobs queue system uses the WooCommerce Action Scheduler.
     | If you have a root installation of TypeRocket run the following:
     |
     | > composer require woocommerce/action-scheduler
