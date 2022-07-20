@@ -17,6 +17,7 @@ TypeRocket is a WordPress framework that beautifully joins refined UI elements a
 - Powerful ORM with eager loading and deep WordPress integration.
 - Component based page builder that you control.
 - Policy, capability, and role management.
+- WP Cron powered jobs and queue system.
 - Laravel inspired routing and controllers.
 - Modern dependency injection container.
 - Symfony based CLI called Galaxy.
