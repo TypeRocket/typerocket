@@ -11,12 +11,15 @@ package-lock.json
 
 # Environment
 .env
+.env.backup
 /wp-config.php
 /sql/run/*
 .phpunit.result.cache
 npm-debug.log
 yarn-error.log
 /galaxy-config.php
+auth.json
+/storage/*.key
 
 # WordPress
 /wordpress/*.*
