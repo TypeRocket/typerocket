@@ -31,6 +31,7 @@ return [
          */
         '\TypeRocket\Services\ErrorService',
         '\TypeRocket\Services\MailerService',
+        '\TypeRocket\Services\JobQueueRunner',
 
         /*
          * Application Service Providers...
