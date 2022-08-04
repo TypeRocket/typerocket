@@ -6,8 +6,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | This option defines the default database driver that is used when a query
-    | or model is instantiated. See the list of connections below for more
-    | details or add your own to the list. There is one by default.
+    | or model is instantiated. See the list of drivers below the available
+    | options. You can add your own to the list.
     |
     */
     'default' => typerocket_env('TYPEROCKET_DATABASE_DEFAULT', 'wp'),
@@ -28,10 +28,10 @@ return [
 
         'alt' => [
             'driver' => '\TypeRocket\Database\Connectors\CoreDatabaseConnector',
-            'username' => '',
-            'password' => '',
-            'database' => '',
-            'host' => '',
+            'username' => typerocket_env('TYPEROCKET_ALT_DATABASE_USER'),
+            'password' => typerocket_env('TYPEROCKET_ALT_DATABASE_PASSWORD'),
+            'database' => typerocket_env('TYPEROCKET_ALT_DATABASE_DATABASE'),
+            'host' => typerocket_env('TYPEROCKET_ALT_DATABASE_HOST'),
         ],
     ]
 ];
