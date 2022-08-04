@@ -19,7 +19,7 @@ return [
     |
     | Here you may configure the database drivers for your application.
     |
-    | Available Connections: "wordpress"
+    | Available Drivers: "wp"
     */
     'drivers' => [
         'wp' => [
