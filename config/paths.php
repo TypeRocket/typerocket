@@ -28,7 +28,7 @@ return [
     | The PATH where log files are to be stored.
     |
     */
-    'logs' => TYPEROCKET_ALT_PATH . '/storage/logs',
+    'logs' => typerocket_env('TYPEROCKET_LOG_FILE_FOLDER', TYPEROCKET_ALT_PATH . '/storage/logs'),
 
     /*
     |--------------------------------------------------------------------------
