@@ -749,7 +749,7 @@ function tr_flash_message($data = null, $dismissible = false)
  */
 function tr_nils($value)
 {
-    return \TypeRocket\Utility\Value::nils($value);
+    return \TypeRocket\Utility\Data::nil($value);
 }
 
 /**
