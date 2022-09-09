@@ -407,7 +407,8 @@ function tr_components_loop($builder_data, $other = [], $group = 'builder')
  */
 function tr_show_page_builder(string $field_name = "use_builder", $item_id = null)
 {
-    $use_builder = tr_post_field(...func_get_args());
+    $args = func_get_args() ?: [$field_name];
+    $use_builder = tr_post_field(...$args);
     return $use_builder === '1' || $use_builder === 1 && !post_password_required();
 }
 
