@@ -21,7 +21,7 @@
         "docs": "https://typerocket.com/docs/v5/"
     },
     "require": {
-        "php": "^7.4",
+        "php": "^8.0.2",
         "typerocket/core": "^5.1"
     },
     "require-dev": {
