@@ -90,8 +90,8 @@ return [
     | The template engine used to build views for the front-end and admin.
     |
     | Pro Only:
-    |    - \TypeRocketPro\Template\TachyonTemplateEngine
-    |    - \TypeRocketPro\Template\TwigTemplateEngine
+    |    - \TypeRocket\Pro\Template\TachyonTemplateEngine
+    |    - \TypeRocket\Pro\Template\TwigTemplateEngine
     |
     */
     'templates' => [
