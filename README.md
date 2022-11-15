@@ -25,11 +25,11 @@ TypeRocket is a WordPress framework that beautifully joins refined UI elements a
 
 ## Getting Started
 
-**TypeRocket v5 Andromeda** is [well documented](https://typerocket.com/docs/v5/), and we have [many video tutorials](https://www.youtube.com/watch?v=wRH8R9MOO7I&list=PLh6jokL0yBPR1J7Gb4RksF3ao7r4agY9x) and [written articles](https://typerocket.com/getting-started/) to help you get started. TypeRocket is easy to [install via composer project](https://typerocket.com/docs/v5/composer-install/) or [as a WordPress plugin](https://typerocket.com/docs/v5/plugin-install/).
+**TypeRocket v6 Antennae** is [well documented](https://typerocket.com/docs/v6/), and we have [many video tutorials](https://www.youtube.com/watch?v=wRH8R9MOO7I&list=PLh6jokL0yBPR1J7Gb4RksF3ao7r4agY9x) and [written articles](https://typerocket.com/getting-started/) to help you get started. TypeRocket is easy to [install via composer project](https://typerocket.com/docs/v6/composer-install/) or [as a WordPress plugin](https://typerocket.com/docs/v6/plugin-install/).
 
 ## Pro Version
 
-[TypeRocket Pro](https://typerocket.com/pricing/) is a paid upgrade to TypeRocket v5 Andromeda. To learn more about TypeRocket Pro [see our comparison chart](https://typerocket.com/compare-versions/).
+[TypeRocket Pro](https://typerocket.com/pricing/) is a paid upgrade to TypeRocket v6 Antennae. To learn more about TypeRocket Pro [see our comparison chart](https://typerocket.com/compare-versions/).
 
 ## License
 

@@ -94,7 +94,7 @@
     <nav>
         <a href="https://typerocket.com/">TypeRocket</a>
         <a href="https://typerocket.com/pro">Pro</a>
-        <a href="https://typerocket.com/docs/v5">Docs</a>
+        <a href="https://typerocket.com/docs/v6">Docs</a>
     </nav>
 </section>
 
