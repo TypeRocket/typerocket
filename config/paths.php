@@ -38,7 +38,7 @@ return [
     | The PATH where files are to be cached.
     |
     */
-    'cache' => TYPEROCKET_ALT_PATH . '/storage/cache',
+    'cache' => typerocket_env('TYPEROCKET_CACHE_FILE_FOLDER', TYPEROCKET_ALT_PATH . '/storage/cache'),
 
     /*
     |--------------------------------------------------------------------------
