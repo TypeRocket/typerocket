@@ -43,6 +43,7 @@ Thumbs.db
 .project
 .build
 .vscode
+.fleet
 
 # File Types
 *.log
