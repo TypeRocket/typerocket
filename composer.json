@@ -21,11 +21,11 @@
         "docs": "https://typerocket.com/docs/v6/"
     },
     "require": {
-        "php": "^8.0.2",
-        "typerocket/core": "^6.0"
+        "php": "^8.2",
+        "typerocket/core": "^6.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^10"
     },
     "autoload": {
         "files": [
