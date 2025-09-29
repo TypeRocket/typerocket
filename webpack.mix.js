@@ -14,6 +14,7 @@ const mix = require('laravel-mix');
 | Watch: `npm run watch`
 | Production: `npm run prod`
 |
+| Node Version: 16.20.2
 */
 
 // Options
