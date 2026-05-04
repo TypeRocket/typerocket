@@ -2,19 +2,15 @@
     "private": true,
     "scripts": {
         "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
+        "development": "vite build --mode development",
+        "watch": "vite build --mode development --watch",
+        "watch-poll": "vite build --mode development --watch --watch.usePolling true",
+        "hot": "vite --host 0.0.0.0",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "vite build --mode production"
     },
     "devDependencies": {
-        "axios": "^0.25",
-        "laravel-mix": "^6.0.6",
-        "lodash": "^4.17.19",
-        "postcss": "^8.1.14",
-        "sass": "^1.51.0",
-        "sass-loader": "^12.6.0"
+        "postcss": "^8.5.14",
+        "vite": "^8.0.10"
     }
 }
